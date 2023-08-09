@@ -22,6 +22,9 @@ type SliderProps = {
     valueLabelDisplay?: JoySliderProps['valueLabelDisplay']
 }
 
+/**
+ * Slider component
+ */
 export const Slider = ({
     error,
     id,
