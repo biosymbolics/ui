@@ -4,7 +4,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 - `yarn dev`
 - Open [http://localhost:3000](http://localhost:3000)
-
+- yarn prettier . --write
 
 ## Deploy on Vercel
 
