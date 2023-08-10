@@ -1,34 +1,35 @@
 import { ReactNode } from 'react'
-import useSWR from 'swr'
+import Breadcrumbs from '@mui/joy/Breadcrumbs'
 
-type Fetcher = <T>(args: Record<string, any>) => T
+import { getSelectableId } from '@/utils/string'
+import Link from 'next/link'
 
-const NavBar = ({ links }: { links: string[] }) => <nav>{links}</nav>
+type Crumb = { label: string; url: string }
+
+const NavBar = ({ links }: { links: Crumb[] }) => (
+    <Breadcrumbs>
+        {links.map(({ label, url }) => (
+            <Link key={getSelectableId(label)} color="neutral" href={url}>
+                {label}
+            </Link>
+        ))}
+    </Breadcrumbs>
+)
 const Footer = () => <footer>footer</footer>
 
 /**
  * Basic layout compound
  */
-export const RootLayout = ({
-    children,
-    fetcher,
-}: {
-    children: ReactNode
-    fetcher: Fetcher
-}) => {
-    const { data, error } = useSWR<{ links: string[] }>(
-        '/api/navigation',
-        fetcher
-    )
-
-    if (error) return <div>Failed to load</div>
-    if (!data) return <div>Loading...</div>
+export const Layout = ({ children }: { children: ReactNode }) => {
+    const links: Crumb[] = [{ label: 'dashboard', url: '/dashboard' }]
 
     return (
         <>
-            <NavBar links={data.links} />
+            <NavBar links={links} />
             <main>{children}</main>
             <Footer />
         </>
     )
 }
+
+export default Layout

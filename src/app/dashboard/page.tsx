@@ -1,44 +1,33 @@
-import { Suspense, cache } from 'react'
+import { Suspense } from 'react'
 
-export const Dashboard = (): JSX.Element => <div />
+import { Description } from './description'
+import { Patents } from './patents'
 
-export const getDescription = cache(async (terms: string[]) => {
-    const res = await fetch(`https://api.example.com/artist/${terms}`)
-    return res.json()
-})
-
-export const fetchPatents = cache(async (terms: string[]) => {
-    const res = await fetch(`https://.../patents?terms=${terms.join(',')}`)
-    return res.json()
-})
-
-async function Patents({ terms }: { terms: string[] }) {
-    // Wait for the playlists
-    const patents = await fetchPatents(terms)
-
-    return (
-        <ul>
-            {patents.map((patent: { id: string; name: string }) => (
-                <li key={patent.id}>{patent.name}</li>
-            ))}
-        </ul>
-    )
-}
-
-export default async function Page({
-    params: { terms },
+/**
+ * http://localhost:3000/dashboard?terms=asthma
+ */
+export const Page = async ({
+    searchParams,
 }: {
-    params: { terms: string[] }
-}) {
-    const description = await getDescription(terms)
+    searchParams: Record<string, string>
+}) => {
+    const terms = searchParams.terms?.split(',') ?? []
+
+    if (terms.length === 0) {
+        return <div>Missing terms</div>
+    }
 
     return (
         <>
             <h1>Terms: {terms.join(', ')}</h1>
-            <p>{description}</p>
+            <Suspense fallback={<div>Loading...</div>}>
+                <Description terms={terms} />
+            </Suspense>
             <Suspense fallback={<div>Loading...</div>}>
                 <Patents terms={terms} />
             </Suspense>
         </>
     )
 }
+
+export default Page
