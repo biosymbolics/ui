@@ -15,7 +15,7 @@ const getDescription = cache(async (terms: string[]): Promise<string> => {
             `Failed to fetch patents: ${res.status} ${res.statusText}`
         )
     }
-    return res.json()
+    return res.text()
 })
 
 export const Description = async ({ terms }: { terms: string[] }) => {
