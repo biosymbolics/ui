@@ -1,7 +1,37 @@
 import { Suspense } from 'react'
+import Typography from '@mui/joy/Typography'
+import fetch from 'node-fetch'
+import { z } from 'zod'
+
+import { Section } from '@/components/layout/section'
+import { Autocomplete } from '@/components/input'
+import { PATENT_TERM_API_URL } from '@/constants'
 
 import { Description } from './description'
 import { Patents } from './patents'
+
+const AutocompleteResponse = z.object({
+    terms: z.array(z.string()),
+})
+
+const fetchOptions = async (term: string): Promise<string[]> => {
+    'use server'
+    const res = await fetch(`${PATENT_TERM_API_URL}?term=${term}`)
+    if (!res.ok) {
+        throw new Error(
+            `Failed to fetch patent terms: ${res.status} ${res.statusText}`
+        )
+    }
+
+    const json_resp = await res.json()
+    const parsedRes = AutocompleteResponse.safeParse(json_resp)
+
+    if (parsedRes.success === false) {
+        throw new Error(`Failed to parse patent terms: ${parsedRes.error}`)
+    }
+    const terms = parsedRes.data.terms
+    return terms
+}
 
 /**
  * http://localhost:3000/dashboard?terms=asthma
@@ -19,13 +49,23 @@ export const Page = async ({
 
     return (
         <>
-            <h1>Terms: {terms.join(', ')}</h1>
-            <Suspense fallback={<div>Loading...</div>}>
-                <Description terms={terms} />
-            </Suspense>
-            <Suspense fallback={<div>Loading...</div>}>
-                <Patents terms={terms} />
-            </Suspense>
+            <Section>
+                <Autocomplete
+                    label="Select terms"
+                    optionFetcher={fetchOptions}
+                />
+                <Typography gutterBottom level="h1">
+                    Terms: {terms.join(', ')}
+                </Typography>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Description terms={terms} />
+                </Suspense>
+            </Section>
+            <Section>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Patents terms={terms} />
+                </Suspense>
+            </Section>
         </>
     )
 }

@@ -2,10 +2,12 @@ import { cache } from 'react'
 import 'server-only'
 
 import { PATENT_SEARCH_API_URL } from '@/constants'
+import { DataGrid } from '@/components/data/grid'
+import Sheet from '@mui/joy/Sheet'
 
 // TODO: jsonschema validation
 type Patent = {
-    publicationNumber: string // TODO
+    publication_number: string // TODO
     title: string
     abstract: string
     compounds: string[]
@@ -32,11 +34,12 @@ export const Patents = async ({ terms }: { terms: string[] }) => {
     try {
         const patents = await fetchPatents(terms)
         return (
-            <ul>
-                {patents.map((patent) => (
-                    <div>{patent.title}</div>
-                ))}
-            </ul>
+            <DataGrid
+                rows={patents.map((patent) => ({
+                    ...patent,
+                    id: patent.publication_number,
+                }))}
+            />
         )
     } catch (e) {
         if (e instanceof Error) {

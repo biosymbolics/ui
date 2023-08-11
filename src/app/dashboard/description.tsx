@@ -2,6 +2,7 @@ import { cache } from 'react'
 import 'server-only'
 
 import { TERM_DESCRIPTION_API_URL } from '@/constants'
+import Typography from '@mui/joy/Typography'
 
 const getDescription = cache(async (terms: string[]): Promise<string> => {
     if (terms.length === 0) {
@@ -21,7 +22,7 @@ const getDescription = cache(async (terms: string[]): Promise<string> => {
 export const Description = async ({ terms }: { terms: string[] }) => {
     try {
         const description = await getDescription(terms)
-        return <p>{description || 'nope'}</p>
+        return <Typography level="body-sm">{description || 'nope'}</Typography>
     } catch (e) {
         if (e instanceof Error) {
             return <div>Failed to fetch description: {e.message}</div>

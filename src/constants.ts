@@ -1,5 +1,5 @@
 export const API_URL =
-    'https://v8v4ij0xs4.execute-api.us-east-1.amazonaws.com/dev/'
+    'https://v8v4ij0xs4.execute-api.us-east-1.amazonaws.com/dev'
 
 export const PATENT_SEARCH_API_URL = `${API_URL}/patents/search`
 

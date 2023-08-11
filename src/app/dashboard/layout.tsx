@@ -1,8 +1,10 @@
 import { ReactNode } from 'react'
+import Link from 'next/link'
+import Box from '@mui/joy/Box'
 import Breadcrumbs from '@mui/joy/Breadcrumbs'
+import Sheet from '@mui/joy/Sheet'
 
 import { getSelectableId } from '@/utils/string'
-import Link from 'next/link'
 
 type Crumb = { label: string; url: string }
 
@@ -26,7 +28,11 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     return (
         <>
             <NavBar links={links} />
-            <main>{children}</main>
+            <Box sx={{ m: 3 }}>
+                <Sheet sx={{ p: 3 }}>
+                    <main>{children}</main>
+                </Sheet>
+            </Box>
             <Footer />
         </>
     )
