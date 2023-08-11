@@ -1,28 +1,37 @@
-import Grid from '@mui/joy/Grid'
-import Sheet from '@mui/joy/Sheet'
-import Stack from '@mui/joy/Stack'
-import Typography from '@mui/joy/Typography'
+'use client';
+
+import React from 'react';
+import Grid from '@mui/joy/Grid';
+import Sheet from '@mui/joy/Sheet';
+import Stack from '@mui/joy/Stack';
+import Typography from '@mui/joy/Typography';
 import {
     DataGridPro as MuiDataGrid,
     DataGridProProps as MuiDataGridProps,
     DataGridProProps,
-} from '@mui/x-data-grid-pro'
-
-import React from 'react'
+} from '@mui/x-data-grid-pro';
+import { GridColDef } from '@mui/x-data-grid';
 
 type DataGridProps = {
-    columns: MuiDataGridProps['columns']
-    isLoading?: MuiDataGridProps['loading']
-    rows: MuiDataGridProps['rows']
-}
+    columns?: GridColDef[];
+    isLoading?: MuiDataGridProps['loading'];
+    rows: MuiDataGridProps['rows'];
+};
 
-const DetailPanelContent = ({ row: rowProp }: { row: Record<string, any> }) => (
+type Row = Record<string, unknown>;
+
+const DetailPanelContent = ({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    row,
+}: {
+    row: Row;
+}) => (
     <Stack
         sx={{ py: 2, height: '100%', boxSizing: 'border-box' }}
         direction="column"
     >
         <Sheet>
-            <Typography>{`Order #${rowProp.id}`}</Typography>
+            <Typography>hi</Typography>
             <Grid container>
                 <Grid>
                     <Typography>Stuff</Typography>
@@ -30,22 +39,33 @@ const DetailPanelContent = ({ row: rowProp }: { row: Record<string, any> }) => (
             </Grid>
         </Sheet>
     </Stack>
-)
+);
 
-export const DataGrid = ({ isLoading, ...props }: DataGridProps) => {
+export const DataGrid = ({
+    columns: _columns,
+    isLoading,
+    rows,
+    ...props
+}: DataGridProps) => {
     const getDetailPanelContent = React.useCallback<
         NonNullable<DataGridProProps['getDetailPanelContent']>
-    >(({ row }) => <DetailPanelContent row={row} />, [])
-    const getDetailPanelHeight = React.useCallback(() => 400, [])
+    >(({ row }: { row: Row }) => <DetailPanelContent row={row} />, []);
+    const getDetailPanelHeight = React.useCallback(() => 400, []);
+
+    const columns =
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        _columns || Object.keys(rows[0]).map((field) => ({ field }));
 
     return (
         <MuiDataGrid
             checkboxSelection
             disableRowSelectionOnClick
             {...props}
+            columns={columns}
             getDetailPanelHeight={getDetailPanelHeight}
             getDetailPanelContent={getDetailPanelContent}
             loading={isLoading}
+            rows={rows}
         />
-    )
-}
+    );
+};

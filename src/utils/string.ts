@@ -1,12 +1,10 @@
-import { get } from "http";
-
 /**
  * Removes all non-alphanumeric characters from a string
  * @param input
  * @returns string
  */
 export const removeNonAlphanumeric = (input: string): string =>
-  input.replace(/[^a-zA-Z0-9]/g, "");
+    input.replace(/[^a-zA-Z0-9]/g, '');
 
 /**
  * Replace all spaces with hyphens
@@ -14,7 +12,7 @@ export const removeNonAlphanumeric = (input: string): string =>
  * @returns
  */
 export const replaceSpacesWithHyphens = (input: string): string =>
-  input.replace(/\s+/g, "-");
+    input.replace(/\s+/g, '-');
 
 /**
  * Lowercase a string
@@ -22,26 +20,6 @@ export const replaceSpacesWithHyphens = (input: string): string =>
  * @returns lowercase string
  */
 export const lower = (input: string): string => input.toLowerCase();
-
-const prefixIfLeadingDigit = (input: string): string =>
-  /^[0-9]/.test(input) ? "id-" + input : input;
-
-/**
- * Creates a css-compliant selector id from a string
- *
- * If null, return randomish id
- * @param input (string or null)
- * @returns css-compliant selector id
- */
-export const getSelectableId = (input?: string): string =>
-  input
-    ? [
-        removeNonAlphanumeric,
-        replaceSpacesWithHyphens,
-        lower,
-        prefixIfLeadingDigit,
-      ].reduce((value, fn) => fn(value), input)
-    : generateRandomishId();
 
 /**
  * Generate randomish id from date.
@@ -51,4 +29,24 @@ export const getSelectableId = (input?: string): string =>
  * @returns randomish string id
  */
 export const generateRandomishId = (): string =>
-  (+new Date()).toString(36).slice(-5);
+    (+new Date()).toString(36).slice(-5);
+
+const prefixIfLeadingDigit = (input: string): string =>
+    /^[0-9]/.test(input) ? `'id-${input}` : input;
+
+/**
+ * Creates a css-compliant selector id from a string
+ *
+ * If null, return randomish id
+ * @param input (string or null)
+ * @returns css-compliant selector id
+ */
+export const getSelectableId = (input?: string): string =>
+    input
+        ? [
+              removeNonAlphanumeric,
+              replaceSpacesWithHyphens,
+              lower,
+              prefixIfLeadingDigit,
+          ].reduce((value, fn) => fn(value), input)
+        : generateRandomishId();
