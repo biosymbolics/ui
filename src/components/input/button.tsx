@@ -12,6 +12,7 @@ type ButtonProps = {
     isLoading?: JoyButtonProps['loading'];
     onClick?: JoyButtonProps['onClick'];
     size?: JoyButtonProps['size'];
+    sx?: JoyButtonProps['sx'];
     variant?: JoyButtonProps['variant'];
 };
 

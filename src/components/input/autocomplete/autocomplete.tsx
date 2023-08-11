@@ -108,7 +108,7 @@ export const Autocomplete = <
                 error={!!fetchError}
                 loading={isLoading}
                 multiple={isMultiple}
-                onInputChange={(event, newInputValue) => {
+                onInputChange={(_, newInputValue) => {
                     setInput(newInputValue);
                 }}
                 options={options}

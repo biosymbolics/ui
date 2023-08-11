@@ -1,36 +1,37 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { cache } from 'react';
+import { z } from 'zod';
 import 'server-only';
 
 import { PATENT_SEARCH_API_URL } from '@/constants';
 import { DataGrid } from '@/components/data/grid';
+import { getFetchOptions } from '@/utils/actions';
 
-// TODO: jsonschema validation
-type Patent = {
-    publication_number: string; // TODO
-    title: string;
-    abstract: string;
-    compounds: string[];
-    diseases: string[];
-    genes: string[];
-    assignees: string[];
-    inventors: string[];
-};
+const PatentSchema = z.object({
+    publication_number: z.string(),
+    title: z.string(),
+    abstract: z.string(),
+    assignees: z.array(z.string()),
+    compounds: z.array(z.string()),
+    diseases: z.array(z.string()),
+    genes: z.array(z.string()),
+    inventors: z.array(z.string()),
+    mechanisms: z.array(z.string()),
+});
+
+const PatentResponse = z.array(PatentSchema);
+
+type Patent = z.infer<typeof PatentSchema>;
 
 const fetchPatents = cache(async (terms: string[]): Promise<Patent[]> => {
     if (terms.length === 0) {
         return [];
     }
-    const res = await fetch(
-        `${PATENT_SEARCH_API_URL}?terms=${terms.join(',')}`
+    const res = await getFetchOptions(
+        `${PATENT_SEARCH_API_URL}?terms=${terms.join(',')}`,
+        PatentResponse
     );
-    if (!res.ok) {
-        throw new Error(
-            `Failed to fetch patents: ${res.status} ${res.statusText}`
-        );
-    }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return res.json();
+    return res;
 });
 
 export const Patents = async ({ terms }: { terms: string[] }) => {

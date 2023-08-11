@@ -3,18 +3,24 @@ import Typography from '@mui/joy/Typography';
 import { z } from 'zod';
 
 import { Section } from '@/components/layout/section';
-import { Autocomplete } from '@/components/input';
 import { PATENT_TERM_API_URL } from '@/constants';
+import { Option } from '@/types/select';
 import { getFetchOptions } from '@/utils/actions';
 
 import { Description } from './description';
 import { Patents } from './patents';
+import { SearchBar } from './search';
 
 const AutocompleteResponse = z.object({
-    terms: z.array(z.string()),
+    terms: z.array(
+        z.object({
+            id: z.string(),
+            label: z.string(),
+        })
+    ),
 });
 
-const fetchOptions = async (term: string): Promise<string[]> => {
+const fetchOptions = async (term: string): Promise<Option[]> => {
     'use server';
 
     const res = await getFetchOptions(
@@ -41,13 +47,7 @@ export const Page = ({
     return (
         <>
             <Section>
-                <Autocomplete
-                    isMultiple
-                    label="Select terms"
-                    optionFetcher={fetchOptions}
-                    size="lg"
-                    variant="soft"
-                />
+                <SearchBar fetchOptions={fetchOptions} terms={terms} />
             </Section>
             <Section>
                 <Typography gutterBottom level="h1">

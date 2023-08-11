@@ -34,11 +34,16 @@ export type AutocompleteBaseProps<
      * (corresponds to the `freeSolo` prop of `Autocomplete`)
      */
     isCreatable?: Creatable;
+    isOptionEqualToValue?: JoyAutocompleteProps<
+        T,
+        Multiple
+    >['isOptionEqualToValue'];
     isMultiple?: Multiple;
     /**
      * label/title for the autocomplete box
      */
     label?: string;
+    onChange?: JoyAutocompleteProps<T, Multiple>['onChange'];
     placeholder?: JoyAutocompleteProps<T, Multiple>['placeholder'];
     size?: JoyAutocompleteProps<T, Multiple>['size'];
     variant?: JoyAutocompleteProps<T, Multiple>['variant'];
