@@ -25,6 +25,11 @@ export const getFetchOptions = async <T>(
     const parsedRes = schema.safeParse(jsonResp);
 
     if (parsedRes.success === false) {
+        console.error(
+            `Failed to parse: ${
+                jsonResp as string
+            } (type ${typeof jsonResp}), error: ${parsedRes.error.toString()}`
+        );
         throw new Error(`Failed to parse: ${parsedRes.error.toString()}`);
     }
     return parsedRes.data;
