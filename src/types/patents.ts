@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { z } from 'zod';
 
 export const PatentSchema = z.object({
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     publication_number: z.string(),
     title: z.string(),
     abstract: z.string(),
@@ -10,7 +10,12 @@ export const PatentSchema = z.object({
     diseases: z.array(z.string()),
     genes: z.array(z.string()),
     inventors: z.array(z.string()),
+    ipc_codes: z.array(z.string()),
+    patent_years: z.number(),
     mechanisms: z.array(z.string()),
+    score: z.number(),
+    search_rank: z.number(),
+    similar: z.array(z.string()),
     url: z.string(),
 });
 
