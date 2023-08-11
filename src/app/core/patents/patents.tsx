@@ -1,10 +1,23 @@
+'use server';
+
 import { cache } from 'react';
+import { GridColDef } from '@mui/x-data-grid';
+import Box from '@mui/joy/Box';
 import 'server-only';
 
 import { PATENT_SEARCH_API_URL } from '@/constants';
 import { DataGrid } from '@/components/data/grid';
 import { Patent, PatentResponse } from '@/types/patents';
 import { getFetchOptions } from '@/utils/actions';
+
+import {
+    DetailContent,
+    formatDate,
+    formatNumber,
+    getPatentYearsClass,
+    getScoresClass,
+    getStyles,
+} from './client-components';
 
 const fetchPatents = cache(async (terms: string[]): Promise<Patent[]> => {
     if (terms.length === 0) {
@@ -17,16 +30,60 @@ const fetchPatents = cache(async (terms: string[]): Promise<Patent[]> => {
     return res;
 });
 
+const PATENT_COLUMNS: GridColDef[] = [
+    { field: 'publication_number', headerName: 'Pub #', width: 160 },
+    { field: 'title', headerName: 'Title', width: 500 },
+    {
+        field: 'patent_years',
+        headerName: 'Yrs Left',
+        width: 75,
+        description: 'Patent years remaining.',
+        cellClassName: getPatentYearsClass,
+    },
+    {
+        field: 'score',
+        headerName: 'Suitability',
+        width: 85,
+        valueFormatter: formatNumber,
+        cellClassName: getScoresClass,
+        description:
+            'Suitability of patent, in terms of patent type (CoM vs MoU), patented thing (compound > device) and patent years remaining.',
+    },
+    {
+        field: 'search_rank',
+        headerName: 'Relevancy',
+        width: 85,
+        valueFormatter: formatNumber,
+        cellClassName: getScoresClass,
+        description: 'Relevancy of patent to search terms.',
+    },
+    {
+        field: 'priority_date',
+        headerName: 'Priority Date',
+        width: 200,
+        valueFormatter: formatDate,
+    },
+    { field: 'assignees', headerName: 'Assignees', width: 250 },
+    { field: 'attributes', headerName: 'Attributes', width: 100 },
+];
+
 export const Patents = async ({ terms }: { terms: string[] }) => {
     try {
         const patents = await fetchPatents(terms);
         return (
-            <DataGrid
-                rows={patents.map((patent) => ({
-                    ...patent,
-                    id: patent.publication_number,
-                }))}
-            />
+            <Box sx={getStyles}>
+                <DataGrid
+                    columns={PATENT_COLUMNS}
+                    detailComponent={DetailContent<Patent>}
+                    // initialState={{
+                    //     pinnedColumns: { left: ['publication_number'] },
+                    // }}
+                    rows={patents.map((patent) => ({
+                        ...patent,
+                        id: patent.publication_number,
+                    }))}
+                />
+            </Box>
         );
     } catch (e) {
         if (e instanceof Error) {

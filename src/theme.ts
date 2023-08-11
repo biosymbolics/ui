@@ -9,6 +9,15 @@ const theme = extendTheme({
     fontFamily: {
         body: 'SF Pro Text, var(--gh-fontFamily-fallback)',
     },
+    components: {
+        JoyCard: {
+            styleOverrides: {
+                root: {
+                    borderRadius: '4px',
+                },
+            },
+        },
+    },
     colorSchemes: {
         light: {
             palette: {
