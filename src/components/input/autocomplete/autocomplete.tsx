@@ -42,7 +42,7 @@ export const Autocomplete = <
     ...props
 }: AutocompleteProps<T, Multiple, Creatable>): JSX.Element => {
     const [_input, setInput] = React.useState('')
-    const input = useDebounce(_input, 500)
+    const input = useDebounce(_input, 300)
     const { data, error: fetchError, isLoading } = useSWR(input, optionFetcher)
 
     const options = (_options ? _options.length == 0 : data) || []

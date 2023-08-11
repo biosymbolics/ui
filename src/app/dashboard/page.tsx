@@ -9,6 +9,7 @@ import { PATENT_TERM_API_URL } from '@/constants'
 
 import { Description } from './description'
 import { Patents } from './patents'
+import { getFetchOptions } from '@/utils/actions'
 
 const AutocompleteResponse = z.object({
     terms: z.array(z.string()),
@@ -16,21 +17,11 @@ const AutocompleteResponse = z.object({
 
 const fetchOptions = async (term: string): Promise<string[]> => {
     'use server'
-    const res = await fetch(`${PATENT_TERM_API_URL}?term=${term}`)
-    if (!res.ok) {
-        throw new Error(
-            `Failed to fetch patent terms: ${res.status} ${res.statusText}`
-        )
-    }
-
-    const json_resp = await res.json()
-    const parsedRes = AutocompleteResponse.safeParse(json_resp)
-
-    if (parsedRes.success === false) {
-        throw new Error(`Failed to parse patent terms: ${parsedRes.error}`)
-    }
-    const terms = parsedRes.data.terms
-    return terms
+    const res = await getFetchOptions(
+        `${PATENT_TERM_API_URL}?term=${term}`,
+        AutocompleteResponse
+    )
+    return res.terms
 }
 
 /**
