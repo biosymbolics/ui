@@ -2,6 +2,7 @@
 
 import { ReactNode } from 'react';
 import NextLink from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ColorPaletteProp, Palette } from '@mui/joy/styles';
 import Grid from '@mui/joy/Grid';
 import Link from '@mui/joy/Link';
@@ -24,11 +25,17 @@ import { Patent } from '@/types/patents';
 const getChips = (
     label: string,
     items: string[] | null,
-    color: ColorPaletteProp = 'primary'
+    color: ColorPaletteProp = 'primary',
+    baseUrl: string | null = null
 ): ReactNode => {
     const chips = items
         ? items.map((c) => (
-              <Chip key={c} color={color} sx={{ mr: 0.5, mt: 0.5 }}>
+              <Chip
+                  key={c}
+                  color={color}
+                  href={baseUrl ? `${baseUrl}?terms=${c}` : undefined}
+                  sx={{ mr: 0.5, mt: 0.5 }}
+              >
                   {c}
               </Chip>
           ))
@@ -65,36 +72,42 @@ export const DetailContent = <T extends Patent>({
     row: patent,
 }: {
     row: T;
-}): JSX.Element => (
-    <Section mx={3}>
-        <Title
-            title={patent.title}
-            description={patent.abstract}
-            link={{ label: patent.publication_number, url: patent.url }}
-        />
-        {getChips('Assignees', patent.assignees, 'neutral')}
-        {getChips('Inventors', patent.inventors, 'neutral')}
-        {getChips('Diseases', patent.diseases)}
-        {getChips('Compounds', patent.compounds)}
-        {getChips('Mechanisms', patent.mechanisms)}
-        {getChips('Genes', patent.genes)}
-        {getChips('IPC Codes', patent.ipc_codes)}
-        <Grid container spacing={3}>
-            <Grid xs={6} sm={2}>
-                <Metric value={patent.score} label="Suitability" />
+}): JSX.Element => {
+    const pathname = usePathname();
+    return (
+        <Section mx={3}>
+            <Title
+                title={patent.title}
+                description={patent.abstract}
+                link={{ label: patent.publication_number, url: patent.url }}
+            />
+            {getChips('Assignees', patent.assignees, 'neutral', pathname)}
+            {getChips('Inventors', patent.inventors, 'neutral', pathname)}
+            {getChips('Diseases', patent.diseases, 'primary', pathname)}
+            {getChips('Compounds', patent.compounds, 'primary', pathname)}
+            {getChips('Mechanisms', patent.mechanisms, 'primary', pathname)}
+            {getChips('Genes', patent.genes, 'primary', pathname)}
+            {getChips('IPC Codes', patent.ipc_codes)}
+            <Grid container spacing={3}>
+                <Grid xs={6} sm={2}>
+                    <Metric value={patent.score} label="Suitability" />
+                </Grid>
+                <Grid xs={6} sm={2}>
+                    <Metric value={patent.search_rank} label="Relevancy" />
+                </Grid>
+                <Grid xs={6} sm={2}>
+                    <Metric
+                        value={patent.patent_years}
+                        label="Patent Years Left"
+                    />
+                </Grid>
             </Grid>
-            <Grid xs={6} sm={2}>
-                <Metric value={patent.search_rank} label="Relevancy" />
-            </Grid>
-            <Grid xs={6} sm={2}>
-                <Metric value={patent.patent_years} label="Patent Years Left" />
-            </Grid>
-        </Grid>
-        <Section>
-            <SimilarPatents patent={patent} />
+            <Section>
+                <SimilarPatents patent={patent} />
+            </Section>
         </Section>
-    </Section>
-);
+    );
+};
 
 export const formatNumber = <T extends Record<string, unknown>>(
     params: GridValueFormatterParams<T>

@@ -27,7 +27,11 @@ export const Chip = ({
 }: ChipProps): JSX.Element => {
     const chip = (
         <JoyChip
-            slotProps={href ? { action: { component: link, href } } : {}}
+            slotProps={
+                href
+                    ? { action: { component: link, href, target: '_blank' } }
+                    : {}
+            }
             startDecorator={icon}
             variant="soft"
             {...props}
