@@ -45,7 +45,11 @@ export const Page = async ({
                     isMultiple
                     label="Select terms"
                     optionFetcher={fetchOptions}
+                    size="lg"
+                    variant="soft"
                 />
+            </Section>
+            <Section>
                 <Typography gutterBottom level="h1">
                     Terms: {terms.join(', ')}
                 </Typography>

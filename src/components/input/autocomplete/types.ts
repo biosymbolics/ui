@@ -24,6 +24,7 @@ export type AutocompleteBaseProps<
     Multiple extends boolean | undefined,
     Creatable extends boolean | undefined,
 > = {
+    color?: JoyAutocompleteProps<T, Multiple>['color']
     defaultValue?: JoyAutocompleteProps<T, Multiple>['defaultValue']
     error?: JoyAutocompleteProps<T, Multiple>['error']
     id?: string
@@ -38,6 +39,7 @@ export type AutocompleteBaseProps<
      */
     label?: string
     placeholder?: JoyAutocompleteProps<T, Multiple>['placeholder']
+    size?: JoyAutocompleteProps<T, Multiple>['size']
     variant?: JoyAutocompleteProps<T, Multiple>['variant']
 } & {
     helperText?: string
