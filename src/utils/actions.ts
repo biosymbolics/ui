@@ -1,6 +1,6 @@
-'use server'
-import 'server-only'
-import { z } from 'zod'
+'use server';
+
+import { z } from 'zod';
 
 /**
  * Get fetch options, given a url and a schema
@@ -10,21 +10,22 @@ import { z } from 'zod'
  */
 export const getFetchOptions = async <T>(
     url: string,
-    Schema: z.ZodSchema<T>
+    schema: z.ZodSchema<T>
 ): Promise<T> => {
-    'use server'
-    const res = await fetch(url)
+    'use server';
+
+    const res = await fetch(url);
     if (!res.ok) {
         throw new Error(
             `Failed to fetch patent terms: ${res.status} ${res.statusText}`
-        )
+        );
     }
 
-    const json_resp = await res.json()
-    const parsedRes = Schema.safeParse(json_resp)
+    const jsonResp: unknown = await res.json();
+    const parsedRes = schema.safeParse(jsonResp);
 
     if (parsedRes.success === false) {
-        throw new Error(`Failed to parse: ${parsedRes.error}`)
+        throw new Error(`Failed to parse: ${parsedRes.error.toString()}`);
     }
-    return parsedRes.data
-}
+    return parsedRes.data;
+};

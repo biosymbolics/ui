@@ -1,41 +1,41 @@
-import { Suspense } from 'react'
-import Typography from '@mui/joy/Typography'
-import fetch from 'node-fetch'
-import { z } from 'zod'
+import { Suspense } from 'react';
+import Typography from '@mui/joy/Typography';
+import { z } from 'zod';
 
-import { Section } from '@/components/layout/section'
-import { Autocomplete } from '@/components/input'
-import { PATENT_TERM_API_URL } from '@/constants'
+import { Section } from '@/components/layout/section';
+import { Autocomplete } from '@/components/input';
+import { PATENT_TERM_API_URL } from '@/constants';
 
-import { Description } from './description'
-import { Patents } from './patents'
-import { getFetchOptions } from '@/utils/actions'
+import { getFetchOptions } from '@/utils/actions';
+import { Description } from './description';
+import { Patents } from './patents';
 
 const AutocompleteResponse = z.object({
     terms: z.array(z.string()),
-})
+});
 
 const fetchOptions = async (term: string): Promise<string[]> => {
-    'use server'
+    'use server';
+
     const res = await getFetchOptions(
         `${PATENT_TERM_API_URL}?term=${term}`,
         AutocompleteResponse
-    )
-    return res.terms
-}
+    );
+    return res.terms;
+};
 
 /**
  * http://localhost:3000/dashboard?terms=asthma
  */
-export const Page = async ({
+export const Page = ({
     searchParams,
 }: {
-    searchParams: Record<string, string>
+    searchParams: Record<string, string>;
 }) => {
-    const terms = searchParams.terms?.split(',') ?? []
+    const terms = searchParams.terms?.split(',') ?? [];
 
     if (terms.length === 0) {
-        return <div>Missing terms</div>
+        return <div>Missing terms</div>;
     }
 
     return (
@@ -63,7 +63,7 @@ export const Page = async ({
                 </Suspense>
             </Section>
         </>
-    )
-}
+    );
+};
 
-export default Page
+export default Page;

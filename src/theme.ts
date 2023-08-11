@@ -1,4 +1,5 @@
-import { extendTheme } from '@mui/joy/styles'
+/* eslint-disable @typescript-eslint/naming-convention */
+import { extendTheme } from '@mui/joy/styles';
 
 declare module '@mui/joy/styles' {
     // No custom tokens found, you can skip the theme augmentation.
@@ -80,6 +81,6 @@ const theme = extendTheme({
             palette: {},
         },
     },
-})
+});
 
-export default theme
+export default theme;

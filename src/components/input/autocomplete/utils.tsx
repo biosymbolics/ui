@@ -1,12 +1,12 @@
-import { ReactElement, useEffect, useState } from 'react'
-import { createFilterOptions } from '@mui/joy/Autocomplete'
+import { ReactElement, useEffect, useState } from 'react';
+import { createFilterOptions } from '@mui/joy/Autocomplete';
 import AutocompleteOption, {
     AutocompleteOptionProps,
-} from '@mui/joy/AutocompleteOption'
-import { ListItemDecorator } from '@mui/joy'
-import Add from '@mui/icons-material/Add'
+} from '@mui/joy/AutocompleteOption';
+import { ListItemDecorator } from '@mui/joy';
+import Add from '@mui/icons-material/Add';
 
-import { BaseOption } from './types'
+import { BaseOption } from './types';
 
 /**
  * Get render option
@@ -19,18 +19,20 @@ export const getRenderOption =
         props: AutocompleteOptionProps,
         option: T
     ): ReactElement<AutocompleteOptionProps> => {
-        const isAdd = (option[optionLabelField] as string).startsWith('Add "')
+        const { component } = props;
+        const { [optionLabelField]: label } = option;
+        const isAdd = (label as string).startsWith('Add "');
         return (
-            <AutocompleteOption {...props} component={props.component || 'div'}>
+            <AutocompleteOption {...props} component={component || 'div'}>
                 {isAdd && (
                     <ListItemDecorator>
                         <Add />
                     </ListItemDecorator>
                 )}
-                {option[optionLabelField]}
+                {label}
             </AutocompleteOption>
-        )
-    }
+        );
+    };
 
 /**
  * Get option for input value
@@ -44,13 +46,13 @@ export const getOptionForInputValue = <T, K extends keyof T>(
     inputValue: string,
     options: T[],
     optionIdField: K
-): T => options.find((option) => option[optionIdField] === inputValue) as T
+): T => options.find((option) => option[optionIdField] === inputValue) as T;
 
 /**
  * Method to return a filter method
  * @returns filter method
  */
-export const getFilter = <T extends BaseOption>() => createFilterOptions<T>()
+export const getFilter = <T extends BaseOption>() => createFilterOptions<T>();
 
 /**
  * Debounce state value
@@ -59,17 +61,17 @@ export const getFilter = <T extends BaseOption>() => createFilterOptions<T>()
  * @returns
  */
 export const useDebounce = (value: string, delay: number) => {
-    const [debouncedValue, setDebouncedValue] = useState(value)
+    const [debouncedValue, setDebouncedValue] = useState(value);
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            setDebouncedValue(value)
-        }, delay)
+            setDebouncedValue(value);
+        }, delay);
 
         return () => {
-            clearTimeout(timeout)
-        }
-    }, [value, delay])
+            clearTimeout(timeout);
+        };
+    }, [value, delay]);
 
-    return debouncedValue
-}
+    return debouncedValue;
+};

@@ -1,12 +1,12 @@
-import { ReactNode } from 'react'
-import Link from 'next/link'
-import Box from '@mui/joy/Box'
-import Breadcrumbs from '@mui/joy/Breadcrumbs'
-import Sheet from '@mui/joy/Sheet'
+import { ReactNode } from 'react';
+import Link from 'next/link';
+import Box from '@mui/joy/Box';
+import Breadcrumbs from '@mui/joy/Breadcrumbs';
+import Sheet from '@mui/joy/Sheet';
 
-import { getSelectableId } from '@/utils/string'
+import { getSelectableId } from '@/utils/string';
 
-type Crumb = { label: string; url: string }
+type Crumb = { label: string; url: string };
 
 const NavBar = ({ links }: { links: Crumb[] }) => (
     <Breadcrumbs>
@@ -16,14 +16,14 @@ const NavBar = ({ links }: { links: Crumb[] }) => (
             </Link>
         ))}
     </Breadcrumbs>
-)
-const Footer = () => <footer>footer</footer>
+);
+const Footer = () => <footer>footer</footer>;
 
 /**
  * Basic layout compound
  */
 export const Layout = ({ children }: { children: ReactNode }) => {
-    const links: Crumb[] = [{ label: 'dashboard', url: '/dashboard' }]
+    const links: Crumb[] = [{ label: 'dashboard', url: '/dashboard' }];
 
     return (
         <>
@@ -35,7 +35,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
             </Box>
             <Footer />
         </>
-    )
-}
+    );
+};
 
-export default Layout
+export default Layout;
