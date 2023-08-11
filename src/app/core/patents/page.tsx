@@ -5,8 +5,8 @@ import { z } from 'zod';
 import { Section } from '@/components/layout/section';
 import { Autocomplete } from '@/components/input';
 import { PATENT_TERM_API_URL } from '@/constants';
-
 import { getFetchOptions } from '@/utils/actions';
+
 import { Description } from './description';
 import { Patents } from './patents';
 

@@ -10,6 +10,7 @@ import isEmpty from 'lodash/fp/isEmpty';
 import Typography from '@mui/joy/Typography';
 
 import { getSelectableId } from '@/utils/string';
+
 import { AutocompleteProps, BaseOption, JoyAutocompleteProps } from './types';
 import {
     useDebounce,

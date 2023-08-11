@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+
 import MuiXLicense from '@/components/data/mui-license';
 
 import ThemeRegistry from './theme-registry';

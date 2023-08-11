@@ -20,3 +20,5 @@ export const GlobalError = ({
         </body>
     </html>
 );
+
+export default GlobalError;

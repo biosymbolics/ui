@@ -1,7 +1,7 @@
 import { cache } from 'react';
+import Typography from '@mui/joy/Typography';
 import 'server-only';
 
-import Typography from '@mui/joy/Typography';
 import { TERM_DESCRIPTION_API_URL } from '@/constants';
 
 const getDescription = cache(async (terms: string[]): Promise<string> => {
