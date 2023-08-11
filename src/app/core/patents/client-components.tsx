@@ -1,8 +1,13 @@
 'use client';
 
 import { ReactNode } from 'react';
+import NextLink from 'next/link';
 import { ColorPaletteProp } from '@mui/joy/styles';
 import Grid from '@mui/joy/Grid';
+import Link from '@mui/joy/Link';
+import List from '@mui/joy/List';
+import ListItem from '@mui/joy/ListItem';
+import ListItemDecorator from '@mui/joy/ListItemDecorator';
 import Typography from '@mui/joy/Typography';
 
 import { Patent } from '@/types/patents';
@@ -30,6 +35,26 @@ const getChips = (
         </Section>
     );
 };
+
+const SimilarPatents = ({ patent }: { patent: Patent }): JSX.Element => (
+    <>
+        <Typography level="title-md">Similar Patents</Typography>
+        <List>
+            {patent.similar.map((s) => (
+                <ListItem>
+                    <ListItemDecorator>·</ListItemDecorator>
+                    <Link
+                        component={NextLink}
+                        href={patent.url}
+                        target="_blank"
+                    >
+                        {s}
+                    </Link>
+                </ListItem>
+            ))}
+        </List>
+    </>
+);
 
 export const DetailContent = <T extends Patent>({
     row: patent,
@@ -59,5 +84,8 @@ export const DetailContent = <T extends Patent>({
                 <Metric value={patent.patent_years} label="Patent Years Left" />
             </Grid>
         </Grid>
+        <Section>
+            <SimilarPatents patent={patent} />
+        </Section>
     </Section>
 );
