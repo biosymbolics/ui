@@ -19,7 +19,6 @@ import ListItem from '@mui/joy/ListItem';
 import Sheet from '@mui/joy/Sheet';
 import Apps from '@mui/icons-material/Apps';
 import Settings from '@mui/icons-material/Settings';
-import Person from '@mui/icons-material/Person';
 import Dropdown from '@mui/joy/Dropdown';
 import MenuButton from '@mui/joy/MenuButton';
 
@@ -71,18 +70,11 @@ const NavMenuButton = ({
     };
 
     return (
-        <Dropdown
-            open={open}
-            onOpenChange={(_, isOpen) => {
-                if (isOpen) {
-                    onOpen?.();
-                }
-            }}
-        >
+        <Dropdown>
             <MenuButton
                 {...props}
                 slots={{ root: IconButton }}
-                slotProps={{ root: { variant: 'plain', color: 'neutral' } }}
+                slotProps={{ root: { variant: 'soft', color: 'primary' } }}
                 onMouseDown={() => {
                     internalOpen.current = open;
                 }}
@@ -90,10 +82,6 @@ const NavMenuButton = ({
                     if (!internalOpen.current) {
                         onOpen();
                     }
-                }}
-                onMouseEnter={() => {
-                    onOpen();
-                    isOnButton.current = true;
                 }}
                 onMouseLeave={() => {
                     isOnButton.current = false;
@@ -154,7 +142,15 @@ export const SideNav = () => {
             }, 200);
         };
     return (
-        <Sheet sx={{ borderRadius: 'sm', py: 1, mr: 20 }}>
+        <Sheet
+            color="neutral"
+            sx={{
+                borderRadius: 'sm',
+                py: 1,
+                mr: 20,
+            }}
+            variant="soft"
+        >
             <List>
                 <ListItem>
                     <NavMenuButton
@@ -162,6 +158,7 @@ export const SideNav = () => {
                         open={menuIndex === 0}
                         onOpen={() => setMenuIndex(0)}
                         onLeaveMenu={createHandleLeaveMenu(0)}
+                        onKeyDown={() => setMenuIndex(null)}
                         menu={
                             <Menu onClose={() => setMenuIndex(null)}>
                                 <MenuItem {...itemProps}>
@@ -194,23 +191,6 @@ export const SideNav = () => {
                         }
                     >
                         <Settings />
-                    </NavMenuButton>
-                </ListItem>
-                <ListItem>
-                    <NavMenuButton
-                        label="Personal"
-                        open={menuIndex === 2}
-                        onOpen={() => setMenuIndex(2)}
-                        onLeaveMenu={createHandleLeaveMenu(2)}
-                        menu={
-                            <Menu onClose={() => setMenuIndex(null)}>
-                                <MenuItem {...itemProps}>Personal 1</MenuItem>
-                                <MenuItem {...itemProps}>Personal 2</MenuItem>
-                                <MenuItem {...itemProps}>Personal 3</MenuItem>
-                            </Menu>
-                        }
-                    >
-                        <Person />
                     </NavMenuButton>
                 </ListItem>
             </List>
