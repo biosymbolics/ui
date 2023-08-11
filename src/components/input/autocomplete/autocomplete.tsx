@@ -51,7 +51,7 @@ export const Autocomplete = <
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { data, error: fetchError, isLoading } = useSWR(input, optionFetcher);
 
-    const options = (isEmpty(_options) ? _options : data) || [];
+    const options = (!isEmpty(_options) ? _options : data) || [];
     const formId = id || getSelectableId(label);
 
     const isCreatableProps =
