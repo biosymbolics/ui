@@ -17,6 +17,7 @@ export const Page = ({
     searchParams: Record<string, string>;
 }) => {
     const terms = searchParams.terms?.split(',') ?? [];
+    const minYears = parseInt(searchParams.minYears ?? '10', 10);
 
     if (terms.length === 0) {
         return <div>Missing terms</div>;
@@ -25,7 +26,11 @@ export const Page = ({
     return (
         <>
             <Section>
-                <SearchBar fetchOptions={fetchOptions} terms={terms} />
+                <SearchBar
+                    fetchOptions={fetchOptions}
+                    minYears={minYears}
+                    terms={terms}
+                />
             </Section>
             <Section>
                 <Typography gutterBottom level="h1">
