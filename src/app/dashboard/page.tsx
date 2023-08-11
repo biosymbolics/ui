@@ -42,6 +42,7 @@ export const Page = async ({
         <>
             <Section>
                 <Autocomplete
+                    isMultiple
                     label="Select terms"
                     optionFetcher={fetchOptions}
                 />

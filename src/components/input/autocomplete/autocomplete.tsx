@@ -33,6 +33,7 @@ export const Autocomplete = <
     error,
     id,
     isCreatable,
+    isMultiple,
     options: _options,
     optionFetcher = () => Promise.resolve([]),
     optionIdField,
@@ -92,6 +93,7 @@ export const Autocomplete = <
                 {...isCreatableProps}
                 error={!!fetchError}
                 loading={isLoading}
+                multiple={isMultiple}
                 onInputChange={(event, newInputValue) => {
                     setInput(newInputValue)
                 }}
