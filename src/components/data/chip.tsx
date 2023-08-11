@@ -10,6 +10,7 @@ type ChipProps = {
     icon?: React.ReactNode;
     onClick?: JoyChipProps['onClick'];
     size?: JoyChipProps['size'];
+    sx?: JoyChipProps['sx'];
     tooltip?: string | JSX.Element;
     variant?: JoyChipProps['variant'];
 };
@@ -23,7 +24,7 @@ export const Chip = ({
     icon,
     tooltip,
     ...props
-}: ChipProps) => {
+}: ChipProps): JSX.Element => {
     const chip = (
         <JoyChip
             slotProps={href ? { action: { component: link, href } } : {}}
@@ -36,8 +37,11 @@ export const Chip = ({
     );
 
     if (tooltip) {
-        <Tooltip title={tooltip} variant="outlined">
-            {chip}
-        </Tooltip>;
+        return (
+            <Tooltip title={tooltip} variant="outlined">
+                {chip}
+            </Tooltip>
+        );
     }
+    return chip;
 };

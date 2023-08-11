@@ -11,6 +11,7 @@ export const PatentSchema = z.object({
     genes: z.array(z.string()),
     inventors: z.array(z.string()),
     mechanisms: z.array(z.string()),
+    url: z.string(),
 });
 
 export const PatentResponse = z.array(PatentSchema);
