@@ -1,5 +1,8 @@
 'use client'
 
+import React from 'react'
+import useSWR from 'swr'
+import 'client-only'
 import { FilterOptionsState } from '@mui/base'
 import FormHelperText from '@mui/joy/FormHelperText'
 import {
@@ -8,18 +11,17 @@ import {
 } from '@mui/joy/Autocomplete'
 import FormLabel from '@mui/joy/FormLabel'
 import FormControl from '@mui/joy/FormControl'
-import useSWR from 'swr'
-import 'client-only'
+import isEmpty from 'lodash/fp/isEmpty'
 
 import { getSelectableId } from '@/utils/string'
-import { AutocompleteProps, BaseOption } from './types'
+import { AutocompleteProps, BaseOption, JoyAutocompleteProps } from './types'
 import {
     useDebounce,
     getRenderOption,
     getFilter,
     getOptionForInputValue,
 } from './utils'
-import React from 'react'
+import Typography from '@mui/joy/Typography'
 
 /**
  * Autocomplete component
@@ -40,20 +42,21 @@ export const Autocomplete = <
     optionLabelField,
     helperText,
     label,
+    size,
     ...props
 }: AutocompleteProps<T, Multiple, Creatable>): JSX.Element => {
     const [_input, setInput] = React.useState('')
     const input = useDebounce(_input, 300)
     const { data, error: fetchError, isLoading } = useSWR(input, optionFetcher)
 
-    const options = (_options ? _options.length == 0 : data) || []
+    const options = (isEmpty(_options) ? _options : data) || []
     const form_id = id || getSelectableId(label)
 
     const isCreatableProps =
         isCreatable && optionIdField && optionLabelField
             ? {
                   clearOnBlur: true,
-                  freeSolo: true,
+                  // freeSolo: true,
                   renderOption: getRenderOption<T>(optionLabelField),
                   selectOnFocus: true,
                   filterOptions: (
@@ -86,10 +89,19 @@ export const Autocomplete = <
 
     return (
         <FormControl id={form_id} error={error}>
-            {label && <FormLabel>{label}</FormLabel>}
+            {label && (
+                <FormLabel>
+                    <Typography level={size === 'lg' ? 'title-lg' : undefined}>
+                        {label}
+                    </Typography>
+                </FormLabel>
+            )}
             <JoyAutocomplete
                 variant="outlined"
-                {...props}
+                {...(props as Omit<
+                    JoyAutocompleteProps<T, Multiple>,
+                    'options'
+                >)}
                 {...isCreatableProps}
                 error={!!fetchError}
                 loading={isLoading}
@@ -98,6 +110,7 @@ export const Autocomplete = <
                     setInput(newInputValue)
                 }}
                 options={options}
+                size={size}
             />
             {helperText && <FormHelperText>{helperText}</FormHelperText>}
         </FormControl>
