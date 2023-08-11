@@ -14,6 +14,7 @@ import { GridColDef, GridToolbar } from '@mui/x-data-grid';
 type DataGridProps<T> = {
     columns?: GridColDef[];
     detailComponent?: ({ row }: { row: T }) => JSX.Element;
+    initialState?: MuiDataGridProps['initialState'];
     isLoading?: MuiDataGridProps['loading'];
     rows: MuiDataGridProps['rows'];
 };
@@ -33,6 +34,8 @@ const DetailPanelContent = ({ row }: { row: Row }) => (
         </Sheet>
     </Stack>
 );
+
+const NoRows = (): JSX.Element => <div>nothing here</div>;
 
 export const DataGrid = <T extends Record<string, unknown>>({
     columns: _columns,
@@ -56,8 +59,6 @@ export const DataGrid = <T extends Record<string, unknown>>({
 
     return (
         <MuiDataGrid
-            checkboxSelection
-            disableRowSelectionOnClick
             {...props}
             columns={columns}
             getDetailPanelHeight={getDetailPanelHeight}
@@ -66,6 +67,7 @@ export const DataGrid = <T extends Record<string, unknown>>({
             rows={rows}
             slots={{
                 toolbar: GridToolbar,
+                noRowsOverlay: NoRows,
             }}
         />
     );
