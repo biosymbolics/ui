@@ -9,12 +9,13 @@ import List from '@mui/joy/List';
 import ListItem from '@mui/joy/ListItem';
 import ListItemDecorator from '@mui/joy/ListItemDecorator';
 import Typography from '@mui/joy/Typography';
+import { GridValueFormatterParams } from '@mui/x-data-grid/models/params/gridCellParams';
 
-import { Patent } from '@/types/patents';
 import { Chip } from '@/components/data/chip';
+import { Metric } from '@/components/data/metric';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
-import { Metric } from '@/components/data/metric';
+import { Patent } from '@/types/patents';
 
 const getChips = (
     label: string,
@@ -73,6 +74,7 @@ export const DetailContent = <T extends Patent>({
         {getChips('Compounds', patent.compounds)}
         {getChips('Mechanisms', patent.mechanisms)}
         {getChips('Genes', patent.genes)}
+        {getChips('IPC Codes', patent.ipc_codes)}
         <Grid container spacing={3}>
             <Grid xs={6} sm={2}>
                 <Metric value={patent.score} label="Suitability" />
@@ -89,3 +91,41 @@ export const DetailContent = <T extends Patent>({
         </Section>
     </Section>
 );
+
+export const formatNumber = <T extends Record<string, unknown>>(
+    params: GridValueFormatterParams<T>
+): string => {
+    const { value } = params;
+
+    if (typeof value !== 'number') {
+        throw new Error(`Expected number, got ${typeof value}`);
+    }
+
+    return (value as number).toPrecision(2);
+};
+
+export const formatNumberArray = <T extends Record<string, unknown>>(
+    params: GridValueFormatterParams<T>
+): string => {
+    const { value } = params;
+
+    if (!Array.isArray(value)) {
+        console.warn('Expected array, got', typeof value);
+
+        return 'nope';
+    }
+
+    return (value as string[]).join(', ');
+};
+
+export const formatDate = <T extends Record<string, unknown>>(
+    params: GridValueFormatterParams<T>
+): string => {
+    const { value } = params;
+
+    if (typeof value !== 'string') {
+        return '';
+    }
+
+    return new Date(value as string).toLocaleDateString();
+};
