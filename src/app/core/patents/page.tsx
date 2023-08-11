@@ -1,38 +1,16 @@
+'is client';
+
 import { Suspense } from 'react';
+import { Skeleton } from '@mui/joy';
 import Typography from '@mui/joy/Typography';
-import { z } from 'zod';
 
 import { Section } from '@/components/layout/section';
-import { PATENT_TERM_API_URL } from '@/constants';
-import { Option } from '@/types/select';
-import { getFetchOptions } from '@/utils/actions';
 
 import { Description } from './description';
 import { Patents } from './patents';
 import { SearchBar } from './search';
+import { fetchOptions } from './utils';
 
-const AutocompleteResponse = z.object({
-    terms: z.array(
-        z.object({
-            id: z.string(),
-            label: z.string(),
-        })
-    ),
-});
-
-const fetchOptions = async (term: string): Promise<Option[]> => {
-    'use server';
-
-    const res = await getFetchOptions(
-        `${PATENT_TERM_API_URL}?term=${term}`,
-        AutocompleteResponse
-    );
-    return res.terms;
-};
-
-/**
- * http://localhost:3000/dashboard?terms=asthma
- */
 export const Page = ({
     searchParams,
 }: {
@@ -53,12 +31,12 @@ export const Page = ({
                 <Typography gutterBottom level="h1">
                     Terms: {terms.join(', ')}
                 </Typography>
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<Skeleton height="20vh" />}>
                     <Description terms={terms} />
                 </Suspense>
             </Section>
             <Section>
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<Skeleton height="80vh" />}>
                     <Patents terms={terms} />
                 </Suspense>
             </Section>

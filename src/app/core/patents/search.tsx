@@ -1,11 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Box from '@mui/joy/Box';
 
 import { Button } from '@/components/input/button';
 import { Autocomplete } from '@/components/input';
+import { useNavigation } from '@/hooks/navigation';
 import { Option } from '@/types/select';
 
 export const SearchBar = ({
@@ -15,7 +16,7 @@ export const SearchBar = ({
     fetchOptions: (term: string) => Promise<Option[]>;
     terms: string[];
 }): JSX.Element => {
-    const router = useRouter();
+    const { navigate } = useNavigation();
     const pathname = usePathname();
     const [newTerms, setTerms] = useState<string[] | null>(terms);
 
@@ -28,7 +29,6 @@ export const SearchBar = ({
                 }
                 label="Select terms"
                 onChange={(e, values) => {
-                    console.info(values);
                     setTerms(values.map((v) => v.id));
                 }}
                 optionFetcher={fetchOptions}
@@ -42,7 +42,7 @@ export const SearchBar = ({
                             console.debug("No terms selected, can't search");
                             return;
                         }
-                        router.push(`${pathname}?terms=${newTerms.join(',')}`);
+                        navigate(`${pathname}?terms=${newTerms.join(',')}`);
                     }}
                     sx={{ marginLeft: 'auto' }}
                 >

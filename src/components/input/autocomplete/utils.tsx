@@ -23,7 +23,11 @@ export const getRenderOption =
         const { [optionLabelField]: label } = option;
         const isAdd = (label as string).startsWith('Add "');
         return (
-            <AutocompleteOption {...props} component={component || 'div'}>
+            <AutocompleteOption
+                {...props}
+                key="autocomplete-add"
+                component={component || 'div'}
+            >
                 {isAdd && (
                     <ListItemDecorator>
                         <Add />

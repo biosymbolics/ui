@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
 import MuiXLicense from '@/components/data/mui-license';
+import { NavigationProvider } from '@/hooks/navigation';
 
 import ThemeRegistry from './theme-registry';
 
@@ -20,7 +21,7 @@ export const RootLayout = ({
     <html lang="en">
         <body className={inter.className}>
             <ThemeRegistry options={{ key: 'joy' }}>
-                {children}
+                <NavigationProvider>{children}</NavigationProvider>
                 <MuiXLicense />
             </ThemeRegistry>
         </body>
