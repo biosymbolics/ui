@@ -28,7 +28,6 @@ type SliderProps = {
  * Slider component
  */
 export const Slider = ({
-    defaultValue,
     error,
     id,
     label,
@@ -44,7 +43,6 @@ export const Slider = ({
                 valueLabelDisplay="auto"
                 variant="soft"
                 {...props}
-                defaultValue={defaultValue}
             />
         </FormControl>
     );

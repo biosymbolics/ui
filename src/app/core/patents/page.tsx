@@ -17,7 +17,8 @@ export const Page = ({
     searchParams: Record<string, string>;
 }) => {
     const terms = searchParams.terms?.split(',') ?? [];
-    const minYears = parseInt(searchParams.minYears ?? '10', 10);
+    const minPatentYears = parseInt(searchParams.minPatentYears ?? '10', 10);
+    const { relevanceThreshold } = searchParams;
 
     if (terms.length === 0) {
         return <div>Missing terms</div>;
@@ -28,8 +29,9 @@ export const Page = ({
             <Section>
                 <SearchBar
                     fetchOptions={fetchOptions}
-                    minYears={minYears}
+                    minPatentYears={minPatentYears}
                     terms={terms}
+                    relevanceThreshold={relevanceThreshold}
                 />
             </Section>
             <Section>
@@ -42,7 +44,11 @@ export const Page = ({
             </Section>
             <Section>
                 <Suspense fallback={<Skeleton height="80vh" />}>
-                    <Patents terms={terms} />
+                    <Patents
+                        minPatentYears={minPatentYears}
+                        terms={terms}
+                        relevanceThreshold={relevanceThreshold}
+                    />
                 </Suspense>
             </Section>
         </>

@@ -22,3 +22,9 @@ export const PatentSchema = z.object({
 export const PatentResponse = z.array(PatentSchema);
 
 export type Patent = z.infer<typeof PatentSchema>;
+
+export type PatentSearchArgs = {
+    minPatentYears: number;
+    relevanceThreshold: string;
+    terms: string[];
+};

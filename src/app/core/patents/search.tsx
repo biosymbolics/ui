@@ -7,24 +7,29 @@ import Grid from '@mui/joy/Grid';
 
 import { Button } from '@/components/input/button';
 import { Autocomplete } from '@/components/input';
-import { useNavigation } from '@/hooks/navigation';
-import { Option } from '@/types/select';
 import { Slider } from '@/components/input/slider';
 import { Section } from '@/components/layout/section';
+import { Select } from '@/components/input/select';
+import { useNavigation } from '@/hooks/navigation';
+import { PatentSearchArgs } from '@/types/patents';
+import { Option } from '@/types/select';
+import { getQueryArgs } from '@/utils/patents';
 
 export const SearchBar = ({
     fetchOptions,
-    minYears,
+    minPatentYears,
     terms,
+    relevanceThreshold,
 }: {
     fetchOptions: (term: string) => Promise<Option[]>;
-    minYears: number;
-    terms: string[];
-}): JSX.Element => {
+} & PatentSearchArgs): JSX.Element => {
     const { navigate } = useNavigation();
     const pathname = usePathname();
     const [newTerms, setTerms] = useState<string[] | null>(terms);
-    const [newMinYears, setMinYears] = useState<number>(minYears);
+    const [newMinPatentYears, setMinPatentYears] =
+        useState<number>(minPatentYears);
+    const [newRelevanceThreshold, setRelevanceThreshold] =
+        useState<string>(relevanceThreshold);
 
     return (
         <>
@@ -58,9 +63,31 @@ export const SearchBar = ({
                                     );
                                     return;
                                 }
-                                setMinYears(value);
+                                setMinPatentYears(value);
                             }}
-                            defaultValue={newMinYears}
+                            defaultValue={newMinPatentYears}
+                        />
+                    </Grid>
+                    <Grid xs={12} sm={4}>
+                        <Select
+                            defaultValue={newRelevanceThreshold}
+                            label="Term Relevance Threshold"
+                            onChange={(e, value) => {
+                                if (!value) {
+                                    console.warn(
+                                        'Invalid select value: undefined'
+                                    );
+                                    return;
+                                }
+                                setRelevanceThreshold(value);
+                            }}
+                            options={[
+                                'very low',
+                                'low',
+                                'medium',
+                                'high',
+                                'very high',
+                            ]}
                         />
                     </Grid>
                 </Grid>
@@ -72,11 +99,12 @@ export const SearchBar = ({
                             console.debug("No terms selected, can't search");
                             return;
                         }
-                        navigate(
-                            `${pathname}?terms=${newTerms.join(
-                                ','
-                            )}&minYears=${newMinYears}`
-                        );
+                        const queryArgs = getQueryArgs({
+                            minPatentYears: newMinPatentYears,
+                            relevanceThreshold: newRelevanceThreshold,
+                            terms: newTerms,
+                        });
+                        navigate(`${pathname}?${queryArgs}`);
                     }}
                     sx={{ marginLeft: 'auto' }}
                 >
