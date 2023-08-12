@@ -25,7 +25,7 @@ const fetchPatents = cache(
         if (args.terms.length === 0) {
             return [];
         }
-        const queryArgs = getQueryArgs(args);
+        const queryArgs = getQueryArgs(args); // TODO: snake case!!
         const res = await getFetchOptions(
             `${PATENT_SEARCH_API_URL}?${queryArgs}`,
             PatentResponse
