@@ -25,6 +25,6 @@ export type Patent = z.infer<typeof PatentSchema>;
 
 export type PatentSearchArgs = {
     minPatentYears: number;
-    relevanceThreshold: string;
+    relevancyThreshold: string;
     terms: string[];
 };

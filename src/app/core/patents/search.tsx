@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Grid from '@mui/joy/Grid';
+import { Typography } from '@mui/joy';
 
 import { Button } from '@/components/input/button';
 import { Autocomplete } from '@/components/input';
@@ -13,13 +14,12 @@ import { useNavigation } from '@/hooks/navigation';
 import { PatentSearchArgs } from '@/types/patents';
 import { Option } from '@/types/select';
 import { getQueryArgs } from '@/utils/patents';
-import { Typography } from '@mui/joy';
 
 export const SearchBar = ({
     fetchOptions,
     minPatentYears,
     terms,
-    relevanceThreshold,
+    relevancyThreshold,
 }: {
     fetchOptions: (term: string) => Promise<Option[]>;
 } & PatentSearchArgs): JSX.Element => {
@@ -28,8 +28,8 @@ export const SearchBar = ({
     const [newTerms, setTerms] = useState<string[] | null>(terms);
     const [newMinPatentYears, setMinPatentYears] =
         useState<number>(minPatentYears);
-    const [newRelevanceThreshold, setRelevanceThreshold] =
-        useState<string>(relevanceThreshold);
+    const [newrelevancyThreshold, setrelevancyThreshold] =
+        useState<string>(relevancyThreshold);
 
     return (
         <>
@@ -72,7 +72,7 @@ export const SearchBar = ({
                     </Grid>
                     <Grid xs={12} sm={4}>
                         <Select
-                            defaultValue={newRelevanceThreshold}
+                            defaultValue={newrelevancyThreshold}
                             label="Term Relevance Threshold"
                             onChange={(e, value) => {
                                 if (!value) {
@@ -81,7 +81,7 @@ export const SearchBar = ({
                                     );
                                     return;
                                 }
-                                setRelevanceThreshold(value);
+                                setrelevancyThreshold(value);
                             }}
                             options={[
                                 'very low',
@@ -103,7 +103,7 @@ export const SearchBar = ({
                         }
                         const queryArgs = getQueryArgs({
                             minPatentYears: newMinPatentYears,
-                            relevanceThreshold: newRelevanceThreshold,
+                            relevancyThreshold: newrelevancyThreshold,
                             terms: newTerms,
                         });
                         navigate(`${pathname}?${queryArgs}`);
