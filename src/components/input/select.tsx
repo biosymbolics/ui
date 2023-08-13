@@ -57,7 +57,10 @@ export const Select = <T extends BaseOption>({
                 {...props}
             >
                 {options.map((o) => (
-                    <JoySelectOption value={getValue(o)}>
+                    <JoySelectOption
+                        key={getSelectableId(getValue(o))}
+                        value={getValue(o)}
+                    >
                         {getValue(o)}
                     </JoySelectOption>
                 ))}

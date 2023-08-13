@@ -12,12 +12,14 @@ export const getQueryArgs = (
     args: PatentSearchArgs,
     isSnakeCase: boolean = false
 ): string => {
-    const queryParams = Object.entries(args).map(
-        ([key, value]) =>
-            `${maybeSnakeCase(key, isSnakeCase)}=${
-                Array.isArray(value) ? value.join(',') : value
-            }`
-    );
+    const queryParams = Object.entries(args)
+        .filter(([, value]) => !!value)
+        .map(
+            ([key, value]) =>
+                `${maybeSnakeCase(key, isSnakeCase)}=${
+                    Array.isArray(value) ? value.join(',') : value
+                }`
+        );
 
     return queryParams.join('&');
 };
