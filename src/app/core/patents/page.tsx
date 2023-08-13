@@ -1,7 +1,7 @@
 'is client';
 
 import { Suspense } from 'react';
-import { Skeleton } from '@mui/joy';
+import Skeleton from '@mui/joy/Skeleton';
 import Typography from '@mui/joy/Typography';
 
 import { Section } from '@/components/layout/section';
@@ -17,6 +17,8 @@ export const Page = ({
     searchParams: Record<string, string>;
 }) => {
     const terms = searchParams.terms?.split(',') ?? [];
+    const minPatentYears = parseInt(searchParams.minPatentYears ?? '10', 10);
+    const { relevancyThreshold } = searchParams;
 
     if (terms.length === 0) {
         return <div>Missing terms</div>;
@@ -24,21 +26,32 @@ export const Page = ({
 
     return (
         <>
-            <Section>
-                <SearchBar fetchOptions={fetchOptions} terms={terms} />
+            <Section variant="separated">
+                <SearchBar
+                    fetchOptions={fetchOptions}
+                    minPatentYears={minPatentYears}
+                    terms={terms}
+                    relevancyThreshold={relevancyThreshold}
+                />
             </Section>
-            <Section>
-                <Typography gutterBottom level="h1">
-                    Terms: {terms.join(', ')}
-                </Typography>
-                <Suspense fallback={<Skeleton height="20vh" />}>
-                    <Description terms={terms} />
-                </Suspense>
-            </Section>
-            <Section>
-                <Suspense fallback={<Skeleton height="80vh" />}>
-                    <Patents terms={terms} />
-                </Suspense>
+            <Section variant="main">
+                <Section>
+                    <Typography gutterBottom level="h1">
+                        Terms: {terms.join(', ')}
+                    </Typography>
+                    <Suspense fallback={<Skeleton height="20vh" />}>
+                        <Description terms={terms} />
+                    </Suspense>
+                </Section>
+                <Section>
+                    <Suspense fallback={<Skeleton height="80vh" />}>
+                        <Patents
+                            minPatentYears={minPatentYears}
+                            terms={terms}
+                            relevancyThreshold={relevancyThreshold}
+                        />
+                    </Suspense>
+                </Section>
             </Section>
         </>
     );

@@ -14,6 +14,7 @@ type SliderProps = {
     error?: boolean;
     id?: JoySliderProps['id'];
     label?: string;
+    onChange?: JoySliderProps['onChange'];
     orientation?: JoySliderProps['orientation'];
     marks?: JoySliderProps['marks'];
     min?: JoySliderProps['min'];
@@ -36,7 +37,13 @@ export const Slider = ({
     return (
         <FormControl id={formId} error={error}>
             {label && <FormLabel>{label}</FormLabel>}
-            <JoySlider {...props} />
+            <JoySlider
+                marks
+                size="sm"
+                valueLabelDisplay="auto"
+                variant="soft"
+                {...props}
+            />
         </FormControl>
     );
 };

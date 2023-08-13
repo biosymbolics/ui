@@ -7,8 +7,9 @@ import 'server-only';
 
 import { PATENT_SEARCH_API_URL } from '@/constants';
 import { DataGrid } from '@/components/data/grid';
-import { Patent, PatentResponse } from '@/types/patents';
+import { Patent, PatentResponse, PatentSearchArgs } from '@/types/patents';
 import { getFetchOptions } from '@/utils/actions';
+import { getQueryArgs } from '@/utils/patents';
 
 import {
     DetailContent,
@@ -17,18 +18,21 @@ import {
     getPatentYearsClass,
     getScoresClass,
     getStyles,
-} from './client-components';
+} from './client';
 
-const fetchPatents = cache(async (terms: string[]): Promise<Patent[]> => {
-    if (terms.length === 0) {
-        return [];
+const fetchPatents = cache(
+    async (args: PatentSearchArgs): Promise<Patent[]> => {
+        if (args.terms.length === 0) {
+            return [];
+        }
+        const queryArgs = getQueryArgs(args, true);
+        const res = await getFetchOptions(
+            `${PATENT_SEARCH_API_URL}?${queryArgs}`,
+            PatentResponse
+        );
+        return res;
     }
-    const res = await getFetchOptions(
-        `${PATENT_SEARCH_API_URL}?terms=${terms.join(',')}`,
-        PatentResponse
-    );
-    return res;
-});
+);
 
 const PATENT_COLUMNS: GridColDef[] = [
     { field: 'publication_number', headerName: 'Pub #', width: 160 },
@@ -67,14 +71,15 @@ const PATENT_COLUMNS: GridColDef[] = [
     { field: 'attributes', headerName: 'Attributes', width: 100 },
 ];
 
-export const Patents = async ({ terms }: { terms: string[] }) => {
+export const Patents = async (args: PatentSearchArgs) => {
     try {
-        const patents = await fetchPatents(terms);
+        const patents = await fetchPatents(args);
         return (
             <Box sx={getStyles}>
                 <DataGrid
                     columns={PATENT_COLUMNS}
                     detailComponent={DetailContent<Patent>}
+                    // pinned column === column title rendering issues
                     // initialState={{
                     //     pinnedColumns: { left: ['publication_number'] },
                     // }}

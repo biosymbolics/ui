@@ -2,32 +2,46 @@
 
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import Box from '@mui/joy/Box';
+import Grid from '@mui/joy/Grid';
+import { Typography } from '@mui/joy';
 
 import { Button } from '@/components/input/button';
 import { Autocomplete } from '@/components/input';
+import { Slider } from '@/components/input/slider';
+import { Section } from '@/components/layout/section';
+import { Select } from '@/components/input/select';
 import { useNavigation } from '@/hooks/navigation';
+import { PatentSearchArgs } from '@/types/patents';
 import { Option } from '@/types/select';
+import { getQueryArgs } from '@/utils/patents';
 
 export const SearchBar = ({
     fetchOptions,
+    minPatentYears,
     terms,
+    relevancyThreshold,
 }: {
     fetchOptions: (term: string) => Promise<Option[]>;
-    terms: string[];
-}): JSX.Element => {
+} & PatentSearchArgs): JSX.Element => {
     const { navigate } = useNavigation();
     const pathname = usePathname();
     const [newTerms, setTerms] = useState<string[] | null>(terms);
+    const [newMinPatentYears, setMinPatentYears] =
+        useState<number>(minPatentYears);
+    const [newrelevancyThreshold, setrelevancyThreshold] =
+        useState<string>(relevancyThreshold);
 
     return (
         <>
+            <Typography gutterBottom level="h2">
+                Select Terms
+            </Typography>
             <Autocomplete<Option, true, false>
                 isMultiple
+                defaultValue={terms.map((term) => ({ id: term, label: term }))}
                 isOptionEqualToValue={(option: Option, value: Option) =>
                     option.id === value.id
                 }
-                label="Select terms"
                 onChange={(e, values) => {
                     setTerms(values.map((v) => v.id));
                 }}
@@ -35,20 +49,70 @@ export const SearchBar = ({
                 size="lg"
                 variant="soft"
             />
-            <Box display="flex" marginTop={3}>
+            <Section variant="l1">
+                <Grid container spacing={2}>
+                    <Grid xs={12} sm={4}>
+                        <Slider
+                            label="Minimum Patent Years Left"
+                            min={0}
+                            max={20}
+                            onChange={(e, value) => {
+                                if (typeof value !== 'number') {
+                                    console.warn(
+                                        `Invalid value: ${JSON.stringify(
+                                            value
+                                        )}`
+                                    );
+                                    return;
+                                }
+                                setMinPatentYears(value);
+                            }}
+                            defaultValue={newMinPatentYears}
+                        />
+                    </Grid>
+                    <Grid xs={12} sm={4}>
+                        <Select
+                            defaultValue={newrelevancyThreshold}
+                            label="Term Relevance Threshold"
+                            onChange={(e, value) => {
+                                if (!value) {
+                                    console.warn(
+                                        'Invalid select value: undefined'
+                                    );
+                                    return;
+                                }
+                                setrelevancyThreshold(value);
+                            }}
+                            options={[
+                                'very low',
+                                'low',
+                                'medium',
+                                'high',
+                                'very high',
+                            ]}
+                        />
+                    </Grid>
+                </Grid>
+            </Section>
+            <Section variant="l2">
                 <Button
                     onClick={() => {
                         if (!newTerms) {
                             console.debug("No terms selected, can't search");
                             return;
                         }
-                        navigate(`${pathname}?terms=${newTerms.join(',')}`);
+                        const queryArgs = getQueryArgs({
+                            minPatentYears: newMinPatentYears,
+                            relevancyThreshold: newrelevancyThreshold,
+                            terms: newTerms,
+                        });
+                        navigate(`${pathname}?${queryArgs}`);
                     }}
-                    sx={{ marginLeft: 'auto' }}
+                    sx={{ ml: 'auto' }}
                 >
                     Search
                 </Button>
-            </Box>
+            </Section>
         </>
     );
 };
