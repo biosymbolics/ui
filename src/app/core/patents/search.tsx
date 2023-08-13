@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import Box from '@mui/joy/Box';
 import Grid from '@mui/joy/Grid';
 
 import { Button } from '@/components/input/button';
@@ -14,6 +13,7 @@ import { useNavigation } from '@/hooks/navigation';
 import { PatentSearchArgs } from '@/types/patents';
 import { Option } from '@/types/select';
 import { getQueryArgs } from '@/utils/patents';
+import { Typography } from '@mui/joy';
 
 export const SearchBar = ({
     fetchOptions,
@@ -33,13 +33,15 @@ export const SearchBar = ({
 
     return (
         <>
+            <Typography gutterBottom level="h2">
+                Select Terms
+            </Typography>
             <Autocomplete<Option, true, false>
                 isMultiple
                 defaultValue={terms.map((term) => ({ id: term, label: term }))}
                 isOptionEqualToValue={(option: Option, value: Option) =>
                     option.id === value.id
                 }
-                label="Select terms"
                 onChange={(e, values) => {
                     setTerms(values.map((v) => v.id));
                 }}
@@ -47,7 +49,7 @@ export const SearchBar = ({
                 size="lg"
                 variant="soft"
             />
-            <Section>
+            <Section variant="l1">
                 <Grid container spacing={2}>
                     <Grid xs={12} sm={4}>
                         <Slider
@@ -92,7 +94,7 @@ export const SearchBar = ({
                     </Grid>
                 </Grid>
             </Section>
-            <Box display="flex" marginTop={3}>
+            <Section variant="l2">
                 <Button
                     onClick={() => {
                         if (!newTerms) {
@@ -106,11 +108,11 @@ export const SearchBar = ({
                         });
                         navigate(`${pathname}?${queryArgs}`);
                     }}
-                    sx={{ marginLeft: 'auto' }}
+                    sx={{ ml: 'auto' }}
                 >
                     Search
                 </Button>
-            </Box>
+            </Section>
         </>
     );
 };

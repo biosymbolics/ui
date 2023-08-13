@@ -2,7 +2,6 @@
 
 import { ReactNode } from 'react';
 import Box from '@mui/joy/Box';
-import Sheet from '@mui/joy/Sheet';
 import Skeleton from '@mui/joy/Skeleton';
 
 import { SideNav } from '@/components/navigation/menu';
@@ -36,9 +35,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                     mx: 'auto',
                 }}
             >
-                <Sheet sx={{ minHeight: 1000, p: 3 }}>
-                    <main>{children}</main>
-                </Sheet>
+                <main>{children}</main>
             </Box>
         </>
     );

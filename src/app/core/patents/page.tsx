@@ -1,7 +1,7 @@
 'is client';
 
 import { Suspense } from 'react';
-import { Skeleton } from '@mui/joy';
+import Skeleton from '@mui/joy/Skeleton';
 import Typography from '@mui/joy/Typography';
 
 import { Section } from '@/components/layout/section';
@@ -26,7 +26,7 @@ export const Page = ({
 
     return (
         <>
-            <Section>
+            <Section variant="separated">
                 <SearchBar
                     fetchOptions={fetchOptions}
                     minPatentYears={minPatentYears}
@@ -34,22 +34,24 @@ export const Page = ({
                     relevanceThreshold={relevanceThreshold}
                 />
             </Section>
-            <Section>
-                <Typography gutterBottom level="h1">
-                    Terms: {terms.join(', ')}
-                </Typography>
-                <Suspense fallback={<Skeleton height="20vh" />}>
-                    <Description terms={terms} />
-                </Suspense>
-            </Section>
-            <Section>
-                <Suspense fallback={<Skeleton height="80vh" />}>
-                    <Patents
-                        minPatentYears={minPatentYears}
-                        terms={terms}
-                        relevanceThreshold={relevanceThreshold}
-                    />
-                </Suspense>
+            <Section variant="main">
+                <Section>
+                    <Typography gutterBottom level="h1">
+                        Terms: {terms.join(', ')}
+                    </Typography>
+                    <Suspense fallback={<Skeleton height="20vh" />}>
+                        <Description terms={terms} />
+                    </Suspense>
+                </Section>
+                <Section>
+                    <Suspense fallback={<Skeleton height="80vh" />}>
+                        <Patents
+                            minPatentYears={minPatentYears}
+                            terms={terms}
+                            relevanceThreshold={relevanceThreshold}
+                        />
+                    </Suspense>
+                </Section>
             </Section>
         </>
     );

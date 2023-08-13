@@ -18,7 +18,7 @@ import {
     getPatentYearsClass,
     getScoresClass,
     getStyles,
-} from './client-components';
+} from './client';
 
 const fetchPatents = cache(
     async (args: PatentSearchArgs): Promise<Patent[]> => {
@@ -79,6 +79,7 @@ export const Patents = async (args: PatentSearchArgs) => {
                 <DataGrid
                     columns={PATENT_COLUMNS}
                     detailComponent={DetailContent<Patent>}
+                    // pinned column === column title rendering issues
                     // initialState={{
                     //     pinnedColumns: { left: ['publication_number'] },
                     // }}
