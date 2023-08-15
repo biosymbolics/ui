@@ -6,7 +6,7 @@ import { GridColDef } from '@mui/x-data-grid/models/colDef';
 import 'server-only';
 
 import { PATENT_SEARCH_API_URL } from '@/constants';
-import { Bar } from '@/components/charts/bar';
+import { Bars } from '@/components/charts/html-bar';
 import { DataGrid } from '@/components/data/grid';
 import { Tabs } from '@/components/layout/tabs';
 import {
@@ -100,19 +100,15 @@ const getTabs = (
     {
         label: 'Summary',
         panel: (
-            <>
-                {summaries.map(({ column, data }) => (
-                    <Bar
-                        labels={data.map((s) => s.term).slice(0, 15)}
-                        series={[
-                            {
-                                name: column,
-                                data: data.map((s) => s.count).slice(0, 15),
-                            },
-                        ]}
-                    />
-                ))}
-            </>
+            <Bars
+                specs={summaries.map(({ column, data }) => ({
+                    label: column,
+                    data: data.map((s) => ({
+                        label: s.term,
+                        value: s.count,
+                    })),
+                }))}
+            />
         ),
     },
 ];

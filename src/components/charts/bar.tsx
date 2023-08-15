@@ -56,6 +56,14 @@ export const Bar = ({
         series,
         xaxis: {
             categories: labels,
+            labels: {
+                maxHeight: 400,
+            },
+        },
+        yaxis: {
+            labels: {
+                offsetX: 100,
+            },
         },
     };
 
