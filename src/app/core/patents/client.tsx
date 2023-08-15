@@ -14,7 +14,6 @@ import {
     GridCellParams,
     GridValueFormatterParams,
 } from '@mui/x-data-grid/models/params/gridCellParams';
-import { GridColDef } from '@mui/x-data-grid/models';
 import clsx from 'clsx';
 
 import { Chip } from '@/components/data/chip';
@@ -148,7 +147,7 @@ export const formatDate = <T extends Record<string, unknown>>(
 //     </strong>
 //   ),
 
-const getPatentYearsClass = (params: GridCellParams<Patent>) => {
+export const getPatentYearsClass = (params: GridCellParams<Patent>) => {
     const { value } = params;
 
     if (typeof value !== 'number') {
@@ -161,7 +160,7 @@ const getPatentYearsClass = (params: GridCellParams<Patent>) => {
     });
 };
 
-const getScoresClass = (params: GridCellParams<Patent>) => {
+export const getScoresClass = (params: GridCellParams<Patent>) => {
     const { value } = params;
 
     if (typeof value !== 'number') {
@@ -186,40 +185,3 @@ export const getStyles = ({ palette }: { palette: Palette }) => ({
         fontWeight: '600',
     },
 });
-
-export const getPatentColumns = (): GridColDef[] => [
-    { field: 'publication_number', headerName: 'Pub #', width: 160 },
-    { field: 'title', headerName: 'Title', width: 500 },
-    {
-        field: 'patent_years',
-        headerName: 'Yrs Left',
-        width: 75,
-        description: 'Patent years remaining.',
-        cellClassName: getPatentYearsClass,
-    },
-    {
-        field: 'score',
-        headerName: 'Suitability',
-        width: 85,
-        valueFormatter: formatNumber,
-        cellClassName: getScoresClass,
-        description:
-            'Suitability of patent, in terms of patent type (CoM vs MoU), patented thing (compound > device) and patent years remaining.',
-    },
-    {
-        field: 'search_rank',
-        headerName: 'Relevancy',
-        width: 85,
-        valueFormatter: formatNumber,
-        cellClassName: getScoresClass,
-        description: 'Relevancy of patent to search terms.',
-    },
-    {
-        field: 'priority_date',
-        headerName: 'Priority Date',
-        width: 200,
-        valueFormatter: formatDate,
-    },
-    { field: 'assignees', headerName: 'Assignees', width: 250 },
-    { field: 'attributes', headerName: 'Attributes', width: 100 },
-];

@@ -9,7 +9,7 @@ import {
     TERM_DESCRIPTION_API_URL,
 } from '@/constants';
 import { Option } from '@/types/select';
-import { Patent, PatentResponse } from '@/types/patents';
+import { PatentResponse, PatentResponseSchema } from '@/types/patents';
 import { getFetchOptions } from '@/utils/actions';
 
 const AutocompleteResponse = z.object({
@@ -49,13 +49,13 @@ export const getDescription = cache(
 );
 
 export const fetchPatents = cache(
-    async (terms: string[]): Promise<Patent[]> => {
+    async (terms: string[]): Promise<PatentResponse> => {
         if (terms.length === 0) {
-            return [];
+            return { patents: [], summaries: [] };
         }
         const res = await getFetchOptions(
             `${PATENT_SEARCH_API_URL}?terms=${terms.join(',')}`,
-            PatentResponse
+            PatentResponseSchema
         );
         return res;
     }
