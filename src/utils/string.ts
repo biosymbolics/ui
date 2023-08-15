@@ -1,3 +1,5 @@
+import startCase from 'lodash/fp/startCase';
+
 /**
  * Removes all non-alphanumeric characters from a string
  * @param input
@@ -20,6 +22,13 @@ export const replaceSpacesWithHyphens = (input: string): string =>
  * @returns lowercase string
  */
 export const lower = (input: string): string => input.toLowerCase();
+
+/**
+ * Title case a string
+ * @param input
+ * @returns title cased string
+ */
+export const title = (input: string): string => startCase(lower(input));
 
 /**
  * Generate randomish id from date.
@@ -50,3 +59,6 @@ export const getSelectableId = (input?: string): string =>
               prefixIfLeadingDigit,
           ].reduce((value, fn) => fn(value), input)
         : generateRandomishId();
+
+export const getLabel = (input: string): string =>
+    title(input.replace(/[-_]/g, ' '));
