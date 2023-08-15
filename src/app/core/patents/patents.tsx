@@ -103,11 +103,11 @@ const getTabs = (
             <>
                 {summaries.map(({ column, data }) => (
                     <Bar
-                        labels={data.map((s) => s.term)}
+                        labels={data.map((s) => s.term).slice(0, 15)}
                         series={[
                             {
                                 name: column,
-                                data: data.map((s) => s.count),
+                                data: data.map((s) => s.count).slice(0, 15),
                             },
                         ]}
                     />
