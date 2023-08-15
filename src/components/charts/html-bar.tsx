@@ -1,5 +1,6 @@
 'use client';
 
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable react/no-array-index-key */
 
 import { styled } from '@mui/joy/styles';
@@ -7,6 +8,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/joy/Grid';
 import Typography from '@mui/joy/Typography';
 import max from 'lodash/fp/max';
+import truncate from 'lodash/fp/truncate';
 
 import { getSelectableId, formatLabel } from '@/utils/string';
 import { useNavigation } from '@/hooks/navigation';
@@ -20,11 +22,11 @@ type BarChartProps = {
 const StyledTr = styled('tr')(({ theme }) => ({
     background: theme.palette.background.level1,
     height: '30px',
+    overflow: 'hidden',
     position: 'relative',
-    // eslint-disable-next-line @typescript-eslint/naming-convention
+    textOverflow: 'ellipsis',
     '& div': {
         fontWeight: 'bold',
-        display: 'flex',
         position: 'absolute',
         top: '50%',
         transform: 'translateY(-50%)',
@@ -38,9 +40,8 @@ const StyledBar = styled('div')(({ theme }) => ({
     position: 'relative',
     transition: 'background-color 0.3s',
     whiteSpace: 'nowrap',
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     '&:hover': {
-        backgroundColor: theme.palette.primary[500], // Darkened color on hover
+        backgroundColor: theme.palette.primary[400], // Darker on hover
     },
 }));
 
@@ -62,7 +63,7 @@ export const Bar = ({ data, label, maxLength = 100 }: BarChartProps) => {
                     }}
                 >
                     <Box sx={{ left: 10 }}>
-                        <span>{item.label}</span>
+                        <span>{truncate({ length: 38 }, item.label)}</span>
                     </Box>
                 </StyledBar>
                 <Box right={10}>{item.value}</Box>
