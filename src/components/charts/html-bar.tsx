@@ -8,7 +8,7 @@ import Grid from '@mui/joy/Grid';
 import Typography from '@mui/joy/Typography';
 import max from 'lodash/fp/max';
 
-import { getSelectableId } from '@/utils/string';
+import { getSelectableId, formatLabel } from '@/utils/string';
 import { useNavigation } from '@/hooks/navigation';
 
 type BarChartProps = {
@@ -72,7 +72,7 @@ export const Bar = ({ data, label, maxLength = 100 }: BarChartProps) => {
 
     return (
         <Grid xs={12} sm={6} md={4}>
-            <Typography level="h3">{label}</Typography>
+            <Typography level="h3">{formatLabel(label)}</Typography>
             <table style={{ width: '100%' }}>
                 <tbody>{rows}</tbody>
             </table>
