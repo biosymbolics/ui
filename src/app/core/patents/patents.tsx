@@ -82,7 +82,8 @@ const getPatentColumns = (): GridColDef[] => [
 const getTabs = (
     columns: GridColDef[],
     patents: Patent[],
-    summaries: PatentsSummaries
+    summaries: PatentsSummaries,
+    pathname: string
 ) => [
     {
         label: 'List',
@@ -106,6 +107,7 @@ const getTabs = (
                     data: data.map((s) => ({
                         label: s.term,
                         value: s.count,
+                        url: `${pathname}?terms=${s.term}`,
                     })),
                 }))}
             />
@@ -117,7 +119,7 @@ export const Patents = async (args: PatentSearchArgs) => {
     const columns = getPatentColumns();
     try {
         const { patents, summaries } = await fetchPatents(args);
-        const tabs = getTabs(columns, patents, summaries);
+        const tabs = getTabs(columns, patents, summaries, '/core/patents');
         return (
             <Box sx={getStyles}>
                 <Tabs tabs={tabs} />
