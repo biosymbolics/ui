@@ -7,17 +7,20 @@ const maybeSnakeCase = (key: string, isSnakeCase: boolean): string =>
 
 /**
  * Get the query string for the patent search
+ *
+ * @param args - The arguments for the patent search
+ * @param isServer - Whether the query string is for the server (if so, snake_case keys)
  */
 export const getQueryArgs = (
     args: PatentSearchArgs,
-    isSnakeCase: boolean = false
+    isServer: boolean = false
 ): string => {
     const queryParams = Object.entries(args)
         .filter(([, value]) => !!value)
         .map(
             ([key, value]) =>
-                `${maybeSnakeCase(key, isSnakeCase)}=${
-                    Array.isArray(value) ? value.join(',') : value
+                `${maybeSnakeCase(key, isServer)}=${
+                    Array.isArray(value) ? value.join(';') : value
                 }`
         );
 

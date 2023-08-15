@@ -16,7 +16,7 @@ export const Page = ({
 }: {
     searchParams: Record<string, string>;
 }) => {
-    const terms = searchParams.terms?.split(',') ?? [];
+    const terms = searchParams.terms?.split(';') ?? [];
     const minPatentYears = parseInt(searchParams.minPatentYears ?? '10', 10);
     const relevancyThreshold = searchParams.relevancyThreshold ?? 'high';
 
