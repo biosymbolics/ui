@@ -76,8 +76,10 @@ export const Bar = ({ data, label }: BarChartProps) => {
 
 export const Bars = ({ specs }: { specs: BarChartProps[] }): JSX.Element => (
     <Grid container spacing={2}>
-        {specs.map((spec) => (
-            <Bar {...spec} />
-        ))}
+        {specs
+            .filter((spec) => spec.data.length > 0)
+            .map((spec) => (
+                <Bar {...spec} />
+            ))}
     </Grid>
 );

@@ -24,7 +24,7 @@ export const Tabs = ({ tabs }: { tabs: TabDef[] }): JSX.Element => (
             ))}
         </TabList>
         {tabs.map(({ label, panel }, idx) => (
-            <TabPanel key={getSelectableId(label)} value={idx} variant="soft">
+            <TabPanel key={getSelectableId(label)} value={idx}>
                 <Sheet>{panel}</Sheet>
             </TabPanel>
         ))}
