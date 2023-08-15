@@ -103,12 +103,13 @@ const getTabs = (
         panel: (
             <Bars
                 specs={summaries.map(({ column, data }) => ({
-                    label: column,
                     data: data.map((s) => ({
                         label: s.term,
                         value: s.count,
                         url: `${pathname}?terms=${s.term}`,
                     })),
+                    label: column,
+                    maxLength: 15,
                 }))}
             />
         ),

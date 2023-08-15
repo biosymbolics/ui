@@ -12,8 +12,9 @@ import { getSelectableId } from '@/utils/string';
 import { useNavigation } from '@/hooks/navigation';
 
 type BarChartProps = {
-    label: string;
     data: { label: string; value: number; url?: string }[];
+    label: string;
+    maxLength?: number;
 };
 
 const StyledTr = styled('tr')(({ theme }) => ({
@@ -46,10 +47,10 @@ const StyledBar = styled('div')(({ theme }) => ({
 /**
  * HTML Bar chart
  */
-export const Bar = ({ data, label }: BarChartProps) => {
+export const Bar = ({ data, label, maxLength = 100 }: BarChartProps) => {
     const { navigate } = useNavigation();
     const maxValue = max(data.map((item) => item.value)) ?? 0;
-    const rows = data.map((item, index) => (
+    const rows = data.slice(0, maxLength).map((item, index) => (
         <StyledTr
             key={`${getSelectableId(label)}-${index}`}
             onClick={item?.url ? () => navigate(item.url || '') : undefined}
@@ -82,12 +83,18 @@ export const Bar = ({ data, label }: BarChartProps) => {
 /**
  * Grid of HTML bars
  */
-export const Bars = ({ specs }: { specs: BarChartProps[] }): JSX.Element => (
+export const Bars = ({
+    maxLength,
+    specs,
+}: {
+    maxLength?: number;
+    specs: BarChartProps[];
+}): JSX.Element => (
     <Grid container spacing={2}>
         {specs
             .filter((spec) => spec.data.length > 0)
             .map((spec) => (
-                <Bar {...spec} />
+                <Bar maxLength={maxLength} {...spec} />
             ))}
     </Grid>
 );
