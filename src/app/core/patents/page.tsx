@@ -18,7 +18,7 @@ export const Page = ({
 }) => {
     const terms = searchParams.terms?.split(',') ?? [];
     const minPatentYears = parseInt(searchParams.minPatentYears ?? '10', 10);
-    const { relevancyThreshold } = searchParams;
+    const relevancyThreshold = searchParams.relevancyThreshold ?? 'high';
 
     if (terms.length === 0) {
         return <div>Missing terms</div>;

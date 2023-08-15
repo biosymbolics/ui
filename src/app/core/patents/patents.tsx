@@ -1,13 +1,21 @@
 'use server';
 
 import { cache } from 'react';
-import { GridColDef } from '@mui/x-data-grid';
 import Box from '@mui/joy/Box';
+import { GridColDef } from '@mui/x-data-grid/models/colDef';
 import 'server-only';
 
 import { PATENT_SEARCH_API_URL } from '@/constants';
+import { Bars } from '@/components/charts/html-bar';
 import { DataGrid } from '@/components/data/grid';
-import { Patent, PatentResponse, PatentSearchArgs } from '@/types/patents';
+import { Tabs } from '@/components/layout/tabs';
+import {
+    Patent,
+    PatentResponse,
+    PatentResponseSchema,
+    PatentsSummaries,
+    PatentSearchArgs,
+} from '@/types/patents';
 import { getFetchOptions } from '@/utils/actions';
 import { getQueryArgs } from '@/utils/patents';
 
@@ -21,20 +29,20 @@ import {
 } from './client';
 
 const fetchPatents = cache(
-    async (args: PatentSearchArgs): Promise<Patent[]> => {
+    async (args: PatentSearchArgs): Promise<PatentResponse> => {
         if (args.terms.length === 0) {
-            return [];
+            return { patents: [], summaries: [] };
         }
         const queryArgs = getQueryArgs(args, true);
         const res = await getFetchOptions(
             `${PATENT_SEARCH_API_URL}?${queryArgs}`,
-            PatentResponse
+            PatentResponseSchema
         );
         return res;
     }
 );
 
-const PATENT_COLUMNS: GridColDef[] = [
+const getPatentColumns = (): GridColDef[] => [
     { field: 'publication_number', headerName: 'Pub #', width: 160 },
     { field: 'title', headerName: 'Title', width: 500 },
     {
@@ -71,23 +79,51 @@ const PATENT_COLUMNS: GridColDef[] = [
     { field: 'attributes', headerName: 'Attributes', width: 100 },
 ];
 
+const getTabs = (
+    columns: GridColDef[],
+    patents: Patent[],
+    summaries: PatentsSummaries,
+    pathname: string
+) => [
+    {
+        label: 'List',
+        panel: (
+            <DataGrid
+                columns={columns}
+                detailComponent={DetailContent<Patent>}
+                rows={patents.map((patent) => ({
+                    ...patent,
+                    id: patent.publication_number,
+                }))}
+            />
+        ),
+    },
+    {
+        label: 'Summary',
+        panel: (
+            <Bars
+                specs={summaries.map(({ column, data }) => ({
+                    data: data.map((s) => ({
+                        label: s.term,
+                        value: s.count,
+                        url: `${pathname}?terms=${s.term}`,
+                    })),
+                    label: column,
+                    maxLength: 15,
+                }))}
+            />
+        ),
+    },
+];
+
 export const Patents = async (args: PatentSearchArgs) => {
+    const columns = getPatentColumns();
     try {
-        const patents = await fetchPatents(args);
+        const { patents, summaries } = await fetchPatents(args);
+        const tabs = getTabs(columns, patents, summaries, '/core/patents');
         return (
             <Box sx={getStyles}>
-                <DataGrid
-                    columns={PATENT_COLUMNS}
-                    detailComponent={DetailContent<Patent>}
-                    // pinned column === column title rendering issues
-                    // initialState={{
-                    //     pinnedColumns: { left: ['publication_number'] },
-                    // }}
-                    rows={patents.map((patent) => ({
-                        ...patent,
-                        id: patent.publication_number,
-                    }))}
-                />
+                <Tabs tabs={tabs} />
             </Box>
         );
     } catch (e) {

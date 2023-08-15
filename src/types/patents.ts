@@ -19,9 +19,23 @@ export const PatentSchema = z.object({
     url: z.string(),
 });
 
-export const PatentResponse = z.array(PatentSchema);
+const PatentSummarySchema = z.object({ count: z.number(), term: z.string() });
+const PatentsSummarySchema = z.array(
+    z.object({
+        column: z.string(),
+        data: z.array(PatentSummarySchema),
+    })
+);
+
+export const PatentResponseSchema = z.object({
+    patents: z.array(PatentSchema),
+    summaries: PatentsSummarySchema,
+});
+
+export type PatentsSummaries = z.infer<typeof PatentsSummarySchema>;
 
 export type Patent = z.infer<typeof PatentSchema>;
+export type PatentResponse = z.infer<typeof PatentResponseSchema>;
 
 export type PatentSearchArgs = {
     minPatentYears: number;
