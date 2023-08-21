@@ -1,6 +1,8 @@
-import Chart from 'react-apexcharts'
+import Chart from 'react-apexcharts';
 
-import { AnnotationSpec, ChartOptions, BasicChartProps } from './types'
+import { AnnotationSpec, ChartOptions, BasicChartProps } from './types';
+
+type LineChartProps = BasicChartProps;
 
 const getPointAnnotations = (annotations: AnnotationSpec[]) =>
     annotations
@@ -24,7 +26,7 @@ const getPointAnnotations = (annotations: AnnotationSpec[]) =>
                 },
                 text: label,
             },
-        }))
+        }));
 
 /**
  * Line chart
@@ -32,36 +34,21 @@ const getPointAnnotations = (annotations: AnnotationSpec[]) =>
  */
 export const Line = ({
     annotations = [],
-    data,
-    height,
+    series,
     title,
-}: BasicChartProps): JSX.Element => {
+    ...props
+}: LineChartProps): JSX.Element => {
     const options: ChartOptions = {
         annotations: {
             points: getPointAnnotations(annotations),
         },
-        dataLabels: {
-            enabled: false,
-        },
-        stroke: {
-            curve: 'straight',
-        },
-        grid: {
-            padding: {
-                right: 30,
-                left: 20,
-            },
-        },
-        title: {
-            text: title,
-            align: 'left',
-        },
-        // labels: data.monthDataSeries1.dates,
-        xaxis: {
-            type: 'datetime',
-        },
-        series: data,
-    }
+        dataLabels: { enabled: false },
+        stroke: { curve: 'straight' },
+        grid: { padding: { right: 30, left: 20 } },
+        title: { text: title, align: 'left' },
+        xaxis: { type: 'datetime' },
+        series,
+    };
 
-    return <Chart height={height} options={options} type="line" />
-}
+    return <Chart {...props} options={options} series={series} type="line" />;
+};

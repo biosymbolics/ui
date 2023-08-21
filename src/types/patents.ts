@@ -20,17 +20,14 @@ export const PatentSchema = z.object({
 });
 
 const PatentSummarySchema = z.object({ count: z.number(), term: z.string() });
-const PatentsSummarySchema = z.array(
+export const PatentsSummarySchema = z.array(
     z.object({
         column: z.string(),
         data: z.array(PatentSummarySchema),
     })
 );
 
-export const PatentResponseSchema = z.object({
-    patents: z.array(PatentSchema),
-    summaries: PatentsSummarySchema,
-});
+export const PatentResponseSchema = z.array(PatentSchema);
 
 export type PatentsSummaries = z.infer<typeof PatentsSummarySchema>;
 

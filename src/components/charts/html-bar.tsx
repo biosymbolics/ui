@@ -10,11 +10,13 @@ import Typography from '@mui/joy/Typography';
 import max from 'lodash/fp/max';
 import truncate from 'lodash/fp/truncate';
 
-import { getSelectableId, formatLabel } from '@/utils/string';
 import { useNavigation } from '@/hooks/navigation';
+import { getSelectableId, formatLabel } from '@/utils/string';
+
+import { DataSpec } from './types';
 
 type BarChartProps = {
-    data: { label: string; value: number; url?: string }[];
+    data: DataSpec[];
     label: string;
     maxLength?: number;
 };

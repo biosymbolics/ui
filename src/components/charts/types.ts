@@ -29,3 +29,5 @@ export type SparklineProps = {
     height: number;
     width: number;
 };
+
+export type DataSpec = { label: string; value: number; url?: string };
