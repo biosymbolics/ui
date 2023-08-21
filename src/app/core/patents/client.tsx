@@ -21,6 +21,7 @@ import { Metric } from '@/components/data/metric';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
 import { Patent } from '@/types/patents';
+import { getSelectableId } from '@/utils/string';
 
 const getChips = (
     label: string,
@@ -31,7 +32,7 @@ const getChips = (
     const chips = items
         ? items.map((c) => (
               <Chip
-                  key={c}
+                  key={getSelectableId(c)}
                   color={color}
                   href={baseUrl ? `${baseUrl}?terms=${c}` : undefined}
                   sx={{ mr: 0.5, mt: 0.5 }}
