@@ -2,10 +2,13 @@
 
 import Chart from 'react-apexcharts';
 import isEmpty from 'lodash/fp/isEmpty';
+import get from 'lodash/fp/get';
+
+import { useNavigation } from '@/hooks/navigation';
 
 import { AnnotationSpec, ChartOptions, BasicChartProps } from './types';
 
-type LineChartProps = BasicChartProps;
+type LineChartProps = BasicChartProps & { pathname: string };
 
 const getPointAnnotations = (annotations: AnnotationSpec[]) =>
     annotations
@@ -37,29 +40,44 @@ const getPointAnnotations = (annotations: AnnotationSpec[]) =>
  */
 export const Line = ({
     annotations = [],
+    pathname,
     series,
     title,
     ...props
 }: LineChartProps): JSX.Element => {
+    const { navigate } = useNavigation();
+
     if (isEmpty(series)) {
         return <span>No data</span>;
     }
 
     const options: ChartOptions = {
-        // annotations: {
-        //     points: getPointAnnotations(annotations),
-        // },
-        // dataLabels: { enabled: false },
-        // stroke: { curve: 'straight' },
-        // grid: { padding: { right: 30, left: 20 } },
+        annotations: {
+            points: getPointAnnotations(annotations),
+        },
+        chart: {
+            events: {
+                dataPointSelection: (
+                    event,
+                    chartContext,
+                    config: Record<string, unknown>
+                ) => {
+                    const idx = get('dataPointIndex', config);
+                    const term = idx;
+
+                    if (!term) {
+                        console.warn("Couldn't find term for index", idx);
+                        return;
+                    }
+                    navigate(`${pathname}?terms=${term}`);
+                },
+            },
+        },
+        grid: { padding: { right: 30, left: 20 } },
         series,
-        // title: { text: title, align: 'left' },
-        xaxis: { type: 'datetime' }, // datetime
-        // yaxis: {
-        //     labels: {
-        //         offsetX: 100,
-        //     },
-        // },
+        stroke: { curve: 'straight' },
+        title: { text: title, align: 'left' },
+        xaxis: { type: 'datetime' },
     };
 
     return <Chart {...props} options={options} series={series} type="line" />;

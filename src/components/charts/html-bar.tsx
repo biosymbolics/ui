@@ -55,7 +55,8 @@ export const Bar = ({ data, label, maxLength = 100 }: BarChartProps) => {
     const maxValue = max(data.map((item) => item.value)) ?? 0;
     const rows = data.slice(0, maxLength).map((item, index) => (
         <StyledTr
-            key={`${getSelectableId(label)}-${index}`}
+            id={getSelectableId(`${label} ${item.label}`)}
+            key={getSelectableId(`${label} ${item.label} ${index}`)}
             onClick={item?.url ? () => navigate(item.url || '') : undefined}
         >
             <td style={{ width: '100%' }}>
@@ -99,7 +100,11 @@ export const Bars = ({
         {specs
             .filter((spec) => spec.data.length > 0)
             .map((spec) => (
-                <Bar maxLength={maxLength} {...spec} />
+                <Bar
+                    key={getSelectableId(spec.label)}
+                    maxLength={maxLength}
+                    {...spec}
+                />
             ))}
     </Grid>
 );

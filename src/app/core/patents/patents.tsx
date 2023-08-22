@@ -19,7 +19,6 @@ import { getQueryArgs } from '@/utils/patents';
 
 import {
     DetailContent,
-    formatDate,
     formatNumber,
     getPatentYearsClass,
     getScoresClass,
@@ -73,7 +72,6 @@ const getPatentColumns = (): GridColDef[] => [
         field: 'priority_date',
         headerName: 'Priority Date',
         width: 200,
-        valueFormatter: formatDate,
     },
     { field: 'assignees', headerName: 'Assignees', width: 250 },
     { field: 'attributes', headerName: 'Attributes', width: 100 },

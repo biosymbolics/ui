@@ -35,12 +35,11 @@ export const OverTime = async ({
     ...args
 }: PatentSearchArgs & { pathname?: string }) => {
     try {
-        console.info(pathname);
         const reports = await fetchReports(args);
 
         const formattedReports = reports
-            .map((r) =>
-                Object.entries(groupBy('x', r.data))
+            .map((r) => ({
+                series: Object.entries(groupBy('x', r.data))
                     .map(([k, v]) => ({
                         name: k,
                         data: v
@@ -51,14 +50,20 @@ export const OverTime = async ({
                             .sort((a, b) => a.x - b.x),
                     }))
                     .filter((v) => v.data.length > 2)
-                    .sort()
-            )
-            .filter((v) => v.some((v1) => v1.data.length > 0));
+                    .sort(),
+                title: r.x,
+            }))
+            .filter((r) => r.series.some((s) => s.data.length > 0));
 
         return (
             <Box sx={getStyles}>
-                {formattedReports.map((report) => (
-                    <Line series={report} />
+                {formattedReports.map(({ series, title }) => (
+                    <Line
+                        height={300}
+                        pathname={pathname}
+                        series={series}
+                        title={title as string}
+                    />
                 ))}
             </Box>
         );
