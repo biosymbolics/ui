@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useEffect, useRef, useState } from 'react';
 import { createFilterOptions } from '@mui/joy/Autocomplete';
 import AutocompleteOption, {
     AutocompleteOptionProps,
@@ -59,21 +59,28 @@ export const getOptionForInputValue = <T, K extends keyof T>(
 export const getFilter = <T extends BaseOption>() => createFilterOptions<T>();
 
 /**
- * Debounce state value
+ * Debounce value - waits until user stops typing (not ideal, but ok for now)
  * @param value
  * @param delay
  * @returns
  */
 export const useDebounce = (value: string, delay: number) => {
     const [debouncedValue, setDebouncedValue] = useState(value);
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
-        const timeout = setTimeout(() => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+        }
+
+        timeoutRef.current = setTimeout(() => {
             setDebouncedValue(value);
         }, delay);
 
         return () => {
-            clearTimeout(timeout);
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
         };
     }, [value, delay]);
 

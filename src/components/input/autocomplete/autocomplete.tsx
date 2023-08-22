@@ -47,7 +47,7 @@ export const Autocomplete = <
     ...props
 }: AutocompleteProps<T, Multiple, Creatable>): JSX.Element => {
     const [_input, setInput] = React.useState('');
-    const input = useDebounce(_input, 100);
+    const input = useDebounce(_input, 300);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { data, error: fetchError, isLoading } = useSWR(input, optionFetcher);
 

@@ -51,7 +51,7 @@ export const getDescription = cache(
 export const fetchPatents = cache(
     async (terms: string[]): Promise<PatentResponse> => {
         if (terms.length === 0) {
-            return { patents: [], summaries: [] };
+            return [];
         }
         const res = await getFetchOptions(
             `${PATENT_SEARCH_API_URL}?terms=${terms.join(',')}`,
