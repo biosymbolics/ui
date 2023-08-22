@@ -52,7 +52,7 @@
         "prettier": "3.0.2"
     },
     "lint-staged": {
-        "**/.tsx?": "prettier --write --ignore-unknown",
+        "**/*.tsx?": "prettier --write --ignore-unknown",
         "src/*.tsx?": "eslint --fix"
     }
 }
