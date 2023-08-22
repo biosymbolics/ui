@@ -52,6 +52,12 @@
         "prettier": "3.0.2"
     },
     "lint-staged": {
-        "src/*.tsx?": "eslint --fix && prettier --write --ignore-unknown"
+        "src/*.{tsx,ts,js}": [
+            "eslint --fix",
+            "prettier --write --ignore-unknown"
+        ],
+        "**/*.{json,md}": [
+            "prettier --write --ignore-unknown"
+        ]
     }
 }
