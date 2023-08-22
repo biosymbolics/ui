@@ -1,6 +1,13 @@
-import Chart from 'react-apexcharts'
+'use client';
 
-import { AnnotationSpec, ChartOptions, BasicChartProps } from './types'
+import Chart from 'react-apexcharts';
+import isEmpty from 'lodash/fp/isEmpty';
+
+import { useNavigation } from '@/hooks/navigation';
+
+import { AnnotationSpec, ChartOptions, BasicChartProps } from './types';
+
+type LineChartProps = BasicChartProps & { pathname: string };
 
 const getPointAnnotations = (annotations: AnnotationSpec[]) =>
     annotations
@@ -24,7 +31,7 @@ const getPointAnnotations = (annotations: AnnotationSpec[]) =>
                 },
                 text: label,
             },
-        }))
+        }));
 
 /**
  * Line chart
@@ -32,36 +39,48 @@ const getPointAnnotations = (annotations: AnnotationSpec[]) =>
  */
 export const Line = ({
     annotations = [],
-    data,
-    height,
+    pathname,
+    series,
     title,
-}: BasicChartProps): JSX.Element => {
+    ...props
+}: LineChartProps): JSX.Element => {
+    const { navigate } = useNavigation();
+
+    if (isEmpty(series)) {
+        return <span>No data</span>;
+    }
+
     const options: ChartOptions = {
         annotations: {
             points: getPointAnnotations(annotations),
         },
-        dataLabels: {
-            enabled: false,
-        },
-        stroke: {
-            curve: 'straight',
-        },
-        grid: {
-            padding: {
-                right: 30,
-                left: 20,
+        chart: {
+            events: {
+                click: (
+                    event,
+                    chartContext,
+                    config: {
+                        globals: { seriesNames: string[] };
+                        seriesIndex: number;
+                    }
+                ) => {
+                    const seriesIdx = config?.seriesIndex || 0;
+                    const term = config.globals?.seriesNames?.[seriesIdx];
+
+                    if (!term) {
+                        console.warn("Couldn't find term for index", seriesIdx);
+                        return;
+                    }
+                    navigate(`${pathname}?terms=${term}`);
+                },
             },
         },
-        title: {
-            text: title,
-            align: 'left',
-        },
-        // labels: data.monthDataSeries1.dates,
-        xaxis: {
-            type: 'datetime',
-        },
-        series: data,
-    }
+        grid: { padding: { right: 30, left: 20 } },
+        series,
+        stroke: { curve: 'straight' },
+        title: { text: title, align: 'left' },
+        xaxis: { type: 'datetime' },
+    };
 
-    return <Chart height={height} options={options} type="line" />
-}
+    return <Chart {...props} options={options} series={series} type="line" />;
+};

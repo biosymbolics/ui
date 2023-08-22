@@ -4,18 +4,20 @@
 /* eslint-disable react/no-array-index-key */
 
 import { styled } from '@mui/joy/styles';
-import Box from '@mui/material/Box';
+import Box from '@mui/joy/Box';
 import Grid from '@mui/joy/Grid';
 import Typography from '@mui/joy/Typography';
 import max from 'lodash/fp/max';
 import truncate from 'lodash/fp/truncate';
 
-import { getSelectableId, formatLabel } from '@/utils/string';
 import { useNavigation } from '@/hooks/navigation';
+import { getSelectableId, formatLabel } from '@/utils/string';
+
+import { DataSpec } from './types';
 
 type BarChartProps = {
-    data: { label: string; value: number; url?: string }[];
-    label: string;
+    data: DataSpec[];
+    label: string | number;
     maxLength?: number;
 };
 
@@ -53,7 +55,8 @@ export const Bar = ({ data, label, maxLength = 100 }: BarChartProps) => {
     const maxValue = max(data.map((item) => item.value)) ?? 0;
     const rows = data.slice(0, maxLength).map((item, index) => (
         <StyledTr
-            key={`${getSelectableId(label)}-${index}`}
+            id={getSelectableId(`${label} ${item.label}`)}
+            key={getSelectableId(`${label} ${item.label} ${index}`)}
             onClick={item?.url ? () => navigate(item.url || '') : undefined}
         >
             <td style={{ width: '100%' }}>
@@ -63,7 +66,9 @@ export const Bar = ({ data, label, maxLength = 100 }: BarChartProps) => {
                     }}
                 >
                     <Box sx={{ left: 10 }}>
-                        <span>{truncate({ length: 38 }, item.label)}</span>
+                        <span>
+                            {truncate({ length: 38 }, item.label as string)}
+                        </span>
                     </Box>
                 </StyledBar>
                 <Box right={10}>{item.value}</Box>
@@ -95,7 +100,11 @@ export const Bars = ({
         {specs
             .filter((spec) => spec.data.length > 0)
             .map((spec) => (
-                <Bar maxLength={maxLength} {...spec} />
+                <Bar
+                    key={getSelectableId(spec.label)}
+                    maxLength={maxLength}
+                    {...spec}
+                />
             ))}
     </Grid>
 );

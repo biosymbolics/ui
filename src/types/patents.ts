@@ -6,12 +6,14 @@ export const PatentSchema = z.object({
     title: z.string(),
     abstract: z.string(),
     assignees: z.array(z.string()),
+    attributes: z.array(z.string()),
     compounds: z.array(z.string()),
     diseases: z.array(z.string()),
     genes: z.array(z.string()),
     inventors: z.array(z.string()),
     ipc_codes: z.array(z.string()),
     patent_years: z.number(),
+    priority_date: z.string(),
     mechanisms: z.array(z.string()),
     score: z.number(),
     search_rank: z.number(),
@@ -19,18 +21,20 @@ export const PatentSchema = z.object({
     url: z.string(),
 });
 
-const PatentSummarySchema = z.object({ count: z.number(), term: z.string() });
-const PatentsSummarySchema = z.array(
+const PatentSummarySchema = z.object({
+    count: z.number(),
+    x: z.union([z.string(), z.number()]),
+    y: z.optional(z.union([z.string(), z.number()])),
+});
+export const PatentsSummarySchema = z.array(
     z.object({
-        column: z.string(),
+        x: z.union([z.string(), z.number()]),
+        y: z.optional(z.union([z.string(), z.number()])),
         data: z.array(PatentSummarySchema),
     })
 );
 
-export const PatentResponseSchema = z.object({
-    patents: z.array(PatentSchema),
-    summaries: PatentsSummarySchema,
-});
+export const PatentResponseSchema = z.array(PatentSchema);
 
 export type PatentsSummaries = z.infer<typeof PatentsSummarySchema>;
 

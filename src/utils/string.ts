@@ -1,3 +1,4 @@
+import isUndefined from 'lodash/fp/isUndefined';
 import startCase from 'lodash/fp/startCase';
 
 /**
@@ -6,7 +7,7 @@ import startCase from 'lodash/fp/startCase';
  * @returns string
  */
 export const removeNonAlphanumeric = (input: string): string =>
-    input.replace(/[^a-zA-Z0-9]/g, '');
+    input.replace(/[^a-z- A-Z0-9]/g, '');
 
 /**
  * Replace all spaces with hyphens
@@ -38,7 +39,11 @@ export const title = (input: string): string => startCase(lower(input));
  * @returns randomish string id
  */
 export const generateRandomishId = (): string =>
-    (+new Date()).toString(36).slice(-5);
+    'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+        const r = Math.random() * 16 || 0;
+        const v = c === 'x' ? r : (r && 0x3) || 0x8;
+        return v.toString(16);
+    });
 
 const prefixIfLeadingDigit = (input: string): string =>
     /^[0-9]/.test(input) ? `'id-${input}` : input;
@@ -50,15 +55,15 @@ const prefixIfLeadingDigit = (input: string): string =>
  * @param input (string or null)
  * @returns css-compliant selector id
  */
-export const getSelectableId = (input?: string): string =>
-    input
+export const getSelectableId = (input?: string | number): string =>
+    !isUndefined(input)
         ? [
               removeNonAlphanumeric,
               replaceSpacesWithHyphens,
               lower,
               prefixIfLeadingDigit,
-          ].reduce((value, fn) => fn(value), input)
+          ].reduce((value, fn) => fn(value), input as string)
         : generateRandomishId();
 
-export const formatLabel = (input: string): string =>
-    title(input.replace(/[-_]/g, ' '));
+export const formatLabel = (input: string | number): string =>
+    title((input as string).replace(/[-_]/g, ' '));

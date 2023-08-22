@@ -6,14 +6,12 @@ import { GridColDef } from '@mui/x-data-grid/models/colDef';
 import 'server-only';
 
 import { PATENT_SEARCH_API_URL } from '@/constants';
-import { Bars } from '@/components/charts/html-bar';
 import { DataGrid } from '@/components/data/grid';
 import { Tabs } from '@/components/layout/tabs';
 import {
     Patent,
     PatentResponse,
     PatentResponseSchema,
-    PatentsSummaries,
     PatentSearchArgs,
 } from '@/types/patents';
 import { getFetchOptions } from '@/utils/actions';
@@ -21,17 +19,18 @@ import { getQueryArgs } from '@/utils/patents';
 
 import {
     DetailContent,
-    formatDate,
     formatNumber,
     getPatentYearsClass,
     getScoresClass,
     getStyles,
 } from './client';
+import { Summary } from './summary';
+import { OverTime } from './over-time';
 
 const fetchPatents = cache(
     async (args: PatentSearchArgs): Promise<PatentResponse> => {
         if (args.terms.length === 0) {
-            return { patents: [], summaries: [] };
+            return [];
         }
         const queryArgs = getQueryArgs(args, true);
         const res = await getFetchOptions(
@@ -73,7 +72,6 @@ const getPatentColumns = (): GridColDef[] => [
         field: 'priority_date',
         headerName: 'Priority Date',
         width: 200,
-        valueFormatter: formatDate,
     },
     { field: 'assignees', headerName: 'Assignees', width: 250 },
     { field: 'attributes', headerName: 'Attributes', width: 100 },
@@ -82,8 +80,7 @@ const getPatentColumns = (): GridColDef[] => [
 const getTabs = (
     columns: GridColDef[],
     patents: Patent[],
-    summaries: PatentsSummaries,
-    pathname: string
+    args: PatentSearchArgs
 ) => [
     {
         label: 'List',
@@ -100,27 +97,19 @@ const getTabs = (
     },
     {
         label: 'Summary',
-        panel: (
-            <Bars
-                specs={summaries.map(({ column, data }) => ({
-                    data: data.map((s) => ({
-                        label: s.term,
-                        value: s.count,
-                        url: `${pathname}?terms=${s.term}`,
-                    })),
-                    label: column,
-                    maxLength: 15,
-                }))}
-            />
-        ),
+        panel: <Summary {...args} />,
+    },
+    {
+        label: 'Over Time',
+        panel: <OverTime {...args} />,
     },
 ];
 
 export const Patents = async (args: PatentSearchArgs) => {
     const columns = getPatentColumns();
     try {
-        const { patents, summaries } = await fetchPatents(args);
-        const tabs = getTabs(columns, patents, summaries, '/core/patents');
+        const patents = await fetchPatents(args);
+        const tabs = getTabs(columns, patents, args);
         return (
             <Box sx={getStyles}>
                 <Tabs tabs={tabs} />

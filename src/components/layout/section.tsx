@@ -1,7 +1,7 @@
-import Box from '@mui/joy/Box';
-import Sheet from '@mui/joy/Sheet';
-import { BoxProps } from '@mui/material/Box';
 import { ReactElement, ReactNode } from 'react';
+import omit from 'lodash/fp/omit';
+import Box, { BoxProps } from '@mui/joy/Box';
+import Sheet from '@mui/joy/Sheet';
 
 const SectionTypes = {
     l1: 'l1', // primary section, 3 units of space in between
@@ -51,7 +51,10 @@ export const Section = ({
 
     // not on a sheet
     return (
-        <Box {...props} sx={{ position: 'relative', ...sxProps }}>
+        <Box
+            {...omit(['key'], props)}
+            sx={{ position: 'relative', ...sxProps }}
+        >
             {children}
         </Box>
     );
