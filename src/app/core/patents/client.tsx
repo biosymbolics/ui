@@ -1,9 +1,9 @@
 'use client';
 
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ColorPaletteProp, Palette } from '@mui/joy/styles';
+import { Palette } from '@mui/joy/styles';
 import Divider from '@mui/joy/Divider';
 import Grid from '@mui/joy/Grid';
 import Link from '@mui/joy/Link';
@@ -13,58 +13,17 @@ import ListItemDecorator from '@mui/joy/ListItemDecorator';
 import Typography from '@mui/joy/Typography';
 import {
     GridCellParams,
+    GridRenderCellParams,
     GridValueFormatterParams,
 } from '@mui/x-data-grid/models/params/gridCellParams';
 import clsx from 'clsx';
 
-import { Chip } from '@/components/data/chip';
+import { Chips, formatChips } from '@/components/data/chip';
 import { Metric } from '@/components/data/metric';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
 import { Patent } from '@/types/patents';
 import { getSelectableId } from '@/utils/string';
-
-const getChips = (
-    label: string,
-    items: string[] | null,
-    color: ColorPaletteProp = 'primary',
-    baseUrl: string | null = null,
-    isHorizontal: boolean = true
-): ReactNode => {
-    const chips = items
-        ? items.map((c) => (
-              <Chip
-                  key={getSelectableId(c)}
-                  color={color}
-                  href={baseUrl ? `${baseUrl}?terms=${c}` : undefined}
-                  sx={{ mr: 0.5, mt: 0.5 }}
-              >
-                  {c}
-              </Chip>
-          ))
-        : [];
-
-    const Container = isHorizontal
-        ? ({ children }: { children: ReactNode }) => (
-              <Grid container alignItems="center">
-                  {children}
-              </Grid>
-          )
-        : React.Fragment;
-
-    return chips.length > 0 ? (
-        <Section variant="l2">
-            <Container>
-                <Typography level="title-md" mr={0.5}>
-                    {label}:
-                </Typography>
-                {chips}
-            </Container>
-        </Section>
-    ) : (
-        <span />
-    );
-};
 
 const SimilarPatents = ({ patent }: { patent: Patent }): JSX.Element => (
     <>
@@ -86,6 +45,9 @@ const SimilarPatents = ({ patent }: { patent: Patent }): JSX.Element => (
     </>
 );
 
+/**
+ * Detail content panel for patents grid
+ */
 export const DetailContent = <T extends Patent>({
     row: patent,
 }: {
@@ -100,12 +62,38 @@ export const DetailContent = <T extends Patent>({
                 title={patent.title}
                 variant="soft"
             />
-            {getChips('Assignees', patent.assignees, 'neutral', pathname)}
-            {getChips('Inventors', patent.inventors, 'neutral', pathname)}
-            {getChips('Diseases', patent.diseases, 'primary', pathname)}
-            {getChips('Compounds', patent.compounds, 'primary', pathname)}
-            {getChips('Mechanisms', patent.mechanisms, 'primary', pathname)}
-            {getChips('IPC Codes', patent.ipc_codes)}
+            <Chips
+                baseUrl={pathname}
+                color="neutral"
+                label="Assignees"
+                items={patent.assignees}
+            />
+            <Chips
+                baseUrl={pathname}
+                color="neutral"
+                label="Inventors"
+                items={patent.inventors}
+            />
+            <Chips
+                baseUrl={pathname}
+                label="Diseases"
+                items={patent.diseases}
+            />
+            <Chips
+                baseUrl={pathname}
+                label="Compounds"
+                items={patent.compounds}
+            />
+            <Chips
+                baseUrl={pathname}
+                label="Mechanisms"
+                items={patent.mechanisms}
+            />
+            <Chips
+                baseUrl={pathname}
+                label="IPC Codes"
+                items={patent.ipc_codes}
+            />
             <Divider sx={{ my: 3 }} />
             <Grid container spacing={3}>
                 <Grid xs={6} sm={2}>
@@ -129,6 +117,9 @@ export const DetailContent = <T extends Patent>({
     );
 };
 
+/**
+ * Pretty-print number
+ */
 export const formatNumber = <T extends Record<string, unknown>>(
     params: GridValueFormatterParams<T>
 ): string => {
@@ -141,6 +132,9 @@ export const formatNumber = <T extends Record<string, unknown>>(
     return (value as number).toPrecision(2);
 };
 
+/**
+ * Format date as string
+ */
 export const formatDate = <T extends Record<string, unknown>>(
     params: GridValueFormatterParams<T>
 ): string => {
@@ -153,19 +147,18 @@ export const formatDate = <T extends Record<string, unknown>>(
     return new Date(value as string).toLocaleDateString();
 };
 
-// export const renderCell: (params: GridRenderCellParams<Date>) => (
-//     <strong>
-//       {params.value.getFullYear()}
-//       <Button
-//         variant="contained"
-//         size="small"
-//         style={{ marginLeft: 16 }}
-//         tabIndex={params.hasFocus ? 0 : -1}
-//       >
-//         Open
-//       </Button>
-//     </strong>
-//   ),
+/**
+ * Render string array as chips
+ */
+export const renderList = (
+    params: GridRenderCellParams<string[]>
+): ReactNode => {
+    if (!Array.isArray(params.value)) {
+        throw new Error(`Expected list, got ${typeof params.value}`);
+    }
+
+    return formatChips({ isWrappable: false, items: params.value as string[] });
+};
 
 export const getPatentYearsClass = (params: GridCellParams<Patent>) => {
     const { value } = params;

@@ -29,6 +29,7 @@ export const Section = ({
     const sxProps = {
         display: 'flex',
         flexDirection: 'column',
+        maxHeight: '100%',
         mx: mx || 0,
         my: variant === 'l2' ? 1 : 3,
     };

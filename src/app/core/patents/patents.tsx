@@ -23,9 +23,10 @@ import {
     getPatentYearsClass,
     getScoresClass,
     getStyles,
+    renderList,
 } from './client';
-import { Summary } from './summary';
 import { OverTime } from './over-time';
+import { Summary } from './summary';
 
 const fetchPatents = cache(
     async (args: PatentSearchArgs): Promise<PatentResponse> => {
@@ -69,12 +70,21 @@ const getPatentColumns = (): GridColDef[] => [
         description: 'Relevancy of patent to search terms.',
     },
     {
+        field: 'assignees',
+        headerName: 'Assignees',
+        width: 250,
+    },
+    {
+        field: 'attributes',
+        headerName: 'Attributes',
+        width: 250,
+        renderCell: renderList,
+    },
+    {
         field: 'priority_date',
         headerName: 'Priority Date',
-        width: 200,
+        width: 100,
     },
-    { field: 'assignees', headerName: 'Assignees', width: 250 },
-    { field: 'attributes', headerName: 'Attributes', width: 100 },
 ];
 
 const getTabs = (

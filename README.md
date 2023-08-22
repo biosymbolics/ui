@@ -2,9 +2,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Development
 
-- `yarn dev`
-- Open [http://localhost:3000](http://localhost:3000)
-- yarn prettier . --write
+-   `yarn dev`
+-   Open [http://localhost:3000](http://localhost:3000)
+-   yarn prettier . --write
+-   `rm -rf .next/cache/fetch-cache/`
 
 ## Deploy on Vercel
 
