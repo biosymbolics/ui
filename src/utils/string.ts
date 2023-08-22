@@ -50,15 +50,15 @@ const prefixIfLeadingDigit = (input: string): string =>
  * @param input (string or null)
  * @returns css-compliant selector id
  */
-export const getSelectableId = (input?: string): string =>
+export const getSelectableId = (input?: string | number): string =>
     input
         ? [
               removeNonAlphanumeric,
               replaceSpacesWithHyphens,
               lower,
               prefixIfLeadingDigit,
-          ].reduce((value, fn) => fn(value), input)
+          ].reduce((value, fn) => fn(value), input as string)
         : generateRandomishId();
 
-export const formatLabel = (input: string): string =>
-    title(input.replace(/[-_]/g, ' '));
+export const formatLabel = (input: string | number): string =>
+    title((input as string).replace(/[-_]/g, ' '));

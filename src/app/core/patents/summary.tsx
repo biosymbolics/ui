@@ -1,3 +1,5 @@
+'use server';
+
 import { cache } from 'react';
 import Box from '@mui/joy/Box';
 
@@ -36,13 +38,13 @@ export const Summary = async ({
         return (
             <Box sx={getStyles}>
                 <Bars
-                    specs={summaries.map(({ column, data }) => ({
+                    specs={summaries.map(({ x, data }) => ({
                         data: data.map((s) => ({
-                            label: s.term,
+                            label: s.x,
                             value: s.count,
-                            url: `${pathname}?terms=${s.term}`,
+                            url: `${pathname}?terms=${s.x}`,
                         })),
-                        label: column,
+                        label: x,
                         maxLength: 15,
                     }))}
                 />

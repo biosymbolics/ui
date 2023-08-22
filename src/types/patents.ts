@@ -19,10 +19,15 @@ export const PatentSchema = z.object({
     url: z.string(),
 });
 
-const PatentSummarySchema = z.object({ count: z.number(), term: z.string() });
+const PatentSummarySchema = z.object({
+    count: z.number(),
+    x: z.union([z.string(), z.number()]),
+    y: z.optional(z.union([z.string(), z.number()])),
+});
 export const PatentsSummarySchema = z.array(
     z.object({
-        column: z.string(),
+        x: z.union([z.string(), z.number()]),
+        y: z.optional(z.union([z.string(), z.number()])),
         data: z.array(PatentSummarySchema),
     })
 );

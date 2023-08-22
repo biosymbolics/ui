@@ -1,3 +1,5 @@
+'use client';
+
 import Chart from 'react-apexcharts';
 
 import { AnnotationSpec, ChartOptions, BasicChartProps } from './types';

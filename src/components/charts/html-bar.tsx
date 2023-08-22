@@ -4,7 +4,7 @@
 /* eslint-disable react/no-array-index-key */
 
 import { styled } from '@mui/joy/styles';
-import Box from '@mui/material/Box';
+import Box from '@mui/joy/Box';
 import Grid from '@mui/joy/Grid';
 import Typography from '@mui/joy/Typography';
 import max from 'lodash/fp/max';
@@ -17,7 +17,7 @@ import { DataSpec } from './types';
 
 type BarChartProps = {
     data: DataSpec[];
-    label: string;
+    label: string | number;
     maxLength?: number;
 };
 
@@ -65,7 +65,9 @@ export const Bar = ({ data, label, maxLength = 100 }: BarChartProps) => {
                     }}
                 >
                     <Box sx={{ left: 10 }}>
-                        <span>{truncate({ length: 38 }, item.label)}</span>
+                        <span>
+                            {truncate({ length: 38 }, item.label as string)}
+                        </span>
                     </Box>
                 </StyledBar>
                 <Box right={10}>{item.value}</Box>
