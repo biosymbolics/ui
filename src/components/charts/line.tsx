@@ -2,7 +2,6 @@
 
 import Chart from 'react-apexcharts';
 import isEmpty from 'lodash/fp/isEmpty';
-import get from 'lodash/fp/get';
 
 import { useNavigation } from '@/hooks/navigation';
 
@@ -57,16 +56,19 @@ export const Line = ({
         },
         chart: {
             events: {
-                dataPointSelection: (
+                click: (
                     event,
                     chartContext,
-                    config: Record<string, unknown>
+                    config: {
+                        globals: { seriesNames: string[] };
+                        seriesIndex: number;
+                    }
                 ) => {
-                    const idx = get('dataPointIndex', config);
-                    const term = idx;
+                    const seriesIdx = config?.seriesIndex || 0;
+                    const term = config.globals?.seriesNames?.[seriesIdx];
 
                     if (!term) {
-                        console.warn("Couldn't find term for index", idx);
+                        console.warn("Couldn't find term for index", seriesIdx);
                         return;
                     }
                     navigate(`${pathname}?terms=${term}`);
