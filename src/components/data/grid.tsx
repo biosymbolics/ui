@@ -51,7 +51,7 @@ export const DataGrid = <T extends Record<string, unknown>>({
         ({ row }: { row: T }) => <DetailComponent row={row} />,
         [DetailComponent]
     );
-    const getDetailPanelHeight = React.useCallback(() => 400, []);
+    const getDetailPanelHeight = React.useCallback(() => 600, []);
 
     const columns =
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument

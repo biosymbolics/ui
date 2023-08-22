@@ -1,9 +1,10 @@
 'use client';
 
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ColorPaletteProp, Palette } from '@mui/joy/styles';
+import Divider from '@mui/joy/Divider';
 import Grid from '@mui/joy/Grid';
 import Link from '@mui/joy/Link';
 import List from '@mui/joy/List';
@@ -27,7 +28,8 @@ const getChips = (
     label: string,
     items: string[] | null,
     color: ColorPaletteProp = 'primary',
-    baseUrl: string | null = null
+    baseUrl: string | null = null,
+    isHorizontal: boolean = true
 ): ReactNode => {
     const chips = items
         ? items.map((c) => (
@@ -41,11 +43,26 @@ const getChips = (
               </Chip>
           ))
         : [];
-    return (
-        <Section>
-            <Typography level="title-md">{label}</Typography>
-            {chips.length > 0 ? chips : 'None'}
+
+    const Container = isHorizontal
+        ? ({ children }: { children: ReactNode }) => (
+              <Grid container alignItems="center">
+                  {children}
+              </Grid>
+          )
+        : React.Fragment;
+
+    return chips.length > 0 ? (
+        <Section variant="l2">
+            <Container>
+                <Typography level="title-md" mr={0.5}>
+                    {label}:
+                </Typography>
+                {chips}
+            </Container>
         </Section>
+    ) : (
+        <span />
     );
 };
 
@@ -53,8 +70,8 @@ const SimilarPatents = ({ patent }: { patent: Patent }): JSX.Element => (
     <>
         <Typography level="title-md">Similar Patents</Typography>
         <List>
-            {patent.similar.map((s) => (
-                <ListItem>
+            {patent.similar.map((s, index) => (
+                <ListItem key={`${getSelectableId(s)}-${index}`}>
                     <ListItemDecorator>·</ListItemDecorator>
                     <Link
                         component={NextLink}
@@ -78,17 +95,18 @@ export const DetailContent = <T extends Patent>({
     return (
         <Section mx={3}>
             <Title
-                title={patent.title}
                 description={patent.abstract}
                 link={{ label: patent.publication_number, url: patent.url }}
+                title={patent.title}
+                variant="soft"
             />
             {getChips('Assignees', patent.assignees, 'neutral', pathname)}
             {getChips('Inventors', patent.inventors, 'neutral', pathname)}
             {getChips('Diseases', patent.diseases, 'primary', pathname)}
             {getChips('Compounds', patent.compounds, 'primary', pathname)}
             {getChips('Mechanisms', patent.mechanisms, 'primary', pathname)}
-            {getChips('Genes', patent.genes, 'primary', pathname)}
             {getChips('IPC Codes', patent.ipc_codes)}
+            <Divider sx={{ my: 3 }} />
             <Grid container spacing={3}>
                 <Grid xs={6} sm={2}>
                     <Metric value={patent.score} label="Suitability" />
@@ -103,6 +121,7 @@ export const DetailContent = <T extends Patent>({
                     />
                 </Grid>
             </Grid>
+            <Divider sx={{ my: 3 }} />
             <Section>
                 <SimilarPatents patent={patent} />
             </Section>

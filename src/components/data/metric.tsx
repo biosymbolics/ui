@@ -15,9 +15,9 @@ type MetricProps = {
 export const Metric = ({ label, tooltip, value }: MetricProps): JSX.Element => {
     const metric = (
         <Card sx={{ maxWidth: 200, textAlign: 'center' }} variant="soft">
-            <Typography level="title-md">{label}</Typography>
+            <Typography level="title-sm">{label}</Typography>
             <CardContent>
-                <Typography level="h1">{value.toPrecision(2)}</Typography>
+                <Typography level="h2">{value.toPrecision(2)}</Typography>
             </CardContent>
         </Card>
     );
