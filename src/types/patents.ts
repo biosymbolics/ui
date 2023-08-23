@@ -1,6 +1,17 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { z } from 'zod';
 
+export const PATENT_DOMAINS = [
+    'assignees',
+    'attributes',
+    'compounds',
+    'diseases',
+    // 'genes',
+    'inventors',
+    // 'ipc_codes',
+    'mechanisms',
+];
+
 export const PatentSchema = z.object({
     publication_number: z.string(),
     title: z.string(),
@@ -42,7 +53,7 @@ export type Patent = z.infer<typeof PatentSchema>;
 export type PatentResponse = z.infer<typeof PatentResponseSchema>;
 
 export type PatentSearchArgs = {
+    domains: string[] | null;
     minPatentYears: number;
-    relevancyThreshold: string;
     terms: string[];
 };

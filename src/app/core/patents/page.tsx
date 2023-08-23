@@ -6,10 +6,10 @@ import Typography from '@mui/joy/Typography';
 
 import { Section } from '@/components/layout/section';
 
+import { fetchOptions } from './actions';
 import { Description } from './description';
 import { Patents } from './patents';
 import { SearchBar } from './search';
-import { fetchOptions } from './utils';
 
 export const Page = ({
     searchParams,
@@ -18,7 +18,7 @@ export const Page = ({
 }) => {
     const terms = searchParams.terms?.split(';') ?? [];
     const minPatentYears = parseInt(searchParams.minPatentYears ?? '10', 10);
-    const relevancyThreshold = searchParams.relevancyThreshold ?? 'high';
+    const domains = searchParams.domains?.split(';') ?? [];
 
     if (terms.length === 0) {
         return <div>Missing terms</div>;
@@ -29,9 +29,9 @@ export const Page = ({
             <Section variant="separated">
                 <SearchBar
                     fetchOptions={fetchOptions}
+                    domains={domains}
                     minPatentYears={minPatentYears}
                     terms={terms}
-                    relevancyThreshold={relevancyThreshold}
                 />
             </Section>
             <Section variant="main">
@@ -46,9 +46,9 @@ export const Page = ({
                 <Section>
                     <Suspense fallback={<Skeleton height="80vh" />}>
                         <Patents
+                            domains={domains}
                             minPatentYears={minPatentYears}
                             terms={terms}
-                            relevancyThreshold={relevancyThreshold}
                         />
                     </Suspense>
                 </Section>

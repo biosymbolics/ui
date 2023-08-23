@@ -1,10 +1,11 @@
 import { ReactElement } from 'react';
+import FormLabel from '@mui/joy/FormLabel';
+import FormControl from '@mui/joy/FormControl';
 import {
     default as JoySlider,
     SliderProps as JoySliderProps,
 } from '@mui/joy/Slider';
-import FormLabel from '@mui/joy/FormLabel';
-import FormControl from '@mui/joy/FormControl';
+import Typography from '@mui/joy/Typography';
 
 import { getSelectableId } from '@/utils/string';
 
@@ -31,18 +32,23 @@ export const Slider = ({
     error,
     id,
     label,
+    size = 'sm',
     ...props
 }: SliderProps): ReactElement<SliderProps> => {
     const formId = id || getSelectableId(label);
     return (
         <FormControl id={formId} error={error}>
-            {label && <FormLabel>{label}</FormLabel>}
+            {label && (
+                <FormLabel>
+                    <Typography>{label}</Typography>
+                </FormLabel>
+            )}
             <JoySlider
                 marks
-                size="sm"
                 valueLabelDisplay="auto"
                 variant="soft"
                 {...props}
+                size={size}
             />
         </FormControl>
     );
