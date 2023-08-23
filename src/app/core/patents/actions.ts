@@ -9,8 +9,13 @@ import {
     TERM_DESCRIPTION_API_URL,
 } from '@/constants';
 import { Option } from '@/types/select';
-import { PatentResponse, PatentResponseSchema } from '@/types/patents';
+import {
+    PatentResponse,
+    PatentResponseSchema,
+    PatentSearchArgs,
+} from '@/types/patents';
 import { getFetchOptions } from '@/utils/actions';
+import { getQueryArgs } from '@/utils/patents';
 
 const AutocompleteResponse = z.object({
     terms: z.array(
@@ -21,6 +26,11 @@ const AutocompleteResponse = z.object({
     ),
 });
 
+/**
+ * Fetch autcomplete options from the API
+ * @param term
+ * @returns options promise
+ */
 export const fetchOptions = async (term: string): Promise<Option[]> => {
     'use server';
 
@@ -31,7 +41,11 @@ export const fetchOptions = async (term: string): Promise<Option[]> => {
     return res.terms;
 };
 
-export const getDescription = cache(
+/**
+ * Fetch term(s) description from the API. Cached.
+ * @param terms
+ */
+export const fetchDescription = cache(
     async (terms: string[]): Promise<string> => {
         if (terms.length === 0) {
             return '';
@@ -48,13 +62,19 @@ export const getDescription = cache(
     }
 );
 
+/**
+ * Fetch patents from the API. Cached.
+ * @param args
+ * @returns patents promise
+ */
 export const fetchPatents = cache(
-    async (terms: string[]): Promise<PatentResponse> => {
-        if (terms.length === 0) {
+    async (args: PatentSearchArgs): Promise<PatentResponse> => {
+        if (args.terms.length === 0) {
             return [];
         }
+        const queryArgs = getQueryArgs(args, true);
         const res = await getFetchOptions(
-            `${PATENT_SEARCH_API_URL}?terms=${terms.join(',')}`,
+            `${PATENT_SEARCH_API_URL}?${queryArgs}`,
             PatentResponseSchema
         );
         return res;

@@ -76,6 +76,11 @@ export const DetailContent = <T extends Patent>({
             />
             <Chips
                 baseUrl={pathname}
+                label="Attributes"
+                items={patent.attributes}
+            />
+            <Chips
+                baseUrl={pathname}
                 label="Diseases"
                 items={patent.diseases}
             />

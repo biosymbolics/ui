@@ -9,27 +9,33 @@ import { Button } from '@/components/input/button';
 import { Autocomplete } from '@/components/input';
 import { Slider } from '@/components/input/slider';
 import { Section } from '@/components/layout/section';
-import { Select } from '@/components/input/select';
 import { useNavigation } from '@/hooks/navigation';
-import { PatentSearchArgs } from '@/types/patents';
+import { PATENT_DOMAINS, PatentSearchArgs } from '@/types/patents';
 import { Option } from '@/types/select';
 import { getQueryArgs } from '@/utils/patents';
 
 export const SearchBar = ({
+    domains = [],
     fetchOptions,
     minPatentYears,
     terms,
-    relevancyThreshold,
 }: {
     fetchOptions: (term: string) => Promise<Option[]>;
 } & PatentSearchArgs): JSX.Element => {
     const { navigate } = useNavigation();
     const pathname = usePathname();
     const [newTerms, setTerms] = useState<string[] | null>(terms);
+    const [newDomains, setDomains] = useState<string[] | null>(domains);
     const [newMinPatentYears, setMinPatentYears] =
         useState<number>(minPatentYears);
-    const [newrelevancyThreshold, setrelevancyThreshold] =
-        useState<string>(relevancyThreshold);
+
+    const handlePatentLifeChange = (value: number) => {
+        if (typeof value !== 'number') {
+            console.warn(`Invalid value: ${JSON.stringify(value)}`);
+            return;
+        }
+        setMinPatentYears(value);
+    };
 
     return (
         <>
@@ -50,46 +56,28 @@ export const SearchBar = ({
                 variant="soft"
             />
             <Section variant="l1">
-                <Grid container spacing={2}>
+                <Grid container spacing={4}>
                     <Grid xs={12} sm={4}>
                         <Slider
+                            defaultValue={newMinPatentYears}
                             label="Minimum Patent Years Left"
                             min={0}
                             max={20}
-                            onChange={(e, value) => {
-                                if (typeof value !== 'number') {
-                                    console.warn(
-                                        `Invalid value: ${JSON.stringify(
-                                            value
-                                        )}`
-                                    );
-                                    return;
-                                }
-                                setMinPatentYears(value);
-                            }}
-                            defaultValue={newMinPatentYears}
+                            onChange={(e, v) =>
+                                handlePatentLifeChange(v as number)
+                            }
+                            size="lg"
                         />
                     </Grid>
-                    <Grid xs={12} sm={4}>
-                        <Select
-                            defaultValue={newrelevancyThreshold}
-                            label="Term Relevance Threshold"
-                            onChange={(e, value) => {
-                                if (!value) {
-                                    console.warn(
-                                        'Invalid select value: undefined'
-                                    );
-                                    return;
-                                }
-                                setrelevancyThreshold(value);
+                    <Grid xs={12} sm={6}>
+                        <Autocomplete<string, true, false>
+                            isMultiple
+                            defaultValue={newDomains || []}
+                            label="Search domains"
+                            onChange={(e, values) => {
+                                setDomains(values);
                             }}
-                            options={[
-                                'very low',
-                                'low',
-                                'medium',
-                                'high',
-                                'very high',
-                            ]}
+                            options={PATENT_DOMAINS}
                         />
                     </Grid>
                 </Grid>
@@ -102,8 +90,8 @@ export const SearchBar = ({
                             return;
                         }
                         const queryArgs = getQueryArgs({
+                            domains: newDomains,
                             minPatentYears: newMinPatentYears,
-                            relevancyThreshold: newrelevancyThreshold,
                             terms: newTerms,
                         });
                         navigate(`${pathname}?${queryArgs}`);

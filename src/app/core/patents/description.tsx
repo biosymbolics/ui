@@ -4,7 +4,7 @@ import 'server-only';
 
 import { TERM_DESCRIPTION_API_URL } from '@/constants';
 
-const getDescription = cache(async (terms: string[]): Promise<string> => {
+const fetchDescription = cache(async (terms: string[]): Promise<string> => {
     if (terms.length === 0) {
         return '';
     }
@@ -21,7 +21,7 @@ const getDescription = cache(async (terms: string[]): Promise<string> => {
 
 export const Description = async ({ terms }: { terms: string[] }) => {
     try {
-        const description = await getDescription(terms);
+        const description = await fetchDescription(terms);
         return <Typography level="body-sm">{description || 'nope'}</Typography>;
     } catch (e) {
         if (e instanceof Error) {

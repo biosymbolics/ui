@@ -1,3 +1,5 @@
+import isEmpty from 'lodash/fp/isEmpty';
+import isNumber from 'lodash/fp/isNumber';
 import snakeCase from 'lodash/fp/snakeCase';
 
 import { PatentSearchArgs } from '@/types/patents';
@@ -16,7 +18,7 @@ export const getQueryArgs = (
     isServer: boolean = false
 ): string => {
     const queryParams = Object.entries(args)
-        .filter(([, value]) => !!value)
+        .filter(([, value]) => !isEmpty(value) || isNumber(value))
         .map(
             ([key, value]) =>
                 `${maybeSnakeCase(key, isServer)}=${

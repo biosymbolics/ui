@@ -1,22 +1,14 @@
 'use server';
 
-import { cache } from 'react';
 import Box from '@mui/joy/Box';
 import { GridColDef } from '@mui/x-data-grid/models/colDef';
 import 'server-only';
 
-import { PATENT_SEARCH_API_URL } from '@/constants';
 import { DataGrid } from '@/components/data/grid';
 import { Tabs } from '@/components/layout/tabs';
-import {
-    Patent,
-    PatentResponse,
-    PatentResponseSchema,
-    PatentSearchArgs,
-} from '@/types/patents';
-import { getFetchOptions } from '@/utils/actions';
-import { getQueryArgs } from '@/utils/patents';
+import { Patent, PatentSearchArgs } from '@/types/patents';
 
+import { fetchPatents } from './actions';
 import {
     DetailContent,
     formatNumber,
@@ -27,20 +19,6 @@ import {
 } from './client';
 import { OverTime } from './over-time';
 import { Summary } from './summary';
-
-const fetchPatents = cache(
-    async (args: PatentSearchArgs): Promise<PatentResponse> => {
-        if (args.terms.length === 0) {
-            return [];
-        }
-        const queryArgs = getQueryArgs(args, true);
-        const res = await getFetchOptions(
-            `${PATENT_SEARCH_API_URL}?${queryArgs}`,
-            PatentResponseSchema
-        );
-        return res;
-    }
-);
 
 const getPatentColumns = (): GridColDef[] => [
     { field: 'publication_number', headerName: 'Pub #', width: 160 },

@@ -12,7 +12,7 @@ export const getFetchOptions = async <T>(
     url: string,
     schema: z.ZodSchema<T>
 ): Promise<T> => {
-    'use server';
+    console.debug(`Calling url: ${url}`);
 
     const res = await fetch(url);
     if (!res.ok) {
@@ -25,10 +25,9 @@ export const getFetchOptions = async <T>(
     const parsedRes = schema.safeParse(jsonResp);
 
     if (parsedRes.success === false) {
-        console.error(
-            `Failed to parse response, error: ${parsedRes.error.toString()}`
-        );
-        throw new Error(`Failed to parse: ${parsedRes.error.toString()}`);
+        const message = `Failed to parse: ${parsedRes.error.toString()}`;
+        console.error(message);
+        throw new Error(message);
     }
     return parsedRes.data;
 };
