@@ -11,6 +11,7 @@ import { Patent, PatentSearchArgs } from '@/types/patents';
 import { fetchPatents } from './actions';
 import {
     DetailContent,
+    formatName,
     formatNumber,
     getPatentYearsClass,
     getScoresClass,
@@ -57,6 +58,7 @@ const getPatentColumns = (): GridColDef[] => [
     {
         field: 'assignees',
         headerName: 'Assignees',
+        valueFormatter: formatName,
         width: 200,
     },
     {

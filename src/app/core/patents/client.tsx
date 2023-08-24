@@ -25,7 +25,7 @@ import { Metric } from '@/components/data/metric';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
 import { Patent } from '@/types/patents';
-import { getSelectableId } from '@/utils/string';
+import { getSelectableId, title } from '@/utils/string';
 
 const SimilarPatents = ({ patent }: { patent: Patent }): JSX.Element => (
     <>
@@ -121,6 +121,25 @@ export const DetailContent = <T extends Patent>({
             </Section>
         </Section>
     );
+};
+
+/**
+ * Format name
+ */
+export const formatName = <T extends Record<string, unknown>>(
+    params: GridValueFormatterParams<T>
+): string => {
+    const { value } = params;
+
+    if (Array.isArray(value)) {
+        return value.map((v) => title(v as string)).join(', ');
+    }
+
+    if (typeof value !== 'string') {
+        throw new Error(`Expected string, got ${typeof value}`);
+    }
+
+    return title(value);
 };
 
 /**
