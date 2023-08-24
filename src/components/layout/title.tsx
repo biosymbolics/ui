@@ -23,7 +23,7 @@ export const Title = ({
         <Typography gutterBottom level="body-md" maxWidth={800}>
             {description}
         </Typography>
-        <Link component={NextLink} href={link.url}>
+        <Link component={NextLink} href={link.url} target="_blank">
             {link.label}
         </Link>
     </Sheet>

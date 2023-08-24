@@ -103,7 +103,11 @@ export const DetailContent = <T extends Patent>({
             <Divider sx={{ my: 3 }} />
             <Grid container spacing={3}>
                 <Grid xs={6} sm={2}>
-                    <Metric value={patent.score} label="Suitability" />
+                    <Metric
+                        value={patent.score}
+                        label="Suitability"
+                        tooltip={patent.explanation || ''}
+                    />
                 </Grid>
                 <Grid xs={6} sm={2}>
                     <Metric
