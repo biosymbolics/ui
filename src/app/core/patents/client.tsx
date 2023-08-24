@@ -11,6 +11,8 @@ import List from '@mui/joy/List';
 import ListItem from '@mui/joy/ListItem';
 import ListItemDecorator from '@mui/joy/ListItemDecorator';
 import Typography from '@mui/joy/Typography';
+import TrueIcon from '@mui/icons-material/Check';
+import FalseIcon from '@mui/icons-material/Close';
 import {
     GridCellParams,
     GridRenderCellParams,
@@ -32,11 +34,7 @@ const SimilarPatents = ({ patent }: { patent: Patent }): JSX.Element => (
             {patent.similar.map((s, index) => (
                 <ListItem key={`${getSelectableId(s)}-${index}`}>
                     <ListItemDecorator>·</ListItemDecorator>
-                    <Link
-                        component={NextLink}
-                        href={patent.url}
-                        target="_blank"
-                    >
+                    <Link component={NextLink} href={patent.url}>
                         {s}
                     </Link>
                 </ListItem>
@@ -54,10 +52,13 @@ export const DetailContent = <T extends Patent>({
     row: T;
 }): JSX.Element => {
     const pathname = usePathname();
+    const approvalInfo = patent.approval_date
+        ? `\n\nApproved ${patent.approval_date}} for indication ${patent.indication} (${patent.brand_name}/${patent.generic_name}).`
+        : '';
     return (
         <Section mx={3}>
             <Title
-                description={patent.abstract}
+                description={`${patent.abstract}${approvalInfo}`}
                 link={{ label: patent.publication_number, url: patent.url }}
                 title={patent.title}
                 variant="soft"
@@ -151,6 +152,18 @@ export const formatDate = <T extends Record<string, unknown>>(
 
     return new Date(value as string).toLocaleDateString();
 };
+
+/**
+ * Render boolean
+ */
+export const renderBoolean = (
+    params: GridRenderCellParams<string[]>
+): ReactNode =>
+    params.value ? (
+        <TrueIcon sx={{ m: 'auto' }} />
+    ) : (
+        <FalseIcon color="disabled" sx={{ m: 'auto' }} />
+    );
 
 /**
  * Render string array as chips

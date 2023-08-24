@@ -15,6 +15,7 @@ import {
     getPatentYearsClass,
     getScoresClass,
     getStyles,
+    renderBoolean,
     renderList,
 } from './client';
 import { OverTime } from './over-time';
@@ -29,6 +30,12 @@ const getPatentColumns = (): GridColDef[] => [
         width: 75,
         description: 'Patent years remaining.',
         cellClassName: getPatentYearsClass,
+    },
+    {
+        field: 'is_approved',
+        headerName: 'Approved',
+        width: 75,
+        renderCell: renderBoolean,
     },
     {
         field: 'score',
@@ -50,12 +57,12 @@ const getPatentColumns = (): GridColDef[] => [
     {
         field: 'assignees',
         headerName: 'Assignees',
-        width: 250,
+        width: 200,
     },
     {
         field: 'attributes',
         headerName: 'Attributes',
-        width: 250,
+        width: 300,
         renderCell: renderList,
     },
     {
