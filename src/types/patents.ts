@@ -32,7 +32,6 @@ export const PatentSchema = z.object({
     priority_date: z.string(),
     mechanisms: z.array(z.string()),
     score: z.number(),
-    search_rank: z.number(),
     similar: z.array(z.string()),
     url: z.string(),
 });

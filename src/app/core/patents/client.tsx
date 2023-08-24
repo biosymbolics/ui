@@ -106,9 +106,6 @@ export const DetailContent = <T extends Patent>({
                     <Metric value={patent.score} label="Suitability" />
                 </Grid>
                 <Grid xs={6} sm={2}>
-                    <Metric value={patent.search_rank} label="Relevancy" />
-                </Grid>
-                <Grid xs={6} sm={2}>
                     <Metric
                         value={patent.patent_years}
                         label="Patent Years Left"

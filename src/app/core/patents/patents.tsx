@@ -48,14 +48,6 @@ const getPatentColumns = (): GridColDef[] => [
             'Suitability of patent, in terms of patent type (CoM vs MoU), patented thing (compound > device) and patent years remaining.',
     },
     {
-        field: 'search_rank',
-        headerName: 'Relevancy',
-        width: 85,
-        valueFormatter: formatNumber,
-        cellClassName: getScoresClass,
-        description: 'Relevancy of patent to search terms.',
-    },
-    {
         field: 'assignees',
         headerName: 'Assignees',
         valueFormatter: formatName,
