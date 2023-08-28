@@ -16,9 +16,7 @@ export const getFetchOptions = async <T>(
 
     const res = await fetch(url);
     if (!res.ok) {
-        throw new Error(
-            `Failed to fetch patent terms: ${res.status} ${res.statusText}`
-        );
+        throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`);
     }
 
     const jsonResp: unknown = await res.json();

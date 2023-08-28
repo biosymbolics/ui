@@ -1,18 +1,19 @@
 'use server';
 
-import Box from '@mui/joy/Box';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import 'server-only';
 
 import { askSec } from './actions';
 
-export const Answer = async (args: { question: string }) => {
+export const Answer = async (args: {
+    question: string;
+    questionType?: string;
+}) => {
     try {
-        const answer = await askSec(args.question);
+        const answer = await askSec(args.question, args.questionType);
         return (
-            <Box>
-                <ReactMarkdown>{answer}</ReactMarkdown>
-            </Box>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{answer}</ReactMarkdown>
         );
     } catch (e) {
         if (e instanceof Error) {

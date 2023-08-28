@@ -169,6 +169,9 @@ export const SideNav = () => {
                                 <MenuItem {...itemProps} href="/core/sec">
                                     Ask SEC
                                 </MenuItem>
+                                <MenuItem {...itemProps} href="/core/finance">
+                                    Finance
+                                </MenuItem>
                                 <MenuItem {...itemProps} href="/core/clindev">
                                     ClinDev
                                 </MenuItem>

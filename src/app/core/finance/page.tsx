@@ -7,27 +7,27 @@ import Typography from '@mui/joy/Typography';
 import { Section } from '@/components/layout/section';
 
 import { Answer } from './answer';
-import { Question } from './question';
+import { Choose } from './choose';
 
 export const Page = ({
     searchParams,
 }: {
     searchParams: Record<string, string>;
 }) => {
-    const question = searchParams.question ?? '';
+    const ticker = searchParams.ticker ?? '';
 
     return (
         <>
             <Typography gutterBottom level="h1">
-                Ask SEC 10-K Docs
+                Important Events
             </Typography>
             <Section variant="separated">
-                <Question initial={question} />
+                <Choose initial={ticker} />
             </Section>
             <Section variant="main">
                 <Section variant="l1">
                     <Suspense fallback={<Skeleton height="80vh" />}>
-                        <Answer question={question} />
+                        <Answer ticker={ticker} />
                     </Suspense>
                 </Section>
             </Section>
