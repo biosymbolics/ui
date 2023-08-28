@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Box from '@mui/joy/Box';
-import Textarea from '@mui/joy/Textarea';
 import Stack from '@mui/joy/Stack';
 
 import { useNavigation } from '@/hooks/navigation';
 import { Button } from '@/components/input/button';
+import { TextArea } from '@/components/input/textarea';
 
 export const Question = ({ initial }: { initial: string }) => {
     const { navigate } = useNavigation();
@@ -17,10 +17,10 @@ export const Question = ({ initial }: { initial: string }) => {
 
     return (
         <Stack spacing={2}>
-            <Textarea
+            <TextArea
+                defaultValue={question}
                 minRows={4}
                 onChange={(e) => setQuestion(e.target.value)}
-                value={question}
                 size="lg"
             />
             <Box>
