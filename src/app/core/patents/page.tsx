@@ -1,4 +1,4 @@
-'is client';
+'use server';
 
 import { Suspense } from 'react';
 import Skeleton from '@mui/joy/Skeleton';
@@ -16,13 +16,9 @@ export const Page = ({
 }: {
     searchParams: Record<string, string>;
 }) => {
-    const terms = searchParams.terms?.split(';') ?? [];
+    const terms = searchParams.terms?.split(';') ?? null;
     const minPatentYears = parseInt(searchParams.minPatentYears ?? '10', 10);
     const domains = searchParams.domains?.split(';') ?? [];
-
-    if (terms.length === 0) {
-        return <div>Missing terms</div>;
-    }
 
     return (
         <>
@@ -31,16 +27,18 @@ export const Page = ({
                     fetchOptions={fetchOptions}
                     domains={domains}
                     minPatentYears={minPatentYears}
-                    terms={terms}
+                    terms={terms || []}
                 />
             </Section>
             <Section variant="main">
                 <Section>
                     <Typography gutterBottom level="h1">
-                        Terms: {terms.join(', ')}
+                        {terms
+                            ? `Terms: {terms.join(', ')}`
+                            : 'No terms selected'}
                     </Typography>
                     <Suspense fallback={<Skeleton height="20vh" />}>
-                        <Description terms={terms} />
+                        {terms && <Description terms={terms} />}
                     </Suspense>
                 </Section>
                 <Section>
@@ -48,7 +46,7 @@ export const Page = ({
                         <Patents
                             domains={domains}
                             minPatentYears={minPatentYears}
-                            terms={terms}
+                            terms={terms || []}
                         />
                     </Suspense>
                 </Section>

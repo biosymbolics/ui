@@ -1,3 +1,5 @@
+'use server';
+
 import { cache } from 'react';
 import Typography from '@mui/joy/Typography';
 import 'server-only';
@@ -22,7 +24,9 @@ const fetchDescription = cache(async (terms: string[]): Promise<string> => {
 export const Description = async ({ terms }: { terms: string[] }) => {
     try {
         const description = await fetchDescription(terms);
-        return <Typography level="body-sm">{description || 'nope'}</Typography>;
+        return (
+            <Typography level="body-sm">{description || '(none)'}</Typography>
+        );
     } catch (e) {
         if (e instanceof Error) {
             return <div>Failed to fetch description: {e.message}</div>;

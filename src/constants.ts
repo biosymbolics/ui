@@ -7,3 +7,5 @@ export const PATENT_OVER_TIME_API_URL = `${API_URL}/patents/reports/time`;
 export const PATENT_TERM_API_URL = `${API_URL}/terms/search`;
 
 export const TERM_DESCRIPTION_API_URL = `${API_URL}/terms/describe`;
+
+export const ASK_SEC_API_URL = `${API_URL}/sec/ask`;

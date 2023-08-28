@@ -11,16 +11,16 @@ import {
     useRef,
     useState,
 } from 'react';
-import Menu, { menuClasses } from '@mui/joy/Menu';
-import MenuItem from '@mui/joy/MenuItem';
+import Link from 'next/link';
+import Dropdown from '@mui/joy/Dropdown';
 import IconButton from '@mui/joy/IconButton';
 import List from '@mui/joy/List';
 import ListItem from '@mui/joy/ListItem';
+import Menu, { menuClasses } from '@mui/joy/Menu';
+import MenuButton from '@mui/joy/MenuButton';
+import MenuItem from '@mui/joy/MenuItem';
 import Sheet from '@mui/joy/Sheet';
 import Apps from '@mui/icons-material/Apps';
-import Settings from '@mui/icons-material/Settings';
-import Dropdown from '@mui/joy/Dropdown';
-import MenuButton from '@mui/joy/MenuButton';
 
 // The Menu is built on top of Popper v2, so it accepts `modifiers` prop that will be passed to the Popper.
 // https://popper.js.org/docs/v2/modifiers/offset/
@@ -125,8 +125,10 @@ const NavMenuButton = ({
 export const SideNav = () => {
     const [menuIndex, setMenuIndex] = useState<null | number>(null);
     const itemProps = {
+        component: Link,
         onClick: () => setMenuIndex(null),
     };
+
     const createHandleLeaveMenu =
         (index: number) => (getIsOnButton: () => boolean) => {
             setTimeout(() => {
@@ -161,36 +163,19 @@ export const SideNav = () => {
                         onKeyDown={() => setMenuIndex(null)}
                         menu={
                             <Menu onClose={() => setMenuIndex(null)}>
-                                <MenuItem {...itemProps}>
-                                    Application 1
+                                <MenuItem {...itemProps} href="/core/patents">
+                                    Patents Search
                                 </MenuItem>
-                                <MenuItem {...itemProps}>
-                                    Application 2
+                                <MenuItem {...itemProps} href="/core/sec">
+                                    Ask SEC
                                 </MenuItem>
-                                <MenuItem {...itemProps}>
-                                    Application 3
+                                <MenuItem {...itemProps} href="/core/clindev">
+                                    ClinDev
                                 </MenuItem>
                             </Menu>
                         }
                     >
                         <Apps />
-                    </NavMenuButton>
-                </ListItem>
-                <ListItem>
-                    <NavMenuButton
-                        label="Settings"
-                        open={menuIndex === 1}
-                        onOpen={() => setMenuIndex(1)}
-                        onLeaveMenu={createHandleLeaveMenu(1)}
-                        menu={
-                            <Menu onClose={() => setMenuIndex(null)}>
-                                <MenuItem {...itemProps}>Setting 1</MenuItem>
-                                <MenuItem {...itemProps}>Setting 2</MenuItem>
-                                <MenuItem {...itemProps}>Setting 3</MenuItem>
-                            </Menu>
-                        }
-                    >
-                        <Settings />
                     </NavMenuButton>
                 </ListItem>
             </List>
