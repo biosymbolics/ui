@@ -1,7 +1,7 @@
 'use server';
 
 import Box from '@mui/joy/Box';
-import { Textarea } from '@mui/joy';
+import ReactMarkdown from 'react-markdown';
 import 'server-only';
 
 import { askSec } from './actions';
@@ -11,7 +11,7 @@ export const Answer = async (args: { question: string }) => {
         const answer = await askSec(args.question);
         return (
             <Box>
-                <Textarea value={answer} />
+                <ReactMarkdown>{answer}</ReactMarkdown>
             </Box>
         );
     } catch (e) {
