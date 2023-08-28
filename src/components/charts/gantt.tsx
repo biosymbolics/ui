@@ -1,22 +1,53 @@
-import Chart from 'react-apexcharts'
+import Chart from 'react-apexcharts';
 
-import { ChartOptions, BasicChartProps } from './types'
+import { useNavigation } from '@/hooks/navigation';
+
+import { ChartOptions, BasicChartProps } from './types';
 
 /**
  * Timeline/gantt-style bar chart
  */
-export const Timeline = ({ data, height }: BasicChartProps): JSX.Element => {
+export const Timeline = ({
+    height,
+    pathname,
+    series,
+    title,
+}: BasicChartProps): JSX.Element => {
+    const { navigate } = useNavigation();
+
     const options: ChartOptions = {
         plotOptions: {
             bar: {
                 horizontal: true,
             },
         },
-        xaxis: {
-            type: 'datetime',
-        },
-        series: data,
-    }
+        chart: {
+            events: {
+                click: (
+                    event,
+                    chartContext,
+                    config: {
+                        globals: { seriesNames: string[] };
+                        seriesIndex: number;
+                    }
+                ) => {
+                    const seriesIdx = config?.seriesIndex || 0;
+                    const term = config.globals?.seriesNames?.[seriesIdx];
 
-    return <Chart height={height} options={options} type="rangeBar" />
-}
+                    if (!term) {
+                        console.warn("Couldn't find term for index", seriesIdx);
+                        return;
+                    }
+                    navigate(`${pathname}?terms=${term}`);
+                },
+            },
+        },
+        grid: { padding: { right: 30, left: 20 } },
+        series,
+        stroke: { curve: 'straight' },
+        title: { text: title, align: 'left' },
+        xaxis: { type: 'datetime' },
+    };
+
+    return <Chart height={height} options={options} type="rangeBar" />;
+};

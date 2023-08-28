@@ -7,7 +7,7 @@ import { useNavigation } from '@/hooks/navigation';
 
 import { AnnotationSpec, ChartOptions, BasicChartProps } from './types';
 
-type LineChartProps = BasicChartProps & { pathname: string };
+type LineChartProps = BasicChartProps;
 
 const getPointAnnotations = (annotations: AnnotationSpec[]) =>
     annotations
