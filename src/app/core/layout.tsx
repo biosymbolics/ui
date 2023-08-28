@@ -17,7 +17,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
         return <Skeleton height="lg" />;
     }
     return (
-        <>
+        <Box mt={3}>
             <Box
                 sx={{
                     display: 'flex',
@@ -37,7 +37,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
             >
                 <main>{children}</main>
             </Box>
-        </>
+        </Box>
     );
 };
 
