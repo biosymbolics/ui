@@ -24,7 +24,7 @@ export const getFetchOptions = async <T>(
 
     if (parsedRes.success === false) {
         const message = `Failed to parse: ${parsedRes.error.toString()}`;
-        console.error(message);
+        // console.error(message);
         throw new Error(message);
     }
     return parsedRes.data;

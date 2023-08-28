@@ -19,7 +19,7 @@ export const Page = ({
     return (
         <>
             <Typography gutterBottom level="h1">
-                Important Events
+                Stock Performance x Events
             </Typography>
             <Section variant="separated">
                 <Choose initial={ticker} />

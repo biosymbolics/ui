@@ -29,6 +29,7 @@ export const Answer = async (args: {
                                 x: d.stage || '???',
                                 y: [d.offset, d.offset + d.median_duration],
                             })),
+                            color: '#6366f1',
                         },
                     ]}
                 />

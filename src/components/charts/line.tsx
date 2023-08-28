@@ -1,7 +1,10 @@
 'use client';
 
+import { useMemo, useState } from 'react';
 import Chart from 'react-apexcharts';
 import isEmpty from 'lodash/fp/isEmpty';
+import Sheet from '@mui/joy/Sheet';
+import Typography from '@mui/joy/Typography';
 
 import { useNavigation } from '@/hooks/navigation';
 
@@ -9,28 +12,32 @@ import { AnnotationSpec, ChartOptions, BasicChartProps } from './types';
 
 type LineChartProps = BasicChartProps;
 
-const getPointAnnotations = (annotations: AnnotationSpec[]) =>
+const getPointAnnotations = (
+    annotations: AnnotationSpec[],
+    setAnnotation: (label: string | null) => void
+) =>
     annotations
-        .filter((a) => a.type === 'point')
+        .filter((a) => !a.type || a.type === 'point')
         .map(({ color, label, x, y }) => ({
-            x,
+            x: new Date(x).getTime(),
             y,
             marker: {
-                size: 8,
+                size: 12,
                 fillColor: 'white',
-                strokeColor: color,
+                strokeColor: color || '#fb923c',
                 radius: 2,
-                cssClass: 'apexcharts-custom-class', // TODO
             },
             label: {
-                borderColor: color,
+                borderColor: color || '#fb923c',
                 offsetY: 0,
                 style: {
                     color: '#fff',
-                    background: color,
+                    background: color || '#fb923c',
                 },
-                text: label,
+                // text: label,
             },
+            mouseEnter: () => setAnnotation(label),
+            mouseLeave: () => setAnnotation(null),
         }));
 
 /**
@@ -45,6 +52,11 @@ export const Line = ({
     ...props
 }: LineChartProps): JSX.Element => {
     const { navigate } = useNavigation();
+    const [annotation, setAnnotation] = useState<string | null>(null);
+    const pointAnnotations = useMemo(
+        () => getPointAnnotations(annotations, setAnnotation),
+        [annotations]
+    );
 
     if (isEmpty(series)) {
         return <span>No data</span>;
@@ -52,7 +64,7 @@ export const Line = ({
 
     const options: ChartOptions = {
         annotations: {
-            points: getPointAnnotations(annotations),
+            points: pointAnnotations,
         },
         chart: {
             events: {
@@ -71,7 +83,9 @@ export const Line = ({
                         console.warn("Couldn't find term for index", seriesIdx);
                         return;
                     }
-                    navigate(`${pathname}?terms=${term}`);
+                    if (false) {
+                        navigate(`${pathname}?terms=${term}`);
+                    }
                 },
             },
         },
@@ -82,5 +96,19 @@ export const Line = ({
         xaxis: { type: 'datetime' },
     };
 
-    return <Chart {...props} options={options} series={series} type="line" />;
+    return (
+        <>
+            <Chart {...props} options={options} series={series} type="line" />
+
+            <Sheet
+                color={annotation ? 'warning' : undefined}
+                sx={{ minHeight: 100, p: 3 }}
+                variant="outlined"
+            >
+                {annotation && (
+                    <Typography level="body-md">{annotation}</Typography>
+                )}
+            </Sheet>
+        </>
+    );
 };
