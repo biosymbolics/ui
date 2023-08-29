@@ -34,7 +34,7 @@ export const Page = ({
                 <Section>
                     <Typography gutterBottom level="h1">
                         {terms
-                            ? `Terms: {terms.join(', ')}`
+                            ? `Terms: ${terms.join(', ')}`
                             : 'No terms selected'}
                     </Typography>
                     <Suspense fallback={<Skeleton height="20vh" />}>
