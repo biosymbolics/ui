@@ -6,6 +6,7 @@ import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
 
 import { Timeline } from '@/components/charts/gantt';
+import theme from '@/theme';
 
 import { predictClindev } from './actions';
 
@@ -29,7 +30,8 @@ export const Answer = async (args: {
                                 x: d.stage || '???',
                                 y: [d.offset, d.offset + d.median_duration],
                             })),
-                            color: '#6366f1',
+                            color: theme.colorSchemes.light.palette
+                                .primary[400],
                         },
                     ]}
                 />

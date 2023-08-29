@@ -7,37 +7,42 @@ import Sheet from '@mui/joy/Sheet';
 import Typography from '@mui/joy/Typography';
 
 import { useNavigation } from '@/hooks/navigation';
+import theme from '@/theme';
 
 import { AnnotationSpec, ChartOptions, BasicChartProps } from './types';
 
 type LineChartProps = BasicChartProps;
 
-const getPointAnnotations = (
+const defaultColor = theme.colorSchemes.light.palette.primary[400];
+const defaultColorDark = theme.colorSchemes.light.palette.primary[700];
+
+const getAnnotations = (
     annotations: AnnotationSpec[],
     setAnnotation: (label: string | null) => void
 ) =>
     annotations
-        .filter((a) => !a.type || a.type === 'point')
-        .map(({ color, label, x, y }) => ({
+        .filter((a) => !a.type || a.type === 'xaxis')
+        .map(({ color, label, x }) => ({
             x: new Date(x).getTime(),
-            y,
+            borderColor: color || defaultColor,
+            strokeDashArray: 5,
             marker: {
                 size: 12,
                 fillColor: 'white',
-                strokeColor: color || '#fb923c',
-                radius: 2,
+                strokeColor: color || defaultColor,
             },
             label: {
-                borderColor: color || '#fb923c',
-                offsetY: 0,
                 style: {
-                    color: '#fff',
-                    background: color || '#fb923c',
+                    fontSize: '12px',
+                    color: 'white',
+                    background: defaultColorDark,
                 },
-                // text: label,
+                offsetX: 0,
+                offsetY: -5,
+                text: x,
+                mouseEnter: () => setAnnotation(label),
+                mouseLeave: () => setAnnotation(null),
             },
-            mouseEnter: () => setAnnotation(label),
-            mouseLeave: () => setAnnotation(null),
         }));
 
 /**
@@ -53,8 +58,8 @@ export const Line = ({
 }: LineChartProps): JSX.Element => {
     const { navigate } = useNavigation();
     const [annotation, setAnnotation] = useState<string | null>(null);
-    const pointAnnotations = useMemo(
-        () => getPointAnnotations(annotations, setAnnotation),
+    const xAxisAnnotations = useMemo(
+        () => getAnnotations(annotations, setAnnotation),
         [annotations]
     );
 
@@ -64,7 +69,10 @@ export const Line = ({
 
     const options: ChartOptions = {
         annotations: {
-            points: pointAnnotations,
+            xaxis: xAxisAnnotations,
+        },
+        markers: {
+            colors: [theme.colorSchemes.light.palette.primary[400]],
         },
         chart: {
             events: {
@@ -98,17 +106,16 @@ export const Line = ({
 
     return (
         <>
-            <Chart {...props} options={options} series={series} type="line" />
-
             <Sheet
-                color={annotation ? 'warning' : undefined}
+                color={annotation ? 'primary' : undefined}
                 sx={{ minHeight: 100, p: 3 }}
-                variant="outlined"
+                variant={annotation ? 'outlined' : undefined}
             >
                 {annotation && (
                     <Typography level="body-md">{annotation}</Typography>
                 )}
             </Sheet>
+            <Chart {...props} options={options} series={series} type="line" />
         </>
     );
 };

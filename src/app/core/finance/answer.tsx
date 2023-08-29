@@ -20,17 +20,15 @@ export const Answer = async (args: { ticker: string }) => {
             <Stack spacing={3}>
                 <Line
                     annotations={events?.map((d) => ({
-                        x: d.date || '???',
+                        x: d.date,
                         y: stock.find(
                             (s) =>
-                                false &&
                                 new Date(s.date).getTime() ===
-                                    new Date(d.date).getTime()
+                                new Date(d.date).getTime()
                         )?.close,
                         label: d.details,
-                        type: 'point',
                     }))}
-                    height={300}
+                    height={350}
                     pathname="/core/finance"
                     series={[
                         {
@@ -39,7 +37,6 @@ export const Answer = async (args: { ticker: string }) => {
                                 y: d.close.toPrecision(4),
                             })),
                             name: 'Closing price',
-                            color: '#6366f1',
                         },
                     ]}
                 />
