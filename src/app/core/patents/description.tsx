@@ -25,7 +25,7 @@ export const Description = async ({ terms }: { terms: string[] }) => {
     try {
         const description = await fetchDescription(terms);
         return (
-            <Typography level="body-sm">{description || '(none)'}</Typography>
+            <Typography level="body-md">{description || '(none)'}</Typography>
         );
     } catch (e) {
         if (e instanceof Error) {

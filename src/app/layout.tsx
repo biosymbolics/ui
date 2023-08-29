@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Mulish } from 'next/font/google';
+import '@fontsource-variable/mulish';
 
 import MuiXLicense from '@/components/data/mui-license';
 import { NavigationProvider } from '@/hooks/navigation';
 
 import ThemeRegistry from './theme-registry';
 
-const inter = Inter({ subsets: ['latin'] });
+const mulish = Mulish({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
     title: 'Biosymbolics - Patents',
@@ -18,8 +19,8 @@ export const RootLayout = ({
 }: {
     children: React.ReactNode;
 }): JSX.Element => (
-    <html lang="en">
-        <body className={inter.className}>
+    <html lang="en" style={{ fontSize: '16px' }}>
+        <body className={mulish.className}>
             <ThemeRegistry options={{ key: 'joy' }}>
                 <NavigationProvider>{children}</NavigationProvider>
                 <MuiXLicense />
