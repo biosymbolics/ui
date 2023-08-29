@@ -21,11 +21,6 @@ export const Answer = async (args: { ticker: string }) => {
                 <Line
                     annotations={events?.map((d) => ({
                         x: d.date,
-                        y: stock.find(
-                            (s) =>
-                                new Date(s.date).getTime() ===
-                                new Date(d.date).getTime()
-                        )?.close,
                         label: d.details,
                     }))}
                     height={350}

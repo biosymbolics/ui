@@ -3,47 +3,14 @@
 import { useMemo, useState } from 'react';
 import Chart from 'react-apexcharts';
 import isEmpty from 'lodash/fp/isEmpty';
-import Sheet from '@mui/joy/Sheet';
-import Typography from '@mui/joy/Typography';
 
 import { useNavigation } from '@/hooks/navigation';
 import theme from '@/theme';
 
-import { AnnotationSpec, ChartOptions, BasicChartProps } from './types';
+import { ChartOptions, BasicChartProps } from './types';
+import { AnnotationDetail, getAnnotations } from './annotation';
 
 type LineChartProps = BasicChartProps;
-
-const defaultColor = theme.colorSchemes.light.palette.primary[400];
-const defaultColorDark = theme.colorSchemes.light.palette.primary[700];
-
-const getAnnotations = (
-    annotations: AnnotationSpec[],
-    setAnnotation: (label: string | null) => void
-) =>
-    annotations
-        .filter((a) => !a.type || a.type === 'xaxis')
-        .map(({ color, label, x }) => ({
-            x: new Date(x).getTime(),
-            borderColor: color || defaultColor,
-            strokeDashArray: 5,
-            marker: {
-                size: 12,
-                fillColor: 'white',
-                strokeColor: color || defaultColor,
-            },
-            label: {
-                style: {
-                    fontSize: '12px',
-                    color: 'white',
-                    background: defaultColorDark,
-                },
-                offsetX: 0,
-                offsetY: -5,
-                text: x,
-                mouseEnter: () => setAnnotation(label),
-                mouseLeave: () => setAnnotation(null),
-            },
-        }));
 
 /**
  * Line chart
@@ -106,16 +73,8 @@ export const Line = ({
 
     return (
         <>
-            <Sheet
-                color={annotation ? 'primary' : undefined}
-                sx={{ minHeight: 100, p: 3 }}
-                variant={annotation ? 'outlined' : undefined}
-            >
-                {annotation && (
-                    <Typography level="body-md">{annotation}</Typography>
-                )}
-            </Sheet>
             <Chart {...props} options={options} series={series} type="line" />
+            <AnnotationDetail annotation={annotation} />
         </>
     );
 };
