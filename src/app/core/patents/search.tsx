@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Grid from '@mui/joy/Grid';
-import { Typography } from '@mui/joy';
+import Typography from '@mui/joy/Typography';
 
 import { Button } from '@/components/input/button';
 import { Autocomplete } from '@/components/input';

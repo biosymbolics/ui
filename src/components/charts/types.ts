@@ -6,14 +6,14 @@ export type ChartSeries = {
 
 export type ChartOptions = ApexOptions;
 
-type AnnotationType = 'point'; // TODO more
+type AnnotationType = 'xaxis'; // TODO more
 
 export type AnnotationSpec = {
-    color: string;
+    color?: string;
     x: string;
-    y: number;
+    y?: number;
     label: string;
-    type: AnnotationType;
+    type?: AnnotationType;
 };
 
 export type BasicChartProps = {

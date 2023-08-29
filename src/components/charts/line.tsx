@@ -1,37 +1,16 @@
 'use client';
 
+import { useMemo, useState } from 'react';
 import Chart from 'react-apexcharts';
 import isEmpty from 'lodash/fp/isEmpty';
 
 import { useNavigation } from '@/hooks/navigation';
+import theme from '@/theme';
 
-import { AnnotationSpec, ChartOptions, BasicChartProps } from './types';
+import { ChartOptions, BasicChartProps } from './types';
+import { AnnotationDetail, getAnnotations } from './annotation';
 
 type LineChartProps = BasicChartProps;
-
-const getPointAnnotations = (annotations: AnnotationSpec[]) =>
-    annotations
-        .filter((a) => a.type === 'point')
-        .map(({ color, label, x, y }) => ({
-            x,
-            y,
-            marker: {
-                size: 8,
-                fillColor: 'white',
-                strokeColor: color,
-                radius: 2,
-                cssClass: 'apexcharts-custom-class', // TODO
-            },
-            label: {
-                borderColor: color,
-                offsetY: 0,
-                style: {
-                    color: '#fff',
-                    background: color,
-                },
-                text: label,
-            },
-        }));
 
 /**
  * Line chart
@@ -45,6 +24,11 @@ export const Line = ({
     ...props
 }: LineChartProps): JSX.Element => {
     const { navigate } = useNavigation();
+    const [annotation, setAnnotation] = useState<string | null>(null);
+    const xAxisAnnotations = useMemo(
+        () => getAnnotations(annotations, setAnnotation),
+        [annotations]
+    );
 
     if (isEmpty(series)) {
         return <span>No data</span>;
@@ -52,8 +36,9 @@ export const Line = ({
 
     const options: ChartOptions = {
         annotations: {
-            points: getPointAnnotations(annotations),
+            xaxis: xAxisAnnotations,
         },
+        colors: [theme.colorSchemes.light.palette.primary[400]],
         chart: {
             events: {
                 click: (
@@ -71,7 +56,9 @@ export const Line = ({
                         console.warn("Couldn't find term for index", seriesIdx);
                         return;
                     }
-                    navigate(`${pathname}?terms=${term}`);
+                    if (false) {
+                        navigate(`${pathname}?terms=${term}`);
+                    }
                 },
             },
         },
@@ -82,5 +69,10 @@ export const Line = ({
         xaxis: { type: 'datetime' },
     };
 
-    return <Chart {...props} options={options} series={series} type="line" />;
+    return (
+        <>
+            <Chart {...props} options={options} series={series} type="line" />
+            <AnnotationDetail annotation={annotation} />
+        </>
+    );
 };

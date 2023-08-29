@@ -1,6 +1,9 @@
+'use client';
+
 import Chart from 'react-apexcharts';
 
 import { useNavigation } from '@/hooks/navigation';
+import theme from '@/theme';
 
 import { ChartOptions, BasicChartProps } from './types';
 
@@ -21,6 +24,7 @@ export const Timeline = ({
                 horizontal: true,
             },
         },
+        colors: [theme.colorSchemes.light.palette.primary[400]],
         chart: {
             events: {
                 click: (
@@ -46,8 +50,15 @@ export const Timeline = ({
         series,
         stroke: { curve: 'straight' },
         title: { text: title, align: 'left' },
-        xaxis: { type: 'datetime' },
+        xaxis: { type: 'numeric' },
     };
 
-    return <Chart height={height} options={options} type="rangeBar" />;
+    return (
+        <Chart
+            height={height}
+            options={options}
+            series={series}
+            type="rangeBar"
+        />
+    );
 };
