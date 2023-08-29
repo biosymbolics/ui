@@ -19,7 +19,11 @@ import theme from '@/theme';
  * required for X-Grid themeing; should be able to remove in the future
  * @see https://mui.com/joy-ui/guides/using-joy-ui-and-material-ui-together/#case-b-material-ui-in-a-joy-ui-project
  */
-const materialTheme = materialExtendTheme();
+const materialTheme = materialExtendTheme({
+    typography: {
+        fontFamily: 'mulish, SF Pro Text, var(--gh-fontFamily-fallback)',
+    },
+});
 
 // This implementation is from emotion-js
 // https://github.com/emotion-js/emotion/issues/2928#issuecomment-1319747902
