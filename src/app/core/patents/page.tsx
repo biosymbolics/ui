@@ -19,6 +19,7 @@ export const Page = ({
     const terms = searchParams.terms?.split(';') ?? null;
     const minPatentYears = parseInt(searchParams.minPatentYears ?? '10', 10);
     const domains = searchParams.domains?.split(';') ?? [];
+    const isExhaustive = searchParams.isExhaustive === 'true';
 
     return (
         <>
@@ -26,6 +27,7 @@ export const Page = ({
                 <SearchBar
                     fetchOptions={fetchOptions}
                     domains={domains}
+                    isExhaustive={isExhaustive}
                     minPatentYears={minPatentYears}
                     terms={terms || []}
                 />
@@ -45,6 +47,7 @@ export const Page = ({
                     <Suspense fallback={<Skeleton height="80vh" />}>
                         <Patents
                             domains={domains}
+                            isExhaustive={isExhaustive}
                             minPatentYears={minPatentYears}
                             terms={terms || []}
                         />

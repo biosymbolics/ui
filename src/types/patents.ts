@@ -59,6 +59,7 @@ export type PatentResponse = z.infer<typeof PatentResponseSchema>;
 
 export type PatentSearchArgs = {
     domains: string[] | null;
+    isExhaustive: boolean;
     minPatentYears: number;
     terms: string[];
 };

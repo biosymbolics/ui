@@ -13,10 +13,12 @@ import { useNavigation } from '@/hooks/navigation';
 import { PATENT_DOMAINS, PatentSearchArgs } from '@/types/patents';
 import { Option } from '@/types/select';
 import { getQueryArgs } from '@/utils/patents';
+import { Checkbox } from '@/components/input/checkbox';
 
 export const SearchBar = ({
     domains = [],
     fetchOptions,
+    isExhaustive,
     minPatentYears,
     terms,
 }: {
@@ -26,6 +28,7 @@ export const SearchBar = ({
     const pathname = usePathname();
     const [newTerms, setTerms] = useState<string[] | null>(terms);
     const [newDomains, setDomains] = useState<string[] | null>(domains);
+    const [newIsExhaustive, setIsExhaustive] = useState<boolean>(isExhaustive);
     const [newMinPatentYears, setMinPatentYears] =
         useState<number>(minPatentYears);
 
@@ -80,6 +83,16 @@ export const SearchBar = ({
                             options={PATENT_DOMAINS}
                         />
                     </Grid>
+                    <Grid xs={12} sm={6}>
+                        <Checkbox
+                            checked={newIsExhaustive}
+                            defualtChecked={isExhaustive}
+                            label="Exhaustive search"
+                            onChange={(e) => {
+                                setIsExhaustive(e.target.checked);
+                            }}
+                        />
+                    </Grid>
                 </Grid>
             </Section>
             <Section variant="l2">
@@ -91,6 +104,7 @@ export const SearchBar = ({
                         }
                         const queryArgs = getQueryArgs({
                             domains: newDomains,
+                            isExhaustive: newIsExhaustive,
                             minPatentYears: newMinPatentYears,
                             terms: newTerms,
                         });
