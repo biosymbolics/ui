@@ -3,10 +3,9 @@
 import 'server-only';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
-import Typography from '@mui/joy/Typography';
 
 import { Timeline } from '@/components/charts/gantt';
-import theme from '@/theme';
+import { Code } from '@/components/code';
 
 import { predictClindev } from './actions';
 
@@ -30,17 +29,11 @@ export const Answer = async (args: {
                                 x: d.stage || '???',
                                 y: [d.offset, d.offset + d.median_duration],
                             })),
-                            color: theme.colorSchemes.light.palette
-                                .primary[400],
                         },
                     ]}
                 />
-                <Sheet color="primary" sx={{ p: 3 }} variant="outlined">
-                    <Typography fontWeight="bold">
-                        <pre>
-                            <code>{JSON.stringify(data, null, 4)}</code>
-                        </pre>
-                    </Typography>
+                <Sheet sx={{ p: 3 }}>
+                    <Code language="json">{JSON.stringify(data, null, 4)}</Code>
                 </Sheet>
             </Stack>
         );

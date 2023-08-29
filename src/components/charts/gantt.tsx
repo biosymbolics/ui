@@ -3,6 +3,7 @@
 import Chart from 'react-apexcharts';
 
 import { useNavigation } from '@/hooks/navigation';
+import theme from '@/theme';
 
 import { ChartOptions, BasicChartProps } from './types';
 
@@ -23,6 +24,7 @@ export const Timeline = ({
                 horizontal: true,
             },
         },
+        colors: [theme.colorSchemes.light.palette.primary[400]],
         chart: {
             events: {
                 click: (

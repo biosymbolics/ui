@@ -8,6 +8,12 @@ import { AnnotationSpec } from './types';
 const defaultColor = theme.colorSchemes.light.palette.primary[400];
 const defaultColorDark = theme.colorSchemes.light.palette.primary[700];
 
+/**
+ * Create annotations based on annotation specs
+ * @param annotations
+ * @param setAnnotation
+ * @returns annotations as apexchart expects
+ */
 export const getAnnotations = (
     annotations: AnnotationSpec[],
     setAnnotation: (label: string | null) => void
