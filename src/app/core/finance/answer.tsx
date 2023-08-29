@@ -3,9 +3,9 @@
 import 'server-only';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
-import Typography from '@mui/joy/Typography';
 
 import { Line } from '@/components/charts/line';
+import { Code } from '@/components/code';
 
 import { getEvents } from './actions';
 
@@ -43,18 +43,10 @@ export const Answer = async (args: { ticker: string }) => {
                         },
                     ]}
                 />
-                <Sheet color="neutral" sx={{ p: 3 }} variant="solid">
-                    <Typography
-                        color="white"
-                        component="pre"
-                        fontWeight="bold"
-                        sx={{
-                            whiteSpace: 'pre-wrap',
-                            width: '100%',
-                        }}
-                    >
+                <Sheet sx={{ p: 3 }}>
+                    <Code language="json">
                         {JSON.stringify(events, null, 4)}
-                    </Typography>
+                    </Code>
                 </Sheet>
             </Stack>
         );
