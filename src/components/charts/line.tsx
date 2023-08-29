@@ -38,7 +38,20 @@ export const Line = ({
         annotations: {
             xaxis: xAxisAnnotations,
         },
-        colors: [theme.colorSchemes.light.palette.primary[400]],
+        colors: [
+            theme.colorSchemes.light.palette.primary[400],
+            theme.colorSchemes.light.palette.success[400],
+            theme.colorSchemes.light.palette.warning[400],
+            theme.colorSchemes.light.palette.danger[400],
+            theme.colorSchemes.light.palette.primary[600],
+            theme.colorSchemes.light.palette.success[600],
+            theme.colorSchemes.light.palette.warning[600],
+            theme.colorSchemes.light.palette.danger[600],
+            theme.colorSchemes.light.palette.primary[800],
+            theme.colorSchemes.light.palette.success[800],
+            theme.colorSchemes.light.palette.warning[800],
+            theme.colorSchemes.light.palette.danger[800],
+        ],
         chart: {
             events: {
                 click: (

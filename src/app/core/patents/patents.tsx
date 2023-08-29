@@ -23,7 +23,7 @@ import { OverTime } from './over-time';
 import { Summary } from './summary';
 
 const getPatentColumns = (): GridColDef[] => [
-    { field: 'publication_number', headerName: 'Pub #', width: 160 },
+    { field: 'publication_number', headerName: 'Pub #', width: 170 },
     { field: 'title', headerName: 'Title', width: 500 },
     {
         field: 'patent_years',
