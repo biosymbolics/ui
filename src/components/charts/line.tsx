@@ -69,9 +69,7 @@ export const Line = ({
                         console.warn("Couldn't find term for index", seriesIdx);
                         return;
                     }
-                    if (false) {
-                        navigate(`${pathname}?terms=${term}`);
-                    }
+                    navigate(`${pathname}?terms=${term}`);
                 },
             },
         },
