@@ -11,11 +11,7 @@ import { Description } from './description';
 import { Patents } from './patents';
 import { SearchBar } from './search';
 
-export const Page = ({
-    searchParams,
-}: {
-    searchParams: Record<string, string>;
-}) => {
+const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     const terms = searchParams.terms?.split(';') ?? null;
     const minPatentYears = parseInt(searchParams.minPatentYears ?? '10', 10);
     const domains = searchParams.domains?.split(';') ?? [];

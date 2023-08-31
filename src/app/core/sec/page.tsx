@@ -9,11 +9,7 @@ import { Section } from '@/components/layout/section';
 import { Answer } from './answer';
 import { Question } from './question';
 
-export const Page = ({
-    searchParams,
-}: {
-    searchParams: Record<string, string>;
-}) => {
+const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     const question = searchParams.question ?? '';
 
     return (

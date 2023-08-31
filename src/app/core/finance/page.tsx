@@ -9,11 +9,7 @@ import { Section } from '@/components/layout/section';
 import { Answer } from './answer';
 import { Choose } from './choose';
 
-export const Page = ({
-    searchParams,
-}: {
-    searchParams: Record<string, string>;
-}) => {
+const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     const ticker = searchParams.ticker ?? '';
 
     return (
