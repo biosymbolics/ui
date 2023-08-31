@@ -1,7 +1,7 @@
 'use server';
 
 import { cache } from 'react';
-import Typography from '@mui/joy/Typography';
+import ReactMarkdown from 'react-markdown';
 import 'server-only';
 
 import { TERM_DESCRIPTION_API_URL } from '@/constants';
@@ -24,9 +24,7 @@ const fetchDescription = cache(async (terms: string[]): Promise<string> => {
 export const Description = async ({ terms }: { terms: string[] }) => {
     try {
         const description = await fetchDescription(terms);
-        return (
-            <Typography level="body-md">{description || '(none)'}</Typography>
-        );
+        return <ReactMarkdown>{description || '(none)'}</ReactMarkdown>;
     } catch (e) {
         if (e instanceof Error) {
             return <div>Failed to fetch description: {e.message}</div>;
