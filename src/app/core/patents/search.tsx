@@ -86,7 +86,6 @@ export const SearchBar = ({
                     <Grid xs={12} sm={6}>
                         <Checkbox
                             checked={newIsExhaustive}
-                            defualtChecked={isExhaustive}
                             label="Exhaustive search"
                             onChange={(e) => {
                                 setIsExhaustive(e.target.checked);

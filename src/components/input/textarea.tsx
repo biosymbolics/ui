@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import FormHelperText from '@mui/joy/FormHelperText';
 import FormLabel from '@mui/joy/FormLabel';
 import FormControl from '@mui/joy/FormControl';
 import {
@@ -13,6 +14,7 @@ type TextareaProps = {
     defaultValue?: JoyTextareaProps['defaultValue'];
     disabled?: JoyTextareaProps['disabled'];
     error?: boolean;
+    helperText?: string;
     id?: JoyTextareaProps['id'];
     label?: string;
     minRows?: JoyTextareaProps['minRows'];
@@ -25,6 +27,7 @@ type TextareaProps = {
  */
 export const TextArea = ({
     error,
+    helperText,
     id,
     label,
     size,
@@ -42,6 +45,7 @@ export const TextArea = ({
                 </FormLabel>
             )}
             <JoyTextarea variant="soft" {...props} size={size} />
+            {helperText && <FormHelperText>{helperText}</FormHelperText>}
         </FormControl>
     );
 };

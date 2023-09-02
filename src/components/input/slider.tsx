@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import FormHelperText from '@mui/joy/FormHelperText';
 import FormLabel from '@mui/joy/FormLabel';
 import FormControl from '@mui/joy/FormControl';
 import {
@@ -13,6 +14,7 @@ type SliderProps = {
     defaultValue?: JoySliderProps['defaultValue'];
     disabled?: JoySliderProps['disabled'];
     error?: boolean;
+    helperText?: string;
     id?: JoySliderProps['id'];
     label?: string;
     onChange?: JoySliderProps['onChange'];
@@ -30,6 +32,7 @@ type SliderProps = {
  */
 export const Slider = ({
     error,
+    helperText,
     id,
     label,
     size = 'sm',
@@ -50,6 +53,7 @@ export const Slider = ({
                 {...props}
                 size={size}
             />
+            {helperText && <FormHelperText>{helperText}</FormHelperText>}
         </FormControl>
     );
 };

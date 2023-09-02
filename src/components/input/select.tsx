@@ -1,11 +1,12 @@
 import { ReactElement } from 'react';
+import FormHelperText from '@mui/joy/FormHelperText';
+import FormLabel from '@mui/joy/FormLabel';
+import FormControl from '@mui/joy/FormControl';
+import JoySelectOption from '@mui/joy/Option';
 import {
     default as JoySelect,
     SelectProps as JoySelectProps,
 } from '@mui/joy/Select';
-import JoySelectOption from '@mui/joy/Option';
-import FormLabel from '@mui/joy/FormLabel';
-import FormControl from '@mui/joy/FormControl';
 
 import { getSelectableId } from '@/utils/string';
 
@@ -16,6 +17,7 @@ type SelectProps<T extends BaseOption> = {
     defaultValue?: JoySelectProps<T>['defaultValue'];
     disabled?: JoySelectProps<T>['disabled'];
     error?: boolean;
+    helperText?: string;
     id?: JoySelectProps<T>['id'];
     idField?: keyof T; // TODO: only if T is Record<string, any>
     label?: string;
@@ -29,6 +31,7 @@ type SelectProps<T extends BaseOption> = {
  */
 export const Select = <T extends BaseOption>({
     error,
+    helperText,
     id,
     idField,
     label,
@@ -65,6 +68,7 @@ export const Select = <T extends BaseOption>({
                     </JoySelectOption>
                 ))}
             </JoySelect>
+            {helperText && <FormHelperText>{helperText}</FormHelperText>}
         </FormControl>
     );
 };

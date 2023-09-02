@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 import FormLabel from '@mui/joy/FormLabel';
 import FormControl from '@mui/joy/FormControl';
+import FormHelperText from '@mui/joy/FormHelperText';
 import {
     default as JoyInput,
     InputProps as JoyInputProps,
@@ -13,6 +14,7 @@ type InputProps = {
     defaultValue?: JoyInputProps['defaultValue'];
     disabled?: JoyInputProps['disabled'];
     error?: boolean;
+    helperText?: string;
     id?: JoyInputProps['id'];
     label?: string;
     onChange?: JoyInputProps['onChange'];
@@ -24,6 +26,7 @@ type InputProps = {
  */
 export const Input = ({
     error,
+    helperText,
     id,
     label,
     size,
@@ -41,6 +44,7 @@ export const Input = ({
                 </FormLabel>
             )}
             <JoyInput variant="soft" {...props} size={size} />
+            {helperText && <FormHelperText>{helperText}</FormHelperText>}
         </FormControl>
     );
 };

@@ -1,6 +1,7 @@
 'use server';
 
 import { cache } from 'react';
+import Box from '@mui/joy/Box';
 import ReactMarkdown from 'react-markdown';
 import 'server-only';
 
@@ -26,9 +27,11 @@ export const Description = async ({ terms }: { terms: string[] }) => {
         const description = await fetchDescription(terms);
         return <ReactMarkdown>{description || '(none)'}</ReactMarkdown>;
     } catch (e) {
-        if (e instanceof Error) {
-            return <div>Failed to fetch description: {e.message}</div>;
-        }
-        return <div>Failed to fetch description</div>;
+        return (
+            <Box>
+                Failed to fetch description:{' '}
+                {e instanceof Error ? e.message : JSON.stringify(e)}
+            </Box>
+        );
     }
 };

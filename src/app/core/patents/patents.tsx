@@ -105,9 +105,11 @@ export const Patents = async (args: PatentSearchArgs) => {
             </Box>
         );
     } catch (e) {
-        if (e instanceof Error) {
-            return <div>Failed to fetch patents: {e.message}</div>;
-        }
-        return <div>Failed to fetch patents</div>;
+        return (
+            <Box>
+                Failed to fetch patents:{' '}
+                {e instanceof Error ? e.message : JSON.stringify(e)}
+            </Box>
+        );
     }
 };
