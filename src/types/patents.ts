@@ -16,6 +16,7 @@ export const PatentSchema = z.object({
     publication_number: z.string(),
     title: z.string(),
     abstract: z.string(),
+    adj_patent_years: z.number(),
     approval_date: z.union([z.string(), z.null()]),
     assignees: z.array(z.string()),
     attributes: z.array(z.string()),
@@ -25,7 +26,6 @@ export const PatentSchema = z.object({
     diseases: z.array(z.string()),
     generic_name: z.union([z.string(), z.null()]),
     genes: z.array(z.string()),
-    explanation: z.optional(z.union([z.string(), z.null()])),
     indication: z.union([z.string(), z.null()]),
     inventors: z.array(z.string()),
     ipc_codes: z.array(z.string()),
@@ -36,6 +36,8 @@ export const PatentSchema = z.object({
     mechanisms: z.array(z.string()),
     score: z.number(),
     similar: z.array(z.string()),
+    suitability_score: z.number(),
+    suitability_score_explanation: z.optional(z.union([z.string(), z.null()])),
     url: z.string(),
 });
 

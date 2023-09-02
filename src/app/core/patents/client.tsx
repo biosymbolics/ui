@@ -104,9 +104,9 @@ export const DetailContent = <T extends Patent>({
             <Grid container spacing={3}>
                 <Grid xs={6} sm={2}>
                     <Metric
-                        value={patent.score}
+                        value={patent.suitability_score}
                         label="Suitability"
-                        tooltip={patent.explanation || ''}
+                        tooltip={patent.suitability_score_explanation || ''}
                     />
                 </Grid>
                 <Grid xs={6} sm={2}>
