@@ -33,12 +33,6 @@ const getPatentColumns = (): GridColDef[] => [
         cellClassName: getPatentYearsClass,
     },
     {
-        field: 'is_approved',
-        headerName: 'Approved',
-        width: 75,
-        renderCell: renderBoolean,
-    },
-    {
         field: 'score',
         headerName: 'Suitability',
         width: 85,
@@ -46,6 +40,28 @@ const getPatentColumns = (): GridColDef[] => [
         cellClassName: getScoresClass,
         description:
             'Suitability of patent, in terms of patent type (CoM vs MoU), patented thing (compound > device) and patent years remaining.',
+    },
+    {
+        field: 'availability_score',
+        headerName: 'Est Avail.*',
+        width: 85,
+        valueFormatter: formatNumber,
+        cellClassName: getScoresClass,
+        description: 'Estimated availability of patent (made up!!).',
+    },
+    {
+        field: 'probability_of_success',
+        headerName: 'Est. PoS*',
+        width: 85,
+        valueFormatter: formatNumber,
+        cellClassName: getScoresClass,
+        description: 'Estimated PoS (made up!!).',
+    },
+    {
+        field: 'is_approved',
+        headerName: 'Approved',
+        width: 75,
+        renderCell: renderBoolean,
     },
     {
         field: 'assignees',
