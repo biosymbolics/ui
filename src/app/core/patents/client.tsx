@@ -19,6 +19,7 @@ import {
     GridValueFormatterParams,
 } from '@mui/x-data-grid/models/params/gridCellParams';
 import clsx from 'clsx';
+import unescape from 'lodash/fp/unescape';
 
 import { Chips, formatChips } from '@/components/data/chip';
 import { Metric } from '@/components/data/metric';
@@ -60,7 +61,7 @@ export const DetailContent = <T extends Patent>({
             <Title
                 description={`${patent.abstract}${approvalInfo}`}
                 link={{ label: patent.publication_number, url: patent.url }}
-                title={patent.title}
+                title={unescape(patent.title)}
                 variant="soft"
             />
             <Chips
@@ -156,6 +157,27 @@ export const formatNumber = <T extends Record<string, unknown>>(
     }
 
     return (value as number).toPrecision(2);
+};
+
+/**
+ * Unencode any HTML-encoded things
+ * @param params
+ * @returns
+ */
+export const unencodeHtml = <T extends Record<string, unknown>>(
+    params: GridValueFormatterParams<T>
+): string => {
+    const { value } = params;
+
+    if (Array.isArray(value)) {
+        return value.map((v) => unescape(v as string)).join(', ');
+    }
+
+    if (typeof value !== 'string') {
+        throw new Error(`Expected string, got ${typeof value}`);
+    }
+
+    return unescape(value);
 };
 
 /**

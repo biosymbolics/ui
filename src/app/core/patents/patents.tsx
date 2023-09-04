@@ -18,13 +18,19 @@ import {
     getStyles,
     renderBoolean,
     renderList,
+    unencodeHtml,
 } from './client';
 import { OverTime } from './over-time';
 import { Summary } from './summary';
 
 const getPatentColumns = (): GridColDef[] => [
     { field: 'publication_number', headerName: 'Pub #', width: 170 },
-    { field: 'title', headerName: 'Title', width: 500 },
+    {
+        field: 'title',
+        headerName: 'Title',
+        width: 500,
+        valueFormatter: unencodeHtml,
+    },
     {
         field: 'score',
         headerName: 'Score',

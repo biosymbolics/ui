@@ -27,5 +27,6 @@ export const getFetchOptions = async <T>(
         // console.error(message);
         throw new Error(message);
     }
+
     return parsedRes.data;
 };
