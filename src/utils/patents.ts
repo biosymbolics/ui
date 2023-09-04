@@ -8,8 +8,14 @@ import { PatentSearchArgs } from '@/types/patents';
 const maybeSnakeCase = (key: string, isSnakeCase: boolean): string =>
     isSnakeCase ? snakeCase(key) : key;
 
-const formatValue = (value: unknown): string | number => {
+const formatValue = (
+    value: unknown,
+    isServer: boolean = false
+): string | number => {
     if (Array.isArray(value)) {
+        if (isServer) {
+            return value.join('%3B'); // escaped ;
+        }
         return value.join(';');
     }
     if (isBoolean(value)) {
@@ -37,7 +43,10 @@ export const getQueryArgs = (
         )
         .map(
             ([key, value]) =>
-                `${maybeSnakeCase(key, isServer)}=${formatValue(value)}`
+                `${maybeSnakeCase(key, isServer)}=${formatValue(
+                    value,
+                    isServer
+                )}`
         );
 
     return queryParams.join('&');
