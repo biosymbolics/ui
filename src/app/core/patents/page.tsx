@@ -29,13 +29,11 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
                 />
             </Section>
             <Section variant="main">
-                <Section>
-                    <Typography gutterBottom level="h1">
-                        {terms
-                            ? `Terms: ${terms.join(', ')}`
-                            : 'No terms selected'}
-                    </Typography>
-                    <Suspense fallback={<Skeleton />}>
+                <Typography level="h1">
+                    {terms ? `Terms: ${terms.join(', ')}` : 'No terms selected'}
+                </Typography>
+                <Section minHeight={100}>
+                    <Suspense fallback={<Skeleton height={100} />}>
                         {terms && <Description terms={terms} />}
                     </Suspense>
                 </Section>

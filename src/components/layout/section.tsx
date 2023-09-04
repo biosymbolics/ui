@@ -12,6 +12,7 @@ const SectionTypes = {
 
 type SectionProps = {
     children: ReactNode;
+    minHeight?: number;
     mx?: number;
     sx?: BoxProps['sx'];
     variant?: keyof typeof SectionTypes;
@@ -22,6 +23,7 @@ type SectionProps = {
  */
 export const Section = ({
     children,
+    minHeight,
     mx,
     variant = 'l1',
     ...props
@@ -30,6 +32,7 @@ export const Section = ({
         display: 'flex',
         flexDirection: 'column',
         maxHeight: '100%',
+        minHeight,
         mx: mx || 0,
         my: variant === 'l2' ? 1 : 3,
     };
