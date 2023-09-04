@@ -17,6 +17,14 @@ const theme = extendTheme({
                 },
             },
         },
+        JoyTabPanel: {
+            styleOverrides: {
+                root: {
+                    paddingRight: 0,
+                    paddingLeft: 0,
+                },
+            },
+        },
     },
     colorSchemes: {
         light: {

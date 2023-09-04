@@ -69,6 +69,7 @@ export const DataGrid = <T extends Record<string, unknown>>({
                 toolbar: GridToolbar,
                 noRowsOverlay: NoRows,
             }}
+            sx={{ border: 0 }}
         />
     );
 };
