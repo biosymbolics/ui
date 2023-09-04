@@ -2,7 +2,9 @@
 
 import { cache } from 'react';
 import Box from '@mui/joy/Box';
+import Typography from '@mui/joy/Typography';
 import groupBy from 'lodash/fp/groupBy';
+import isEmpty from 'lodash/fp/isEmpty';
 
 import { PATENT_OVER_TIME_API_URL } from '@/constants';
 import { Line } from '@/components/charts/line';
@@ -55,6 +57,16 @@ export const OverTime = async ({
             }))
             .filter((r) => r.series.some((s) => s.data.length > 0));
 
+        if (isEmpty(formattedReports)) {
+            return (
+                <>
+                    <Typography level="h3">Not enough data</Typography>
+                    <Typography>
+                        Not enough data to show trends over time.
+                    </Typography>
+                </>
+            );
+        }
         return (
             <Box sx={getStyles}>
                 {formattedReports.map(({ series, title }) => (

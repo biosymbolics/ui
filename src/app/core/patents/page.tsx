@@ -35,7 +35,7 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
                             ? `Terms: ${terms.join(', ')}`
                             : 'No terms selected'}
                     </Typography>
-                    <Suspense fallback={<Skeleton height="20vh" />}>
+                    <Suspense fallback={<Skeleton />}>
                         {terms && <Description terms={terms} />}
                     </Suspense>
                 </Section>

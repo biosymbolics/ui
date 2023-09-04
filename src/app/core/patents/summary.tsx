@@ -31,10 +31,11 @@ const fetchSummaries = cache(
 
 export const Summary = async ({
     pathname = '/core/patents',
+    terms,
     ...args
 }: PatentSearchArgs & { pathname?: string }) => {
     try {
-        const summaries = await fetchSummaries(args);
+        const summaries = await fetchSummaries({ terms, ...args });
         return (
             <Box sx={getStyles}>
                 <Bars
@@ -42,7 +43,7 @@ export const Summary = async ({
                         data: data.map((s) => ({
                             label: s.x,
                             value: s.count,
-                            url: `${pathname}?terms=${s.x}`,
+                            url: `${pathname}?terms=${s.x};${terms.join(';')}`,
                         })),
                         label: x,
                         maxLength: 15,
