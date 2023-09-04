@@ -160,6 +160,21 @@ export const formatNumber = <T extends Record<string, unknown>>(
 };
 
 /**
+ * Format number as percent
+ */
+export const formatPercent = <T extends Record<string, unknown>>(
+    params: GridValueFormatterParams<T>
+): string => {
+    const { value } = params;
+
+    if (typeof value !== 'number') {
+        throw new Error(`Expected number, got ${typeof value}`);
+    }
+
+    return `${(100 * value).toPrecision(2)}%`;
+};
+
+/**
  * Unencode any HTML-encoded things
  * @param params
  * @returns
