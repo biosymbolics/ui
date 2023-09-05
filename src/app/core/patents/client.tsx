@@ -73,10 +73,15 @@ export const DetailContent = <T extends Patent>({
     const approvalInfo = patent.approval_date
         ? `\n\nApproved ${patent.approval_date}} for indication ${patent.indication} (${patent.brand_name}/${patent.generic_name}).`
         : '';
+    const trialInfo = patent.last_trial_status
+        ? `\n\nLast trial update: ${patent.last_trial_status} on ${
+              patent.last_trial_update
+          }. NCTs ${(patent.nct_ids || []).join(', ')}.`
+        : '';
     return (
         <Section mx={3}>
             <Title
-                description={`${patent.abstract}${approvalInfo}`}
+                description={`${patent.abstract}${approvalInfo}${trialInfo}`}
                 link={{ label: patent.publication_number, url: patent.url }}
                 title={unescape(patent.title)}
                 variant="soft"

@@ -21,7 +21,6 @@ import {
     getScoresClass,
     getStyles,
     renderBoolean,
-    renderList,
     unencodeHtml,
 } from './client';
 import { OverTime } from './over-time';
@@ -95,10 +94,14 @@ const getPatentColumns = (): GridColDef[] => [
         width: 200,
     },
     {
-        field: 'attributes',
-        headerName: 'Attributes',
-        width: 300,
-        renderCell: renderList,
+        field: 'max_trial_phase',
+        headerName: 'CT Phase',
+        width: 100,
+    },
+    {
+        field: 'last_trial_update',
+        headerName: 'Last CT Update',
+        width: 125,
     },
     {
         field: 'priority_date',
