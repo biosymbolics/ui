@@ -32,7 +32,7 @@ const SimilarPatents = ({ patent }: { patent: Patent }): JSX.Element => (
     <>
         <Typography level="title-md">Similar Patents</Typography>
         <List>
-            {patent.similar
+            {patent.similar_patents
                 .filter((s) => s.startsWith('WO'))
                 .map((s, index) => (
                     <ListItem key={`${getSelectableId(s)}-${index}`}>
