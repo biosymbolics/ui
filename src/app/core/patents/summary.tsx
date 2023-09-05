@@ -17,7 +17,7 @@ import { getStyles } from './client';
 
 const fetchSummaries = cache(
     async (args: PatentSearchArgs): Promise<PatentsSummaries> => {
-        if (args.terms.length === 0) {
+        if (args.terms?.length === 0) {
             return [];
         }
         const queryArgs = getQueryArgs(args, true);
@@ -43,7 +43,7 @@ export const Summary = async ({
                         data: data.map((s) => ({
                             label: s.x,
                             value: s.count,
-                            url: `${pathname}?terms=${s.x};${terms.join(';')}`,
+                            url: `${pathname}?terms=${s.x};${terms?.join(';')}`,
                         })),
                         label: x,
                         maxLength: 15,

@@ -69,7 +69,7 @@ export const fetchDescription = cache(
  */
 export const fetchPatents = cache(
     async (args: PatentSearchArgs): Promise<PatentResponse> => {
-        if (args.terms.length === 0) {
+        if (args.terms?.length === 0) {
             return [];
         }
         const queryArgs = getQueryArgs(args, true);

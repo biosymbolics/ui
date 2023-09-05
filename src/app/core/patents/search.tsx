@@ -10,16 +10,17 @@ import { Autocomplete } from '@/components/input';
 import { Slider } from '@/components/input/slider';
 import { Section } from '@/components/layout/section';
 import { useNavigation } from '@/hooks/navigation';
-import { PATENT_DOMAINS, PatentSearchArgs } from '@/types/patents';
+import { PatentSearchArgs } from '@/types/patents';
 import { Option } from '@/types/select';
 import { getQueryArgs } from '@/utils/patents';
 import { Checkbox } from '@/components/input/checkbox';
+import { Select } from '@/components/input/select';
 
 export const SearchBar = ({
-    domains = [],
     fetchOptions,
     isExhaustive,
     minPatentYears,
+    queryType,
     terms,
 }: {
     fetchOptions: (term: string) => Promise<Option[]>;
@@ -27,7 +28,7 @@ export const SearchBar = ({
     const { navigate } = useNavigation();
     const pathname = usePathname();
     const [newTerms, setTerms] = useState<string[] | null>(terms);
-    const [newDomains, setDomains] = useState<string[] | null>(domains);
+    const [newQueryType, setQueryType] = useState<string | null>(queryType);
     const [newIsExhaustive, setIsExhaustive] = useState<boolean>(isExhaustive);
     const [newMinPatentYears, setMinPatentYears] =
         useState<number>(minPatentYears);
@@ -47,7 +48,10 @@ export const SearchBar = ({
             </Typography>
             <Autocomplete<Option, true, false>
                 isMultiple
-                defaultValue={terms.map((term) => ({ id: term, label: term }))}
+                defaultValue={(terms || []).map((term) => ({
+                    id: term,
+                    label: term,
+                }))}
                 isOptionEqualToValue={(option: Option, value: Option) =>
                     option.id === value.id
                 }
@@ -72,15 +76,14 @@ export const SearchBar = ({
                             size="lg"
                         />
                     </Grid>
-                    <Grid xs={12} sm={6}>
-                        <Autocomplete<string, true, false>
-                            isMultiple
-                            defaultValue={newDomains || []}
-                            label="Search domains"
-                            onChange={(e, values) => {
-                                setDomains(values);
+                    <Grid xs={12} sm={3}>
+                        <Select
+                            defaultValue={queryType}
+                            label="Search Type"
+                            onChange={(e, value) => {
+                                setQueryType(value);
                             }}
-                            options={PATENT_DOMAINS}
+                            options={['AND', 'OR']}
                         />
                     </Grid>
                     <Grid xs={12} sm={6}>
@@ -102,9 +105,9 @@ export const SearchBar = ({
                             return;
                         }
                         const queryArgs = getQueryArgs({
-                            domains: newDomains,
                             isExhaustive: newIsExhaustive,
                             minPatentYears: newMinPatentYears,
+                            queryType: newQueryType,
                             terms: newTerms,
                         });
                         navigate(`${pathname}?${queryArgs}`);

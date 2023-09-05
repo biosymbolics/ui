@@ -13,8 +13,8 @@ import { SearchBar } from './search';
 
 const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     const terms = searchParams.terms?.split(';') ?? null;
+    const queryType = searchParams.queryType ?? 'AND';
     const minPatentYears = parseInt(searchParams.minPatentYears ?? '10', 10);
-    const domains = searchParams.domains?.split(';') ?? [];
     const isExhaustive = searchParams.isExhaustive === 'true';
 
     return (
@@ -22,9 +22,9 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
             <Section variant="separated">
                 <SearchBar
                     fetchOptions={fetchOptions}
-                    domains={domains}
                     isExhaustive={isExhaustive}
                     minPatentYears={minPatentYears}
+                    queryType={queryType}
                     terms={terms || []}
                 />
             </Section>
@@ -40,9 +40,9 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
                 <Section>
                     <Suspense fallback={<Skeleton height="80vh" />}>
                         <Patents
-                            domains={domains}
                             isExhaustive={isExhaustive}
                             minPatentYears={minPatentYears}
+                            queryType={queryType}
                             terms={terms || []}
                         />
                     </Suspense>
