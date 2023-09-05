@@ -33,7 +33,7 @@ export const PatentSchema = z.object({
     last_trial_status: z.optional(z.union([z.string(), z.null()])),
     last_trial_update: z.optional(z.union([z.string(), z.null()])),
     max_trial_phase: z.optional(z.union([z.string(), z.null()])),
-    nct_ids: z.array(z.union([z.string(), z.null()])),
+    nct_ids: z.union([z.null(), z.array(z.union([z.string(), z.null()]))]),
     patent_years: z.number(),
     priority_date: z.string(),
     probability_of_success: z.number(),
