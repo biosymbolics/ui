@@ -47,7 +47,7 @@ export const Section = ({
 
     if (variant === 'main') {
         return (
-            <Sheet {...props} sx={{ minHeight: 1000, p: 3, ...sxProps }}>
+            <Sheet {...props} sx={{ p: 3, ...sxProps, minHeight: 1000 }}>
                 {children}
             </Sheet>
         );

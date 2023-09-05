@@ -32,14 +32,31 @@ const SimilarPatents = ({ patent }: { patent: Patent }): JSX.Element => (
     <>
         <Typography level="title-md">Similar Patents</Typography>
         <List>
-            {patent.similar.map((s, index) => (
-                <ListItem key={`${getSelectableId(s)}-${index}`}>
-                    <ListItemDecorator>·</ListItemDecorator>
-                    <Link component={NextLink} href={patent.url}>
-                        {s}
-                    </Link>
-                </ListItem>
-            ))}
+            {patent.similar
+                .filter((s) => s.startsWith('WO'))
+                .map((s, index) => (
+                    <ListItem key={`${getSelectableId(s)}-${index}`}>
+                        <ListItemDecorator>·</ListItemDecorator>
+                        <Link
+                            component={NextLink}
+                            href={patent.url}
+                            target="_blank"
+                        >
+                            {s}
+                        </Link>
+                        <Typography level="body-sm" sx={{ ml: 1 }}>
+                            (
+                            <Link
+                                component={NextLink}
+                                href={`/core/patents?terms=${s}`}
+                                target="_blank"
+                            >
+                                Search
+                            </Link>
+                            )
+                        </Typography>
+                    </ListItem>
+                ))}
         </List>
     </>
 );

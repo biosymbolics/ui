@@ -2,6 +2,9 @@
 
 import Box from '@mui/joy/Box';
 import { GridColDef } from '@mui/x-data-grid/models/colDef';
+import Alert from '@mui/joy/Alert';
+import Typography from '@mui/joy/Typography';
+import WarningIcon from '@mui/icons-material/Warning';
 import 'server-only';
 
 import { DataGrid } from '@/components/data/grid';
@@ -144,10 +147,16 @@ export const Patents = async (args: PatentSearchArgs) => {
         );
     } catch (e) {
         return (
-            <Box>
-                Failed to fetch patents:{' '}
-                {e instanceof Error ? e.message : JSON.stringify(e)}
-            </Box>
+            <Alert
+                startDecorator={<WarningIcon />}
+                variant="soft"
+                color="warning"
+            >
+                <Typography level="h4">Failed to fetch patents</Typography>
+                <Typography>
+                    {e instanceof Error ? e.message : JSON.stringify(e)}
+                </Typography>
+            </Alert>
         );
     }
 };

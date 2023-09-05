@@ -109,7 +109,7 @@ export const Autocomplete = <
                 loading={isLoading}
                 multiple={isMultiple}
                 onInputChange={(_, newInputValue) => {
-                    setInput(newInputValue);
+                    setInput(newInputValue.trim());
                 }}
                 options={options}
                 size={size}
