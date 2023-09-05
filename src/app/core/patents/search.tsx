@@ -76,7 +76,7 @@ export const SearchBar = ({
                             size="lg"
                         />
                     </Grid>
-                    <Grid xs={12} sm={3}>
+                    <Grid xs={12} sm={2}>
                         <Select
                             defaultValue={queryType}
                             label="Search Type"
@@ -86,10 +86,10 @@ export const SearchBar = ({
                             options={['AND', 'OR']}
                         />
                     </Grid>
-                    <Grid xs={12} sm={6}>
+                    <Grid xs={12} sm={3}>
                         <Checkbox
                             checked={newIsExhaustive}
-                            label="Exhaustive search"
+                            label="Exhaustive"
                             onChange={(e) => {
                                 setIsExhaustive(e.target.checked);
                             }}
