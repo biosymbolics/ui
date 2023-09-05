@@ -20,7 +20,7 @@ import { getStyles } from './client';
 
 const fetchReports = cache(
     async (args: PatentSearchArgs): Promise<PatentsSummaries> => {
-        if (args.terms.length === 0) {
+        if (args.terms?.length === 0) {
             return [];
         }
         const queryArgs = getQueryArgs(args, true);
