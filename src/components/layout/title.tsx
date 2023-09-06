@@ -5,6 +5,7 @@ import Typography from '@mui/joy/Typography';
 
 type TitleVariant = 'outlined' | 'soft' | 'plain' | 'solid';
 
+const MAX_WIDTH = 800;
 export const Title = ({
     title,
     description,
@@ -17,10 +18,10 @@ export const Title = ({
     variant: TitleVariant;
 }) => (
     <Sheet variant={variant} sx={{ mx: -3, mb: 2, mt: -3, px: 3, py: 2 }}>
-        <Typography gutterBottom level="title-lg">
+        <Typography gutterBottom level="title-lg" maxWidth={MAX_WIDTH}>
             {title}
         </Typography>
-        <Typography gutterBottom level="body-md" maxWidth={800}>
+        <Typography gutterBottom level="body-md" maxWidth={MAX_WIDTH}>
             {description}
         </Typography>
         <Link component={NextLink} href={link.url} target="_blank">

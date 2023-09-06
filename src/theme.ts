@@ -7,7 +7,7 @@ declare module '@mui/joy/styles' {
 
 const theme = extendTheme({
     fontFamily: {
-        body: 'Abel, SF Pro Text, var(--gh-fontFamily-fallback)',
+        body: 'Mulish, SF Pro Text, var(--gh-fontFamily-fallback)',
     },
     components: {
         JoyCard: {

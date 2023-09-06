@@ -270,18 +270,32 @@ export const getPatentYearsClass = (params: GridCellParams<Patent>) => {
     });
 };
 
-export const getScoresClass = (params: GridCellParams<Patent>) => {
-    const { value } = params;
+export const getScoresClassFunc =
+    ({
+        goodThreshold = 0.8,
+        badThreshold = 0.2,
+    }: {
+        goodThreshold?: number;
+        badThreshold?: number;
+    }) =>
+    (params: GridCellParams<Patent>) => {
+        const { value } = params;
 
-    if (typeof value !== 'number') {
-        return '';
-    }
+        if (typeof value !== 'number') {
+            return '';
+        }
 
-    return clsx('biosym-app', {
-        good: value > 0.8,
-        bad: value < 0.2,
-    });
-};
+        return clsx('biosym-app', {
+            good: value > goodThreshold,
+            bad: value < badThreshold,
+        });
+    };
+
+export const getScoresClass = getScoresClassFunc({});
+export const getTolerantScoresClass = getScoresClassFunc({
+    goodThreshold: 0.42,
+    badThreshold: 0.2,
+});
 
 export const getStyles = ({ palette }: { palette: Palette }) => ({
     // eslint-disable-next-line @typescript-eslint/naming-convention

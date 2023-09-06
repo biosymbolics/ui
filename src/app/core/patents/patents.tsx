@@ -19,6 +19,7 @@ import {
     formatPercent,
     getPatentYearsClass,
     getScoresClass,
+    getTolerantScoresClass,
     getStyles,
     renderBoolean,
     unencodeHtml,
@@ -36,10 +37,10 @@ const getPatentColumns = (): GridColDef[] => [
     },
     {
         field: 'score',
-        headerName: 'Score',
+        headerName: 'Overall',
         width: 85,
         valueFormatter: formatNumber,
-        cellClassName: getScoresClass,
+        cellClassName: getTolerantScoresClass,
         description: 'Overall score',
     },
     {
