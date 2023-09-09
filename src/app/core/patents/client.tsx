@@ -167,6 +167,11 @@ export const formatName = <T extends Record<string, unknown>>(
 };
 
 /**
+ * Print blank
+ */
+export const formatBlank = (): string => '--';
+
+/**
  * Pretty-print number
  */
 export const formatNumber = <T extends Record<string, unknown>>(
@@ -272,7 +277,7 @@ export const getPatentYearsClass = (params: GridCellParams<Patent>) => {
 
 export const getScoresClassFunc =
     ({
-        goodThreshold = 0.8,
+        goodThreshold = 0.75,
         badThreshold = 0.2,
     }: {
         goodThreshold?: number;

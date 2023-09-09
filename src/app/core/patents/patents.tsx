@@ -14,6 +14,7 @@ import { Patent, PatentSearchArgs } from '@/types/patents';
 import { fetchPatents } from './actions';
 import {
     DetailContent,
+    formatBlank,
     formatName,
     formatNumber,
     formatPercent,
@@ -78,7 +79,7 @@ const getPatentColumns = (): GridColDef[] => [
         field: 'probability_of_success',
         headerName: 'Est. PoS⚠️',
         width: 85,
-        valueFormatter: formatPercent,
+        valueFormatter: formatBlank,
         cellClassName: getScoresClass,
         description: '**FAKE PLACEHOLDER**!! Estimated PoS.',
     },
@@ -97,6 +98,11 @@ const getPatentColumns = (): GridColDef[] => [
     {
         field: 'max_trial_phase',
         headerName: 'CT Phase',
+        width: 100,
+    },
+    {
+        field: 'last_trial_status',
+        headerName: 'CT Status',
         width: 100,
     },
     {

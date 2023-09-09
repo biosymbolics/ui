@@ -47,10 +47,7 @@ export const Section = ({
 
     if (variant === 'main') {
         return (
-            <Sheet
-                {...props}
-                sx={{ p: 3, ...sxProps, minHeight: sxProps.minHeight || 1000 }}
-            >
+            <Sheet {...props} sx={{ p: 3, ...sxProps, minHeight: 1000 }}>
                 {children}
             </Sheet>
         );
@@ -58,7 +55,10 @@ export const Section = ({
 
     // not on a sheet
     return (
-        <Box {...omit(['key'], props)} position="relative" sx={sxProps}>
+        <Box
+            {...omit(['key'], props)}
+            sx={{ position: 'relative', ...sxProps }}
+        >
             {children}
         </Box>
     );
