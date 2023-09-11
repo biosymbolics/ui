@@ -39,6 +39,7 @@ export const PatentSchema = z.object({
     probability_of_success: z.number(),
     mechanisms: z.array(z.string()),
     score: z.number(),
+    search_rank: z.number(),
     similar_patents: z.array(z.string()),
     suitability_score: z.number(),
     suitability_score_explanation: z.optional(z.union([z.string(), z.null()])),

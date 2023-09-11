@@ -84,6 +84,11 @@ const getPatentColumns = (): GridColDef[] => [
         description: '**FAKE PLACEHOLDER**!! Estimated PoS.',
     },
     {
+        field: 'search_rank',
+        headerName: 'Relevance',
+        width: 100,
+    },
+    {
         field: 'is_approved',
         headerName: 'Approved',
         width: 75,
