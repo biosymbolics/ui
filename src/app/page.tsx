@@ -34,8 +34,8 @@ const Home = (): JSX.Element => (
                     <Typography level="body-md">
                         Systematic, pattern-based and predictive methods for
                         navigating the biomedical data landscape. Our technology
-                        enables you to structure and quanitify hunches,
-                        triangulate across hetergenous data sources, and
+                        enables you to structure and quantify hunches,
+                        triangulate across heterogeneous data sources, and
                         understand broad landscapes of complex activity.
                     </Typography>
                     <Typography gutterBottom level="body-md">
