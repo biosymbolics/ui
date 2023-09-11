@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Mulish } from 'next/font/google';
-import '@fontsource-variable/mulish';
 
 import MuiXLicense from '@/components/data/mui-license';
 import { NavigationProvider } from '@/hooks/navigation';
