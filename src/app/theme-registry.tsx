@@ -19,11 +19,7 @@ import theme from '@/theme';
  * required for X-Grid themeing; should be able to remove in the future
  * @see https://mui.com/joy-ui/guides/using-joy-ui-and-material-ui-together/#case-b-material-ui-in-a-joy-ui-project
  */
-const materialTheme = materialExtendTheme({
-    typography: {
-        fontFamily: 'Mulish, SF Pro Text, var(--gh-fontFamily-fallback)',
-    },
-});
+const materialTheme = materialExtendTheme({});
 
 // This implementation is from emotion-js
 // https://github.com/emotion-js/emotion/issues/2928#issuecomment-1319747902
@@ -75,7 +71,6 @@ const ThemeRegistry = (props: any) => {
                 theme={{ [MATERIAL_THEME_ID]: materialTheme }}
             >
                 <CssVarsProvider theme={theme}>
-                    {/* the custom theme is optional */}
                     <CssBaseline />
                     {children}
                 </CssVarsProvider>

@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { extendTheme } from '@mui/joy/styles';
+import { Mulish } from 'next/font/google';
+
+const mulish = Mulish({ subsets: ['latin'] });
 
 declare module '@mui/joy/styles' {
     // No custom tokens found, you can skip the theme augmentation.
@@ -7,7 +10,8 @@ declare module '@mui/joy/styles' {
 
 const theme = extendTheme({
     fontFamily: {
-        body: 'Mulish, SF Pro Text, var(--gh-fontFamily-fallback)',
+        body: `${mulish.className}, SF Pro Text, var(--gh-fontFamily-fallback)`,
+        display: `${mulish.className}, SF Pro Display, var(--gh-fontFamily-fallback)`,
     },
     components: {
         JoyCard: {
