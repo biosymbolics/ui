@@ -19,7 +19,6 @@ import ListItem from '@mui/joy/ListItem';
 import Menu, { menuClasses } from '@mui/joy/Menu';
 import MenuButton from '@mui/joy/MenuButton';
 import MenuItem from '@mui/joy/MenuItem';
-import Sheet from '@mui/joy/Sheet';
 import Apps from '@mui/icons-material/Apps';
 
 // The Menu is built on top of Popper v2, so it accepts `modifiers` prop that will be passed to the Popper.
@@ -144,44 +143,34 @@ export const SideNav = () => {
             }, 200);
         };
     return (
-        <Sheet
-            color="neutral"
-            sx={{
-                borderRadius: 'sm',
-                py: 1,
-                mr: 20,
-            }}
-            variant="soft"
-        >
-            <List>
-                <ListItem>
-                    <NavMenuButton
-                        label="Apps"
-                        open={menuIndex === 0}
-                        onOpen={() => setMenuIndex(0)}
-                        onLeaveMenu={createHandleLeaveMenu(0)}
-                        onKeyDown={() => setMenuIndex(null)}
-                        menu={
-                            <Menu onClose={() => setMenuIndex(null)}>
-                                <MenuItem {...itemProps} href="/core/patents">
-                                    Patents Search
-                                </MenuItem>
-                                <MenuItem {...itemProps} href="/core/sec">
-                                    Ask SEC
-                                </MenuItem>
-                                <MenuItem {...itemProps} href="/core/finance">
-                                    Finance
-                                </MenuItem>
-                                <MenuItem {...itemProps} href="/core/clindev">
-                                    ClinDev
-                                </MenuItem>
-                            </Menu>
-                        }
-                    >
-                        <Apps />
-                    </NavMenuButton>
-                </ListItem>
-            </List>
-        </Sheet>
+        <List>
+            <ListItem>
+                <NavMenuButton
+                    label="Apps"
+                    open={menuIndex === 0}
+                    onOpen={() => setMenuIndex(0)}
+                    onLeaveMenu={createHandleLeaveMenu(0)}
+                    onKeyDown={() => setMenuIndex(null)}
+                    menu={
+                        <Menu onClose={() => setMenuIndex(null)}>
+                            <MenuItem {...itemProps} href="/core/patents">
+                                Patents Search
+                            </MenuItem>
+                            <MenuItem {...itemProps} href="/core/sec">
+                                Ask SEC
+                            </MenuItem>
+                            <MenuItem {...itemProps} href="/core/finance">
+                                Finance
+                            </MenuItem>
+                            <MenuItem {...itemProps} href="/core/clindev">
+                                ClinDev
+                            </MenuItem>
+                        </Menu>
+                    }
+                >
+                    <Apps />
+                </NavMenuButton>
+            </ListItem>
+        </List>
     );
 };
