@@ -21,7 +21,7 @@ import theme from '@/theme';
  */
 const materialTheme = materialExtendTheme({
     typography: {
-        fontFamily: 'mulish, SF Pro Text, var(--gh-fontFamily-fallback)',
+        fontFamily: 'Mulish, SF Pro Text, var(--gh-fontFamily-fallback)',
     },
 });
 
