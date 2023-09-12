@@ -18,7 +18,12 @@ export const RootLayout = ({
 }: {
     children: React.ReactNode;
 }): JSX.Element => (
-    <html lang="en" style={{ fontSize: '16px' }}>
+    <html
+        data-joy-color-scheme="light"
+        data-mui-color-scheme="light"
+        lang="en"
+        style={{ fontSize: '16px' }}
+    >
         <body className={mulish.className}>
             <ThemeRegistry options={{ key: 'joy' }}>
                 <NavigationProvider>{children}</NavigationProvider>

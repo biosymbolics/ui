@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import Chart from 'react-apexcharts';
 import isEmpty from 'lodash/fp/isEmpty';
+import { useColorScheme } from '@mui/joy/styles';
 
 import { useNavigation } from '@/hooks/navigation';
 import theme from '@/theme';
@@ -23,6 +24,7 @@ export const Line = ({
     title,
     ...props
 }: LineChartProps): JSX.Element => {
+    const { mode } = useColorScheme();
     const { navigate } = useNavigation();
     const [annotation, setAnnotation] = useState<string | null>(null);
     const xAxisAnnotations = useMemo(
@@ -76,8 +78,18 @@ export const Line = ({
         grid: { padding: { right: 30, left: 20 } },
         series,
         stroke: { curve: 'straight' },
-        title: { text: title, align: 'left' },
-        xaxis: { type: 'datetime' },
+        title: {
+            text: title,
+            align: 'left',
+            style: mode === 'dark' ? { color: 'white' } : {},
+        },
+        xaxis: {
+            type: 'datetime',
+            labels: mode === 'dark' ? { style: { colors: 'white' } } : {},
+        },
+        yaxis: {
+            labels: mode === 'dark' ? { style: { colors: 'white' } } : {},
+        },
     };
 
     return (

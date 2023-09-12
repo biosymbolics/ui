@@ -1,5 +1,6 @@
-/* eslint-disable */
 'use client';
+
+/* eslint-disable */
 
 import React from 'react';
 import createCache from '@emotion/cache';
@@ -19,7 +20,7 @@ import theme from '@/theme';
  * required for X-Grid themeing; should be able to remove in the future
  * @see https://mui.com/joy-ui/guides/using-joy-ui-and-material-ui-together/#case-b-material-ui-in-a-joy-ui-project
  */
-const materialTheme = materialExtendTheme({});
+const materialTheme = materialExtendTheme();
 
 // This implementation is from emotion-js
 // https://github.com/emotion-js/emotion/issues/2928#issuecomment-1319747902
@@ -68,9 +69,15 @@ const ThemeRegistry = (props: any) => {
     return (
         <CacheProvider value={cache}>
             <MaterialCssVarsProvider
+                attribute="biosym-color-scheme"
+                defaultMode="system"
                 theme={{ [MATERIAL_THEME_ID]: materialTheme }}
             >
-                <CssVarsProvider theme={theme}>
+                <CssVarsProvider
+                    attribute="biosym-color-scheme"
+                    defaultMode="system"
+                    theme={theme}
+                >
                     <CssBaseline />
                     {children}
                 </CssVarsProvider>

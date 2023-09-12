@@ -3,7 +3,7 @@
 import { ReactNode } from 'react';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Palette } from '@mui/joy/styles';
+import { Theme } from '@mui/joy/styles';
 import Divider from '@mui/joy/Divider';
 import Grid from '@mui/joy/Grid';
 import Link from '@mui/joy/Link';
@@ -71,7 +71,7 @@ export const DetailContent = <T extends Patent>({
 }): JSX.Element => {
     const pathname = usePathname();
     const approvalInfo = patent.approval_date
-        ? `\n\nApproved ${patent.approval_date}} for indication ${patent.indication} (${patent.brand_name}/${patent.generic_name}).`
+        ? `\n\nApproved ${patent.approval_date}} for indication ${patent.indications} (${patent.brand_name}/${patent.generic_name}).`
         : '';
     const trialInfo = patent.last_trial_status
         ? `\n\nLast trial update: ${patent.last_trial_status} on ${
@@ -302,15 +302,31 @@ export const getTolerantScoresClass = getScoresClassFunc({
     badThreshold: 0.2,
 });
 
-export const getStyles = ({ palette }: { palette: Palette }) => ({
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    '& .biosym-app.good': {
-        backgroundColor: palette.success[100],
-        fontWeight: '600',
+export const getStyles = ({ getColorSchemeSelector, palette }: Theme) => ({
+    [getColorSchemeSelector('dark')]: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        '& .biosym-app.good': {
+            backgroundColor: palette.success[500],
+            fontWeight: '600',
+            filter: 'brightness(0.9)',
+        },
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        '& .biosym-app.bad': {
+            backgroundColor: palette.danger[500],
+            fontWeight: '600',
+            filter: 'brightness(0.9)',
+        },
     },
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    '& .biosym-app.bad': {
-        backgroundColor: palette.danger[100],
-        fontWeight: '600',
+    [getColorSchemeSelector('light')]: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        '& .biosym-app.good': {
+            backgroundColor: palette.success[100],
+            fontWeight: '600',
+        },
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        '& .biosym-app.bad': {
+            backgroundColor: palette.danger[100],
+            fontWeight: '600',
+        },
     },
 });

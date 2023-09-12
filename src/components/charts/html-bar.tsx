@@ -22,7 +22,10 @@ type BarChartProps = {
 };
 
 const StyledTr = styled('tr')(({ theme }) => ({
-    background: theme.palette.background.level1,
+    [theme.getColorSchemeSelector('dark')]: {},
+    [theme.getColorSchemeSelector('light')]: {
+        background: theme.palette.primary[50],
+    },
     height: '30px',
     overflow: 'hidden',
     position: 'relative',
@@ -36,15 +39,23 @@ const StyledTr = styled('tr')(({ theme }) => ({
 }));
 
 const StyledBar = styled('div')(({ theme }) => ({
-    background: theme.palette.primary[300],
+    [theme.getColorSchemeSelector('dark')]: {
+        background: theme.palette.primary[600],
+        '&:hover': {
+            backgroundColor: theme.palette.primary[800], // Darker on hover
+        },
+    },
+    [theme.getColorSchemeSelector('light')]: {
+        background: theme.palette.primary[200],
+        '&:hover': {
+            backgroundColor: theme.palette.primary[300], // Darker on hover
+        },
+    },
     cursor: 'pointer',
     height: '100%',
     position: 'relative',
     transition: 'background-color 0.3s',
     whiteSpace: 'nowrap',
-    '&:hover': {
-        backgroundColor: theme.palette.primary[400], // Darker on hover
-    },
 }));
 
 /**

@@ -26,7 +26,7 @@ export const PatentSchema = z.object({
     diseases: z.array(z.string()),
     generic_name: z.union([z.string(), z.null()]),
     genes: z.array(z.string()),
-    indication: z.union([z.string(), z.null()]),
+    indications: z.union([z.string(), z.null()]),
     inventors: z.array(z.string()),
     ipc_codes: z.array(z.string()),
     is_approved: z.optional(z.boolean()),
