@@ -70,8 +70,10 @@ export const DetailContent = <T extends Patent>({
     row: T;
 }): JSX.Element => {
     const pathname = usePathname();
-    const approvalInfo = patent.approval_date
-        ? `\n\nApproved ${patent.approval_date}} for indication ${patent.indications} (${patent.brand_name}/${patent.generic_name}).`
+    const approvalInfo = patent.approval_dates
+        ? `\n\nApproved ${patent.approval_dates[0]}} for indication ${
+              patent.indications?.[0] || '(unknown)'
+          } (${patent.brand_name}/${patent.generic_name}).`
         : '';
     const trialInfo = patent.last_trial_status
         ? `\n\nLast trial update: ${patent.last_trial_status} on ${

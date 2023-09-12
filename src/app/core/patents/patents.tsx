@@ -86,6 +86,7 @@ const getPatentColumns = (): GridColDef[] => [
     {
         field: 'search_rank',
         headerName: 'Relevance',
+        valueFormatter: formatNumber,
         width: 100,
     },
     {
