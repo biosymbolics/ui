@@ -83,7 +83,9 @@ export const DetailContent = <T extends Patent>({
     return (
         <Section mx={3}>
             <Title
-                description={`${patent.abstract}${approvalInfo}${trialInfo}`}
+                description={`${unescape(
+                    patent.abstract
+                )}${approvalInfo}${trialInfo}`}
                 link={{ label: patent.publication_number, url: patent.url }}
                 title={unescape(patent.title)}
                 variant="soft"
