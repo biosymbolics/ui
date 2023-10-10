@@ -12,6 +12,7 @@ import {
 } from '@/types/patents';
 import { getFetchOptions } from '@/utils/actions';
 import { getQueryArgs } from '@/utils/patents';
+import { Heatmap } from '@/components/charts/heatmap';
 
 import { getStyles } from './client';
 
@@ -49,6 +50,7 @@ export const Summary = async ({
                         maxLength: 15,
                     }))}
                 />
+                <Heatmap />
             </Box>
         );
     } catch (e) {
