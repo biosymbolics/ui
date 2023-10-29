@@ -69,7 +69,7 @@ export const Autocomplete = <
 
                       const { inputValue } = params;
                       // Suggest the creation of a new value
-                      const isExisting = getOptionForInputValue(
+                      const isExisting = !!getOptionForInputValue(
                           inputValue,
                           newOptions,
                           optionIdField

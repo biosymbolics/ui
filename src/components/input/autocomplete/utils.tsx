@@ -5,6 +5,7 @@ import AutocompleteOption, {
 } from '@mui/joy/AutocompleteOption';
 import { ListItemDecorator } from '@mui/joy';
 import Add from '@mui/icons-material/Add';
+import { isString } from 'lodash/fp';
 
 import { BaseOption } from './types';
 
@@ -51,6 +52,29 @@ export const getOptionForInputValue = <T, K extends keyof T>(
     options: T[],
     optionIdField: K
 ): T => options.find((option) => option[optionIdField] === inputValue) as T;
+
+/**
+ * Get id for an option
+ *
+ * - string if option is a string
+ * - option[optionIdField] if option is a record
+ *
+ * @param option
+ * @param optionIdField
+ * @returns string id for option
+ */
+export const getOptionId = <T extends BaseOption>(
+    option: T,
+    optionIdField: string | undefined = undefined
+) => {
+    if (optionIdField && !isString(option)) {
+        return option[optionIdField] as string;
+    }
+    if (isString(option)) {
+        return option;
+    }
+    throw new Error('Option must be a string or have an optionIdField');
+};
 
 /**
  * Method to return a filter method

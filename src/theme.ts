@@ -29,6 +29,14 @@ const theme = extendTheme({
                 },
             },
         },
+        JoyLink: {
+            styleOverrides: {
+                root: {
+                    color: 'var(--joy-palette-primary-700)',
+                    textDecoration: 'none',
+                },
+            },
+        },
     },
     colorSchemes: {
         light: {

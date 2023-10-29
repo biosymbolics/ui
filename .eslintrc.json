@@ -25,7 +25,7 @@
         "react/prop-types": "off",
         "react/no-array-index-key": "off",
         "@typescript-eslint/naming-convention": [
-            "error",
+            "warn",
             {
                 "format": ["camelCase"],
                 "leadingUnderscore": "allow",

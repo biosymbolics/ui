@@ -13,7 +13,7 @@ import {
     PatentsSummaries,
     PatentsSummarySchema,
 } from '@/types/patents';
-import { getFetchOptions } from '@/utils/actions';
+import { doFetch } from '@/utils/actions';
 import { getQueryArgs } from '@/utils/patents';
 
 import { getStyles } from './client';
@@ -24,7 +24,7 @@ const fetchReports = cache(
             return [];
         }
         const queryArgs = getQueryArgs(args, true);
-        const res = await getFetchOptions(
+        const res = await doFetch(
             `${PATENT_OVER_TIME_API_URL}?${queryArgs}`,
             PatentsSummarySchema
         );
