@@ -70,12 +70,12 @@ const ThemeRegistry = (props: any) => {
         <CacheProvider value={cache}>
             <MaterialCssVarsProvider
                 attribute="biosym-color-scheme"
-                defaultMode="system"
+                defaultMode="light"
                 theme={{ [MATERIAL_THEME_ID]: materialTheme }}
             >
                 <CssVarsProvider
                     attribute="biosym-color-scheme"
-                    defaultMode="system"
+                    defaultMode="light"
                     theme={theme}
                 >
                     <CssBaseline />
