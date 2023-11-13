@@ -1,17 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { z } from 'zod';
 
-export const PATENT_DOMAINS = [
-    'assignees',
-    'attributes',
-    'compounds',
-    'diseases',
-    // 'genes',
-    'inventors',
-    // 'ipc_codes',
-    'mechanisms',
-];
-
 export const PatentSchema = z.object({
     publication_number: z.string(),
     title: z.string(),
@@ -21,11 +10,13 @@ export const PatentSchema = z.object({
     assignees: z.array(z.string()),
     attributes: z.array(z.string()),
     availability_score: z.number(),
+    biologics: z.array(z.string()),
     brand_name: z.union([z.string(), z.null()]),
     compounds: z.array(z.string()),
+    devices: z.array(z.string()),
     diseases: z.array(z.string()),
     generic_name: z.union([z.string(), z.null()]),
-    genes: z.array(z.string()),
+    // genes: z.array(z.string()),
     indications: z.optional(z.union([z.array(z.string()), z.null()])),
     inventors: z.array(z.string()),
     ipc_codes: z.array(z.string()),

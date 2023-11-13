@@ -26,7 +26,7 @@ import { Metric } from '@/components/data/metric';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
 import { Patent } from '@/types/patents';
-import { getSelectableId, title } from '@/utils/string';
+import { formatLabel, getSelectableId, title } from '@/utils/string';
 
 const SimilarPatents = ({ patent }: { patent: Patent }): JSX.Element => (
     <>
@@ -69,6 +69,16 @@ export const DetailContent = <T extends Patent>({
 }: {
     row: T;
 }): JSX.Element => {
+    const domainsOfInterest: (keyof T)[] = [
+        'assignees',
+        'attributes',
+        'biologics',
+        'compounds',
+        'devices',
+        'diseases',
+        'inventors',
+        'mechanisms',
+    ];
     const pathname = usePathname();
     const approvalInfo = patent.approval_dates
         ? `\n\nApproved ${patent.approval_dates[0]}} for indication ${
@@ -90,43 +100,16 @@ export const DetailContent = <T extends Patent>({
                 title={unescape(patent.title)}
                 variant="soft"
             />
-            <Chips
-                baseUrl={pathname}
-                color="neutral"
-                label="Assignees"
-                items={patent.assignees}
-            />
-            <Chips
-                baseUrl={pathname}
-                color="neutral"
-                label="Inventors"
-                items={patent.inventors}
-            />
-            <Chips
-                baseUrl={pathname}
-                label="Attributes"
-                items={patent.attributes}
-            />
-            <Chips
-                baseUrl={pathname}
-                label="Diseases"
-                items={patent.diseases}
-            />
-            <Chips
-                baseUrl={pathname}
-                label="Compounds"
-                items={patent.compounds}
-            />
-            <Chips
-                baseUrl={pathname}
-                label="Mechanisms"
-                items={patent.mechanisms}
-            />
-            <Chips
-                baseUrl={pathname}
-                label="IPC Codes"
-                items={patent.ipc_codes}
-            />
+
+            {domainsOfInterest.map((domain) => (
+                <Chips
+                    baseUrl={pathname}
+                    color="neutral"
+                    label={formatLabel(domain as string)}
+                    items={(patent[domain] as string[]) || []}
+                />
+            ))}
+
             <Divider sx={{ my: 3 }} />
             <Grid container spacing={3}>
                 <Grid xs={6} sm={2}>

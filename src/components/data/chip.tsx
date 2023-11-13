@@ -33,7 +33,7 @@ type ChipsProps = {
 };
 
 /**
- * Chip component
+ * Chip component wrapper
  */
 export const Chip = ({
     children,

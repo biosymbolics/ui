@@ -8,15 +8,16 @@ import { z } from 'zod';
  * @param Schema
  * @returns
  */
-export const getFetchOptions = async <T>(
+export const doFetch = async <T>(
     url: string,
     schema: z.ZodSchema<T>
 ): Promise<T> => {
-    console.debug(`Calling url: ${url}`);
+    console.info(`Calling url: ${url}`);
 
     const res = await fetch(url);
     if (!res.ok) {
         const error = await res.text();
+        console.error('Failed to fetch: ', error);
         throw new Error(error);
     }
 

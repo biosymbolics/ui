@@ -5,12 +5,13 @@ import Box from '@mui/joy/Box';
 
 import { PATENT_SUMMARY_API_URL } from '@/constants';
 import { Bars } from '@/components/charts/html-bar';
+// import { Scatter } from '@/components/charts/scatter';
 import {
     PatentSearchArgs,
     PatentsSummaries,
     PatentsSummarySchema,
 } from '@/types/patents';
-import { getFetchOptions } from '@/utils/actions';
+import { doFetch } from '@/utils/actions';
 import { getQueryArgs } from '@/utils/patents';
 
 import { getStyles } from './client';
@@ -21,7 +22,7 @@ const fetchSummaries = cache(
             return [];
         }
         const queryArgs = getQueryArgs(args, true);
-        const res = await getFetchOptions(
+        const res = await doFetch(
             `${PATENT_SUMMARY_API_URL}?${queryArgs}`,
             PatentsSummarySchema
         );
@@ -49,6 +50,7 @@ export const Summary = async ({
                         maxLength: 15,
                     }))}
                 />
+                {/* <Scatter /> */}
             </Box>
         );
     } catch (e) {

@@ -18,6 +18,7 @@ export type AnnotationSpec = {
 
 export type BasicChartProps = {
     annotations?: AnnotationSpec[];
+    colors?: string[];
     height?: number;
     pathname: string;
     series: ApexOptions['series'];

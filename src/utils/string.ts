@@ -65,5 +65,10 @@ export const getSelectableId = (input?: string | number): string =>
           ].reduce((value, fn) => fn(value), input as string)
         : generateRandomishId();
 
+/**
+ * Format a string to be used as a label
+ * @param input
+ * @returns nicely formatted label
+ */
 export const formatLabel = (input: string | number): string =>
     title((input as string).replace(/[-_]/g, ' '));

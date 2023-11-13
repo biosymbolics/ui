@@ -14,7 +14,7 @@ import {
     PatentResponseSchema,
     PatentSearchArgs,
 } from '@/types/patents';
-import { getFetchOptions } from '@/utils/actions';
+import { doFetch } from '@/utils/actions';
 import { getQueryArgs } from '@/utils/patents';
 
 const AutocompleteResponse = z.object({
@@ -34,7 +34,7 @@ const AutocompleteResponse = z.object({
 export const fetchOptions = async (term: string): Promise<Option[]> => {
     'use server';
 
-    const res = await getFetchOptions(
+    const res = await doFetch(
         `${PATENT_TERM_API_URL}?term=${term}`,
         AutocompleteResponse
     );
@@ -55,7 +55,7 @@ export const fetchDescription = cache(
         );
         if (!res.ok) {
             throw new Error(
-                `Failed to fetch patents: ${res.status} ${res.statusText}`
+                `Failed to fetch description: ${res.status} ${res.statusText}`
             );
         }
         return res.text();
@@ -73,10 +73,11 @@ export const fetchPatents = cache(
             return [];
         }
         const queryArgs = getQueryArgs(args, true);
-        const res = await getFetchOptions(
+        const res = await doFetch(
             `${PATENT_SEARCH_API_URL}?${queryArgs}`,
             PatentResponseSchema
         );
+
         return res;
     }
 );
