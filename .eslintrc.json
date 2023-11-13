@@ -36,7 +36,8 @@
                 "leadingUnderscore": "allow",
                 "selector": "variable"
             },
-            { "format": ["PascalCase"], "selector": "typeLike" }
+            { "format": ["PascalCase"], "selector": "typeLike" },
+            { "format": ["camelCase", "PascalCase"], "selector": "import" }
         ],
         "no-console": [
             "error",

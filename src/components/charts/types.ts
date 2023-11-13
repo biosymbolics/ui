@@ -16,14 +16,17 @@ export type AnnotationSpec = {
     type?: AnnotationType;
 };
 
-export type BasicChartProps = {
-    annotations?: AnnotationSpec[];
-    colors?: string[];
+export type BaseChartProps = {
     height?: number;
     pathname: string;
-    series: ApexOptions['series'];
     title?: string;
     width?: number;
+};
+
+export type BaseApexChartProps = BaseChartProps & {
+    annotations?: AnnotationSpec[];
+    colors?: string[];
+    series: ApexOptions['series'];
 };
 
 export type SparklineProps = {
@@ -33,3 +36,10 @@ export type SparklineProps = {
 };
 
 export type DataSpec = { label: string | number; value: number; url?: string };
+
+export type PatentLink = { source: string; target: string; weight: number };
+export type PatentNode = { id: string; patentIds: string[] };
+export type PatentGraph = {
+    links: PatentLink[];
+    nodes: PatentNode[];
+};
