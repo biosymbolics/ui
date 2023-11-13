@@ -17,7 +17,7 @@ const CoordValues = {
 type Coords = Record<keyof typeof CoordValues, number>;
 
 /**
- * Force direted chart
+ * Force directed chart
  * @see https://github.com/vasturiano/react-force-graph
  */
 export const ForceDirected = ({

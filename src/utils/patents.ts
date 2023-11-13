@@ -1,3 +1,4 @@
+import camelCase from 'lodash/fp/camelCase';
 import isBoolean from 'lodash/fp/isBoolean';
 import isEmpty from 'lodash/fp/isEmpty';
 import isNumber from 'lodash/fp/isNumber';
@@ -5,16 +6,30 @@ import snakeCase from 'lodash/fp/snakeCase';
 
 import { PatentSearchArgs } from '@/types/patents';
 
+import { formatKeys } from './object';
+
+/**
+ * Optionally snake-case the key
+ * @param key
+ * @param isSnakeCase
+ * @returns a key, maybe snake-cased
+ */
 const maybeSnakeCase = (key: string, isSnakeCase: boolean): string =>
     isSnakeCase ? snakeCase(key) : key;
 
+/**
+ * Format the value for the query string
+ * @param value
+ * @param isServer
+ * @returns
+ */
 const formatValue = (
     value: unknown,
     isServer: boolean = false
 ): string | number => {
     if (Array.isArray(value)) {
         if (isServer) {
-            return value.join('%3B'); // escaped ;
+            return value.join('%3B'); // escaped ';'
         }
         return value.join(';');
     }
@@ -26,6 +41,7 @@ const formatValue = (
     }
     return value as string;
 };
+
 /**
  * Get the query string for the patent search
  *
@@ -51,3 +67,15 @@ export const getQueryArgs = (
 
     return queryParams.join('&');
 };
+
+/**
+ * Deserialize API response from our APIs
+ *
+ * (Currently just camelCases the keys)
+ *
+ * @param response
+ * @returns response object with recursively camelCased keys
+ */
+export const deserializeAPIResponse = <T extends Record<string, unknown>>(
+    response: T
+): T => formatKeys(response, camelCase);
