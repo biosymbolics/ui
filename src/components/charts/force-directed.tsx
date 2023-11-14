@@ -1,56 +1,67 @@
 'use client';
 
 import Typography from '@mui/joy/Typography';
-import ForceGraph3D from 'react-force-graph-3d';
-import SpriteText from 'three-spritetext';
+import ForceGraph2D, { NodeObject } from 'react-force-graph-2d';
 
-import { BaseChartProps, PatentGraph, PatentLink } from './types';
+import { PatentGraph, PatentLink, PatentNode } from '@/types/patents';
+
+import { BaseChartProps } from './types';
 
 type ForceDirectedProps = BaseChartProps & {
     data: PatentGraph;
 };
-const CoordValues = {
-    x: 'x',
-    y: 'y',
-    z: 'z',
-};
-type Coords = Record<keyof typeof CoordValues, number>;
+
+type CanvasNode = NodeObject<PatentNode>;
 
 /**
  * Force directed chart
+ *
+ * Features
+ *   - it's 3d (right now - probably want to add 2d option)
+ *   - has text labels on nodes
+ *   - link width is based on weight (as provided in data)
+ *
  * @see https://github.com/vasturiano/react-force-graph
  */
 export const ForceDirected = ({
     data,
+    title,
     ...props
 }: ForceDirectedProps): JSX.Element => (
     <>
-        <Typography level="title-md">Force Directed Graph</Typography>
-        <ForceGraph3D
+        {title && <Typography level="title-md">{title}</Typography>}
+        <ForceGraph2D
             {...props}
-            linkThreeObjectExtend
             graphData={data}
             linkSource="source"
             linkTarget="target"
-            linkThreeObject={(link: PatentLink) =>
-                new SpriteText(
-                    `${link.source} > ${link.target}`,
-                    1.5,
-                    'lightgrey'
-                )
-            }
-            linkPositionUpdate={(
-                sprite: { position: Coords },
-                { start, end }: { start: Coords; end: Coords }
+            linkWidth={(link: PatentLink) => link.weight}
+            nodeCanvasObject={(
+                node: CanvasNode,
+                ctx: CanvasRenderingContext2D,
+                globalScale
             ) => {
-                const middlePos = {
-                    x: (start.x + end.x) / 2,
-                    y: (start.y + end.y) / 2,
-                    z: (start.z + end.z) / 2,
-                };
+                if (node.x == null || node.y == null || ctx == null) {
+                    return;
+                }
 
-                // Position sprite
-                Object.assign(sprite.position, middlePos);
+                const label = node.id;
+                const fontSize = 12 / globalScale;
+                ctx.font = `${fontSize}px Sans-Serif`;
+                const textWidth = ctx.measureText(label).width;
+
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+                ctx.fillRect(
+                    node.x - textWidth + (fontSize * 0.2) / 2,
+                    node.y - (fontSize * 2 * 1.2) / 2,
+                    textWidth + fontSize * 0.2,
+                    fontSize * 2 * 1.2
+                );
+
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = '#000';
+                ctx.fillText(label, node.x, node.y);
             }}
             nodeId="id"
         />

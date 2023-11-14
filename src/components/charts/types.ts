@@ -36,10 +36,3 @@ export type SparklineProps = {
 };
 
 export type DataSpec = { label: string | number; value: number; url?: string };
-
-export type PatentLink = { source: string; target: string; weight: number };
-export type PatentNode = { id: string; patentIds: string[] };
-export type PatentGraph = {
-    links: PatentLink[];
-    nodes: PatentNode[];
-};

@@ -27,6 +27,7 @@ import {
     getTolerantScoresClass,
     getStyles,
 } from './client';
+import { PatentGraph } from './graph';
 import { OverTime } from './over-time';
 import { Summary } from './summary';
 
@@ -150,6 +151,10 @@ const getTabs = (
     {
         label: 'Over Time',
         panel: <OverTime {...args} />,
+    },
+    {
+        label: 'Graph',
+        panel: <PatentGraph {...args} />,
     },
 ];
 
