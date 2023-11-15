@@ -5,7 +5,7 @@ import camelCase from 'lodash/fp/camelCase';
 import Box from '@mui/joy/Box';
 
 import { PATENT_GRAPH_API_URL } from '@/constants';
-import { ForceDirected } from '@/components/charts/force-directed';
+import { Graph } from '@/components/charts/graph';
 import {
     PatentGraph as PatentGraphType,
     PatentSearchArgs,
@@ -37,11 +37,7 @@ export const PatentGraph = async ({
 }: PatentSearchArgs & { pathname?: string }) => {
     try {
         const graph = await fetchGraph({ terms, ...args });
-        return (
-            <Box>
-                <ForceDirected data={graph} pathname={pathname} />
-            </Box>
-        );
+        return <Graph data={graph} pathname={pathname} />;
     } catch (e) {
         return (
             <Box>

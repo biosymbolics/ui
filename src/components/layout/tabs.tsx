@@ -25,7 +25,11 @@ export const Tabs = ({ tabs }: { tabs: TabDef[] }): JSX.Element => (
             ))}
         </TabList>
         {tabs.map(({ label, panel }, idx) => (
-            <TabPanel key={`${getSelectableId(label)}-panel`} value={idx}>
+            <TabPanel
+                key={`${getSelectableId(label)}-panel`}
+                value={idx}
+                sx={{ height: '100vh' }}
+            >
                 {panel}
             </TabPanel>
         ))}

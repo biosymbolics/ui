@@ -64,7 +64,7 @@ export type PatentSearchArgs = {
     terms: string[] | null;
 };
 
-const PatentLinkSchema = z.object({
+const PatentEdgeSchema = z.object({
     source: z.string(),
     target: z.string(),
     weight: z.number(),
@@ -76,10 +76,10 @@ const PatentNodeSchema = z.object({
 });
 
 export const PatentGraphSchema = z.object({
-    links: z.array(PatentLinkSchema),
+    edges: z.array(PatentEdgeSchema),
     nodes: z.array(PatentNodeSchema),
 });
 
 export type PatentGraph = z.infer<typeof PatentGraphSchema>;
-export type PatentLink = z.infer<typeof PatentLinkSchema>;
+export type PatentEdge = z.infer<typeof PatentEdgeSchema>;
 export type PatentNode = z.infer<typeof PatentNodeSchema>;
