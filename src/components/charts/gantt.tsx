@@ -5,7 +5,7 @@ import Chart from 'react-apexcharts';
 import { useNavigation } from '@/hooks/navigation';
 import theme from '@/theme';
 
-import { ChartOptions, BasicChartProps } from './types';
+import { ChartOptions, BaseApexChartProps } from './types';
 
 /**
  * Timeline/gantt-style bar chart
@@ -15,7 +15,7 @@ export const Timeline = ({
     pathname,
     series,
     title,
-}: BasicChartProps): JSX.Element => {
+}: BaseApexChartProps): JSX.Element => {
     const { navigate } = useNavigation();
 
     const options: ChartOptions = {

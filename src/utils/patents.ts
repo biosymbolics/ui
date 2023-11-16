@@ -5,16 +5,28 @@ import snakeCase from 'lodash/fp/snakeCase';
 
 import { PatentSearchArgs } from '@/types/patents';
 
+/**
+ * Optionally snake-case the key
+ * @param key
+ * @param isSnakeCase
+ * @returns a key, maybe snake-cased
+ */
 const maybeSnakeCase = (key: string, isSnakeCase: boolean): string =>
     isSnakeCase ? snakeCase(key) : key;
 
+/**
+ * Format the value for the query string
+ * @param value
+ * @param isServer
+ * @returns
+ */
 const formatValue = (
     value: unknown,
     isServer: boolean = false
 ): string | number => {
     if (Array.isArray(value)) {
         if (isServer) {
-            return value.join('%3B'); // escaped ;
+            return value.join('%3B'); // escaped ';'
         }
         return value.join(';');
     }
@@ -26,6 +38,7 @@ const formatValue = (
     }
     return value as string;
 };
+
 /**
  * Get the query string for the patent search
  *

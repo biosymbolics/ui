@@ -1,9 +1,9 @@
 'use client';
 
 import { BaseApexChart } from './base-apex';
-import { BasicChartProps } from './types';
+import { BaseApexChartProps } from './types';
 
-type ScatterProps = BasicChartProps;
+type ScatterProps = BaseApexChartProps;
 
 /**
  * Scatter

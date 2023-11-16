@@ -8,10 +8,10 @@ import { useColorScheme } from '@mui/joy/styles';
 import { useNavigation } from '@/hooks/navigation';
 import theme from '@/theme';
 
-import { ChartOptions, BasicChartProps } from './types';
+import { ChartOptions, BaseApexChartProps } from './types';
 import { AnnotationDetail, getAnnotations } from './annotation';
 
-type BaseApexChartProps = BasicChartProps & {
+type BasicApexChartProps = BaseApexChartProps & {
     additionalOptions?: ChartOptions;
     type: 'heatmap' | 'line' | 'scatter';
 };
@@ -28,7 +28,7 @@ export const BaseApexChart = ({
     title,
     type,
     ...props
-}: BaseApexChartProps): JSX.Element => {
+}: BasicApexChartProps): JSX.Element => {
     const { mode } = useColorScheme();
     const { navigate } = useNavigation();
     const [annotation, setAnnotation] = useState<string | null>(null);

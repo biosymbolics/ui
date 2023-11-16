@@ -8,9 +8,9 @@ import isNumber from 'lodash/fp/isNumber';
 
 import { useNavigation } from '@/hooks/navigation';
 
-import { ChartOptions, BasicChartProps } from './types';
+import { ChartOptions, BaseApexChartProps } from './types';
 
-type BarChartProps = BasicChartProps & {
+type BarChartProps = BaseApexChartProps & {
     labels: string[];
 };
 

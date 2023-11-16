@@ -2,10 +2,10 @@
 
 import theme from '@/theme';
 
-import { ChartOptions, BasicChartProps } from './types';
+import { ChartOptions, BaseApexChartProps } from './types';
 import { BaseApexChart } from './base-apex';
 
-type LineChartProps = BasicChartProps;
+type LineChartProps = BaseApexChartProps;
 
 /**
  * Line chart

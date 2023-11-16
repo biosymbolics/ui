@@ -63,3 +63,27 @@ export type PatentSearchArgs = {
     queryType: string | null;
     terms: string[] | null;
 };
+
+const PatentEdgeSchema = z.object({
+    source: z.string(),
+    target: z.string(),
+});
+
+const PatentNodeSchema = z.object({
+    id: z.string(),
+    group: z.string(),
+    position: z.object({
+        x: z.number(),
+        y: z.number(),
+    }),
+    size: z.number(),
+});
+
+export const PatentGraphSchema = z.object({
+    edges: z.array(PatentEdgeSchema),
+    nodes: z.array(PatentNodeSchema),
+});
+
+export type PatentGraph = z.infer<typeof PatentGraphSchema>;
+export type PatentEdge = z.infer<typeof PatentEdgeSchema>;
+export type PatentNode = z.infer<typeof PatentNodeSchema>;

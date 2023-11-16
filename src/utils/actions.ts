@@ -10,7 +10,8 @@ import { z } from 'zod';
  */
 export const doFetch = async <T>(
     url: string,
-    schema: z.ZodSchema<T>
+    schema: z.ZodSchema<T>,
+    transform: (data: unknown) => unknown = (data) => data
 ): Promise<T> => {
     console.info(`Calling url: ${url}`);
 
@@ -22,7 +23,8 @@ export const doFetch = async <T>(
     }
 
     const jsonResp: unknown = await res.json();
-    const parsedRes = schema.safeParse(jsonResp);
+    const transformed = transform(jsonResp);
+    const parsedRes = schema.safeParse(transformed);
 
     if (parsedRes.success === false) {
         const message = `Failed to parse: ${parsedRes.error.toString()}`;

@@ -16,14 +16,17 @@ export type AnnotationSpec = {
     type?: AnnotationType;
 };
 
-export type BasicChartProps = {
-    annotations?: AnnotationSpec[];
-    colors?: string[];
+export type BaseChartProps = {
     height?: number;
     pathname: string;
-    series: ApexOptions['series'];
     title?: string;
     width?: number;
+};
+
+export type BaseApexChartProps = BaseChartProps & {
+    annotations?: AnnotationSpec[];
+    colors?: string[];
+    series: ApexOptions['series'];
 };
 
 export type SparklineProps = {

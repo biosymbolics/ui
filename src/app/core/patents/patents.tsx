@@ -7,24 +7,27 @@ import Typography from '@mui/joy/Typography';
 import WarningIcon from '@mui/icons-material/Warning';
 import 'server-only';
 
-import { DataGrid } from '@/components/data/grid';
+import {
+    DataGrid,
+    formatBlank,
+    formatName,
+    formatNumber,
+    formatPercent,
+    renderBoolean,
+    unencodeHtml,
+} from '@/components/data/grid';
 import { Tabs } from '@/components/layout/tabs';
 import { Patent, PatentSearchArgs } from '@/types/patents';
 
 import { fetchPatents } from './actions';
 import {
     DetailContent,
-    formatBlank,
-    formatName,
-    formatNumber,
-    formatPercent,
     getPatentYearsClass,
     getScoresClass,
     getTolerantScoresClass,
     getStyles,
-    renderBoolean,
-    unencodeHtml,
 } from './client';
+import { PatentGraph } from './graph';
 import { OverTime } from './over-time';
 import { Summary } from './summary';
 
@@ -148,6 +151,10 @@ const getTabs = (
     {
         label: 'Over Time',
         panel: <OverTime {...args} />,
+    },
+    {
+        label: 'Graph',
+        panel: <PatentGraph {...args} />,
     },
 ];
 
