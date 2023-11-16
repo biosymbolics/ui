@@ -67,12 +67,16 @@ export type PatentSearchArgs = {
 const PatentEdgeSchema = z.object({
     source: z.string(),
     target: z.string(),
-    weight: z.number(),
 });
 
 const PatentNodeSchema = z.object({
     id: z.string(),
-    patentIds: z.array(z.string()),
+    group: z.string(),
+    position: z.object({
+        x: z.number(),
+        y: z.number(),
+    }),
+    size: z.number(),
 });
 
 export const PatentGraphSchema = z.object({
