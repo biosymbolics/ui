@@ -38,8 +38,6 @@
         "react-vega": "^7.6.0",
         "remark-gfm": "^4.0.0",
         "swr": "^2.2.2",
-        "three": "^0.158.0",
-        "three-spritetext": "^1.8.1",
         "typescript": "5.2.2",
         "unfetch": "^5.0.0",
         "zod": "^3.22.2"

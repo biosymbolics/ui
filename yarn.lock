@@ -3816,16 +3816,6 @@ text-table@^0.2.0:
   resolved "https://registry.npmjs.org/text-table/-/text-table-0.2.0.tgz"
   integrity sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==
 
-three-spritetext@^1.8.1:
-  version "1.8.1"
-  resolved "https://registry.npmjs.org/three-spritetext/-/three-spritetext-1.8.1.tgz"
-  integrity sha512-pohv5CcdeUtAPLi9KhG0kcDLj3gmzdIFK/QlgsTJe+U07oQFSj+K0DLPQKbNDPWAK+7YzhulkRcjWdVIQ5F7nw==
-
-three@^0.158.0:
-  version "0.158.0"
-  resolved "https://registry.npmjs.org/three/-/three-0.158.0.tgz"
-  integrity sha512-TALj4EOpdDPF1henk2Q+s17K61uEAAWQ7TJB68nr7FKxqwyDr3msOt5IWdbGm4TaWKjrtWS8DJJWe9JnvsWOhQ==
-
 to-fast-properties@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/to-fast-properties/-/to-fast-properties-2.0.0.tgz"
