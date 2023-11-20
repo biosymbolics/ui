@@ -66,9 +66,30 @@ export const getSelectableId = (input?: string | number): string =>
         : generateRandomishId();
 
 /**
+ * Returns true if input seems to contain an abbreviation
+ * @param input
+ * @returns true if input seems to contain an abbreviation
+ */
+const containsAbbr = (input: string): boolean => {
+    const ABBR_RE = /([A-Z]{1,}[A-Z0-9]{3,})/;
+    return ABBR_RE.test(input) && input.toUpperCase() !== input;
+};
+
+/**
  * Format a string to be used as a label
  * @param input
  * @returns nicely formatted label
  */
-export const formatLabel = (input: string | number): string =>
-    title((input as string).replace(/[-_]/g, ' '));
+export const formatLabel = (
+    input: string | number,
+    exceptionRe: string | undefined = undefined
+): string => {
+    const strInput = `${input}`;
+    if (exceptionRe && new RegExp(exceptionRe).test(strInput)) {
+        return strInput;
+    }
+    if (containsAbbr(strInput)) {
+        return strInput;
+    }
+    return title(strInput.replace(/_/g, ' '));
+};

@@ -12,7 +12,6 @@ import {
     formatBlank,
     formatName,
     formatNumber,
-    formatPercent,
     renderBoolean,
     unencodeHtml,
 } from '@/components/data/grid';
@@ -26,6 +25,7 @@ import {
     getScoresClass,
     getTolerantScoresClass,
     getStyles,
+    getAvailabilityClass,
 } from './client';
 import { PatentGraph } from './graph';
 import { OverTime } from './over-time';
@@ -71,12 +71,12 @@ const getPatentColumns = (): GridColDef[] => [
         cellClassName: getPatentYearsClass,
     },
     {
-        field: 'availability_score',
-        headerName: 'Est. Avail⚠️',
+        field: 'availability_likelihood',
+        headerName: 'Est. Avail',
         width: 85,
-        valueFormatter: formatPercent,
-        cellClassName: getScoresClass,
-        description: '**FAKE PLACEHOLDER**!! Estimated availability of patent.',
+        valueFormatter: formatName,
+        cellClassName: getAvailabilityClass,
+        description: 'Likehood of patent being available.',
     },
     {
         field: 'probability_of_success',

@@ -118,6 +118,13 @@ export const DetailContent = <T extends Patent>({
                         label="Patent Years Left"
                     />
                 </Grid>
+                <Grid xs={6} sm={2}>
+                    <Metric
+                        value={patent.availability_likelihood}
+                        label="Likehood of Availability"
+                        tooltip={patent.availability_explanation}
+                    />
+                </Grid>
             </Grid>
             <Divider sx={{ my: 3 }} />
             <Section>
@@ -137,6 +144,19 @@ export const getPatentYearsClass = (params: GridCellParams<Patent>) => {
     return clsx('biosym-app', {
         good: value > 15,
         bad: value < 8,
+    });
+};
+
+export const getAvailabilityClass = (params: GridCellParams<Patent>) => {
+    const { value } = params;
+
+    if (typeof value !== 'string') {
+        return '';
+    }
+
+    return clsx('biosym-app', {
+        good: ['POSSIBLE', 'LIKELY'].includes(value),
+        bad: value === 'UNLIKELY',
     });
 };
 
