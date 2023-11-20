@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     description: 'Intelligent IP search for biotech and pharma',
 };
 
-export const RootLayout = ({
+const RootLayout = ({
     children,
 }: {
     children: React.ReactNode;

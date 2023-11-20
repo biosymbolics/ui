@@ -14,16 +14,16 @@ import { getSelectableId } from '@/utils/string';
 export type BaseOption = string | Record<string, any>;
 
 type SelectProps<T extends BaseOption> = {
-    defaultValue?: JoySelectProps<T>['defaultValue'];
-    disabled?: JoySelectProps<T>['disabled'];
+    defaultValue?: JoySelectProps<T, false>['defaultValue'];
+    disabled?: JoySelectProps<T, false>['disabled'];
     error?: boolean;
     helperText?: string;
-    id?: JoySelectProps<T>['id'];
+    id?: JoySelectProps<T, false>['id'];
     idField?: keyof T; // TODO: only if T is Record<string, any>
     label?: string;
     options: T[];
-    onChange?: JoySelectProps<T>['onChange'];
-    size?: JoySelectProps<T>['size'];
+    onChange?: JoySelectProps<T, false>['onChange'];
+    size?: JoySelectProps<T, false>['size'];
 };
 
 /**

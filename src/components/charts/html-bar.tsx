@@ -78,7 +78,10 @@ export const Bar = ({ data, label, maxLength = 100 }: BarChartProps) => {
                 >
                     <Box sx={{ left: 10 }}>
                         <span>
-                            {truncate({ length: 38 }, item.label as string)}
+                            {formatLabel(
+                                truncate({ length: 38 }, item.label as string),
+                                '^WO-.*$'
+                            )}
                         </span>
                     </Box>
                 </StyledBar>
