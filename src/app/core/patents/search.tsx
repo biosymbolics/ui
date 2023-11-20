@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Grid from '@mui/joy/Grid';
 import Typography from '@mui/joy/Typography';
@@ -80,7 +80,10 @@ export const SearchBar = ({
                         <Select
                             defaultValue={queryType}
                             label="Search Type"
-                            onChange={(e, value) => {
+                            onChange={(
+                                e: unknown,
+                                value: SetStateAction<string | null>
+                            ) => {
                                 setQueryType(value);
                             }}
                             options={['AND', 'OR']}
