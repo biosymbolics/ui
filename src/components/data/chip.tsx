@@ -2,6 +2,7 @@ import link from 'next/link';
 import React, { ReactNode } from 'react';
 import { ColorPaletteProp } from '@mui/joy/styles';
 import { default as JoyChip, ChipProps as JoyChipProps } from '@mui/joy/Chip';
+import Box from '@mui/joy/Box';
 import Grid from '@mui/joy/Grid';
 import Tooltip from '@mui/joy/Tooltip';
 import Typography from '@mui/joy/Typography';
@@ -59,7 +60,7 @@ export const Chip = ({
 
     if (tooltip) {
         return (
-            <Tooltip title={tooltip} variant="outlined">
+            <Tooltip title={<Box>{tooltip}</Box>} variant="outlined">
                 {chip}
             </Tooltip>
         );

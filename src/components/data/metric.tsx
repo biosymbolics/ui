@@ -1,6 +1,7 @@
-import Tooltip from '@mui/joy/Tooltip';
+import Box from '@mui/joy/Box';
 import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
+import Tooltip from '@mui/joy/Tooltip';
 import Typography from '@mui/joy/Typography';
 import isNumber from 'lodash/fp/isNumber';
 
@@ -27,7 +28,10 @@ export const Metric = ({ label, tooltip, value }: MetricProps): JSX.Element => {
 
     if (tooltip) {
         return (
-            <Tooltip title={tooltip} variant="outlined">
+            <Tooltip
+                title={<Box sx={{ maxWidth: '300px' }}>{tooltip}</Box>}
+                variant="outlined"
+            >
                 {metric}
             </Tooltip>
         );
