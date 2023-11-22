@@ -45,6 +45,7 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
                             isExhaustive={isExhaustive}
                             minPatentYears={minPatentYears}
                             queryType={queryType}
+                            similarPatents={similarPatents}
                             terms={terms || []}
                         />
                     </Suspense>
