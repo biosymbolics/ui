@@ -21,6 +21,7 @@ export const SearchBar = ({
     isExhaustive,
     minPatentYears,
     queryType,
+    similarPatents,
     terms,
 }: {
     fetchOptions: (term: string) => Promise<Option[]>;
@@ -28,6 +29,9 @@ export const SearchBar = ({
     const { navigate } = useNavigation();
     const pathname = usePathname();
     const [newTerms, setTerms] = useState<string[] | null>(terms);
+    const [newSimilarPatents, setSimilarPatents] = useState<string[] | null>(
+        similarPatents
+    );
     const [newQueryType, setQueryType] = useState<string | null>(queryType);
     const [newIsExhaustive, setIsExhaustive] = useState<boolean>(isExhaustive);
     const [newMinPatentYears, setMinPatentYears] =
@@ -99,6 +103,31 @@ export const SearchBar = ({
                         />
                     </Grid>
                 </Grid>
+                <Grid container spacing={4} sx={{ mt: 1 }}>
+                    <Grid xs={12} sm={6}>
+                        <Autocomplete<Option, true, false>
+                            isMultiple
+                            defaultValue={(similarPatents || []).map(
+                                (patent) => ({
+                                    id: patent,
+                                    label: patent,
+                                })
+                            )}
+                            isOptionEqualToValue={(
+                                option: Option,
+                                value: Option
+                            ) => option.id === value.id}
+                            label="North Star Patents"
+                            onChange={(e, values) => {
+                                setSimilarPatents(values.map((v) => v.id));
+                            }}
+                            optionFetcher={fetchOptions}
+                            size="md"
+                            tooltip="Patents that are similar to the ones you are looking for"
+                            variant="soft"
+                        />
+                    </Grid>
+                </Grid>
             </Section>
             <Section variant="l2">
                 <Button
@@ -111,6 +140,7 @@ export const SearchBar = ({
                             isExhaustive: newIsExhaustive,
                             minPatentYears: newMinPatentYears,
                             queryType: newQueryType,
+                            similarPatents: newSimilarPatents,
                             terms: newTerms,
                         });
                         navigate(`${pathname}?${queryArgs}`);

@@ -1,6 +1,5 @@
 import { ReactElement } from 'react';
 import FormHelperText from '@mui/joy/FormHelperText';
-import FormLabel from '@mui/joy/FormLabel';
 import FormControl from '@mui/joy/FormControl';
 import JoySelectOption from '@mui/joy/Option';
 import {
@@ -8,6 +7,7 @@ import {
     SelectProps as JoySelectProps,
 } from '@mui/joy/Select';
 
+import { FormLabel } from '@/components/input/label';
 import { getSelectableId } from '@/utils/string';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,6 +24,7 @@ type SelectProps<T extends BaseOption> = {
     options: T[];
     onChange?: JoySelectProps<T, false>['onChange'];
     size?: JoySelectProps<T, false>['size'];
+    tooltip?: string;
 };
 
 /**
@@ -36,6 +37,7 @@ export const Select = <T extends BaseOption>({
     idField,
     label,
     options,
+    tooltip,
     ...props
 }: SelectProps<T>): ReactElement<SelectProps<T>> => {
     const formId = id || getSelectableId(label);
@@ -52,7 +54,7 @@ export const Select = <T extends BaseOption>({
 
     return (
         <FormControl id={formId} error={error}>
-            {label && <FormLabel>{label}</FormLabel>}
+            {label && <FormLabel tooltip={tooltip}>{label}</FormLabel>}
             <JoySelect
                 placeholder="Choose one…"
                 size="sm"
