@@ -16,17 +16,17 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     const queryType = searchParams.queryType ?? 'AND';
     const minPatentYears = parseInt(searchParams.minPatentYears ?? '10', 10);
     const isExhaustive = searchParams.isExhaustive === 'true';
-    const similarPatents = searchParams.similarPatents?.split(';') ?? null;
+    const exemplarPatents = searchParams.exemplarPatents?.split(';') ?? null;
 
     return (
         <>
             <Section variant="separated">
                 <SearchBar
+                    exemplarPatents={exemplarPatents}
                     fetchOptions={fetchOptions}
                     isExhaustive={isExhaustive}
                     minPatentYears={minPatentYears}
                     queryType={queryType}
-                    similarPatents={similarPatents}
                     terms={terms || []}
                 />
             </Section>
@@ -42,10 +42,10 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
                 <Section>
                     <Suspense fallback={<Skeleton height="80vh" />}>
                         <Patents
+                            exemplarPatents={exemplarPatents}
                             isExhaustive={isExhaustive}
                             minPatentYears={minPatentYears}
                             queryType={queryType}
-                            similarPatents={similarPatents}
                             terms={terms || []}
                         />
                     </Suspense>

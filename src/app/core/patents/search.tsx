@@ -21,7 +21,7 @@ export const SearchBar = ({
     isExhaustive,
     minPatentYears,
     queryType,
-    similarPatents,
+    exemplarPatents,
     terms,
 }: {
     fetchOptions: (term: string) => Promise<Option[]>;
@@ -29,8 +29,8 @@ export const SearchBar = ({
     const { navigate } = useNavigation();
     const pathname = usePathname();
     const [newTerms, setTerms] = useState<string[] | null>(terms);
-    const [newSimilarPatents, setSimilarPatents] = useState<string[] | null>(
-        similarPatents
+    const [newExemplarPatents, setExemplarPatents] = useState<string[] | null>(
+        exemplarPatents
     );
     const [newQueryType, setQueryType] = useState<string | null>(queryType);
     const [newIsExhaustive, setIsExhaustive] = useState<boolean>(isExhaustive);
@@ -107,7 +107,7 @@ export const SearchBar = ({
                     <Grid xs={12} sm={6}>
                         <Autocomplete<Option, true, false>
                             isMultiple
-                            defaultValue={(similarPatents || []).map(
+                            defaultValue={(exemplarPatents || []).map(
                                 (patent) => ({
                                     id: patent,
                                     label: patent,
@@ -117,13 +117,13 @@ export const SearchBar = ({
                                 option: Option,
                                 value: Option
                             ) => option.id === value.id}
-                            label="North Star Patents"
+                            label="Exemplar Patents"
                             onChange={(e, values) => {
-                                setSimilarPatents(values.map((v) => v.id));
+                                setExemplarPatents(values.map((v) => v.id));
                             }}
                             optionFetcher={fetchOptions}
                             size="md"
-                            tooltip="Patents that are similar to the ones you are looking for"
+                            tooltip="Patents that exemplify the terms you are searching for."
                             variant="soft"
                         />
                     </Grid>
@@ -140,7 +140,7 @@ export const SearchBar = ({
                             isExhaustive: newIsExhaustive,
                             minPatentYears: newMinPatentYears,
                             queryType: newQueryType,
-                            similarPatents: newSimilarPatents,
+                            exemplarPatents: newExemplarPatents,
                             terms: newTerms,
                         });
                         navigate(`${pathname}?${queryArgs}`);

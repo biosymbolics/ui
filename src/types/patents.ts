@@ -62,7 +62,7 @@ export type PatentSearchArgs = {
     isExhaustive: boolean;
     minPatentYears: number;
     queryType: string | null;
-    similarPatents: string[] | null;
+    exemplarPatents: string[] | null;
     terms: string[] | null;
 };
 
