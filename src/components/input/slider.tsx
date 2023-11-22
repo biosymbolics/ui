@@ -1,6 +1,5 @@
 import { ReactElement } from 'react';
 import FormHelperText from '@mui/joy/FormHelperText';
-import FormLabel from '@mui/joy/FormLabel';
 import FormControl from '@mui/joy/FormControl';
 import {
     default as JoySlider,
@@ -8,15 +7,14 @@ import {
 } from '@mui/joy/Slider';
 import Typography from '@mui/joy/Typography';
 
+import { FormLabel } from '@/components/input/label';
 import { getSelectableId } from '@/utils/string';
+
+import { BaseInputProps } from './types';
 
 type SliderProps = {
     defaultValue?: JoySliderProps['defaultValue'];
     disabled?: JoySliderProps['disabled'];
-    error?: boolean;
-    helperText?: string;
-    id?: JoySliderProps['id'];
-    label?: string;
     onChange?: JoySliderProps['onChange'];
     orientation?: JoySliderProps['orientation'];
     marks?: JoySliderProps['marks'];
@@ -25,7 +23,7 @@ type SliderProps = {
     size?: JoySliderProps['size'];
     step?: JoySliderProps['step'];
     valueLabelDisplay?: JoySliderProps['valueLabelDisplay'];
-};
+} & BaseInputProps;
 
 /**
  * Slider component
@@ -36,13 +34,14 @@ export const Slider = ({
     id,
     label,
     size = 'sm',
+    tooltip,
     ...props
 }: SliderProps): ReactElement<SliderProps> => {
     const formId = id || getSelectableId(label);
     return (
         <FormControl id={formId} error={error}>
             {label && (
-                <FormLabel>
+                <FormLabel title={tooltip}>
                     <Typography>{label}</Typography>
                 </FormLabel>
             )}

@@ -4,23 +4,20 @@ import {
     CheckboxProps as JoyCheckboxProps,
 } from '@mui/joy/Checkbox';
 import FormHelperText from '@mui/joy/FormHelperText';
-import FormLabel from '@mui/joy/FormLabel';
 import FormControl from '@mui/joy/FormControl';
 import Typography from '@mui/joy/Typography';
 
+import { FormLabel } from '@/components/input/label';
 import { getSelectableId } from '@/utils/string';
+
+import { BaseInputProps } from './types';
 
 type CheckboxProps = {
     defaultChecked?: JoyCheckboxProps['defaultChecked'];
     disabled?: JoyCheckboxProps['disabled'];
     checked?: JoyCheckboxProps['checked'];
-    error?: boolean;
-    helperText?: string;
-    id?: JoyCheckboxProps['id'];
-    label?: string;
     onChange?: JoyCheckboxProps['onChange'];
-    size?: JoyCheckboxProps['size'];
-};
+} & BaseInputProps;
 
 /**
  * Checkbox component
@@ -30,6 +27,7 @@ export const Checkbox = ({
     helperText,
     id,
     label,
+    tooltip,
     ...props
 }: CheckboxProps): ReactElement<CheckboxProps> => {
     const formId = id || getSelectableId(label);
@@ -37,7 +35,7 @@ export const Checkbox = ({
     return (
         <FormControl id={formId} error={error}>
             {label && (
-                <FormLabel>
+                <FormLabel tooltip={tooltip}>
                     <Typography>{label}</Typography>
                 </FormLabel>
             )}

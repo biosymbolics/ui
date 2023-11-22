@@ -1,6 +1,5 @@
 import { ReactElement } from 'react';
 import FormHelperText from '@mui/joy/FormHelperText';
-import FormLabel from '@mui/joy/FormLabel';
 import FormControl from '@mui/joy/FormControl';
 import {
     default as JoyTextarea,
@@ -8,6 +7,7 @@ import {
 } from '@mui/joy/Textarea';
 import Typography from '@mui/joy/Typography';
 
+import { FormLabel } from '@/components/input/label';
 import { getSelectableId } from '@/utils/string';
 
 type TextareaProps = {
@@ -20,6 +20,7 @@ type TextareaProps = {
     minRows?: JoyTextareaProps['minRows'];
     onChange?: JoyTextareaProps['onChange'];
     size?: JoyTextareaProps['size'];
+    tooltip?: string;
 };
 
 /**
@@ -31,6 +32,7 @@ export const TextArea = ({
     id,
     label,
     size,
+    tooltip,
     ...props
 }: TextareaProps): ReactElement<TextareaProps> => {
     const formId = id || getSelectableId(label);
@@ -38,7 +40,7 @@ export const TextArea = ({
     return (
         <FormControl id={formId} error={error}>
             {label && (
-                <FormLabel>
+                <FormLabel tooltip={tooltip}>
                     <Typography level={size === 'lg' ? 'body-lg' : undefined}>
                         {label}
                     </Typography>

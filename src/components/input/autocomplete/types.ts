@@ -73,6 +73,9 @@ export type AutocompleteProps<
     T extends BaseOption,
     Multiple extends boolean | undefined,
     Creatable extends boolean | undefined,
-> =
+> = (
     | AutocompletePropsWithOptions<T, Multiple, Creatable>
-    | AutocompletePropsWithStaticOptions<T, Multiple, Creatable>;
+    | AutocompletePropsWithStaticOptions<T, Multiple, Creatable>
+) & {
+    tooltip?: string;
+};

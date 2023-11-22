@@ -4,11 +4,11 @@ import React from 'react';
 import useSWR from 'swr';
 import FormHelperText from '@mui/joy/FormHelperText';
 import { default as JoyAutocomplete } from '@mui/joy/Autocomplete';
-import FormLabel from '@mui/joy/FormLabel';
 import FormControl from '@mui/joy/FormControl';
 import isEmpty from 'lodash/fp/isEmpty';
 import Typography from '@mui/joy/Typography';
 
+import { FormLabel } from '@/components/input/label';
 import { getSelectableId } from '@/utils/string';
 
 import { AutocompleteProps, BaseOption, JoyAutocompleteProps } from './types';
@@ -44,6 +44,7 @@ export const Autocomplete = <
     helperText,
     label,
     size,
+    tooltip,
     ...props
 }: AutocompleteProps<T, Multiple, Creatable>): JSX.Element => {
     const [_input, setInput] = React.useState('');
@@ -92,7 +93,7 @@ export const Autocomplete = <
     return (
         <FormControl id={formId} error={error}>
             {label && (
-                <FormLabel>
+                <FormLabel tooltip={tooltip}>
                     <Typography level={size === 'lg' ? 'title-lg' : undefined}>
                         {label}
                     </Typography>

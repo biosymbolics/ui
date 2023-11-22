@@ -1,5 +1,4 @@
 import { ReactElement } from 'react';
-import FormLabel from '@mui/joy/FormLabel';
 import FormControl from '@mui/joy/FormControl';
 import FormHelperText from '@mui/joy/FormHelperText';
 import {
@@ -10,16 +9,15 @@ import Typography from '@mui/joy/Typography';
 
 import { getSelectableId } from '@/utils/string';
 
+import { BaseInputProps } from './types';
+import { FormLabel } from './label';
+
 type InputProps = {
     defaultValue?: JoyInputProps['defaultValue'];
     disabled?: JoyInputProps['disabled'];
-    error?: boolean;
-    helperText?: string;
-    id?: JoyInputProps['id'];
-    label?: string;
     onChange?: JoyInputProps['onChange'];
     size?: JoyInputProps['size'];
-};
+} & BaseInputProps;
 
 /**
  * Input component
@@ -30,6 +28,7 @@ export const Input = ({
     id,
     label,
     size,
+    tooltip,
     ...props
 }: InputProps): ReactElement<InputProps> => {
     const formId = id || getSelectableId(label);
@@ -37,7 +36,7 @@ export const Input = ({
     return (
         <FormControl id={formId} error={error}>
             {label && (
-                <FormLabel>
+                <FormLabel tooltip={tooltip}>
                     <Typography level={size === 'lg' ? 'body-lg' : undefined}>
                         {label}
                     </Typography>
