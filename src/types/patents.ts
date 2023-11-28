@@ -16,6 +16,7 @@ export const PatentSchema = z.object({
     compounds: z.array(z.string()),
     devices: z.array(z.string()),
     diseases: z.array(z.string()),
+    exemplar_similarity: z.number(),
     generic_name: z.union([z.string(), z.null()]),
     // genes: z.array(z.string()),
     indications: z.optional(z.union([z.array(z.string()), z.null()])),
@@ -59,10 +60,9 @@ export type Patent = z.infer<typeof PatentSchema>;
 export type PatentResponse = z.infer<typeof PatentResponseSchema>;
 
 export type PatentSearchArgs = {
-    isExhaustive: boolean;
+    exemplarPatents: string[] | null;
     minPatentYears: number;
     queryType: string | null;
-    similarPatents: string[] | null;
     terms: string[] | null;
 };
 

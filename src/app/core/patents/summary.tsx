@@ -36,7 +36,10 @@ export const Summary = async ({
     ...args
 }: PatentSearchArgs & { pathname?: string }) => {
     try {
-        const summaries = await fetchSummaries({ terms, ...args });
+        const summaries = await fetchSummaries({
+            terms,
+            ...args,
+        });
         return (
             <Box sx={getStyles}>
                 <Bars
