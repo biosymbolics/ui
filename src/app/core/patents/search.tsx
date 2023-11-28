@@ -13,18 +13,18 @@ import { useNavigation } from '@/hooks/navigation';
 import { PatentSearchArgs } from '@/types/patents';
 import { Option } from '@/types/select';
 import { getQueryArgs } from '@/utils/patents';
-import { Checkbox } from '@/components/input/checkbox';
 import { Select } from '@/components/input/select';
 
+import { FetchAutocompletions } from './types';
+
 export const SearchBar = ({
-    fetchOptions,
-    isExhaustive,
+    exemplarPatents,
+    fetchAutocompletions,
     minPatentYears,
     queryType,
-    exemplarPatents,
     terms,
 }: {
-    fetchOptions: (term: string) => Promise<Option[]>;
+    fetchAutocompletions: FetchAutocompletions;
 } & PatentSearchArgs): JSX.Element => {
     const { navigate } = useNavigation();
     const pathname = usePathname();
@@ -33,7 +33,6 @@ export const SearchBar = ({
         exemplarPatents
     );
     const [newQueryType, setQueryType] = useState<string | null>(queryType);
-    const [newIsExhaustive, setIsExhaustive] = useState<boolean>(isExhaustive);
     const [newMinPatentYears, setMinPatentYears] =
         useState<number>(minPatentYears);
 
@@ -62,7 +61,7 @@ export const SearchBar = ({
                 onChange={(e, values) => {
                     setTerms(values.map((v) => v.id));
                 }}
-                optionFetcher={fetchOptions}
+                optionFetcher={fetchAutocompletions}
                 size="lg"
                 variant="soft"
             />
@@ -93,15 +92,6 @@ export const SearchBar = ({
                             options={['AND', 'OR']}
                         />
                     </Grid>
-                    <Grid xs={12} sm={3}>
-                        <Checkbox
-                            checked={newIsExhaustive}
-                            label="Exhaustive"
-                            onChange={(e) => {
-                                setIsExhaustive(e.target.checked);
-                            }}
-                        />
-                    </Grid>
                 </Grid>
                 <Grid container spacing={4} sx={{ mt: 1 }}>
                     <Grid xs={12} sm={6}>
@@ -121,9 +111,11 @@ export const SearchBar = ({
                             onChange={(e, values) => {
                                 setExemplarPatents(values.map((v) => v.id));
                             }}
-                            optionFetcher={fetchOptions}
+                            optionFetcher={(str: string) =>
+                                fetchAutocompletions(str, 'id')
+                            }
                             size="md"
-                            tooltip="Patents that exemplify the terms you are searching for."
+                            tooltip="Patents that exemplify what you are looking for."
                             variant="soft"
                         />
                     </Grid>
@@ -137,7 +129,6 @@ export const SearchBar = ({
                             return;
                         }
                         const queryArgs = getQueryArgs({
-                            isExhaustive: newIsExhaustive,
                             minPatentYears: newMinPatentYears,
                             queryType: newQueryType,
                             exemplarPatents: newExemplarPatents,

@@ -4,8 +4,8 @@ import { cache } from 'react';
 import { z } from 'zod';
 
 import {
+    PATENT_AUTOCOMPLETE_API_URL,
     PATENT_SEARCH_API_URL,
-    PATENT_TERM_API_URL,
     TERM_DESCRIPTION_API_URL,
 } from '@/constants';
 import { Option } from '@/types/select';
@@ -17,28 +17,29 @@ import {
 import { doFetch } from '@/utils/actions';
 import { getQueryArgs } from '@/utils/patents';
 
-const AutocompleteResponse = z.object({
-    terms: z.array(
-        z.object({
-            id: z.string(),
-            label: z.string(),
-        })
-    ),
-});
+const AutocompleteResponse = z.array(
+    z.object({
+        id: z.string(),
+        label: z.string(),
+    })
+);
 
 /**
- * Fetch autcomplete options from the API
- * @param term
+ * Autocomplete terms or ids from the API.
+ * @param str search string
  * @returns options promise
  */
-export const fetchOptions = async (term: string): Promise<Option[]> => {
+export const fetchAutocompletions = async (
+    str: string,
+    mode: 'id' | 'term' = 'term'
+): Promise<Option[]> => {
     'use server';
 
     const res = await doFetch(
-        `${PATENT_TERM_API_URL}?term=${term}`,
+        `${PATENT_AUTOCOMPLETE_API_URL}?mode=${mode}&string=${str}`,
         AutocompleteResponse
     );
-    return res.terms;
+    return res;
 };
 
 /**

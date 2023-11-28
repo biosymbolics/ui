@@ -93,6 +93,12 @@ const getPatentColumns = (): GridColDef[] => [
         width: 100,
     },
     {
+        field: 'exemplar_similarity',
+        headerName: 'Exemplar Similarity',
+        valueFormatter: formatNumber,
+        width: 100,
+    },
+    {
         field: 'is_approved',
         headerName: 'Approved',
         width: 75,

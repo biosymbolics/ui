@@ -6,7 +6,7 @@ import Typography from '@mui/joy/Typography';
 
 import { Section } from '@/components/layout/section';
 
-import { fetchOptions } from './actions';
+import { fetchAutocompletions } from './actions';
 import { Description } from './description';
 import { Patents } from './patents';
 import { SearchBar } from './search';
@@ -15,7 +15,6 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     const terms = searchParams.terms?.split(';') ?? null;
     const queryType = searchParams.queryType ?? 'AND';
     const minPatentYears = parseInt(searchParams.minPatentYears ?? '10', 10);
-    const isExhaustive = searchParams.isExhaustive === 'true';
     const exemplarPatents = searchParams.exemplarPatents?.split(';') ?? null;
 
     return (
@@ -23,8 +22,7 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
             <Section variant="separated">
                 <SearchBar
                     exemplarPatents={exemplarPatents}
-                    fetchOptions={fetchOptions}
-                    isExhaustive={isExhaustive}
+                    fetchAutocompletions={fetchAutocompletions}
                     minPatentYears={minPatentYears}
                     queryType={queryType}
                     terms={terms || []}
@@ -43,7 +41,6 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
                     <Suspense fallback={<Skeleton height="80vh" />}>
                         <Patents
                             exemplarPatents={exemplarPatents}
-                            isExhaustive={isExhaustive}
                             minPatentYears={minPatentYears}
                             queryType={queryType}
                             terms={terms || []}
