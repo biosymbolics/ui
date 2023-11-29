@@ -1,5 +1,7 @@
 'use client';
 
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Theme } from '@mui/joy/styles';
@@ -189,13 +191,11 @@ export const getTolerantScoresClass = getScoresClassFunc({
 
 export const getStyles = ({ getColorSchemeSelector, palette }: Theme) => ({
     [getColorSchemeSelector('dark')]: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
         '& .biosym-app.good': {
             backgroundColor: palette.success[500],
             fontWeight: '600',
             filter: 'brightness(0.9)',
         },
-        // eslint-disable-next-line @typescript-eslint/naming-convention
         '& .biosym-app.bad': {
             backgroundColor: palette.danger[500],
             fontWeight: '600',
@@ -203,12 +203,10 @@ export const getStyles = ({ getColorSchemeSelector, palette }: Theme) => ({
         },
     },
     [getColorSchemeSelector('light')]: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
         '& .biosym-app.good': {
             backgroundColor: palette.success[100],
             fontWeight: '600',
         },
-        // eslint-disable-next-line @typescript-eslint/naming-convention
         '& .biosym-app.bad': {
             backgroundColor: palette.danger[100],
             fontWeight: '600',

@@ -144,14 +144,16 @@ const getTabs = (
     {
         label: 'List',
         panel: (
-            <DataGrid
-                columns={columns}
-                detailComponent={DetailContent<Patent>}
-                rows={patents.map((patent) => ({
-                    ...patent,
-                    id: patent.publication_number,
-                }))}
-            />
+            <Box height="100vh">
+                <DataGrid
+                    columns={columns}
+                    detailComponent={DetailContent<Patent>}
+                    rows={patents.map((patent) => ({
+                        ...patent,
+                        id: patent.publication_number,
+                    }))}
+                />
+            </Box>
         ),
     },
     {
