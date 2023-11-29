@@ -35,7 +35,9 @@ const DetailPanelContent = ({ row }: { row: Row }) => (
     </Stack>
 );
 
-const NoRows = (): JSX.Element => <>nothing here</>;
+const NoRows = (): JSX.Element => (
+    <Typography level="h3">no results</Typography>
+);
 
 export const DataGrid = <T extends Record<string, unknown>>({
     columns: _columns,
