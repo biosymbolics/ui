@@ -73,9 +73,11 @@ export type AutocompleteProps<
     T extends BaseOption,
     Multiple extends boolean | undefined,
     Creatable extends boolean | undefined,
-> = (
+> = Omit<
     | AutocompletePropsWithOptions<T, Multiple, Creatable>
-    | AutocompletePropsWithStaticOptions<T, Multiple, Creatable>
-) & {
+    | AutocompletePropsWithStaticOptions<T, Multiple, Creatable>,
+    'size'
+> & {
+    size?: AutocompleteBaseProps<T, Multiple, Creatable>['size'] | 'xlg';
     tooltip?: string;
 };

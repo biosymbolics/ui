@@ -5,8 +5,8 @@ import useSWR from 'swr';
 import FormHelperText from '@mui/joy/FormHelperText';
 import { default as JoyAutocomplete } from '@mui/joy/Autocomplete';
 import FormControl from '@mui/joy/FormControl';
+import Typography, { TypographyProps } from '@mui/joy/Typography';
 import isEmpty from 'lodash/fp/isEmpty';
-import Typography from '@mui/joy/Typography';
 
 import { FormLabel } from '@/components/input/label';
 import { getSelectableId } from '@/utils/string';
@@ -23,6 +23,18 @@ export interface FilterOptionsState<T> {
     inputValue: string;
     getOptionLabel: (option: T) => string;
 }
+
+const getLabelSize = (
+    size: AutocompleteProps<BaseOption, false, false>['size']
+): TypographyProps['level'] => {
+    if (size === 'xlg') {
+        return 'h2';
+    }
+    if (size === 'lg') {
+        return 'title-lg';
+    }
+    return undefined;
+};
 
 /**
  * Autocomplete component
@@ -94,7 +106,10 @@ export const Autocomplete = <
         <FormControl id={formId} error={error}>
             {label && (
                 <FormLabel tooltip={tooltip}>
-                    <Typography level={size === 'lg' ? 'title-lg' : undefined}>
+                    <Typography
+                        gutterBottom={size === 'xlg'}
+                        level={getLabelSize(size)}
+                    >
                         {label}
                     </Typography>
                 </FormLabel>
@@ -113,7 +128,8 @@ export const Autocomplete = <
                     setInput(newInputValue.trim());
                 }}
                 options={options}
-                size={size}
+                size={size === 'xlg' ? 'lg' : size}
+                sx={{ mb: size === 'xlg' ? 2 : 0 }}
             />
             {helperText && <FormHelperText>{helperText}</FormHelperText>}
         </FormControl>

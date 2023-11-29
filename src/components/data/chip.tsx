@@ -60,7 +60,10 @@ export const Chip = ({
 
     if (tooltip) {
         return (
-            <Tooltip title={<Box>{tooltip}</Box>} variant="outlined">
+            <Tooltip
+                title={<Box maxWidth={300}>{tooltip}</Box>}
+                variant="outlined"
+            >
                 {chip}
             </Tooltip>
         );
