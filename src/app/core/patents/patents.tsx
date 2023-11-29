@@ -75,7 +75,7 @@ const getPatentColumns = (): GridColDef[] => [
     {
         field: 'availability_likelihood',
         headerName: 'Est. Avail',
-        width: 85,
+        width: 100,
         valueFormatter: formatName,
         cellClassName: getAvailabilityClass,
         description: 'Likehood of patent being available.',
