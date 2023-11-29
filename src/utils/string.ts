@@ -80,7 +80,9 @@ export const title = (input: string): string =>
     input
         .split(' ')
         .map((word: string) =>
-            containsAbbr(word) ? word : capitalize(lower(word))
+            containsAbbr(word) && input.toUpperCase() !== input
+                ? word
+                : capitalize(lower(word))
         )
         .join(' ');
 
