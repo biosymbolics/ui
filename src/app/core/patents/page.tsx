@@ -36,7 +36,7 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
                             ? terms.map((t) => formatLabel(t)).join(', ')
                             : 'No terms selected'}
                     </Typography>
-                    <Suspense fallback={<Skeleton height={100} />}>
+                    <Suspense fallback={<Skeleton />}>
                         {terms && <Description terms={terms} />}
                     </Suspense>
                 </Section>
