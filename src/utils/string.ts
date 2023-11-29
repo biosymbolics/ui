@@ -1,5 +1,5 @@
 import isUndefined from 'lodash/fp/isUndefined';
-import startCase from 'lodash/fp/startCase';
+import capitalize from 'lodash/fp/capitalize';
 
 /**
  * Removes all non-alphanumeric characters from a string
@@ -23,13 +23,6 @@ export const replaceSpacesWithHyphens = (input: string): string =>
  * @returns lowercase string
  */
 export const lower = (input: string): string => input.toLowerCase();
-
-/**
- * Title case a string
- * @param input
- * @returns title cased string
- */
-export const title = (input: string): string => startCase(lower(input));
 
 /**
  * Generate randomish id from date.
@@ -72,8 +65,24 @@ export const getSelectableId = (input?: string | number): string =>
  */
 const containsAbbr = (input: string): boolean => {
     const ABBR_RE = /([A-Z]{1,}[A-Z0-9]{3,})/;
-    return ABBR_RE.test(input) && input.toUpperCase() !== input;
+    return ABBR_RE.test(input) && input.toUpperCase() === input;
 };
+
+/**
+ * Title case a string
+ *
+ * Avoids messing with words that look like abbreviations
+ *
+ * @param input
+ * @returns title cased string
+ */
+export const title = (input: string): string =>
+    input
+        .split(' ')
+        .map((word: string) =>
+            containsAbbr(word) ? word : capitalize(lower(word))
+        )
+        .join(' ');
 
 /**
  * Format a string to be used as a label
@@ -86,9 +95,6 @@ export const formatLabel = (
 ): string => {
     const strInput = `${input}`;
     if (exceptionRe && new RegExp(exceptionRe).test(strInput)) {
-        return strInput;
-    }
-    if (containsAbbr(strInput)) {
         return strInput;
     }
     return title(strInput.replace(/_/g, ' '));

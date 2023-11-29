@@ -5,6 +5,7 @@ import Skeleton from '@mui/joy/Skeleton';
 import Typography from '@mui/joy/Typography';
 
 import { Section } from '@/components/layout/section';
+import { formatLabel } from '@/utils/string';
 
 import { fetchAutocompletions } from './actions';
 import { Description } from './description';
@@ -29,10 +30,12 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
                 />
             </Section>
             <Section variant="main">
-                <Typography level="h1">
-                    {terms ? `Terms: ${terms.join(', ')}` : 'No terms selected'}
-                </Typography>
-                <Section minHeight={100}>
+                <Section>
+                    <Typography level="h1">
+                        {terms
+                            ? terms.map((t) => formatLabel(t)).join(', ')
+                            : 'No terms selected'}
+                    </Typography>
                     <Suspense fallback={<Skeleton height={100} />}>
                         {terms && <Description terms={terms} />}
                     </Suspense>

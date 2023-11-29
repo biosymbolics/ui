@@ -8,6 +8,7 @@ import isEmpty from 'lodash/fp/isEmpty';
 
 import { PATENT_OVER_TIME_API_URL } from '@/constants';
 import { Line } from '@/components/charts/line';
+import { Section } from '@/components/layout/section';
 import {
     PatentSearchArgs,
     PatentsSummaries,
@@ -68,7 +69,7 @@ export const OverTime = async ({
             );
         }
         return (
-            <Box sx={getStyles}>
+            <Section sx={getStyles}>
                 {formattedReports.map(({ series, title }) => (
                     <Line
                         height={300}
@@ -77,7 +78,7 @@ export const OverTime = async ({
                         title={title as string}
                     />
                 ))}
-            </Box>
+            </Section>
         );
     } catch (e) {
         return (

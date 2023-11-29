@@ -3,7 +3,6 @@
 import { SetStateAction, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Grid from '@mui/joy/Grid';
-import Typography from '@mui/joy/Typography';
 
 import { Button } from '@/components/input/button';
 import { Autocomplete } from '@/components/input';
@@ -46,9 +45,6 @@ export const SearchBar = ({
 
     return (
         <>
-            <Typography gutterBottom level="h2">
-                Select Terms
-            </Typography>
             <Autocomplete<Option, true, false>
                 isMultiple
                 defaultValue={(terms || []).map((term) => ({
@@ -58,11 +54,13 @@ export const SearchBar = ({
                 isOptionEqualToValue={(option: Option, value: Option) =>
                     option.id === value.id
                 }
+                label="Select Terms"
                 onChange={(e, values) => {
                     setTerms(values.map((v) => v.id));
                 }}
                 optionFetcher={fetchAutocompletions}
-                size="lg"
+                size="xlg"
+                tooltip="Compounds, diseases, MoAs, pharmaceutical companies, etc."
                 variant="soft"
             />
             <Section variant="l1">
@@ -115,7 +113,7 @@ export const SearchBar = ({
                                 fetchAutocompletions(str, 'id')
                             }
                             size="md"
-                            tooltip="Patents that exemplify what you are looking for."
+                            tooltip="Patents that exemplify what you are looking for, against which we'll perform cosine similarity comparisons against the embedded representations of the patents in our database."
                             variant="soft"
                         />
                     </Grid>
@@ -136,6 +134,7 @@ export const SearchBar = ({
                         });
                         navigate(`${pathname}?${queryArgs}`);
                     }}
+                    size="lg"
                     sx={{ ml: 'auto' }}
                 >
                     Search

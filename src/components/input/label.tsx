@@ -14,7 +14,10 @@ export const FormLabel = ({ children, tooltip, ...props }: FormLabelProps) => {
 
     if (tooltip) {
         return (
-            <Tooltip title={<Box>{tooltip}</Box>} variant="outlined">
+            <Tooltip
+                title={<Box maxWidth={300}>{tooltip}</Box>}
+                variant="outlined"
+            >
                 {formLabel}
             </Tooltip>
         );

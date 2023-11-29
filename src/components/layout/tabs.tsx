@@ -28,7 +28,7 @@ export const Tabs = ({ tabs }: { tabs: TabDef[] }): JSX.Element => (
             <TabPanel
                 key={`${getSelectableId(label)}-panel`}
                 value={idx}
-                sx={{ height: '100vh' }}
+                sx={{ minHeight: '100vh' }}
             >
                 {panel}
             </TabPanel>

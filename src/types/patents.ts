@@ -36,6 +36,7 @@ export const PatentSchema = z.object({
     similar_patents: z.array(z.string()),
     suitability_score: z.number(),
     suitability_score_explanation: z.optional(z.union([z.string(), z.null()])),
+    termination_reason: z.optional(z.union([z.string(), z.null()])),
     url: z.string(),
 });
 
