@@ -8,6 +8,7 @@ import {
     GridValueFormatterParams,
 } from '@mui/x-data-grid/models/params/gridCellParams';
 import unescape from 'lodash/fp/unescape';
+import { format } from 'date-fns';
 
 import { formatChips } from '@/components/data/chip';
 import { title } from '@/utils/string';
@@ -88,19 +89,31 @@ export const unencodeHtml = <T extends Record<string, unknown>>(
 };
 
 /**
- * Format date as string
+ * Get date formatter
  */
-export const formatDate = <T extends Record<string, unknown>>(
-    params: GridValueFormatterParams<T>
-): string => {
-    const { value } = params;
+export const getFormatDate =
+    (dateFormat: string = 'yyyy-MM-dd') =>
+    <T extends Record<string, unknown>>(
+        params: GridValueFormatterParams<T>
+    ): string => {
+        const { value } = params;
 
-    if (typeof value !== 'string') {
-        return '';
-    }
+        if (typeof value !== 'string') {
+            return '';
+        }
 
-    return new Date(value as string).toLocaleDateString();
-};
+        return format(new Date(value as string), dateFormat);
+    };
+
+/**
+ * Format date as yyyy-MM-dd
+ */
+export const formatDate = getFormatDate('yyyy-MM-dd');
+
+/**
+ * Format date as year
+ */
+export const formatYear = getFormatDate('yyyy');
 
 /**
  * Render boolean

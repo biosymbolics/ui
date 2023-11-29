@@ -10,8 +10,10 @@ import 'server-only';
 import {
     DataGrid,
     formatBlank,
+    formatDate,
     formatName,
     formatNumber,
+    formatYear,
     renderBoolean,
     unencodeHtml,
 } from '@/components/data/grid';
@@ -63,13 +65,13 @@ const getPatentColumns = (): GridColDef[] => [
         description: 'Patent years remaining.',
         cellClassName: getPatentYearsClass,
     },
-    {
-        field: 'adj_patent_years',
-        headerName: 'Adj Yrs⚠️',
-        width: 75,
-        description: '**FAKE** Adjusted patent years remaining.',
-        cellClassName: getPatentYearsClass,
-    },
+    // {
+    //     field: 'adj_patent_years',
+    //     headerName: 'Adj Yrs⚠️',
+    //     width: 75,
+    //     description: '**FAKE** Adjusted patent years remaining.',
+    //     cellClassName: getPatentYearsClass,
+    // },
     {
         field: 'availability_likelihood',
         headerName: 'Est. Avail',
@@ -118,17 +120,19 @@ const getPatentColumns = (): GridColDef[] => [
     {
         field: 'last_trial_status',
         headerName: 'CT Status',
-        width: 100,
+        width: 125,
     },
     {
         field: 'last_trial_update',
         headerName: 'Last CT Update',
+        valueFormatter: formatDate,
         width: 125,
     },
     {
         field: 'priority_date',
-        headerName: 'Priority Date',
-        width: 100,
+        headerName: 'Priority Year',
+        valueFormatter: formatYear,
+        width: 125,
     },
 ];
 

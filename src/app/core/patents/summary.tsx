@@ -47,7 +47,7 @@ export const Summary = async ({
                         data: data.map((s) => ({
                             label: s.x,
                             value: s.count,
-                            url: `${pathname}?terms=${s.x};${terms?.join(';')}`,
+                            url: `${pathname}?terms=${s.x}`, // ;${terms?.join(';')}
                         })),
                         label: x,
                         maxLength: 15,
