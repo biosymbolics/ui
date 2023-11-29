@@ -64,7 +64,7 @@ export const getSelectableId = (input?: string | number): string =>
  * @returns true if input seems to contain an abbreviation
  */
 const containsAbbr = (input: string): boolean => {
-    const ABBR_RE = /([A-Z]{1,}[A-Z0-9]{3,})/;
+    const ABBR_RE = /([A-Z]{1,}[A-Z0-9]{2,})/;
     return ABBR_RE.test(input) && input.toUpperCase() === input;
 };
 

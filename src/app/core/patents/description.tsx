@@ -9,7 +9,11 @@ import { fetchDescription } from './actions';
 export const Description = async ({ terms }: { terms: string[] }) => {
     try {
         const description = await fetchDescription(terms);
-        return <ReactMarkdown>{description || '(none)'}</ReactMarkdown>;
+        return (
+            <Box>
+                <ReactMarkdown>{description || '(none)'}</ReactMarkdown>
+            </Box>
+        );
     } catch (e) {
         return (
             <Box>
