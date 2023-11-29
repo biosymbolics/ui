@@ -134,6 +134,7 @@ export const SearchBar = ({
                         });
                         navigate(`${pathname}?${queryArgs}`);
                     }}
+                    size="lg"
                     sx={{ ml: 'auto' }}
                 >
                     Search
