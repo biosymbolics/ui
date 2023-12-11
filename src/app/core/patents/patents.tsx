@@ -9,7 +9,6 @@ import 'server-only';
 
 import {
     DataGrid,
-    formatBlank,
     formatDate,
     formatName,
     formatNumber,
@@ -81,13 +80,19 @@ const getPatentColumns = (): GridColDef[] => [
         description: 'Likehood of patent being available.',
     },
     {
-        field: 'probability_of_success',
-        headerName: 'Est. PoS⚠️',
-        width: 85,
-        valueFormatter: formatBlank,
-        cellClassName: getScoresClass,
-        description: '**FAKE PLACEHOLDER**!! Estimated PoS.',
+        field: 'assignees',
+        headerName: 'Assignees',
+        valueFormatter: formatName,
+        width: 200,
     },
+    // {
+    //     field: 'probability_of_success',
+    //     headerName: 'Est. PoS⚠️',
+    //     width: 85,
+    //     valueFormatter: formatBlank,
+    //     cellClassName: getScoresClass,
+    //     description: '**FAKE PLACEHOLDER**!! Estimated PoS.',
+    // },
     {
         field: 'search_rank',
         headerName: 'Relevance',
@@ -105,12 +110,6 @@ const getPatentColumns = (): GridColDef[] => [
         headerName: 'Approved',
         width: 75,
         renderCell: renderBoolean,
-    },
-    {
-        field: 'assignees',
-        headerName: 'Assignees',
-        valueFormatter: formatName,
-        width: 200,
     },
     {
         field: 'max_trial_phase',
@@ -142,7 +141,7 @@ const getTabs = (
     args: PatentSearchArgs
 ) => [
     {
-        label: 'List',
+        label: 'Patents',
         panel: (
             <Box height="100vh">
                 <DataGrid

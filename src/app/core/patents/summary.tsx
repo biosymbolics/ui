@@ -5,7 +5,6 @@ import Box from '@mui/joy/Box';
 
 import { PATENT_SUMMARY_API_URL } from '@/constants';
 import { Bars } from '@/components/charts/html-bar';
-// import { Scatter } from '@/components/charts/scatter';
 import {
     PatentSearchArgs,
     PatentsSummaries,
@@ -30,16 +29,28 @@ const fetchSummaries = cache(
     }
 );
 
+// const fetchTopicAnalysis = cache(
+//     async (args: PatentSearchArgs): Promise<PatentsTopics> => {
+//         if (args.terms?.length === 0) {
+//             return [];
+//         }
+//         const queryArgs = getQueryArgs(args, true);
+//         const res = await doFetch(
+//             `${PATENT_TOPIC_API_URL}?${queryArgs}`,
+//             PatentsTopicSchema
+//         );
+//         return res;
+//     }
+// );
+
 export const Summary = async ({
     pathname = '/core/patents',
     terms,
     ...args
 }: PatentSearchArgs & { pathname?: string }) => {
     try {
-        const summaries = await fetchSummaries({
-            terms,
-            ...args,
-        });
+        const summaries = await fetchSummaries({ terms, ...args });
+        // const topics = await fetchTopicAnalysis({ terms, ...args });
         return (
             <Box sx={getStyles}>
                 <Bars
@@ -53,7 +64,10 @@ export const Summary = async ({
                         maxLength: 15,
                     }))}
                 />
-                {/* <Scatter /> */}
+                {/* <Scatter
+                    pathname={pathname}
+                    series={{ data: topics.map((t) => ({ x: t.x, y: t.y })) }}
+                /> */}
             </Box>
         );
     } catch (e) {

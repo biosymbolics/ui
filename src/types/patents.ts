@@ -53,10 +53,17 @@ export const PatentsSummarySchema = z.array(
     })
 );
 
+const PatentTopicSchema = z.object({
+    publication_number: z.string(),
+    x: z.union([z.string(), z.number()]),
+    y: z.optional(z.union([z.string(), z.number()])),
+});
+export const PatentsTopicSchema = z.array(PatentTopicSchema);
+
 export const PatentResponseSchema = z.array(PatentSchema);
 
 export type PatentsSummaries = z.infer<typeof PatentsSummarySchema>;
-
+export type PatentsTopics = z.infer<typeof PatentsTopicSchema>;
 export type Patent = z.infer<typeof PatentSchema>;
 export type PatentResponse = z.infer<typeof PatentResponseSchema>;
 
