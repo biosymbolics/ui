@@ -9,7 +9,7 @@ import { formatLabel } from '@/utils/string';
 
 import { fetchAutocompletions } from './actions';
 import { Description } from './description';
-import { Patents } from './patents';
+import { Content } from './content';
 import { SearchBar } from './search';
 
 const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
@@ -42,7 +42,7 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
                 </Section>
                 <Section>
                     <Suspense fallback={<Skeleton height="80vh" />}>
-                        <Patents
+                        <Content
                             exemplarPatents={exemplarPatents}
                             minPatentYears={minPatentYears}
                             queryType={queryType}

@@ -11,7 +11,7 @@ import unescape from 'lodash/fp/unescape';
 import { format } from 'date-fns';
 
 import { formatChips } from '@/components/data/chip';
-import { title } from '@/utils/string';
+import { formatLabel, title } from '@/utils/string';
 
 /**
  * Format name
@@ -20,6 +20,10 @@ export const formatName = <T extends Record<string, unknown>>(
     params: GridValueFormatterParams<T>
 ): string => {
     const { value } = params;
+
+    if (!value) {
+        return '';
+    }
 
     if (Array.isArray(value)) {
         return value.map((v) => title(v as string)).join(', ');
@@ -44,6 +48,10 @@ export const formatNumber = <T extends Record<string, unknown>>(
     params: GridValueFormatterParams<T>
 ): string => {
     const { value } = params;
+
+    if (value === null) {
+        return formatBlank();
+    }
 
     if (typeof value !== 'number') {
         throw new Error(`Expected number, got ${typeof value}`);
@@ -138,4 +146,23 @@ export const renderList = (
     }
 
     return formatChips({ isWrappable: false, items: params.value as string[] });
+};
+
+/**
+ * Format label
+ */
+export const renderLabel = <T extends Record<string, unknown>>(
+    params: GridValueFormatterParams<T>
+): string => {
+    const { value } = params;
+
+    if (!value) {
+        return formatBlank();
+    }
+
+    if (typeof value !== 'string') {
+        throw new Error(`Expected string, got ${typeof value}`);
+    }
+
+    return formatLabel(value);
 };
