@@ -57,7 +57,7 @@ export const formatNumber = <T extends Record<string, unknown>>(
         throw new Error(`Expected number, got ${typeof value}`);
     }
 
-    return (value as number).toPrecision(2);
+    return `${parseFloat((value as number).toPrecision(2))}`;
 };
 
 /**
