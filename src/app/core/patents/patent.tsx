@@ -9,9 +9,11 @@ import 'server-only';
 
 import {
     DataGrid,
+    formatBlank,
     formatDate,
     formatName,
     formatNumber,
+    formatPercent,
     formatYear,
     renderBoolean,
     unencodeHtml,
@@ -80,14 +82,22 @@ const getPatentColumns = (): GridColDef[] => [
         valueFormatter: formatName,
         width: 200,
     },
-    // {
-    //     field: 'probability_of_success',
-    //     headerName: 'Est. PoS⚠️',
-    //     width: 85,
-    //     valueFormatter: formatBlank,
-    //     cellClassName: getScoresClass,
-    //     description: '**FAKE PLACEHOLDER**!! Estimated PoS.',
-    // },
+    {
+        field: 'probability_of_success',
+        headerName: 'PoS',
+        width: 85,
+        valueFormatter: formatBlank,
+        // cellClassName: getScoresClass,
+        description: '**FAKE PLACEHOLDER**!! Estimated PoS.',
+    },
+    {
+        field: 'reformulation_score',
+        headerName: '⚠️Reform⚠️',
+        width: 100,
+        valueFormatter: formatPercent,
+        // cellClassName: getScoresClass,
+        description: '**FAKE PLACEHOLDER**!! Esimated reformulation potential.',
+    },
     {
         field: 'search_rank',
         headerName: 'Relevance',
@@ -96,9 +106,10 @@ const getPatentColumns = (): GridColDef[] => [
     },
     {
         field: 'exemplar_similarity',
-        headerName: 'Exemplar Similarity',
+        headerName: 'Similarity',
         valueFormatter: formatNumber,
         width: 100,
+        description: 'Similarity to exemplar patent.',
     },
     {
         field: 'is_approved',

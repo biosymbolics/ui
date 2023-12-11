@@ -166,9 +166,11 @@ export const getScoresClassFunc =
     ({
         goodThreshold = 0.75,
         badThreshold = 0.2,
+        higherIsBetter = true,
     }: {
         goodThreshold?: number;
         badThreshold?: number;
+        higherIsBetter?: boolean;
     }) =>
     (params: GridCellParams<Patent>) => {
         const { value } = params;
@@ -178,8 +180,10 @@ export const getScoresClassFunc =
         }
 
         return clsx('biosym-app', {
-            good: value > goodThreshold,
-            bad: value < badThreshold,
+            good: higherIsBetter
+                ? value > goodThreshold
+                : value < goodThreshold,
+            bad: higherIsBetter ? value < badThreshold : value > badThreshold,
         });
     };
 
@@ -187,6 +191,15 @@ export const getScoresClass = getScoresClassFunc({});
 export const getTolerantScoresClass = getScoresClassFunc({
     goodThreshold: 0.42,
     badThreshold: 0.2,
+});
+export const getDropoutScoresClass = getScoresClassFunc({
+    goodThreshold: 0.0,
+    badThreshold: 0.2,
+    higherIsBetter: false,
+});
+export const getRepurposeScoreClass = getScoresClassFunc({
+    goodThreshold: 0.35,
+    badThreshold: 0.0,
 });
 
 export const getStyles = ({ getColorSchemeSelector, palette }: Theme) => ({

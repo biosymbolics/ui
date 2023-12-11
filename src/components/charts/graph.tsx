@@ -78,7 +78,7 @@ export const Graph = ({ data, title, ...props }: GraphProps): JSX.Element => {
                     padding: 30,
                 }}
                 stylesheet={styles}
-                style={{ width: '100%', height: '100%' }}
+                style={{ width: '100%', height: '100vh' }}
             />
         </>
     );

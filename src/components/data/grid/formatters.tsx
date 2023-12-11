@@ -49,7 +49,7 @@ export const formatNumber = <T extends Record<string, unknown>>(
 ): string => {
     const { value } = params;
 
-    if (value === null) {
+    if (value === null || typeof value === 'undefined') {
         return formatBlank();
     }
 
@@ -72,7 +72,7 @@ export const formatPercent = <T extends Record<string, unknown>>(
         throw new Error(`Expected number, got ${typeof value}`);
     }
 
-    return `${(100 * value).toPrecision(2)}%`;
+    return `${parseFloat((100 * value).toPrecision(2))}%`;
 };
 
 /**
