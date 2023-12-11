@@ -3,8 +3,6 @@ import isEmpty from 'lodash/fp/isEmpty';
 import isNumber from 'lodash/fp/isNumber';
 import snakeCase from 'lodash/fp/snakeCase';
 
-import { PatentSearchArgs } from '@/types/patents';
-
 /**
  * Optionally snake-case the key
  * @param key
@@ -46,7 +44,7 @@ const formatValue = (
  * @param isServer - Whether the query string is for the server (if so, snake_case keys)
  */
 export const getQueryArgs = (
-    args: PatentSearchArgs,
+    args: Record<string, unknown>,
     isServer: boolean = false
 ): string => {
     const queryParams = Object.entries(args)

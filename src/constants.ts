@@ -9,6 +9,7 @@ export const PATENT_TOPIC_API_URL = `${API_URL}/patents/reports/topic`;
 export const PATENT_AUTOCOMPLETE_API_URL = `${API_URL}/autocomplete`;
 
 export const TERM_DESCRIPTION_API_URL = `${API_URL}/terms/describe`;
+export const TRIAL_SEARCH_API_URL = `${API_URL}/trials/search`;
 
 export const ASK_SEC_API_URL = 'http://localhost:3001/dev/sec/ask'; // `${API_URL}/sec/ask`;
 export const PREDICT_CLINDEV_API_URL = `${API_URL}/clindev/predict/timelines`;

@@ -7,6 +7,7 @@ import {
     PATENT_AUTOCOMPLETE_API_URL,
     PATENT_SEARCH_API_URL,
     TERM_DESCRIPTION_API_URL,
+    TRIAL_SEARCH_API_URL,
 } from '@/constants';
 import { Option } from '@/types/select';
 import {
@@ -16,6 +17,11 @@ import {
 } from '@/types/patents';
 import { doFetch } from '@/utils/actions';
 import { getQueryArgs } from '@/utils/patents';
+import {
+    TrialResponse,
+    TrialResponseSchema,
+    TrialSearchArgs,
+} from '@/types/trials';
 
 const AutocompleteResponse = z.array(
     z.object({
@@ -77,6 +83,26 @@ export const fetchPatents = cache(
         const res = await doFetch(
             `${PATENT_SEARCH_API_URL}?${queryArgs}`,
             PatentResponseSchema
+        );
+
+        return res;
+    }
+);
+
+/**
+ * Fetch patents from the API. Cached.
+ * @param args
+ * @returns patents promise
+ */
+export const fetchTrials = cache(
+    async (args: TrialSearchArgs): Promise<TrialResponse> => {
+        if (args.terms?.length === 0) {
+            return [];
+        }
+        const queryArgs = getQueryArgs(args, true);
+        const res = await doFetch(
+            `${TRIAL_SEARCH_API_URL}?${queryArgs}`,
+            TrialResponseSchema
         );
 
         return res;

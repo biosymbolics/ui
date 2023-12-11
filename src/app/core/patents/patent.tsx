@@ -16,21 +16,16 @@ import {
     renderBoolean,
     unencodeHtml,
 } from '@/components/data/grid';
-import { Tabs } from '@/components/layout/tabs';
 import { Patent, PatentSearchArgs } from '@/types/patents';
 
-import { fetchPatents } from './actions';
 import {
     DetailContent,
     getPatentYearsClass,
     getScoresClass,
     getTolerantScoresClass,
-    getStyles,
     getAvailabilityClass,
 } from './client';
-import { PatentGraph } from './graph';
-import { OverTime } from './over-time';
-import { Summary } from './summary';
+import { fetchPatents } from './actions';
 
 const getPatentColumns = (): GridColDef[] => [
     { field: 'publication_number', headerName: 'Pub #', width: 170 },
@@ -135,14 +130,11 @@ const getPatentColumns = (): GridColDef[] => [
     },
 ];
 
-const getTabs = (
-    columns: GridColDef[],
-    patents: Patent[],
-    args: PatentSearchArgs
-) => [
-    {
-        label: 'Patents',
-        panel: (
+export const PatentList = async (args: PatentSearchArgs) => {
+    const columns = getPatentColumns();
+    const patents = await fetchPatents(args);
+    try {
+        return (
             <Box height="100vh">
                 <DataGrid
                     columns={columns}
@@ -152,31 +144,6 @@ const getTabs = (
                         id: patent.publication_number,
                     }))}
                 />
-            </Box>
-        ),
-    },
-    {
-        label: 'Summary',
-        panel: <Summary {...args} />,
-    },
-    {
-        label: 'Over Time',
-        panel: <OverTime {...args} />,
-    },
-    {
-        label: 'Graph',
-        panel: <PatentGraph {...args} />,
-    },
-];
-
-export const Patents = async (args: PatentSearchArgs) => {
-    const columns = getPatentColumns();
-    try {
-        const patents = await fetchPatents(args);
-        const tabs = getTabs(columns, patents, args);
-        return (
-            <Box sx={getStyles}>
-                <Tabs tabs={tabs} />
             </Box>
         );
     } catch (e) {
