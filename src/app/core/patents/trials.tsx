@@ -13,13 +13,15 @@ import {
     formatName,
     formatNumber,
     formatYear,
+    formatPercent,
 } from '@/components/data/grid';
 import { TrialSearchArgs } from '@/types/trials';
 
 import { fetchTrials } from './actions';
+import { getDropoutScoresClass, getRepurposeScoreClass } from './client';
 
 const getTrialColumns = (): GridColDef[] => [
-    { field: 'nct_id', headerName: 'Nct Id', width: 150 },
+    { field: 'nct_id', headerName: 'Nct Id', width: 135 },
     {
         field: 'title',
         headerName: 'Title',
@@ -49,12 +51,6 @@ const getTrialColumns = (): GridColDef[] => [
         width: 160,
     },
     {
-        field: 'enrollment',
-        headerName: 'Enrollment',
-        width: 100,
-        valueFormatter: formatNumber,
-    },
-    {
         field: 'duration',
         headerName: 'Duration',
         width: 100,
@@ -73,14 +69,36 @@ const getTrialColumns = (): GridColDef[] => [
         valueFormatter: renderLabel,
     },
     {
-        field: 'dropout_count',
-        headerName: 'Dropouts',
-        width: 100,
-    },
-    {
         field: 'max_timeframe',
         headerName: 'Timeframe',
         width: 100,
+    },
+    {
+        field: 'enrollment',
+        headerName: 'Enrollment',
+        width: 100,
+        valueFormatter: formatNumber,
+    },
+    {
+        field: 'dropout_percent',
+        headerName: 'Dropout %',
+        width: 100,
+        valueFormatter: formatPercent,
+        cellClassName: getDropoutScoresClass,
+        description: 'Dropout % = Dropouts / Enrollment',
+    },
+    {
+        field: 'termination_reason',
+        headerName: 'Term. Reason',
+        width: 150,
+    },
+    {
+        field: 'reformulation_score',
+        headerName: 'Repurpose Score',
+        width: 150,
+        valueFormatter: formatNumber,
+        cellClassName: getRepurposeScoreClass,
+        description: '**FAKE PLACEHOLDER**!! Esimated repurpose potential.',
     },
 ];
 
