@@ -18,7 +18,7 @@ export const TrialSchema = z.object({
     phase: z.string(),
     primary_outcomes: z.array(z.string()),
     randomization: z.string(),
-    reformulation_score: z.number(),
+    reformulation_score: z.optional(z.number()),
     score: z.number(),
     sponsor: z.union([z.string(), z.null()]),
     sponsor_type: z.string(),
