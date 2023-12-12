@@ -4,6 +4,7 @@ import { z } from 'zod';
 export const TrialSchema = z.object({
     blinding: z.string(),
     comparison_type: z.string(),
+    condition: z.optional(z.union([z.string(), z.null()])),
     conditions: z.array(z.string()),
     design: z.string(),
     dropout_count: z.union([z.number(), z.null()]),
@@ -12,6 +13,7 @@ export const TrialSchema = z.object({
     end_date: z.union([z.string(), z.null()]),
     enrollment: z.union([z.number(), z.null()]),
     hypothesis_type: z.union([z.string(), z.null()]),
+    intervention: z.optional(z.union([z.string(), z.null()])),
     interventions: z.array(z.string()),
     masking: z.string(),
     max_timeframe: z.union([z.number(), z.null()]),

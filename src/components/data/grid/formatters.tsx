@@ -157,7 +157,7 @@ export const getRenderChip =
     (params: GridRenderCellParams<any, string>): ReactNode => {
         const { value } = params;
         if (typeof value !== 'string') {
-            throw new Error(`Expected str, got ${typeof value}`);
+            return <>{JSON.stringify(value)}</>;
         }
         return <Chip color={color}>{formatLabel(value || '')}</Chip>;
     };

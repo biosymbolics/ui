@@ -35,6 +35,18 @@ const getTrialColumns = (): GridColDef[] => [
         width: 500,
     },
     {
+        field: 'intervention',
+        headerName: 'Intervention',
+        renderCell: renderChip,
+        width: 200,
+    },
+    {
+        field: 'condition',
+        headerName: 'Condition',
+        renderCell: renderChip,
+        width: 175,
+    },
+    {
         field: 'sponsor',
         headerName: 'Sponsor',
         width: 175,
