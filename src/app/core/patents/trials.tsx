@@ -9,16 +9,22 @@ import 'server-only';
 
 import {
     DataGrid,
-    renderLabel,
     formatName,
     formatNumber,
     formatYear,
-    formatPercent,
+    renderChip,
+    renderPrimaryChip,
+    renderLabel,
+    renderPercent,
 } from '@/components/data/grid';
-import { TrialSearchArgs } from '@/types/trials';
+import { Trial, TrialSearchArgs } from '@/types/trials';
 
 import { fetchTrials } from './actions';
-import { getDropoutScoresClass, getRepurposeScoreClass } from './client';
+import {
+    TrialDetail,
+    getDropoutScoresClass,
+    getRepurposeScoreClass,
+} from './client';
 
 const getTrialColumns = (): GridColDef[] => [
     { field: 'nct_id', headerName: 'Nct Id', width: 135 },
@@ -46,27 +52,50 @@ const getTrialColumns = (): GridColDef[] => [
         valueFormatter: formatYear,
     },
     {
-        field: 'status',
-        headerName: 'Status',
-        width: 160,
-    },
-    {
-        field: 'duration',
-        headerName: 'Duration',
-        width: 100,
-        valueFormatter: formatNumber,
-    },
-    {
         field: 'phase',
         headerName: 'Phase',
+        renderCell: renderChip,
         width: 100,
-        valueFormatter: renderLabel,
+    },
+    {
+        field: 'status',
+        headerName: 'Status',
+        renderCell: renderPrimaryChip,
+        width: 125,
+    },
+
+    {
+        field: 'dropout_percent',
+        headerName: 'Dropout %',
+        width: 100,
+        valueFormatter: renderPercent,
+        cellClassName: getDropoutScoresClass,
+        description: 'Dropout % = Dropouts / Enrollment',
+    },
+    {
+        field: 'termination_reason',
+        headerName: 'Term. Reason',
+        width: 150,
+    },
+    {
+        field: 'reformulation_score',
+        headerName: 'Repurpose⚠️',
+        width: 150,
+        valueFormatter: formatNumber,
+        cellClassName: getRepurposeScoreClass,
+        description: '**FAKE PLACEHOLDER**!! Esimated repurpose potential.',
     },
     {
         field: 'design',
         headerName: 'Design',
         width: 150,
         valueFormatter: renderLabel,
+    },
+    {
+        field: 'duration',
+        headerName: 'Duration',
+        width: 100,
+        valueFormatter: formatNumber,
     },
     {
         field: 'max_timeframe',
@@ -79,27 +108,6 @@ const getTrialColumns = (): GridColDef[] => [
         width: 100,
         valueFormatter: formatNumber,
     },
-    {
-        field: 'dropout_percent',
-        headerName: 'Dropout %',
-        width: 100,
-        valueFormatter: formatPercent,
-        cellClassName: getDropoutScoresClass,
-        description: 'Dropout % = Dropouts / Enrollment',
-    },
-    {
-        field: 'termination_reason',
-        headerName: 'Term. Reason',
-        width: 150,
-    },
-    {
-        field: 'reformulation_score',
-        headerName: 'Repurpose Score',
-        width: 150,
-        valueFormatter: formatNumber,
-        cellClassName: getRepurposeScoreClass,
-        description: '**FAKE PLACEHOLDER**!! Esimated repurpose potential.',
-    },
 ];
 
 export const TrialList = async (args: TrialSearchArgs) => {
@@ -110,6 +118,7 @@ export const TrialList = async (args: TrialSearchArgs) => {
             <Box height="100vh">
                 <DataGrid
                     columns={columns}
+                    detailComponent={TrialDetail<Trial>}
                     rows={trials.map((trial) => ({
                         ...trial,
                         id: trial.nct_id,

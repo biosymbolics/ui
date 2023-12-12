@@ -13,6 +13,7 @@ export const TrialSchema = z.object({
     enrollment: z.union([z.number(), z.null()]),
     hypothesis_type: z.union([z.string(), z.null()]),
     interventions: z.array(z.string()),
+    masking: z.string(),
     max_timeframe: z.union([z.number(), z.null()]),
     nct_id: z.string(),
     phase: z.string(),
@@ -27,6 +28,7 @@ export const TrialSchema = z.object({
     termination_reason: z.union([z.string(), z.null()]),
     time_frames: z.array(z.string()),
     title: z.string(),
+    why_stopped: z.union([z.string(), z.null()]),
 });
 
 export const TrialResponseSchema = z.array(TrialSchema);

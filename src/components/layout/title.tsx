@@ -13,17 +13,19 @@ export const Title = ({
     variant = 'plain',
 }: {
     title: string;
-    description: string;
+    description?: string;
     link: { label: string; url: string };
     variant: TitleVariant;
 }) => (
     <Sheet variant={variant} sx={{ mx: -3, mb: 2, mt: -3, px: 3, py: 2 }}>
-        <Typography gutterBottom level="title-lg" maxWidth={MAX_WIDTH}>
+        <Typography gutterBottom level="h3" maxWidth={MAX_WIDTH}>
             {title}
         </Typography>
-        <Typography gutterBottom level="body-md" maxWidth={MAX_WIDTH}>
-            {description}
-        </Typography>
+        {description && (
+            <Typography gutterBottom level="body-md" maxWidth={MAX_WIDTH}>
+                {description}
+            </Typography>
+        )}
         <Link component={NextLink} href={link.url} target="_blank">
             {link.label}
         </Link>

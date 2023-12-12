@@ -10,8 +10,8 @@ import {
 import unescape from 'lodash/fp/unescape';
 import { format } from 'date-fns';
 
-import { formatChips } from '@/components/data/chip';
-import { formatLabel, title } from '@/utils/string';
+import { Chip, ChipProps, formatChips } from '@/components/data/chip';
+import { formatLabel, formatPercent, title } from '@/utils/string';
 
 /**
  * Format name
@@ -63,7 +63,7 @@ export const formatNumber = <T extends Record<string, unknown>>(
 /**
  * Format number as percent
  */
-export const formatPercent = <T extends Record<string, unknown>>(
+export const renderPercent = <T extends Record<string, unknown>>(
     params: GridValueFormatterParams<T>
 ): string => {
     const { value } = params;
@@ -72,7 +72,7 @@ export const formatPercent = <T extends Record<string, unknown>>(
         throw new Error(`Expected number, got ${typeof value}`);
     }
 
-    return `${parseFloat((100 * value).toPrecision(2))}%`;
+    return formatPercent(value);
 };
 
 /**
@@ -147,6 +147,23 @@ export const renderList = (
 
     return formatChips({ isWrappable: false, items: params.value as string[] });
 };
+
+/**
+ * Render string array as chips
+ */
+export const getRenderChip =
+    (color: ChipProps['color']) =>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (params: GridRenderCellParams<any, string>): ReactNode => {
+        const { value } = params;
+        if (typeof value !== 'string') {
+            throw new Error(`Expected str, got ${typeof value}`);
+        }
+        return <Chip color={color}>{formatLabel(value || '')}</Chip>;
+    };
+
+export const renderPrimaryChip = getRenderChip('primary');
+export const renderChip = getRenderChip('neutral');
 
 /**
  * Format label
