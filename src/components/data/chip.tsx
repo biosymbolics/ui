@@ -11,7 +11,7 @@ import { formatLabel, getSelectableId } from '@/utils/string';
 
 import { Section } from '../layout/section';
 
-type ChipProps = {
+export type ChipProps = {
     children: JoyChipProps['children'];
     color?: JoyChipProps['color'];
     component?: JoyChipProps['component'];

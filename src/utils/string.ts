@@ -101,3 +101,6 @@ export const formatLabel = (
     }
     return title(strInput.replace(/_/g, ' '));
 };
+
+export const formatPercent = (value: number) =>
+    `${parseFloat((100 * value).toPrecision(2))}%`;

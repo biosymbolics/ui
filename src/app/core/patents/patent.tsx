@@ -13,15 +13,15 @@ import {
     formatDate,
     formatName,
     formatNumber,
-    formatPercent,
     formatYear,
     renderBoolean,
+    renderPercent,
     unencodeHtml,
 } from '@/components/data/grid';
 import { Patent, PatentSearchArgs } from '@/types/patents';
 
 import {
-    DetailContent,
+    PatentDetail,
     getPatentYearsClass,
     getScoresClass,
     getTolerantScoresClass,
@@ -94,7 +94,7 @@ const getPatentColumns = (): GridColDef[] => [
         field: 'reformulation_score',
         headerName: '⚠️Reform⚠️',
         width: 100,
-        valueFormatter: formatPercent,
+        valueFormatter: renderPercent,
         // cellClassName: getScoresClass,
         description: '**FAKE PLACEHOLDER**!! Esimated reformulation potential.',
     },
@@ -149,7 +149,7 @@ export const PatentList = async (args: PatentSearchArgs) => {
             <Box height="100vh">
                 <DataGrid
                     columns={columns}
-                    detailComponent={DetailContent<Patent>}
+                    detailComponent={PatentDetail<Patent>}
                     rows={patents.map((patent) => ({
                         ...patent,
                         id: patent.publication_number,
