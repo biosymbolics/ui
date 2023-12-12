@@ -16,6 +16,7 @@ import {
 } from '@/types/patents';
 import { doFetch } from '@/utils/actions';
 import { getQueryArgs } from '@/utils/patents';
+import { formatLabel } from '@/utils/string';
 
 import { getStyles } from './client';
 
@@ -55,7 +56,7 @@ export const OverTime = async ({
                     .filter((v) => v.data.length > 2)
                     .slice(0, 5)
                     .sort(),
-                title: r.x,
+                title: formatLabel(r.x),
             }))
             .filter((r) => r.series.some((s) => s.data.length > 0));
 
@@ -76,7 +77,7 @@ export const OverTime = async ({
                         height={300}
                         pathname={pathname}
                         series={series}
-                        title={title as string}
+                        title={title}
                     />
                 ))}
             </Section>
