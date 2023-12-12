@@ -92,7 +92,7 @@ const getPatentColumns = (): GridColDef[] => [
     },
     {
         field: 'reformulation_score',
-        headerName: '⚠️Reform⚠️',
+        headerName: 'Reformulation⚠️',
         width: 100,
         valueFormatter: renderPercent,
         // cellClassName: getScoresClass,

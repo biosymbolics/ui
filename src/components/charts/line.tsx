@@ -35,7 +35,7 @@ export const Line = (props: LineChartProps): JSX.Element => {
             {...props}
             additionalOptions={options}
             colors={colors}
-            type="line"
+            type="area"
         />
     );
 };

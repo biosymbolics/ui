@@ -50,7 +50,7 @@ export const Timeline = ({
         series,
         stroke: { curve: 'straight' },
         title: { text: title, align: 'left' },
-        xaxis: { type: 'numeric' },
+        xaxis: { type: 'datetime' },
     };
 
     return (

@@ -7,6 +7,7 @@ import Typography from '@mui/joy/Typography';
 import WarningIcon from '@mui/icons-material/Warning';
 import 'server-only';
 
+// import { Timeline } from '@/components/charts/gantt';
 import {
     DataGrid,
     formatName,
@@ -116,6 +117,30 @@ export const TrialList = async (args: TrialSearchArgs) => {
     try {
         return (
             <Box height="100vh">
+                {/* <Timeline
+                    height={400}
+                    pathname=""
+                    series={[
+                        {
+                            data: trials
+                                .filter(
+                                    (t) =>
+                                        t.start_date &&
+                                        t.end_date &&
+                                        new Date(t.end_date).getTime() >
+                                            new Date().getTime()
+                                )
+                                .map((t) => ({
+                                    x: t.mesh_conditions[0],
+                                    y: [
+                                        new Date(t.start_date || '').getTime(),
+                                        new Date(t.end_date || '').getTime(),
+                                    ],
+                                }))
+                                .slice(0, 200),
+                        },
+                    ]}
+                /> */}
                 <DataGrid
                     columns={columns}
                     detailComponent={TrialDetail<Trial>}

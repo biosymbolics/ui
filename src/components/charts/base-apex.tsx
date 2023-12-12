@@ -13,7 +13,7 @@ import { AnnotationDetail, getAnnotations } from './annotation';
 
 type BasicApexChartProps = BaseApexChartProps & {
     additionalOptions?: ChartOptions;
-    type: 'heatmap' | 'line' | 'scatter';
+    type: 'area' | 'heatmap' | 'line' | 'scatter';
 };
 
 /**

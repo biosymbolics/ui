@@ -15,6 +15,7 @@ export const TrialSchema = z.object({
     interventions: z.array(z.string()),
     masking: z.string(),
     max_timeframe: z.union([z.number(), z.null()]),
+    mesh_conditions: z.array(z.string()),
     nct_id: z.string(),
     phase: z.string(),
     primary_outcomes: z.array(z.string()),

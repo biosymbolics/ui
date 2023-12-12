@@ -53,6 +53,7 @@ export const OverTime = async ({
                             .sort((a, b) => a.x - b.x),
                     }))
                     .filter((v) => v.data.length > 2)
+                    .slice(0, 5)
                     .sort(),
                 title: r.x,
             }))

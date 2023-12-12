@@ -162,7 +162,7 @@ export const TrialDetail = <T extends Trial>({
     const pathname = usePathname();
     const fields: (keyof T)[] = [
         'conditions',
-        // 'mesh_conditions',
+        'mesh_conditions',
         'interventions',
     ];
     return (
