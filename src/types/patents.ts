@@ -78,6 +78,7 @@ export type PatentSearchArgs = {
 const PatentEdgeSchema = z.object({
     source: z.string(),
     target: z.string(),
+    weight: z.number(),
 });
 
 const PatentNodeSchema = z.object({

@@ -23,7 +23,7 @@ const transform = (data: PatentGraph) => ({
             ...node,
             color: node.group === 'patent' ? 'blue' : 'red',
             label: node.id,
-            weight: node.group === 'patent' ? 60 : 20,
+            weight: node.group === 'patent' ? 30 : 30,
         },
         // group: node.group,
         position: {
@@ -39,11 +39,11 @@ const styles: Stylesheet[] = [
         style: {
             content: 'data(name)',
             label: 'data(id)',
-            'font-size': '18px',
+            'font-size': '24px',
             'text-valign': 'top',
             'text-halign': 'center',
             'background-color': 'data(color)',
-            'overlay-padding': '6px',
+            'overlay-padding': '16px',
             width: 'data(weight)',
             height: 'data(weight)',
         },
@@ -54,6 +54,7 @@ const styles: Stylesheet[] = [
             opacity: '0.3',
             'line-color': '#bbb',
             'overlay-padding': '3px',
+            width: 'data(weight)',
         },
     },
 ] as Stylesheet[];
@@ -63,23 +64,20 @@ const styles: Stylesheet[] = [
  *
  * @see https://github.com/cytoscape/cytoscape.js
  */
-export const Graph = ({ data, title, ...props }: GraphProps): JSX.Element => {
-    console.info('Graph', data);
-
-    return (
-        <>
-            {title && <Typography level="title-md">{title}</Typography>}
-            <CytoscapeComponent
-                {...props}
-                elements={CytoscapeComponent.normalizeElements(transform(data))}
-                layout={{
-                    name: 'preset',
-                    fit: true,
-                    padding: 30,
-                }}
-                stylesheet={styles}
-                style={{ width: '100%', height: '100vh' }}
-            />
-        </>
-    );
-};
+export const Graph = ({ data, title, ...props }: GraphProps): JSX.Element => (
+    <>
+        {title && <Typography level="title-md">{title}</Typography>}
+        <CytoscapeComponent
+            {...props}
+            elements={CytoscapeComponent.normalizeElements(transform(data))}
+            layout={{
+                name: 'preset',
+                fit: true,
+                padding: 30,
+            }}
+            stylesheet={styles}
+            style={{ width: '100%', height: '100vh' }}
+        />
+        {JSON.stringify(data)}
+    </>
+);
