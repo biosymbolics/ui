@@ -1,3 +1,5 @@
+'use client';
+
 import { ReactNode } from 'react';
 import Tab from '@mui/joy/Tab';
 import TabList from '@mui/joy/TabList';
