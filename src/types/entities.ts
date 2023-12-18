@@ -6,11 +6,11 @@ import { TrialSchema } from './trials';
 
 export const EntitySchema = z.object({
     activity: z.array(z.number()),
-    last_status: z.union([z.string(), z.null()]),
+    last_status: z.string(),
     last_updated: z.union([z.string(), z.null()]),
     name: z.string(),
-    max_phase: z.union([z.string(), z.null()]),
-    last_priority_year: z.union([z.number(), z.null()]),
+    max_phase: z.string(),
+    last_priority_year: z.union([z.number(), z.string()]),
     patents: z.array(PatentSchema),
     patent_count: z.number(),
     record_count: z.number(),

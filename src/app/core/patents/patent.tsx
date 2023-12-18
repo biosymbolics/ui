@@ -143,8 +143,9 @@ const getPatentColumns = (): GridColDef[] => [
 
 export const PatentList = async (args: PatentSearchArgs) => {
     const columns = getPatentColumns();
-    const patents = await fetchPatents(args);
     try {
+        const patents = await fetchPatents(args);
+
         return (
             <Box height="100vh">
                 <DataGrid
