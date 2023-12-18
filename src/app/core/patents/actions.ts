@@ -4,6 +4,7 @@ import { cache } from 'react';
 import { z } from 'zod';
 
 import {
+    ENTITY_SEARCH_API_URL,
     PATENT_AUTOCOMPLETE_API_URL,
     PATENT_SEARCH_API_URL,
     TERM_DESCRIPTION_API_URL,
@@ -22,6 +23,11 @@ import {
     TrialResponseSchema,
     TrialSearchArgs,
 } from '@/types/trials';
+import {
+    EntityResponse,
+    EntityResponseSchema,
+    EntitySearchArgs,
+} from '@/types/entities';
 
 const AutocompleteResponse = z.array(
     z.object({
@@ -66,6 +72,26 @@ export const fetchDescription = cache(
             );
         }
         return res.text();
+    }
+);
+
+/**
+ * Fetch entities from the API. Cached.
+ * @param args
+ * @returns patents promise
+ */
+export const fetchEntities = cache(
+    async (args: EntitySearchArgs): Promise<EntityResponse> => {
+        if (args.terms?.length === 0) {
+            return [];
+        }
+        const queryArgs = getQueryArgs(args, true);
+        const res = await doFetch(
+            `${ENTITY_SEARCH_API_URL}?${queryArgs}`,
+            EntityResponseSchema
+        );
+
+        return res;
     }
 );
 

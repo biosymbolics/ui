@@ -9,6 +9,7 @@ import {
 } from '@mui/x-data-grid/models/params/gridCellParams';
 import unescape from 'lodash/fp/unescape';
 import { format } from 'date-fns';
+import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
 
 import { Chip, ChipProps, formatChips } from '@/components/data/chip';
 import { formatLabel, formatPercent, title } from '@/utils/string';
@@ -152,18 +153,55 @@ export const renderList = (
  * Render string array as chips
  */
 export const getRenderChip =
-    (color: ChipProps['color']) =>
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (params: GridRenderCellParams<any, string>): ReactNode => {
-        const { value } = params;
-        if (typeof value !== 'string') {
+    <T extends Record<string, unknown>>(
+        color: ChipProps['color'],
+        getUrl: (row: T) => string | undefined = () => undefined
+    ) =>
+    (params: GridRenderCellParams<T, string | number>): ReactNode => {
+        const { value, row } = params;
+        if (typeof value !== 'string' && typeof value !== 'number') {
             return <>{JSON.stringify(value)}</>;
         }
-        return <Chip color={color}>{formatLabel(value || '')}</Chip>;
+
+        const href = getUrl(row);
+
+        if (!value) {
+            return <span />;
+        }
+
+        return (
+            <Chip color={color} href={href}>
+                {formatLabel(value || '')}
+            </Chip>
+        );
     };
 
 export const renderPrimaryChip = getRenderChip('primary');
 export const renderChip = getRenderChip('neutral');
+export const renderCompoundCountChip = getRenderChip(
+    'primary',
+    (row: { name: string }) => `/core/patents?terms=${row.name}`
+);
+
+export const getRenderSparkline =
+    <T extends Record<string, unknown>>() =>
+    (params: GridRenderCellParams<T, number[]>): ReactNode => {
+        const { value } = params;
+        if (!value) {
+            return <span />;
+        }
+        return (
+            <SparkLineChart
+                plotType="line"
+                colors={['blue']}
+                data={value}
+                height={50}
+                margin={{ top: 10, right: 0, bottom: 10, left: 0 }}
+            />
+        );
+    };
+
+export const renderSparkline = getRenderSparkline();
 
 /**
  * Format label
