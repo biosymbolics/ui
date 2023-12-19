@@ -11,6 +11,7 @@ import {
 } from '@mui/x-data-grid-pro';
 import { GridColDef, GridToolbar } from '@mui/x-data-grid';
 
+type DataGridVariant = 'standard' | 'minimal' | 'maximal';
 type DataGridProps<T> = {
     columns?: GridColDef[];
     detailComponent?: ({ row }: { row: T }) => JSX.Element;
@@ -19,7 +20,7 @@ type DataGridProps<T> = {
     isLoading?: MuiDataGridProps['loading'];
     rows: MuiDataGridProps['rows'];
     title?: string;
-    variant?: 'standard' | 'minimal';
+    variant?: DataGridVariant;
 };
 
 type Row = Record<string, unknown>;
@@ -41,6 +42,16 @@ const DetailPanelContent = ({ row }: { row: Row }) => (
 const NoRows = (): JSX.Element => (
     <Typography level="h3">no results</Typography>
 );
+
+const getDensity = (variant: DataGridVariant): MuiDataGridProps['density'] => {
+    if (variant === 'minimal') {
+        return 'compact';
+    }
+    if (variant === 'maximal') {
+        return 'comfortable';
+    }
+    return 'standard';
+};
 
 export const DataGrid = <T extends Record<string, unknown>>({
     columns: _columns,
@@ -66,10 +77,11 @@ export const DataGrid = <T extends Record<string, unknown>>({
 
     const columns =
         _columns ||
-        (rows.length > 0
-            ? // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-              Object.keys(rows[0]).map((field) => ({ field }))
-            : []);
+        Object.keys((rows?.[0] as Record<string, unknown>) || {}).map(
+            (field) => ({ field })
+        );
+
+    const density = getDensity(variant || 'standard');
 
     return (
         <>
@@ -81,10 +93,10 @@ export const DataGrid = <T extends Record<string, unknown>>({
             <MuiDataGrid
                 {...props}
                 columns={columns}
-                density={variant === 'minimal' ? 'compact' : 'standard'}
+                density={density}
                 getDetailPanelHeight={getDetailPanelHeight}
                 getDetailPanelContent={
-                    variant === 'minimal' ? undefined : getDetailPanelContent
+                    detailComponent ? getDetailPanelContent : undefined
                 }
                 loading={isLoading}
                 rows={rows}
