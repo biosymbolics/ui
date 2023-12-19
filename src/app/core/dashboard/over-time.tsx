@@ -35,7 +35,7 @@ const fetchReports = cache(
 );
 
 export const OverTime = async ({
-    pathname = '/core/patents',
+    pathname = '/core/dashboard',
     ...args
 }: PatentSearchArgs & { pathname?: string }) => {
     try {

@@ -181,7 +181,7 @@ export const renderPrimaryChip = getRenderChip('primary');
 export const renderChip = getRenderChip('neutral');
 export const renderAssetCountChip = getRenderChip(
     'primary',
-    (row: { name: string }) => `/core/patents?terms=${row.name}`
+    (row: { name: string }) => `/core/dashboard?terms=${row.name}`
 );
 
 export const getRenderSparkline =

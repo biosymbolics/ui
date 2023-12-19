@@ -40,7 +40,7 @@ const SimilarPatents = ({ patent }: { patent: Patent }): JSX.Element => (
                             (
                             <Link
                                 component={NextLink}
-                                href={`/core/patents?terms=${s}`}
+                                href={`/core/dashboard?terms=${s}`}
                                 target="_blank"
                             >
                                 Search

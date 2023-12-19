@@ -44,7 +44,7 @@ const fetchSummaries = cache(
 // );
 
 export const Summary = async ({
-    pathname = '/core/patents',
+    pathname = '/core/dashboard',
     terms,
     ...args
 }: PatentSearchArgs & { pathname?: string }) => {
