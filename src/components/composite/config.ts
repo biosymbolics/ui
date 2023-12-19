@@ -13,6 +13,7 @@ import {
     renderBoolean,
     renderChip,
     renderLabel,
+    renderMainTypography,
     renderPrimaryChip,
     renderPercent,
     renderSparkline,
@@ -241,6 +242,7 @@ export const getAssetColumns = (): GridColDef[] => [
         field: 'name',
         headerName: 'Asset or Target',
         width: 250,
+        renderCell: renderMainTypography,
     },
     {
         field: 'trial_count',

@@ -8,8 +8,7 @@ import 'server-only';
 
 import { DataGrid } from '@/components/data/grid';
 import { getAssetColumns } from '@/components/composite/config';
-import { AssetDetail } from '@/components/composite/assets/client';
-import { Entity, EntitySearchArgs } from '@/types/entities';
+import { EntitySearchArgs } from '@/types/entities';
 
 import { fetchAssets } from '../actions';
 
@@ -21,12 +20,13 @@ export const AssetList = async (args: EntitySearchArgs) => {
             <Box height="100vh">
                 <DataGrid
                     columns={columns}
-                    detailComponent={AssetDetail<Entity>}
+                    // detailComponent={AssetDetail<Entity>}
                     detailHeight={800}
                     rows={assets.map((asset) => ({
                         ...asset,
                         id: asset.name,
                     }))}
+                    variant="maximal"
                 />
             </Box>
         );

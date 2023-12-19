@@ -3,6 +3,7 @@
 import { ReactNode } from 'react';
 import TrueIcon from '@mui/icons-material/Check';
 import FalseIcon from '@mui/icons-material/Close';
+import Typography, { TypographyProps } from '@mui/joy/Typography';
 import {
     GridRenderCellParams,
     GridValueFormatterParams,
@@ -221,3 +222,15 @@ export const renderLabel = <T extends Record<string, unknown>>(
 
     return formatLabel(value);
 };
+
+export const getRenderTypography =
+    <T extends Record<string, unknown>>(level: TypographyProps['level']) =>
+    (params: GridRenderCellParams<T, string>): ReactNode => {
+        const { value } = params;
+        if (!value) {
+            return <span />;
+        }
+        return <Typography level={level}>{value}</Typography>;
+    };
+
+export const renderMainTypography = getRenderTypography('title-md');
