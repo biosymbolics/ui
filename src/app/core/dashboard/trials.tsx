@@ -11,7 +11,7 @@ import { TrialDetail } from '@/components/composite/trials/client';
 import { DataGrid } from '@/components/data/grid';
 import { Trial, TrialSearchArgs } from '@/types/trials';
 
-import { fetchTrials } from './actions';
+import { fetchTrials } from '../actions';
 
 export const TrialList = async (args: TrialSearchArgs) => {
     const columns = getTrialColumns();

@@ -11,7 +11,7 @@ import { getAssetColumns } from '@/components/composite/config';
 import { AssetDetail } from '@/components/composite/assets/client';
 import { Entity, EntitySearchArgs } from '@/types/entities';
 
-import { fetchAssets } from './actions';
+import { fetchAssets } from '../actions';
 
 export const AssetList = async (args: EntitySearchArgs) => {
     const columns = getAssetColumns();

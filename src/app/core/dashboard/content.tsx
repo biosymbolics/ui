@@ -7,6 +7,7 @@ import Skeleton from '@mui/joy/Skeleton';
 import Typography from '@mui/joy/Typography';
 import WarningIcon from '@mui/icons-material/Warning';
 
+import { getStyles } from '@/components/composite/styles';
 import { Tabs } from '@/components/layout/tabs';
 import { PatentSearchArgs } from '@/types/patents';
 
@@ -16,8 +17,6 @@ import { PatentGraph } from './graph';
 import { OverTime } from './over-time';
 import { Summary } from './summary';
 import { TrialList } from './trials';
-
-import { getStyles } from '../../../components/composite/styles';
 
 export const Content = (args: PatentSearchArgs) => {
     try {

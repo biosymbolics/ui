@@ -11,7 +11,7 @@ import { PatentDetail } from '@/components/composite/patents/client';
 import { DataGrid } from '@/components/data/grid';
 import { Patent, PatentSearchArgs } from '@/types/patents';
 
-import { fetchPatents } from './actions';
+import { fetchPatents } from '../actions';
 
 export const PatentList = async (args: PatentSearchArgs) => {
     const columns = getPatentColumns();
