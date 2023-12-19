@@ -13,6 +13,7 @@ import { GridColDef, GridToolbar } from '@mui/x-data-grid';
 
 type DataGridVariant = 'standard' | 'minimal' | 'maximal';
 type DataGridProps<T> = {
+    checkboxSelection?: MuiDataGridProps['checkboxSelection'];
     columns?: GridColDef[];
     detailComponent?: ({ row }: { row: T }) => JSX.Element;
     detailHeight?: number;

@@ -8,8 +8,8 @@ import 'server-only';
 
 import { DataGrid } from '@/components/data/grid';
 import { getAssetColumns } from '@/components/composite/config';
-// import { AssetDetail } from '@/components/composite/assets/client';
-import { EntitySearchArgs } from '@/types/entities';
+import { AssetDetail } from '@/components/composite/assets/client';
+import { Entity, EntitySearchArgs } from '@/types/entities';
 
 import { fetchAssets } from '../actions';
 
@@ -20,8 +20,9 @@ export const AssetList = async (args: EntitySearchArgs) => {
         return (
             <Box height="100vh">
                 <DataGrid
+                    checkboxSelection
                     columns={columns}
-                    // detailComponent={AssetDetail<Entity>}
+                    detailComponent={AssetDetail<Entity>}
                     detailHeight={800}
                     rows={assets.map((asset) => ({
                         ...asset,

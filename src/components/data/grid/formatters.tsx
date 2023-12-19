@@ -193,6 +193,7 @@ export const getRenderSparkline =
         }
         return (
             <SparkLineChart
+                showHighlight
                 plotType="line"
                 colors={['blue']}
                 data={value}

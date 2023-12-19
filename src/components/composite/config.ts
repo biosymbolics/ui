@@ -245,15 +245,21 @@ export const getAssetColumns = (): GridColDef[] => [
         renderCell: renderMainTypography,
     },
     {
+        field: 'approval_count',
+        headerName: 'Approvals',
+        width: 100,
+        renderCell: renderAssetCountChip,
+    },
+    {
         field: 'trial_count',
         headerName: 'Trials',
-        width: 125,
+        width: 100,
         renderCell: renderAssetCountChip,
     },
     {
         field: 'patent_count',
         headerName: 'Patents',
-        width: 125,
+        width: 100,
         renderCell: renderAssetCountChip,
     },
     {

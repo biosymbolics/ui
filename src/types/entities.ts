@@ -6,6 +6,8 @@ import { TrialSchema } from './trials';
 
 export const EntitySchema = z.object({
     activity: z.array(z.number()),
+    approval_count: z.number(),
+    is_approved: z.boolean(),
     last_status: z.string(),
     last_updated: z.union([z.number(), z.null()]),
     name: z.string(),
