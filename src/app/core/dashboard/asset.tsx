@@ -8,6 +8,7 @@ import 'server-only';
 
 import { DataGrid } from '@/components/data/grid';
 import { getAssetColumns } from '@/components/composite/config';
+// import { AssetDetail } from '@/components/composite/assets/client';
 import { EntitySearchArgs } from '@/types/entities';
 
 import { fetchAssets } from '../actions';
