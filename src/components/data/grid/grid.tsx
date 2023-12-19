@@ -14,9 +14,12 @@ import { GridColDef, GridToolbar } from '@mui/x-data-grid';
 type DataGridProps<T> = {
     columns?: GridColDef[];
     detailComponent?: ({ row }: { row: T }) => JSX.Element;
+    detailHeight?: number;
     initialState?: MuiDataGridProps['initialState'];
     isLoading?: MuiDataGridProps['loading'];
     rows: MuiDataGridProps['rows'];
+    title?: string;
+    variant?: 'standard' | 'minimal';
 };
 
 type Row = Record<string, unknown>;
@@ -42,8 +45,11 @@ const NoRows = (): JSX.Element => (
 export const DataGrid = <T extends Record<string, unknown>>({
     columns: _columns,
     detailComponent,
+    detailHeight = 600,
     isLoading,
     rows,
+    variant,
+    title,
     ...props
 }: DataGridProps<T>) => {
     const DetailComponent = detailComponent || DetailPanelContent;
@@ -53,25 +59,41 @@ export const DataGrid = <T extends Record<string, unknown>>({
         ({ row }: { row: T }) => <DetailComponent row={row} />,
         [DetailComponent]
     );
-    const getDetailPanelHeight = React.useCallback(() => 600, []);
+    const getDetailPanelHeight = React.useCallback(
+        () => detailHeight,
+        [detailHeight]
+    );
 
     const columns =
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        _columns || Object.keys(rows[0]).map((field) => ({ field }));
+        _columns ||
+        (rows.length > 0
+            ? // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+              Object.keys(rows[0]).map((field) => ({ field }))
+            : []);
 
     return (
-        <MuiDataGrid
-            {...props}
-            columns={columns}
-            getDetailPanelHeight={getDetailPanelHeight}
-            getDetailPanelContent={getDetailPanelContent}
-            loading={isLoading}
-            rows={rows}
-            slots={{
-                toolbar: GridToolbar,
-                noRowsOverlay: NoRows,
-            }}
-            sx={{ border: 0 }}
-        />
+        <>
+            {title && (
+                <Typography level={variant === 'minimal' ? 'h4' : 'h3'}>
+                    {title}
+                </Typography>
+            )}
+            <MuiDataGrid
+                {...props}
+                columns={columns}
+                density={variant === 'minimal' ? 'compact' : 'standard'}
+                getDetailPanelHeight={getDetailPanelHeight}
+                getDetailPanelContent={
+                    variant === 'minimal' ? undefined : getDetailPanelContent
+                }
+                loading={isLoading}
+                rows={rows}
+                slots={{
+                    toolbar: variant === 'minimal' ? null : GridToolbar,
+                    noRowsOverlay: NoRows,
+                }}
+                sx={{ border: 0 }}
+            />
+        </>
     );
 };

@@ -165,20 +165,20 @@ export const getRenderChip =
 
         const href = getUrl(row);
 
-        if (!value) {
+        if (typeof value !== 'number' && !value) {
             return <span />;
         }
 
         return (
             <Chip color={color} href={href}>
-                {formatLabel(value || '')}
+                {formatLabel(value)}
             </Chip>
         );
     };
 
 export const renderPrimaryChip = getRenderChip('primary');
 export const renderChip = getRenderChip('neutral');
-export const renderCompoundCountChip = getRenderChip(
+export const renderAssetCountChip = getRenderChip(
     'primary',
     (row: { name: string }) => `/core/patents?terms=${row.name}`
 );

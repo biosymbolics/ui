@@ -80,7 +80,7 @@ export const fetchDescription = cache(
  * @param args
  * @returns patents promise
  */
-export const fetchEntities = cache(
+export const fetchAssets = cache(
     async (args: EntitySearchArgs): Promise<EntityResponse> => {
         if (args.terms?.length === 0) {
             return [];

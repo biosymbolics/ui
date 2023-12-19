@@ -13,7 +13,7 @@ import {
 import { doFetch } from '@/utils/actions';
 import { getQueryArgs } from '@/utils/patents';
 
-import { getStyles } from './client';
+import { getStyles } from '../../../components/composite/styles';
 
 const fetchSummaries = cache(
     async (args: PatentSearchArgs): Promise<PatentsSummaries> => {

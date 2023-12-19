@@ -10,22 +10,23 @@ import WarningIcon from '@mui/icons-material/Warning';
 import { Tabs } from '@/components/layout/tabs';
 import { PatentSearchArgs } from '@/types/patents';
 
-import { getStyles } from './client';
-import { CompoundList } from './compound';
+import { AssetList } from './asset';
 import { PatentList } from './patent';
 import { PatentGraph } from './graph';
 import { OverTime } from './over-time';
 import { Summary } from './summary';
 import { TrialList } from './trials';
 
+import { getStyles } from '../../../components/composite/styles';
+
 export const Content = (args: PatentSearchArgs) => {
     try {
         const tabs = [
             {
-                label: 'Compounds',
+                label: 'Assets',
                 panel: (
                     <Suspense fallback={<Skeleton />}>
-                        <CompoundList {...args} />
+                        <AssetList {...args} />
                     </Suspense>
                 ),
             },
