@@ -13,7 +13,7 @@ import { PatentSearchArgs } from '@/types/patents';
 
 import { AssetList } from './asset';
 import { PatentList } from './patent';
-import { PatentGraph } from './graph';
+// import { PatentGraph } from './graph';
 import { OverTime } from './over-time';
 import { Summary } from './summary';
 import { TrialList } from './trials';
@@ -61,14 +61,14 @@ export const Content = (args: PatentSearchArgs) => {
                     </Suspense>
                 ),
             },
-            {
-                label: 'Graph',
-                panel: (
-                    <Suspense fallback={<Skeleton />}>
-                        <PatentGraph {...args} />
-                    </Suspense>
-                ),
-            },
+            // {
+            //     label: 'Graph',
+            //     panel: (
+            //         <Suspense fallback={<Skeleton />}>
+            //             <PatentGraph {...args} />
+            //         </Suspense>
+            //     ),
+            // },
         ];
         return (
             <Box sx={getStyles}>

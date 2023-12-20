@@ -5,12 +5,10 @@ import 'server-only';
 
 import {
     formatBlank,
-    formatDate,
     formatName,
     formatNumber,
     formatYear,
     renderAssetCountChip,
-    renderBoolean,
     renderChip,
     renderLabel,
     renderMainTypography,
@@ -110,28 +108,6 @@ export const getPatentColumns = (): GridColDef[] => [
         valueFormatter: formatNumber,
         width: 100,
         description: 'Similarity to exemplar patent.',
-    },
-    {
-        field: 'is_approved',
-        headerName: 'Approved',
-        width: 75,
-        renderCell: renderBoolean,
-    },
-    {
-        field: 'max_trial_phase',
-        headerName: 'CT Phase',
-        width: 100,
-    },
-    {
-        field: 'last_trial_status',
-        headerName: 'CT Status',
-        width: 125,
-    },
-    {
-        field: 'last_trial_update',
-        headerName: 'Last CT Update',
-        valueFormatter: formatDate,
-        width: 125,
     },
     {
         field: 'priority_date',
@@ -240,7 +216,7 @@ export const getTrialColumns = (): GridColDef[] => [
 export const getAssetColumns = (): GridColDef[] => [
     {
         field: 'name',
-        headerName: 'Asset or Target',
+        headerName: 'Asset, Class or Target',
         width: 250,
         renderCell: renderMainTypography,
     },
