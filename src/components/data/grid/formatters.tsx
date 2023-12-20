@@ -128,8 +128,8 @@ export const formatYear = getFormatDate('yyyy');
 /**
  * Render boolean
  */
-export const renderBoolean = (
-    params: GridRenderCellParams<string[]>
+export const renderBoolean = <T extends Record<string, unknown>>(
+    params: GridRenderCellParams<T>
 ): ReactNode =>
     params.value ? (
         <TrueIcon sx={{ m: 'auto' }} />
@@ -160,15 +160,14 @@ export const getRenderChip =
     ) =>
     (params: GridRenderCellParams<T, string | number>): ReactNode => {
         const { value, row } = params;
+        if (value === null || typeof value === 'undefined') {
+            return formatBlank();
+        }
         if (typeof value !== 'string' && typeof value !== 'number') {
             return <>{JSON.stringify(value)}</>;
         }
 
         const href = getUrl(row);
-
-        if (typeof value !== 'number' && !value) {
-            return <span />;
-        }
 
         return (
             <Chip color={color} href={href}>
@@ -178,6 +177,7 @@ export const getRenderChip =
     };
 
 export const renderPrimaryChip = getRenderChip('primary');
+export const renderWarningChip = getRenderChip('warning');
 export const renderChip = getRenderChip('neutral');
 export const renderAssetCountChip = getRenderChip(
     'primary',

@@ -217,26 +217,32 @@ export const getAssetColumns = (): GridColDef[] => [
     {
         field: 'name',
         headerName: 'Asset, Class or Target',
-        width: 250,
+        width: 300,
         renderCell: renderMainTypography,
     },
     {
         field: 'approval_count',
         headerName: 'Approvals',
-        width: 100,
+        width: 85,
         renderCell: renderAssetCountChip,
     },
     {
         field: 'trial_count',
         headerName: 'Trials',
-        width: 100,
+        width: 85,
         renderCell: renderAssetCountChip,
     },
     {
         field: 'patent_count',
         headerName: 'Patents',
-        width: 100,
+        width: 85,
         renderCell: renderAssetCountChip,
+    },
+    {
+        field: 'owner_count',
+        headerName: 'Owners',
+        width: 85,
+        renderCell: renderChip,
     },
     {
         field: 'activity',
@@ -246,8 +252,14 @@ export const getAssetColumns = (): GridColDef[] => [
     },
     {
         field: 'last_updated',
-        headerName: 'Last Update',
-        width: 125,
+        headerName: 'Updated',
+        width: 85,
+    },
+    {
+        field: 'maybe_available_count',
+        headerName: 'Available?',
+        renderCell: renderChip,
+        width: 100,
     },
     {
         field: 'max_phase',
