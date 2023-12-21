@@ -5,6 +5,7 @@ import 'server-only';
 
 import {
     renderChip,
+    renderAvailabilityChip,
     renderMainTypography,
     renderOwnerChip,
     renderSparkline,
@@ -56,8 +57,9 @@ export const getAssetColumns = (): GridColDef[] => [
     {
         field: 'maybe_available_count',
         headerName: 'Available?',
-        renderCell: renderChip,
+        renderCell: renderAvailabilityChip,
         width: 100,
+        description: 'Number of patents that *might* be available',
     },
     {
         field: 'max_phase',

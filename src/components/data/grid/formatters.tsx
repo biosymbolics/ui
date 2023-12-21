@@ -162,7 +162,9 @@ export const renderList = (
  */
 export const getRenderChip =
     <T extends Record<string, unknown>>(
-        color: ChipProps['color'],
+        _color:
+            | ChipProps['color']
+            | ((value: number) => ChipProps['color']) = 'primary',
         getUrl: (row: T) => string | undefined = () => undefined,
         getTooltip: (row: T) => string | ReactNode | undefined = () => undefined
     ) =>
@@ -178,6 +180,9 @@ export const getRenderChip =
         const href = getUrl(row);
         const tooltip = getTooltip(row);
 
+        const color =
+            typeof _color === 'function' ? _color(value as number) : _color;
+
         return (
             <Chip color={color} href={href} tooltip={tooltip}>
                 {formatLabel(value)}
@@ -188,6 +193,9 @@ export const getRenderChip =
 export const renderPrimaryChip = getRenderChip('primary');
 export const renderWarningChip = getRenderChip('warning');
 export const renderChip = getRenderChip('neutral');
+export const renderAvailabilityChip = getRenderChip((value) =>
+    value > 0 ? 'success' : 'neutral'
+);
 export const renderOwnerChip = getRenderChip(
     'neutral',
     undefined,
