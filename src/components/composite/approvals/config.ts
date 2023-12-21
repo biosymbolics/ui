@@ -9,13 +9,13 @@ export const getApprovalColumns = (): GridColDef[] => [
         field: 'brand_name',
         headerName: 'Brand Name',
         renderCell: renderChip,
-        width: 200,
+        width: 250,
     },
     {
         field: 'generic_name',
         headerName: 'Generic Name',
         renderCell: renderChip,
-        width: 200,
+        width: 250,
     },
     {
         field: 'application_type',
