@@ -1,35 +1,24 @@
-'use server';
+'use client';
 
-import Box from '@mui/joy/Box';
 import { GridColDef } from '@mui/x-data-grid/models/colDef';
-import Alert from '@mui/joy/Alert';
-import Typography from '@mui/joy/Typography';
-import WarningIcon from '@mui/icons-material/Warning';
-import 'server-only';
 
 import {
-    DataGrid,
     formatBlank,
-    formatDate,
     formatName,
     formatNumber,
     formatYear,
-    renderBoolean,
     renderPercent,
     unencodeHtml,
 } from '@/components/data/grid';
-import { Patent, PatentSearchArgs } from '@/types/patents';
 
 import {
-    PatentDetail,
+    getAvailabilityClass,
     getPatentYearsClass,
     getScoresClass,
     getTolerantScoresClass,
-    getAvailabilityClass,
-} from './client';
-import { fetchPatents } from './actions';
+} from '../styles';
 
-const getPatentColumns = (): GridColDef[] => [
+export const getPatentColumns = (): GridColDef[] => [
     { field: 'publication_number', headerName: 'Pub #', width: 170 },
     {
         field: 'title',
@@ -112,63 +101,9 @@ const getPatentColumns = (): GridColDef[] => [
         description: 'Similarity to exemplar patent.',
     },
     {
-        field: 'is_approved',
-        headerName: 'Approved',
-        width: 75,
-        renderCell: renderBoolean,
-    },
-    {
-        field: 'max_trial_phase',
-        headerName: 'CT Phase',
-        width: 100,
-    },
-    {
-        field: 'last_trial_status',
-        headerName: 'CT Status',
-        width: 125,
-    },
-    {
-        field: 'last_trial_update',
-        headerName: 'Last CT Update',
-        valueFormatter: formatDate,
-        width: 125,
-    },
-    {
         field: 'priority_date',
         headerName: 'Priority Year',
         valueFormatter: formatYear,
         width: 125,
     },
 ];
-
-export const PatentList = async (args: PatentSearchArgs) => {
-    const columns = getPatentColumns();
-    const patents = await fetchPatents(args);
-    try {
-        return (
-            <Box height="100vh">
-                <DataGrid
-                    columns={columns}
-                    detailComponent={PatentDetail<Patent>}
-                    rows={patents.map((patent) => ({
-                        ...patent,
-                        id: patent.publication_number,
-                    }))}
-                />
-            </Box>
-        );
-    } catch (e) {
-        return (
-            <Alert
-                startDecorator={<WarningIcon />}
-                variant="soft"
-                color="warning"
-            >
-                <Typography level="h4">Failed to fetch patents</Typography>
-                <Typography>
-                    {e instanceof Error ? e.message : JSON.stringify(e)}
-                </Typography>
-            </Alert>
-        );
-    }
-};

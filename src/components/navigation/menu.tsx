@@ -153,7 +153,7 @@ export const SideNav = () => {
                     onKeyDown={() => setMenuIndex(null)}
                     menu={
                         <Menu onClose={() => setMenuIndex(null)}>
-                            <MenuItem {...itemProps} href="/core/patents">
+                            <MenuItem {...itemProps} href="/core/dashboard">
                                 Patents Search
                             </MenuItem>
                         </Menu>

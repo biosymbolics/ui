@@ -14,7 +14,7 @@ export const Title = ({
 }: {
     title: string;
     description?: string;
-    link: { label: string; url: string };
+    link?: { label: string; url: string };
     variant: TitleVariant;
 }) => (
     <Sheet variant={variant} sx={{ mx: -3, mb: 2, mt: -3, px: 3, py: 2 }}>
@@ -26,8 +26,10 @@ export const Title = ({
                 {description}
             </Typography>
         )}
-        <Link component={NextLink} href={link.url} target="_blank">
-            {link.label}
-        </Link>
+        {link && (
+            <Link component={NextLink} href={link.url} target="_blank">
+                {link.label}
+            </Link>
+        )}
     </Sheet>
 );

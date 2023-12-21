@@ -21,6 +21,7 @@ const theme = extendTheme({
                 },
             },
         },
+
         JoyTabPanel: {
             styleOverrides: {
                 root: {

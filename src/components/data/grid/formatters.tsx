@@ -3,6 +3,9 @@
 import { ReactNode } from 'react';
 import TrueIcon from '@mui/icons-material/Check';
 import FalseIcon from '@mui/icons-material/Close';
+import List from '@mui/joy/List';
+import ListItem from '@mui/joy/ListItem';
+import Typography, { TypographyProps } from '@mui/joy/Typography';
 import {
     GridRenderCellParams,
     GridValueFormatterParams,
@@ -31,7 +34,8 @@ export const formatName = <T extends Record<string, unknown>>(
     }
 
     if (typeof value !== 'string') {
-        throw new Error(`Expected string, got ${typeof value}`);
+        console.error(`Expected string, got ${typeof value}`);
+        return '';
     }
 
     return title(value);
@@ -55,7 +59,8 @@ export const formatNumber = <T extends Record<string, unknown>>(
     }
 
     if (typeof value !== 'number') {
-        throw new Error(`Expected number, got ${typeof value}`);
+        console.error(`Expected number, got ${typeof value}`);
+        return formatBlank();
     }
 
     return `${parseFloat((value as number).toPrecision(2))}`;
@@ -70,7 +75,8 @@ export const renderPercent = <T extends Record<string, unknown>>(
     const { value } = params;
 
     if (typeof value !== 'number') {
-        throw new Error(`Expected number, got ${typeof value}`);
+        console.error(`Expected number, got ${typeof value}`);
+        return formatBlank();
     }
 
     return formatPercent(value);
@@ -91,7 +97,8 @@ export const unencodeHtml = <T extends Record<string, unknown>>(
     }
 
     if (typeof value !== 'string') {
-        throw new Error(`Expected string, got ${typeof value}`);
+        console.error(`Expected string, got ${typeof value}`);
+        return '';
     }
 
     return unescape(value);
@@ -127,8 +134,8 @@ export const formatYear = getFormatDate('yyyy');
 /**
  * Render boolean
  */
-export const renderBoolean = (
-    params: GridRenderCellParams<string[]>
+export const renderBoolean = <T extends Record<string, unknown>>(
+    params: GridRenderCellParams<T>
 ): ReactNode =>
     params.value ? (
         <TrueIcon sx={{ m: 'auto' }} />
@@ -143,7 +150,8 @@ export const renderList = (
     params: GridRenderCellParams<string[]>
 ): ReactNode => {
     if (!Array.isArray(params.value)) {
-        throw new Error(`Expected list, got ${typeof params.value}`);
+        console.error(`Expected list, got ${typeof params.value}`);
+        return formatBlank();
     }
 
     return formatChips({ isWrappable: false, items: params.value as string[] });
@@ -154,33 +162,50 @@ export const renderList = (
  */
 export const getRenderChip =
     <T extends Record<string, unknown>>(
-        color: ChipProps['color'],
-        getUrl: (row: T) => string | undefined = () => undefined
+        _color:
+            | ChipProps['color']
+            | ((value: number) => ChipProps['color']) = 'primary',
+        getUrl: (row: T) => string | undefined = () => undefined,
+        getTooltip: (row: T) => string | ReactNode | undefined = () => undefined
     ) =>
     (params: GridRenderCellParams<T, string | number>): ReactNode => {
         const { value, row } = params;
+        if (value === null || typeof value === 'undefined') {
+            return formatBlank();
+        }
         if (typeof value !== 'string' && typeof value !== 'number') {
             return <>{JSON.stringify(value)}</>;
         }
 
         const href = getUrl(row);
+        const tooltip = getTooltip(row);
 
-        if (!value) {
-            return <span />;
-        }
+        const color =
+            typeof _color === 'function' ? _color(value as number) : _color;
 
         return (
-            <Chip color={color} href={href}>
-                {formatLabel(value || '')}
+            <Chip color={color} href={href} tooltip={tooltip}>
+                {formatLabel(value)}
             </Chip>
         );
     };
 
 export const renderPrimaryChip = getRenderChip('primary');
+export const renderWarningChip = getRenderChip('warning');
 export const renderChip = getRenderChip('neutral');
-export const renderCompoundCountChip = getRenderChip(
-    'primary',
-    (row: { name: string }) => `/core/patents?terms=${row.name}`
+export const renderAvailabilityChip = getRenderChip((value) =>
+    value > 0 ? 'success' : 'neutral'
+);
+export const renderOwnerChip = getRenderChip(
+    'neutral',
+    undefined,
+    (row: { owners: string[] }) => (
+        <List>
+            {row.owners.map((owner) => (
+                <ListItem>{owner}</ListItem>
+            ))}
+        </List>
+    )
 );
 
 export const getRenderSparkline =
@@ -192,6 +217,7 @@ export const getRenderSparkline =
         }
         return (
             <SparkLineChart
+                showHighlight
                 plotType="line"
                 colors={['blue']}
                 data={value}
@@ -216,8 +242,21 @@ export const renderLabel = <T extends Record<string, unknown>>(
     }
 
     if (typeof value !== 'string') {
-        throw new Error(`Expected string, got ${typeof value}`);
+        console.error(`Expected string, got ${typeof value}`);
+        return formatBlank();
     }
 
     return formatLabel(value);
 };
+
+export const getRenderTypography =
+    <T extends Record<string, unknown>>(level: TypographyProps['level']) =>
+    (params: GridRenderCellParams<T, string>): ReactNode => {
+        const { value } = params;
+        if (!value) {
+            return <span />;
+        }
+        return <Typography level={level}>{value}</Typography>;
+    };
+
+export const renderMainTypography = getRenderTypography('title-md');

@@ -4,13 +4,14 @@ import { Suspense } from 'react';
 import Skeleton from '@mui/joy/Skeleton';
 import Typography from '@mui/joy/Typography';
 
+import { SearchBar } from '@/components/composite';
 import { Section } from '@/components/layout/section';
 import { formatLabel } from '@/utils/string';
 
-import { fetchAutocompletions } from './actions';
 import { Description } from './description';
 import { Content } from './content';
-import { SearchBar } from './search';
+
+import { fetchAutocompletions } from '../actions';
 
 const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     const terms = searchParams.terms?.split(';') ?? null;

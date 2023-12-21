@@ -31,7 +31,7 @@ const fetchGraph = cache(
 );
 
 export const PatentGraph = async ({
-    pathname = '/core/patents',
+    pathname = '/core/dashboard',
     terms,
     ...args
 }: PatentSearchArgs & { pathname?: string }) => {

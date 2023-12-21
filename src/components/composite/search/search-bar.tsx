@@ -32,8 +32,9 @@ export const SearchBar = ({
         exemplarPatents
     );
     const [newQueryType, setQueryType] = useState<string | null>(queryType);
-    const [newMinPatentYears, setMinPatentYears] =
-        useState<number>(minPatentYears);
+    const [newMinPatentYears, setMinPatentYears] = useState<number>(
+        minPatentYears || 0
+    );
 
     const handlePatentLifeChange = (value: number) => {
         if (typeof value !== 'number') {

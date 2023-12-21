@@ -7,41 +7,23 @@ import Skeleton from '@mui/joy/Skeleton';
 import Typography from '@mui/joy/Typography';
 import WarningIcon from '@mui/icons-material/Warning';
 
+import { getStyles } from '@/components/composite/styles';
 import { Tabs } from '@/components/layout/tabs';
 import { PatentSearchArgs } from '@/types/patents';
 
-import { getStyles } from './client';
-import { CompoundList } from './compound';
-import { PatentList } from './patent';
-import { PatentGraph } from './graph';
+import { AssetList } from './asset';
+// import { PatentGraph } from './graph';
 import { OverTime } from './over-time';
 import { Summary } from './summary';
-import { TrialList } from './trials';
 
 export const Content = (args: PatentSearchArgs) => {
     try {
         const tabs = [
             {
-                label: 'Compounds',
+                label: 'Assets',
                 panel: (
                     <Suspense fallback={<Skeleton />}>
-                        <CompoundList {...args} />
-                    </Suspense>
-                ),
-            },
-            {
-                label: 'Patents',
-                panel: (
-                    <Suspense fallback={<Skeleton />}>
-                        <PatentList {...args} />
-                    </Suspense>
-                ),
-            },
-            {
-                label: 'Trials',
-                panel: (
-                    <Suspense fallback={<Skeleton />}>
-                        <TrialList {...args} />
+                        <AssetList {...args} />
                     </Suspense>
                 ),
             },
@@ -61,14 +43,14 @@ export const Content = (args: PatentSearchArgs) => {
                     </Suspense>
                 ),
             },
-            {
-                label: 'Graph',
-                panel: (
-                    <Suspense fallback={<Skeleton />}>
-                        <PatentGraph {...args} />
-                    </Suspense>
-                ),
-            },
+            // {
+            //     label: 'Graph',
+            //     panel: (
+            //         <Suspense fallback={<Skeleton />}>
+            //             <PatentGraph {...args} />
+            //         </Suspense>
+            //     ),
+            // },
         ];
         return (
             <Box sx={getStyles}>

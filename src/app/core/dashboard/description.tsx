@@ -4,7 +4,7 @@ import Box from '@mui/joy/Box';
 import ReactMarkdown from 'react-markdown';
 import 'server-only';
 
-import { fetchDescription } from './actions';
+import { fetchDescription } from '../actions';
 
 export const Description = async ({ terms }: { terms: string[] }) => {
     try {
