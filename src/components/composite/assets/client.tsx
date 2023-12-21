@@ -3,10 +3,8 @@
 import Box from '@mui/joy/Box';
 import { GridRenderCellParams } from '@mui/x-data-grid/models/params';
 
-import { Chip } from '@/components/data/chip';
-import { formatLabel } from '@/utils/string';
 import { Modal, ModalButtonElementProps } from '@/components/navigation/modal';
-import { DataGrid } from '@/components/data/grid';
+import { DataGrid, getRenderChip } from '@/components/data/grid';
 import { Entity } from '@/types/entities';
 import { Patent } from '@/types/patents';
 import { Trial } from '@/types/trials';
@@ -65,53 +63,44 @@ export const TrialsDetail = <T extends Entity>({
     );
 };
 
-const getButtonElement = (value: number) => {
-    const ButtonElement = ({ onClick }: ModalButtonElementProps) => (
-        <Chip color="primary" onClick={onClick}>
-            {formatLabel(value)}
-        </Chip>
-    );
-    return ButtonElement;
-};
-
-type DocumentModalProps<T extends Entity> = {
-    buttonElement: (props: ModalButtonElementProps) => React.ReactNode;
-    row: T;
-};
-
-export const TrialModal = <T extends Entity>({
-    buttonElement,
-    row: trial,
-}: DocumentModalProps<T>): JSX.Element => (
-    <Modal buttonElement={buttonElement} title={trial.name}>
-        <TrialsDetail row={trial} />
-    </Modal>
-);
-
-export const PatentModal = <T extends Entity>({
-    row: patent,
-    buttonElement,
-}: DocumentModalProps<T>): JSX.Element => (
-    <Modal buttonElement={buttonElement} title={patent.name}>
-        <PatentsDetail row={patent} />
-    </Modal>
-);
-
 export const renderTrialModal = <T extends Entity>(
     params: GridRenderCellParams<T, number>
 ): JSX.Element => {
-    const { row, value } = params;
-    if (typeof value !== 'number') {
-        return <span />;
-    }
-    return <TrialModal buttonElement={getButtonElement(value)} row={row} />;
+    const { row } = params;
+    const ButtonElement = ({ onClick }: ModalButtonElementProps) =>
+        getRenderChip({ color: 'primary', onClick })(params);
+    return (
+        <Modal buttonElement={ButtonElement} title={row.name}>
+            <TrialsDetail row={row} />
+        </Modal>
+    );
 };
+
 export const renderPatentModal = <T extends Entity>(
     params: GridRenderCellParams<T, number>
 ): JSX.Element => {
-    const { row, value } = params;
-    if (typeof value !== 'number') {
-        return <span />;
-    }
-    return <PatentModal buttonElement={getButtonElement(value)} row={row} />;
+    const { row } = params;
+    const ButtonElement = ({ onClick }: ModalButtonElementProps) =>
+        getRenderChip({ color: 'primary', onClick })(params);
+    return (
+        <Modal buttonElement={ButtonElement} title={row.name}>
+            <PatentsDetail row={row} />
+        </Modal>
+    );
+};
+
+export const renderAvailabilityModal = <T extends Entity>(
+    params: GridRenderCellParams<T, number>
+): JSX.Element => {
+    const { row } = params;
+    const ButtonElement = ({ onClick }: ModalButtonElementProps) =>
+        getRenderChip({
+            color: (v) => (v > 0 ? 'success' : 'neutral'),
+            onClick,
+        })(params);
+    return (
+        <Modal buttonElement={ButtonElement} title={row.name}>
+            <PatentsDetail row={row} />
+        </Modal>
+    );
 };

@@ -3,6 +3,7 @@
 import { ReactNode } from 'react';
 import TrueIcon from '@mui/icons-material/Check';
 import FalseIcon from '@mui/icons-material/Close';
+import { IconButtonProps } from '@mui/joy/IconButton';
 import List from '@mui/joy/List';
 import ListItem from '@mui/joy/ListItem';
 import Typography, { TypographyProps } from '@mui/joy/Typography';
@@ -161,13 +162,17 @@ export const renderList = (
  * Render string array as chips
  */
 export const getRenderChip =
-    <T extends Record<string, unknown>>(
-        _color:
-            | ChipProps['color']
-            | ((value: number) => ChipProps['color']) = 'primary',
-        getUrl: (row: T) => string | undefined = () => undefined,
-        getTooltip: (row: T) => string | ReactNode | undefined = () => undefined
-    ) =>
+    <T extends Record<string, unknown>>({
+        color: _color = 'primary',
+        getUrl,
+        getTooltip,
+        onClick,
+    }: {
+        color: ChipProps['color'] | ((value: number) => ChipProps['color']);
+        getUrl?: (row: T) => string | undefined;
+        getTooltip?: (row: T) => string | ReactNode | undefined;
+        onClick?: IconButtonProps['onClick'];
+    }) =>
     (params: GridRenderCellParams<T, string | number>): ReactNode => {
         const { value, row } = params;
         if (value === null || typeof value === 'undefined') {
@@ -177,36 +182,32 @@ export const getRenderChip =
             return <>{JSON.stringify(value)}</>;
         }
 
-        const href = getUrl(row);
-        const tooltip = getTooltip(row);
+        const href = getUrl ? getUrl(row) : undefined;
+        const tooltip = getTooltip ? getTooltip(row) : undefined;
 
         const color =
             typeof _color === 'function' ? _color(value as number) : _color;
 
         return (
-            <Chip color={color} href={href} tooltip={tooltip}>
+            <Chip color={color} href={href} onClick={onClick} tooltip={tooltip}>
                 {formatLabel(value)}
             </Chip>
         );
     };
 
-export const renderPrimaryChip = getRenderChip('primary');
-export const renderWarningChip = getRenderChip('warning');
-export const renderChip = getRenderChip('neutral');
-export const renderAvailabilityChip = getRenderChip((value) =>
-    value > 0 ? 'success' : 'neutral'
-);
-export const renderOwnerChip = getRenderChip(
-    'neutral',
-    undefined,
-    (row: { owners: string[] }) => (
+export const renderPrimaryChip = getRenderChip({ color: 'primary' });
+export const renderWarningChip = getRenderChip({ color: 'warning' });
+export const renderChip = getRenderChip({ color: 'neutral' });
+export const renderOwnerChip = getRenderChip({
+    color: 'neutral',
+    getTooltip: (row: { owners: string[] }) => (
         <List>
             {row.owners.map((owner) => (
                 <ListItem>{owner}</ListItem>
             ))}
         </List>
-    )
-);
+    ),
+});
 
 export const getRenderSparkline =
     <T extends Record<string, unknown>>() =>
