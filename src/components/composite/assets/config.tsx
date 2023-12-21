@@ -12,6 +12,7 @@ import {
 import {
     renderAvailabilityModal,
     renderMainTerm,
+    renderApprovalModel,
     renderPatentModal,
     renderTrialModal,
 } from './client';
@@ -26,25 +27,25 @@ export const getAssetColumns = (): GridColDef[] => [
     {
         field: 'approval_count',
         headerName: 'Approvals',
-        width: 85,
-        renderCell: renderChip,
+        width: 80,
+        renderCell: renderApprovalModel,
     },
     {
         field: 'trial_count',
         headerName: 'Trials',
-        width: 85,
+        width: 80,
         renderCell: renderTrialModal,
     },
     {
         field: 'patent_count',
         headerName: 'Patents',
-        width: 85,
+        width: 80,
         renderCell: renderPatentModal,
     },
     {
         field: 'owner_count',
         headerName: 'Owners',
-        width: 85,
+        width: 80,
         renderCell: renderOwnerChip,
     },
     {
@@ -54,26 +55,21 @@ export const getAssetColumns = (): GridColDef[] => [
         renderCell: renderSparkline,
     },
     {
-        field: 'last_updated',
-        headerName: 'Updated',
-        width: 85,
-    },
-    {
         field: 'maybe_available_count',
-        headerName: 'Available',
+        headerName: 'Avail?',
         width: 85,
         renderCell: renderAvailabilityModal,
         description: 'Number of patents that *might* be available',
     },
     {
-        field: 'max_phase',
-        headerName: 'Max Phase',
+        field: 'total_enrollment',
+        headerName: 'Enroll.',
         width: 125,
         renderCell: renderChip,
     },
     {
-        field: 'last_status',
-        headerName: 'Last Status',
+        field: 'max_phase',
+        headerName: 'Max Phase',
         width: 125,
         renderCell: renderChip,
     },

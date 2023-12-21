@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { z } from 'zod';
 
+import { RegulatoryApprovalSchema } from './approvals';
 import { PatentSchema } from './patents';
 import { TrialSchema } from './trials';
 
 export const EntitySchema = z.object({
     activity: z.array(z.number()),
+    approvals: z.array(RegulatoryApprovalSchema),
     approval_count: z.number(),
     is_approved: z.boolean(),
     last_status: z.string(),
@@ -18,6 +20,7 @@ export const EntitySchema = z.object({
     patents: z.array(PatentSchema),
     patent_count: z.number(),
     record_count: z.number(),
+    total_enrollment: z.number(),
     trials: z.array(TrialSchema),
     trial_count: z.number(),
 });

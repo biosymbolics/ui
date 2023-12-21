@@ -17,11 +17,6 @@ import { getDropoutScoresClass, getRepurposeScoreClass } from '../styles';
 export const getTrialColumns = (): GridColDef[] => [
     { field: 'nct_id', headerName: 'Nct Id', width: 135 },
     {
-        field: 'title',
-        headerName: 'Title',
-        width: 500,
-    },
-    {
         field: 'intervention',
         headerName: 'Intervention',
         renderCell: renderChip,
@@ -63,7 +58,6 @@ export const getTrialColumns = (): GridColDef[] => [
         renderCell: renderPrimaryChip,
         width: 125,
     },
-
     {
         field: 'dropout_percent',
         headerName: 'Dropout %',
@@ -84,6 +78,11 @@ export const getTrialColumns = (): GridColDef[] => [
         valueFormatter: formatNumber,
         cellClassName: getRepurposeScoreClass,
         description: '**FAKE PLACEHOLDER**!! Esimated repurpose potential.',
+    },
+    {
+        field: 'title',
+        headerName: 'Title',
+        width: 500,
     },
     {
         field: 'design',
