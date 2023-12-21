@@ -32,7 +32,7 @@ export const Modal = ({ buttonElement, children, title }: ModalProps) => {
             <JoyModal open={isOpen} onClose={() => setIsOpen(false)}>
                 <ModalOverflow>
                     <ModalDialog layout="fullscreen">
-                        <ModalClose />
+                        <ModalClose size="lg" />
                         <Typography level="h2">{title}</Typography>
                         {children}
                     </ModalDialog>
