@@ -3,6 +3,8 @@
 import { ReactNode } from 'react';
 import TrueIcon from '@mui/icons-material/Check';
 import FalseIcon from '@mui/icons-material/Close';
+import List from '@mui/joy/List';
+import ListItem from '@mui/joy/ListItem';
 import Typography, { TypographyProps } from '@mui/joy/Typography';
 import {
     GridRenderCellParams,
@@ -161,7 +163,8 @@ export const renderList = (
 export const getRenderChip =
     <T extends Record<string, unknown>>(
         color: ChipProps['color'],
-        getUrl: (row: T) => string | undefined = () => undefined
+        getUrl: (row: T) => string | undefined = () => undefined,
+        getTooltip: (row: T) => string | ReactNode | undefined = () => undefined
     ) =>
     (params: GridRenderCellParams<T, string | number>): ReactNode => {
         const { value, row } = params;
@@ -173,9 +176,10 @@ export const getRenderChip =
         }
 
         const href = getUrl(row);
+        const tooltip = getTooltip(row);
 
         return (
-            <Chip color={color} href={href}>
+            <Chip color={color} href={href} tooltip={tooltip}>
                 {formatLabel(value)}
             </Chip>
         );
@@ -184,9 +188,16 @@ export const getRenderChip =
 export const renderPrimaryChip = getRenderChip('primary');
 export const renderWarningChip = getRenderChip('warning');
 export const renderChip = getRenderChip('neutral');
-export const renderAssetCountChip = getRenderChip(
-    'primary',
-    (row: { name: string }) => `/core/dashboard?terms=${row.name}`
+export const renderOwnerChip = getRenderChip(
+    'neutral',
+    undefined,
+    (row: { owners: string[] }) => (
+        <List>
+            {row.owners.map((owner) => (
+                <ListItem>{owner}</ListItem>
+            ))}
+        </List>
+    )
 );
 
 export const getRenderSparkline =

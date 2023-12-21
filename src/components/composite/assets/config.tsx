@@ -6,6 +6,7 @@ import 'server-only';
 import {
     renderChip,
     renderMainTypography,
+    renderOwnerChip,
     renderSparkline,
 } from '@/components/data/grid';
 
@@ -39,7 +40,7 @@ export const getAssetColumns = (): GridColDef[] => [
         field: 'owner_count',
         headerName: 'Owners',
         width: 85,
-        renderCell: renderChip,
+        renderCell: renderOwnerChip,
     },
     {
         field: 'activity',

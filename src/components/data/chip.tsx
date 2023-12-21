@@ -20,7 +20,7 @@ export type ChipProps = {
     onClick?: JoyChipProps['onClick'];
     size?: JoyChipProps['size'];
     sx?: JoyChipProps['sx'];
-    tooltip?: string | JSX.Element;
+    tooltip?: string | ReactNode;
     variant?: JoyChipProps['variant'];
 };
 
@@ -61,7 +61,7 @@ export const Chip = ({
     if (tooltip) {
         return (
             <Tooltip
-                title={<Box maxWidth={300}>{tooltip}</Box>}
+                title={<Box maxWidth={400}>{tooltip}</Box>}
                 variant="outlined"
             >
                 {chip}
