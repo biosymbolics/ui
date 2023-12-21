@@ -10,7 +10,7 @@ import {
     renderSparkline,
 } from '@/components/data/grid';
 
-import { renderAssetModal } from './client';
+import { renderPatentModal, renderTrialModal } from './client';
 
 export const getAssetColumns = (): GridColDef[] => [
     {
@@ -29,13 +29,15 @@ export const getAssetColumns = (): GridColDef[] => [
         field: 'trial_count',
         headerName: 'Trials',
         width: 85,
-        renderCell: renderAssetCountChip,
+        type: 'actions',
+        renderCell: renderTrialModal,
     },
     {
         field: 'patent_count',
         headerName: 'Patents',
         width: 85,
-        renderCell: renderAssetCountChip,
+        type: 'actions',
+        renderCell: renderPatentModal,
     },
     {
         field: 'owner_count',
@@ -71,12 +73,5 @@ export const getAssetColumns = (): GridColDef[] => [
         headerName: 'Last Status',
         width: 125,
         renderCell: renderChip,
-    },
-    {
-        field: 'actions',
-        headerName: 'Actions',
-        width: 100,
-        type: 'actions',
-        renderCell: renderAssetModal,
     },
 ];

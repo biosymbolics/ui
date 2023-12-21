@@ -17,6 +17,7 @@ type DataGridProps<T> = {
     columns?: GridColDef[];
     detailComponent?: ({ row }: { row: T }) => JSX.Element;
     detailHeight?: number;
+    disableRowSelectionOnClick?: MuiDataGridProps['disableRowSelectionOnClick'];
     getRowId?: MuiDataGridProps['getRowId'];
     initialState?: MuiDataGridProps['initialState'];
     isLoading?: MuiDataGridProps['loading'];

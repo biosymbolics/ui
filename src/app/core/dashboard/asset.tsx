@@ -20,6 +20,7 @@ export const AssetList = async (args: EntitySearchArgs) => {
             <Box height="100vh">
                 <DataGrid
                     checkboxSelection
+                    disableRowSelectionOnClick
                     columns={columns}
                     rows={assets.map((asset) => ({
                         ...asset,
