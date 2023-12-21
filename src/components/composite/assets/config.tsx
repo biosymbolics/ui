@@ -5,13 +5,13 @@ import 'server-only';
 
 import {
     renderChip,
-    renderMainTypography,
     renderOwnerChip,
     renderSparkline,
 } from '@/components/data/grid';
 
 import {
     renderAvailabilityModal,
+    renderMainTerm,
     renderPatentModal,
     renderTrialModal,
 } from './client';
@@ -21,7 +21,7 @@ export const getAssetColumns = (): GridColDef[] => [
         field: 'name',
         headerName: 'Asset, Class or Target',
         width: 325,
-        renderCell: renderMainTypography,
+        renderCell: renderMainTerm,
     },
     {
         field: 'approval_count',

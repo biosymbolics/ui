@@ -1,6 +1,10 @@
 'use client';
 
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 import { ReactNode } from 'react';
+import NextLink from 'next/link';
+import Link from '@mui/joy/Link';
 import TrueIcon from '@mui/icons-material/Check';
 import FalseIcon from '@mui/icons-material/Close';
 import { IconButtonProps } from '@mui/joy/IconButton';
@@ -251,13 +255,27 @@ export const renderLabel = <T extends Record<string, unknown>>(
 };
 
 export const getRenderTypography =
-    <T extends Record<string, unknown>>(level: TypographyProps['level']) =>
+    <T extends Record<string, unknown>>(
+        level: TypographyProps['level'],
+        getUrl?: (row: T) => string | undefined
+    ) =>
     (params: GridRenderCellParams<T, string>): ReactNode => {
-        const { value } = params;
+        const { row, value } = params;
         if (!value) {
             return <span />;
         }
-        return <Typography level={level}>{value}</Typography>;
+        const url = getUrl ? getUrl(row) : undefined;
+
+        const typog = <Typography level={level}>{value}</Typography>;
+
+        if (url) {
+            return (
+                <NextLink passHref href={url} target="_blank">
+                    <Link>{value}</Link>
+                </NextLink>
+            );
+        }
+        return typog;
     };
 
 export const renderMainTypography = getRenderTypography('title-md');

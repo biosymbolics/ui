@@ -4,7 +4,11 @@ import Box from '@mui/joy/Box';
 import { GridRenderCellParams } from '@mui/x-data-grid/models/params';
 
 import { Modal, ModalButtonElementProps } from '@/components/navigation/modal';
-import { DataGrid, getRenderChip } from '@/components/data/grid';
+import {
+    DataGrid,
+    getRenderChip,
+    getRenderTypography,
+} from '@/components/data/grid';
 import { Entity } from '@/types/entities';
 import { Patent } from '@/types/patents';
 import { Trial } from '@/types/trials';
@@ -104,3 +108,8 @@ export const renderAvailabilityModal = <T extends Entity>(
         </Modal>
     );
 };
+
+export const renderMainTerm = getRenderTypography(
+    'title-md',
+    (row: Entity) => `/core/dashboard?terms=${row.name}`
+);
