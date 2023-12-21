@@ -6,7 +6,7 @@ import Typography from '@mui/joy/Typography';
 import WarningIcon from '@mui/icons-material/Warning';
 import 'server-only';
 
-import { getTrialColumns } from '@/components/composite/config';
+import { getTrialColumns } from '@/components/composite/trials/config';
 import { TrialDetail } from '@/components/composite/trials/client';
 import { DataGrid } from '@/components/data/grid';
 import { Trial, TrialSearchArgs } from '@/types/trials';

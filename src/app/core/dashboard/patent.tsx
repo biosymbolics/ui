@@ -6,7 +6,7 @@ import Typography from '@mui/joy/Typography';
 import WarningIcon from '@mui/icons-material/Warning';
 import 'server-only';
 
-import { getPatentColumns } from '@/components/composite/config';
+import { getPatentColumns } from '@/components/composite/patents/config';
 import { PatentDetail } from '@/components/composite/patents/client';
 import { DataGrid } from '@/components/data/grid';
 import { Patent, PatentSearchArgs } from '@/types/patents';

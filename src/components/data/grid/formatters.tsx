@@ -32,7 +32,8 @@ export const formatName = <T extends Record<string, unknown>>(
     }
 
     if (typeof value !== 'string') {
-        throw new Error(`Expected string, got ${typeof value}`);
+        console.error(`Expected string, got ${typeof value}`);
+        return '';
     }
 
     return title(value);
@@ -56,7 +57,8 @@ export const formatNumber = <T extends Record<string, unknown>>(
     }
 
     if (typeof value !== 'number') {
-        throw new Error(`Expected number, got ${typeof value}`);
+        console.error(`Expected number, got ${typeof value}`);
+        return formatBlank();
     }
 
     return `${parseFloat((value as number).toPrecision(2))}`;
@@ -71,7 +73,8 @@ export const renderPercent = <T extends Record<string, unknown>>(
     const { value } = params;
 
     if (typeof value !== 'number') {
-        throw new Error(`Expected number, got ${typeof value}`);
+        console.error(`Expected number, got ${typeof value}`);
+        return formatBlank();
     }
 
     return formatPercent(value);
@@ -92,7 +95,8 @@ export const unencodeHtml = <T extends Record<string, unknown>>(
     }
 
     if (typeof value !== 'string') {
-        throw new Error(`Expected string, got ${typeof value}`);
+        console.error(`Expected string, got ${typeof value}`);
+        return '';
     }
 
     return unescape(value);
@@ -144,7 +148,8 @@ export const renderList = (
     params: GridRenderCellParams<string[]>
 ): ReactNode => {
     if (!Array.isArray(params.value)) {
-        throw new Error(`Expected list, got ${typeof params.value}`);
+        console.error(`Expected list, got ${typeof params.value}`);
+        return formatBlank();
     }
 
     return formatChips({ isWrappable: false, items: params.value as string[] });
@@ -218,7 +223,8 @@ export const renderLabel = <T extends Record<string, unknown>>(
     }
 
     if (typeof value !== 'string') {
-        throw new Error(`Expected string, got ${typeof value}`);
+        console.error(`Expected string, got ${typeof value}`);
+        return formatBlank();
     }
 
     return formatLabel(value);

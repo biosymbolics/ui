@@ -72,11 +72,6 @@ export const PatentDetail = <T extends Patent>({
         'mechanisms',
     ];
     const pathname = usePathname();
-    const approvalInfo = patent.approval_dates
-        ? `\n\nApproved ${patent.approval_dates[0]}} for indication ${
-              patent.indications?.[0] || '(unknown)'
-          } (${patent.brand_name}/${patent.generic_name}).`
-        : '';
     const trialInfo = patent.last_trial_status
         ? `\n\nLast trial update: ${patent.last_trial_status} on ${
               patent.last_trial_update
@@ -85,9 +80,7 @@ export const PatentDetail = <T extends Patent>({
     return (
         <Section mx={3}>
             <Title
-                description={`${unescape(
-                    patent.abstract
-                )}${approvalInfo}${trialInfo}`}
+                description={`${unescape(patent.abstract)}${trialInfo}`}
                 link={{ label: patent.publication_number, url: patent.url }}
                 title={unescape(patent.title)}
                 variant="soft"
