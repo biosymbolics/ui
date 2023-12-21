@@ -24,6 +24,7 @@ export const getAssetColumns = (): GridColDef[] => [
         field: 'approval_count',
         headerName: 'Approvals',
         width: 85,
+        renderCell: renderChip,
     },
     {
         field: 'trial_count',
