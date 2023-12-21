@@ -9,7 +9,7 @@ import {
     DataGridProProps as MuiDataGridProps,
     DataGridProProps,
 } from '@mui/x-data-grid-pro';
-import { GridColDef, GridToolbar } from '@mui/x-data-grid';
+import { GridColDef } from '@mui/x-data-grid';
 
 type DataGridVariant = 'standard' | 'minimal' | 'maximal';
 type DataGridProps<T> = {
@@ -104,7 +104,6 @@ export const DataGrid = <T extends Record<string, unknown>>({
                 loading={isLoading}
                 rows={rows}
                 slots={{
-                    toolbar: variant === 'minimal' ? null : GridToolbar,
                     noRowsOverlay: NoRows,
                 }}
                 sx={{ border: 0 }}

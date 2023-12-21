@@ -18,6 +18,7 @@ import {
 import unescape from 'lodash/fp/unescape';
 import { format } from 'date-fns';
 import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
+import { cheerfulFiestaPalette } from '@mui/x-charts/colorPalettes';
 
 import { Chip, ChipProps, formatChips } from '@/components/data/chip';
 import { formatLabel, formatPercent, title } from '@/utils/string';
@@ -223,11 +224,12 @@ export const getRenderSparkline =
         return (
             <SparkLineChart
                 showHighlight
-                plotType="line"
-                colors={['blue']}
+                curve="natural"
+                colors={cheerfulFiestaPalette}
                 data={value}
                 height={50}
                 margin={{ top: 10, right: 0, bottom: 10, left: 0 }}
+                plotType="line"
             />
         );
     };

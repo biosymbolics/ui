@@ -44,7 +44,6 @@ const theme = extendTheme({
             palette: {
                 background: {
                     body: 'var(--joy-palette-primary-50)',
-                    // surface: '#fff',
                     level1: 'var(--joy-palette-primary-50)',
                     level2: 'var(--joy-palette-primary-100)',
                     level3: 'var(--joy-palette-primary-200)',

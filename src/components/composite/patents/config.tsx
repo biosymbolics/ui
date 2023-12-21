@@ -50,13 +50,6 @@ export const getPatentColumns = (): GridColDef[] => [
         description: 'Patent years remaining.',
         cellClassName: getPatentYearsClass,
     },
-    // {
-    //     field: 'adj_patent_years',
-    //     headerName: 'Adj Yrs⚠️',
-    //     width: 75,
-    //     description: '**FAKE** Adjusted patent years remaining.',
-    //     cellClassName: getPatentYearsClass,
-    // },
     {
         field: 'availability_likelihood',
         headerName: 'Est. Avail',
@@ -76,7 +69,7 @@ export const getPatentColumns = (): GridColDef[] => [
         headerName: 'PoS',
         width: 85,
         valueFormatter: formatBlank,
-        // cellClassName: getScoresClass,
+        cellClassName: getScoresClass,
         description: '**FAKE PLACEHOLDER**!! Estimated PoS.',
     },
     {
@@ -84,7 +77,7 @@ export const getPatentColumns = (): GridColDef[] => [
         headerName: 'Reformulation⚠️',
         width: 100,
         valueFormatter: renderPercent,
-        // cellClassName: getScoresClass,
+        cellClassName: getScoresClass,
         description: '**FAKE PLACEHOLDER**!! Esimated reformulation potential.',
     },
     {
