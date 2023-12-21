@@ -11,14 +11,14 @@ import { Entity } from '@/types/entities';
 import { Patent } from '@/types/patents';
 import { Trial } from '@/types/trials';
 
-import { getPatentColumns } from '../patents/config';
+import { PatentDetail, getPatentColumns } from '../patents';
 import { getStyles } from '../styles';
-import { getTrialColumns } from '../trials/config';
+import { getTrialColumns, TrialDetail } from '../trials';
 
 /**
  * Detail content panel for patents grid
  */
-export const PatentDetail = <T extends Entity>({
+export const PatentsDetail = <T extends Entity>({
     row: asset,
 }: {
     row: T;
@@ -29,6 +29,7 @@ export const PatentDetail = <T extends Entity>({
             {asset.patents.length > 0 && (
                 <DataGrid
                     columns={patentColumns}
+                    detailComponent={PatentDetail<Patent>}
                     getRowId={(row: Patent) => row.publication_number}
                     rows={asset.patents}
                     title="Patents"
@@ -42,7 +43,7 @@ export const PatentDetail = <T extends Entity>({
 /**
  * Detail content panel for patents grid
  */
-export const TrialDetail = <T extends Entity>({
+export const TrialsDetail = <T extends Entity>({
     row: asset,
 }: {
     row: T;
@@ -53,6 +54,7 @@ export const TrialDetail = <T extends Entity>({
             {asset.trials.length > 0 && (
                 <DataGrid
                     columns={trialColumns}
+                    detailComponent={TrialDetail<Trial>}
                     getRowId={(row: Trial) => row.nct_id}
                     rows={asset.trials}
                     title="Trials"
@@ -82,7 +84,7 @@ export const TrialModal = <T extends Entity>({
     row: trial,
 }: DocumentModalProps<T>): JSX.Element => (
     <Modal buttonElement={buttonElement} title={trial.name}>
-        <TrialDetail row={trial} />
+        <TrialsDetail row={trial} />
     </Modal>
 );
 
@@ -91,7 +93,7 @@ export const PatentModal = <T extends Entity>({
     buttonElement,
 }: DocumentModalProps<T>): JSX.Element => (
     <Modal buttonElement={buttonElement} title={patent.name}>
-        <PatentDetail row={patent} />
+        <PatentsDetail row={patent} />
     </Modal>
 );
 

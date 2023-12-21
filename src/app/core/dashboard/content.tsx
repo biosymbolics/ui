@@ -12,11 +12,9 @@ import { Tabs } from '@/components/layout/tabs';
 import { PatentSearchArgs } from '@/types/patents';
 
 import { AssetList } from './asset';
-import { PatentList } from './patent';
 // import { PatentGraph } from './graph';
 import { OverTime } from './over-time';
 import { Summary } from './summary';
-import { TrialList } from './trials';
 
 export const Content = (args: PatentSearchArgs) => {
     try {
@@ -26,22 +24,6 @@ export const Content = (args: PatentSearchArgs) => {
                 panel: (
                     <Suspense fallback={<Skeleton />}>
                         <AssetList {...args} />
-                    </Suspense>
-                ),
-            },
-            {
-                label: 'Patents',
-                panel: (
-                    <Suspense fallback={<Skeleton />}>
-                        <PatentList {...args} />
-                    </Suspense>
-                ),
-            },
-            {
-                label: 'Trials',
-                panel: (
-                    <Suspense fallback={<Skeleton />}>
-                        <TrialList {...args} />
                     </Suspense>
                 ),
             },

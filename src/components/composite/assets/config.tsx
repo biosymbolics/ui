@@ -4,7 +4,6 @@ import { GridColDef } from '@mui/x-data-grid/models/colDef';
 import 'server-only';
 
 import {
-    renderAssetCountChip,
     renderChip,
     renderMainTypography,
     renderSparkline,
@@ -16,14 +15,13 @@ export const getAssetColumns = (): GridColDef[] => [
     {
         field: 'name',
         headerName: 'Asset, Class or Target',
-        width: 300,
+        width: 325,
         renderCell: renderMainTypography,
     },
     {
         field: 'approval_count',
         headerName: 'Approvals',
         width: 85,
-        renderCell: renderAssetCountChip,
     },
     {
         field: 'trial_count',
