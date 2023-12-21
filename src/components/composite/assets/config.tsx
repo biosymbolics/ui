@@ -29,14 +29,12 @@ export const getAssetColumns = (): GridColDef[] => [
         field: 'trial_count',
         headerName: 'Trials',
         width: 85,
-        type: 'actions',
         renderCell: renderTrialModal,
     },
     {
         field: 'patent_count',
         headerName: 'Patents',
         width: 85,
-        type: 'actions',
         renderCell: renderPatentModal,
     },
     {

@@ -31,14 +31,9 @@ export const Modal = ({ buttonElement, children, title }: ModalProps) => {
             <ButtonElement onClick={() => setIsOpen(true)} />
             <JoyModal open={isOpen} onClose={() => setIsOpen(false)}>
                 <ModalOverflow>
-                    <ModalDialog
-                        aria-labelledby="modal-dialog-overflow"
-                        layout="fullscreen"
-                    >
+                    <ModalDialog layout="fullscreen">
                         <ModalClose />
-                        <Typography id="modal-dialog-overflow" level="h1">
-                            {title}
-                        </Typography>
+                        <Typography level="h2">{title}</Typography>
                         {children}
                     </ModalDialog>
                 </ModalOverflow>
