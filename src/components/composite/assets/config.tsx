@@ -5,13 +5,16 @@ import 'server-only';
 
 import {
     renderChip,
-    renderAvailabilityChip,
     renderMainTypography,
     renderOwnerChip,
     renderSparkline,
 } from '@/components/data/grid';
 
-import { renderPatentModal, renderTrialModal } from './client';
+import {
+    renderAvailabilityModal,
+    renderPatentModal,
+    renderTrialModal,
+} from './client';
 
 export const getAssetColumns = (): GridColDef[] => [
     {
@@ -57,9 +60,9 @@ export const getAssetColumns = (): GridColDef[] => [
     },
     {
         field: 'maybe_available_count',
-        headerName: 'Available?',
-        renderCell: renderAvailabilityChip,
-        width: 100,
+        headerName: 'Available',
+        width: 85,
+        renderCell: renderAvailabilityModal,
         description: 'Number of patents that *might* be available',
     },
     {
