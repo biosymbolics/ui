@@ -17,7 +17,7 @@ const spec = {
         'A network diagram of software dependencies, with edges grouped via hierarchical edge bundling.',
     padding: 20,
     width: 1000,
-    height: 720,
+    height: 1000,
     autosize: 'none',
 
     signals: [
