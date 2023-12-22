@@ -1,7 +1,7 @@
 'use client';
 
 import Typography from '@mui/joy/Typography';
-import { Vega } from 'react-vega';
+import { Vega, VisualizationSpec } from 'react-vega';
 
 import { PatentGraph } from '@/types/patents';
 
@@ -11,14 +11,14 @@ type GraphProps = BaseChartProps & {
     data: PatentGraph;
 };
 
-const spec = {
+const spec: VisualizationSpec = {
     $schema: 'https://vega.github.io/schema/vega/v5.json',
     description:
         'A network diagram of software dependencies, with edges grouped via hierarchical edge bundling.',
     padding: 20,
     width: 1000,
     height: 1000,
-    autosize: 'none',
+    autosize: undefined,
 
     signals: [
         {
@@ -241,6 +241,7 @@ const spec = {
 export const Graph = ({ data, title, ...props }: GraphProps): JSX.Element => (
     <>
         {title && <Typography level="title-md">{title}</Typography>}
+
         <Vega spec={spec} data={data} {...props} />
     </>
 );
