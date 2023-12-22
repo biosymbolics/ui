@@ -576,11 +576,6 @@
   dependencies:
     tslib "^2.4.0"
 
-"@types/cytoscape@*":
-  version "3.19.15"
-  resolved "https://registry.npmjs.org/@types/cytoscape/-/cytoscape-3.19.15.tgz"
-  integrity sha512-v1PNoMBzoIrOGZfuU/PFwDEPxfP4GnfVCTrZPx4M2G4EFS7BV/FLCCoVMOzdBG98MJbNBXpx1LCrs8wh0vybEw==
-
 "@types/debug@^4.0.0":
   version "4.1.8"
   resolved "https://registry.npmjs.org/@types/debug/-/debug-4.1.8.tgz"
@@ -660,14 +655,6 @@
   version "15.7.11"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.11.tgz#2596fb352ee96a1379c657734d4b913a613ad563"
   integrity sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==
-
-"@types/react-cytoscapejs@^1.2.5":
-  version "1.2.5"
-  resolved "https://registry.npmjs.org/@types/react-cytoscapejs/-/react-cytoscapejs-1.2.5.tgz"
-  integrity sha512-G9VcGQOlER3njklOu5D0FDGHYfkQJ3yEL95kGbgI/MR08N5dQ7IbLSZI8WqaB4fG0zOURIg0BUtOCrbE5HRZEQ==
-  dependencies:
-    "@types/cytoscape" "*"
-    "@types/react" "*"
 
 "@types/react-dom@18.2.15":
   version "18.2.15"
@@ -3537,13 +3524,6 @@ react-apexcharts@^1.4.1:
   version "1.4.1"
   resolved "https://registry.npmjs.org/react-apexcharts/-/react-apexcharts-1.4.1.tgz"
   integrity sha512-G14nVaD64Bnbgy8tYxkjuXEUp/7h30Q0U33xc3AwtGFijJB9nHqOt1a6eG0WBn055RgRg+NwqbKGtqPxy15d0Q==
-  dependencies:
-    prop-types "^15.8.1"
-
-react-cytoscapejs@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/react-cytoscapejs/-/react-cytoscapejs-2.0.0.tgz"
-  integrity sha512-t3SSl1DQy7+JQjN+8QHi1anEJlM3i3aAeydHTsJwmjo/isyKK7Rs7oCvU6kZsB9NwZidzZQR21Vm2PcBLG/Tjg==
   dependencies:
     prop-types "^15.8.1"
 

@@ -15,49 +15,42 @@ const spec = {
     $schema: 'https://vega.github.io/schema/vega/v5.json',
     description:
         'A network diagram of software dependencies, with edges grouped via hierarchical edge bundling.',
-    padding: 5,
-    width: 720,
+    padding: 20,
+    width: 1000,
     height: 720,
     autosize: 'none',
 
     signals: [
         {
             name: 'tension',
-            value: 0.85,
-            bind: { input: 'range', min: 0, max: 1, step: 0.01 },
+            value: 0.95,
         },
         {
             name: 'radius',
             value: 280,
-            bind: { input: 'range', min: 20, max: 400 },
         },
         {
             name: 'extent',
             value: 360,
-            bind: { input: 'range', min: 0, max: 360, step: 1 },
         },
         {
             name: 'rotate',
             value: 0,
-            bind: { input: 'range', min: 0, max: 360, step: 1 },
         },
         {
             name: 'textSize',
-            value: 8,
-            bind: { input: 'range', min: 2, max: 20, step: 1 },
+            value: 12,
         },
         {
             name: 'textOffset',
-            value: 2,
-            bind: { input: 'range', min: 0, max: 10, step: 1 },
+            value: 3,
         },
         {
             name: 'layout',
             value: 'cluster',
-            bind: { input: 'radio', options: ['tidy', 'cluster'] },
         },
-        { name: 'colorIn', value: 'firebrick' },
-        { name: 'colorOut', value: 'forestgreen' },
+        { name: 'colorIn', value: 'blue' },
+        { name: 'colorOut', value: 'blue' },
         { name: 'originX', update: 'width / 2' },
         { name: 'originY', update: 'height / 2' },
         {
@@ -240,26 +233,14 @@ const spec = {
             range: [{ signal: 'colorIn' }, { signal: 'colorOut' }],
         },
     ],
-
-    legends: [
-        {
-            stroke: 'color',
-            orient: 'bottom-right',
-            title: 'Dependencies',
-            symbolType: 'stroke',
-        },
-    ],
 };
 
 /**
  * Graph chart
- *
- * @see https://github.com/cytoscape/cytoscape.js
  */
 export const Graph = ({ data, title, ...props }: GraphProps): JSX.Element => (
     <>
         {title && <Typography level="title-md">{title}</Typography>}
         <Vega spec={spec} data={data} {...props} />
-        {JSON.stringify(data)}
     </>
 );
