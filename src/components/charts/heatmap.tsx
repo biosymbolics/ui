@@ -22,6 +22,7 @@ const spec: VisualizationSpec = {
     mark: {
         type: 'rect',
         cursor: 'pointer',
+        tooltip: true,
     },
     params: [
         {
@@ -59,21 +60,6 @@ const spec: VisualizationSpec = {
             labelLimit: 500,
         },
     },
-    signals: [
-        {
-            name: 'select',
-            on: [{ events: 'shape:click', update: 'warn(datum)' }],
-        },
-
-        {
-            name: 'tooltip',
-            value: {},
-            on: [
-                { events: 'rect:mouseover', update: 'datum' },
-                { events: 'rect:mouseout', update: '{}' },
-            ],
-        },
-    ],
 };
 
 /**
