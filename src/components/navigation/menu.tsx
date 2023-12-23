@@ -144,7 +144,7 @@ export const SideNav = () => {
         };
     return (
         <List>
-            <ListItem>
+            <ListItem key="apps">
                 <NavMenuButton
                     label="Apps"
                     open={menuIndex === 0}

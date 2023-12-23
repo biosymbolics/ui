@@ -208,7 +208,7 @@ export const renderOwnerChip = getRenderChip({
     getTooltip: (row: { owners: string[] }) => (
         <List>
             {row.owners.map((owner) => (
-                <ListItem>{owner}</ListItem>
+                <ListItem key={owner}>{owner}</ListItem>
             ))}
         </List>
     ),

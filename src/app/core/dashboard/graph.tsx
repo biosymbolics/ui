@@ -26,6 +26,7 @@ const fetchGraph = cache(
             PatentGraphSchema,
             (response) => formatKeys(response, camelCase)
         );
+
         return res;
     }
 );
