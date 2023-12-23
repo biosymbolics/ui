@@ -13,40 +13,90 @@ type HeatmapProps = BaseChartProps & {
 
 const spec: VisualizationSpec = {
     $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+    width: 'container',
+    height: { step: 30 },
+    background: 'transparent',
     data: {
         name: 'data',
     },
-    mark: 'rect',
-    encoding: {
-        y: { field: 'tail', type: 'nominal' },
-        x: { field: 'head', type: 'nominal' },
-        color: {
-            field: 'size',
+    mark: {
+        type: 'rect',
+        cursor: 'pointer',
+    },
+    params: [
+        {
+            name: 'highlight',
+            select: { type: 'point', on: 'pointerover' },
         },
+        {
+            name: 'select',
+            select: { type: 'point', on: 'click' },
+        },
+    ],
+
+    encoding: {
+        x: { field: 'head', type: 'nominal', title: '' },
+        y: { field: 'tail', type: 'nominal', title: '' },
         fill: {
+            scale: { scheme: 'lightorange' },
             field: 'size',
             type: 'quantitative',
-            scale: {
-                range: ['lightgrey', 'purple'],
-            },
+        },
+        fillOpacity: {
+            condition: { param: 'highlight', value: 0.9 },
+            value: 1,
         },
     },
     config: {
         axis: { grid: true, tickBand: 'extent' },
+        axisX: {
+            orient: 'top',
+            labelFontSize: 14,
+            labelAngle: 0,
+        },
+        axisY: {
+            labelFontSize: 12,
+            labelLimit: 500,
+        },
     },
+    signals: [
+        {
+            name: 'select',
+            on: [{ events: 'shape:click', update: 'warn(datum)' }],
+        },
+
+        {
+            name: 'tooltip',
+            value: {},
+            on: [
+                { events: 'rect:mouseover', update: 'datum' },
+                { events: 'rect:mouseout', update: '{}' },
+            ],
+        },
+    ],
 };
 
 /**
  * Graph chart
  */
-export const Heatmap = ({
-    data,
-    title,
-    ...props
-}: HeatmapProps): JSX.Element => (
-    <>
-        {title && <Typography level="title-md">{title}</Typography>}
+export const Heatmap = ({ data, title }: HeatmapProps): JSX.Element => {
+    const handleSelect = (...args: unknown[]) => {
+        console.info(args);
+    };
 
-        <Vega spec={spec} data={{ data }} {...props} />
-    </>
-);
+    const signalListeners = {
+        select: handleSelect,
+    };
+    return (
+        <>
+            {title && <Typography level="title-md">{title}</Typography>}
+
+            <Vega
+                spec={spec}
+                data={{ data }}
+                signalListeners={signalListeners}
+                width={800}
+            />
+        </>
+    );
+};
