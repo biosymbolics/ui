@@ -40,12 +40,12 @@ export const PatentSchema = z.object({
 const PatentSummarySchema = z.object({
     count: z.number(),
     x: z.union([z.string(), z.number()]),
-    y: z.optional(z.union([z.string(), z.number()])),
+    y: z.optional(z.union([z.string(), z.number(), z.null()])),
 });
 export const PatentsSummarySchema = z.array(
     z.object({
         x: z.union([z.string(), z.number()]),
-        y: z.optional(z.union([z.string(), z.number()])),
+        y: z.optional(z.union([z.string(), z.number(), z.null()])),
         data: z.array(PatentSummarySchema),
     })
 );
