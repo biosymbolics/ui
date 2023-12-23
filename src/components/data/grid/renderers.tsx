@@ -15,10 +15,11 @@ import {
     GridRenderCellParams,
     GridValueFormatterParams,
 } from '@mui/x-data-grid/models/params/gridCellParams';
-import unescape from 'lodash/fp/unescape';
-import { format } from 'date-fns';
 import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
 import { cheerfulFiestaPalette } from '@mui/x-charts/colorPalettes';
+import isEmpty from 'lodash/fp/isEmpty';
+import unescape from 'lodash/fp/unescape';
+import { format } from 'date-fns';
 
 import { Chip, ChipProps, formatChips } from '@/components/data/chip';
 import { formatLabel, formatPercent, title } from '@/utils/string';
@@ -173,7 +174,9 @@ export const getRenderChip =
         getTooltip,
         onClick,
     }: {
-        color: ChipProps['color'] | ((value: number) => ChipProps['color']);
+        color:
+            | ChipProps['color']
+            | ((value: number | string) => ChipProps['color']);
         getUrl?: (row: T) => string | undefined;
         getTooltip?: (row: T) => string | ReactNode | undefined;
         onClick?: IconButtonProps['onClick'];
@@ -235,6 +238,31 @@ export const getRenderSparkline =
     };
 
 export const renderSparkline = getRenderSparkline();
+
+export const getRenderBar =
+    <T extends Record<string, unknown>>() =>
+    (params: GridRenderCellParams<T, Record<string, number>>): ReactNode => {
+        const { value } = params;
+        if (!value || isEmpty(value)) {
+            return <span />;
+        }
+        return (
+            <SparkLineChart
+                showTooltip
+                showHighlight
+                colors={cheerfulFiestaPalette}
+                data={Object.values(value)}
+                xAxis={{
+                    data: Object.keys(value),
+                }}
+                height={50}
+                margin={{ top: 10, right: 0, bottom: 10, left: 0 }}
+                plotType="bar"
+            />
+        );
+    };
+
+export const renderBar = getRenderBar();
 
 /**
  * Format label

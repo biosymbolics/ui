@@ -1,2 +1,2 @@
 export * from './grid';
-export * from './formatters';
+export * from './renderers';

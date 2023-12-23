@@ -6,9 +6,9 @@ import Typography from '@mui/joy/Typography';
 import WarningIcon from '@mui/icons-material/Warning';
 import 'server-only';
 
-import { getAssetColumns } from '@/components/composite/assets/config';
+import { getAssetColumns, AssetDetail } from '@/components/composite/assets';
 import { DataGrid } from '@/components/data/grid';
-import { EntitySearchArgs } from '@/types/entities';
+import { Entity, EntitySearchArgs } from '@/types/entities';
 
 import { fetchAssets } from '../actions';
 
@@ -19,9 +19,10 @@ export const AssetList = async (args: EntitySearchArgs) => {
         return (
             <Box height="100vh">
                 <DataGrid
-                    checkboxSelection
+                    // checkboxSelection
                     disableRowSelectionOnClick
                     columns={columns}
+                    detailComponent={AssetDetail<Entity>}
                     rows={assets.map((asset) => ({
                         ...asset,
                         id: asset.name,

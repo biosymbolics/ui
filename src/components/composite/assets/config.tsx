@@ -6,6 +6,7 @@ import 'server-only';
 import {
     renderChip,
     renderOwnerChip,
+    renderPercent,
     renderSparkline,
 } from '@/components/data/grid';
 
@@ -14,8 +15,11 @@ import {
     renderMainTerm,
     renderApprovalModel,
     renderPatentModal,
+    renderSaturationChip,
     renderTrialModal,
 } from './client';
+
+import { getStoppedPercentClass } from '../styles';
 
 export const getAssetColumns = (): GridColDef[] => [
     {
@@ -62,15 +66,22 @@ export const getAssetColumns = (): GridColDef[] => [
         description: 'Number of patents that *might* be available',
     },
     {
-        field: 'total_enrollment',
-        headerName: 'Enroll.',
+        field: 'investment_level',
+        headerName: 'Saturation',
         width: 125,
-        renderCell: renderChip,
+        renderCell: renderSaturationChip,
     },
     {
         field: 'max_phase',
         headerName: 'Max Phase',
         width: 125,
         renderCell: renderChip,
+    },
+    {
+        field: 'percent_stopped',
+        headerName: '% Stopped',
+        width: 85,
+        valueFormatter: renderPercent,
+        cellClassName: getStoppedPercentClass,
     },
 ];

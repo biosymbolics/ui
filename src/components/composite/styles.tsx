@@ -74,6 +74,12 @@ export const getRepurposeScoreClass = getScoresClassFunc({
     badThreshold: 0.0,
 });
 
+export const getStoppedPercentClass = getScoresClassFunc({
+    goodThreshold: 0.0,
+    badThreshold: 0.2,
+    higherIsBetter: false,
+});
+
 export const getStyles = ({ getColorSchemeSelector, palette }: Theme) => ({
     [getColorSchemeSelector('dark')]: {
         '& .biosym-app.good': {

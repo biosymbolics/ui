@@ -14,6 +14,7 @@ import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
 import { formatLabel, formatPercent, getSelectableId } from '@/utils/string';
 import { Trial } from '@/types/trials';
+import { getRenderChip } from '@/components/data/grid';
 
 const OutcomesList = ({ trial }: { trial: Trial }): JSX.Element => (
     <>
@@ -144,3 +145,16 @@ export const TrialDetail = <T extends Trial>({
         </Section>
     );
 };
+
+export const renderStatusChip = getRenderChip({
+    color: (v) => {
+        if (v === 'COMPLETED') {
+            return 'success';
+        }
+        if (['SUSPENDED', 'TERMINATED', 'WITHDRAWN'].includes(v as string)) {
+            return 'danger';
+        }
+
+        return 'neutral';
+    },
+});

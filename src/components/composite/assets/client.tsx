@@ -9,6 +9,8 @@ import {
     getRenderChip,
     getRenderTypography,
 } from '@/components/data/grid';
+import { Section } from '@/components/layout/section';
+import { Title } from '@/components/layout/title';
 import { RegulatoryApproval } from '@/types/approvals';
 import { Entity } from '@/types/entities';
 import { Patent } from '@/types/patents';
@@ -18,6 +20,19 @@ import { PatentDetail, getPatentColumns } from '../patents';
 import { getStyles } from '../styles';
 import { getTrialColumns, TrialDetail } from '../trials';
 import { ApprovalDetail, getApprovalColumns } from '../approvals';
+
+/**
+ * Detail content panel for assets
+ */
+export const AssetDetail = <T extends Entity>({
+    row: asset,
+}: {
+    row: T;
+}): JSX.Element => (
+    <Section mx={3}>
+        <Title title={asset.name} variant="soft" />
+    </Section>
+);
 
 /**
  * Detail content panel for patents grid
@@ -139,7 +154,7 @@ export const renderAvailabilityModal = <T extends Entity>(
     const { row, value } = params;
     const ButtonElement = ({ onClick }: ModalButtonElementProps) =>
         getRenderChip({
-            color: (v) => (v > 0 ? 'success' : 'neutral'),
+            color: (v) => ((v as number) > 0 ? 'success' : 'neutral'),
             onClick,
         })({ ...params, value: (value || 0) > 0 ? value : '?' });
     return (
@@ -153,3 +168,18 @@ export const renderMainTerm = getRenderTypography(
     'title-md',
     (row: Entity) => `/core/dashboard?terms=${row.name}`
 );
+
+export const renderSaturationChip = getRenderChip({
+    color: (v) => {
+        if (v === 'very high') {
+            return 'danger';
+        }
+        if (v === 'high') {
+            return 'warning';
+        }
+        if (v === 'low') {
+            return 'success';
+        }
+        return 'neutral';
+    },
+});
