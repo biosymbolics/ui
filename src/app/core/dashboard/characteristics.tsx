@@ -3,9 +3,11 @@
 import { cache } from 'react';
 import camelCase from 'lodash/fp/camelCase';
 import Box from '@mui/joy/Box';
+import Typography from '@mui/joy/Typography';
 
 import { PATENT_CHARACTERISTIC_API_URL } from '@/constants';
 import { Heatmap } from '@/components/charts/heatmap';
+import { Section } from '@/components/layout/section';
 import {
     PatentCharacteristics as PatentCharacteristicsType,
     PatentSearchArgs,
@@ -38,7 +40,21 @@ export const PatentCharacteristics = async ({
 }: PatentSearchArgs & { pathname?: string }) => {
     try {
         const data = await fetchPatentCharacteristics({ terms, ...args });
-        return <Heatmap data={data} pathname={pathname} />;
+        return (
+            <>
+                <Section>
+                    <Typography level="h3">Patent Characteristics</Typography>
+                    <Typography gutterBottom level="body-md">
+                        UMLS concepts directly or indirectly associated with
+                        patents for search{' '}
+                        <b>{(terms || []).map((t) => `'${t}'`).join(', ')}</b>
+                    </Typography>
+                </Section>
+                <Section>
+                    <Heatmap data={data} pathname={pathname} />
+                </Section>
+            </>
+        );
     } catch (e) {
         return (
             <Box>

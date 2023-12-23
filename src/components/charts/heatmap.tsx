@@ -49,6 +49,7 @@ const spec: VisualizationSpec = {
         },
     },
     config: {
+        font: 'monospace',
         axis: { grid: true, tickBand: 'extent' },
         axisX: {
             orient: 'top',
