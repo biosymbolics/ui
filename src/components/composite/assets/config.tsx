@@ -4,9 +4,9 @@ import { GridColDef } from '@mui/x-data-grid/models/colDef';
 import 'server-only';
 
 import {
-    renderBar,
     renderChip,
     renderOwnerChip,
+    renderPercent,
     renderSparkline,
 } from '@/components/data/grid';
 
@@ -18,6 +18,8 @@ import {
     renderSaturationChip,
     renderTrialModal,
 } from './client';
+
+import { getStoppedPercentClass } from '../styles';
 
 export const getAssetColumns = (): GridColDef[] => [
     {
@@ -57,12 +59,6 @@ export const getAssetColumns = (): GridColDef[] => [
         renderCell: renderSparkline,
     },
     {
-        field: 'outcomes',
-        headerName: 'Outcomes',
-        width: 125,
-        renderCell: renderBar,
-    },
-    {
         field: 'maybe_available_count',
         headerName: 'Avail?',
         width: 85,
@@ -80,5 +76,12 @@ export const getAssetColumns = (): GridColDef[] => [
         headerName: 'Max Phase',
         width: 125,
         renderCell: renderChip,
+    },
+    {
+        field: 'percent_stopped',
+        headerName: '% Stopped',
+        width: 85,
+        valueFormatter: renderPercent,
+        cellClassName: getStoppedPercentClass,
     },
 ];
