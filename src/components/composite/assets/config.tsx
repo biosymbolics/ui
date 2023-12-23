@@ -4,6 +4,7 @@ import { GridColDef } from '@mui/x-data-grid/models/colDef';
 import 'server-only';
 
 import {
+    renderBar,
     renderChip,
     renderOwnerChip,
     renderSparkline,
@@ -14,6 +15,7 @@ import {
     renderMainTerm,
     renderApprovalModel,
     renderPatentModal,
+    renderSaturationChip,
     renderTrialModal,
 } from './client';
 
@@ -55,6 +57,12 @@ export const getAssetColumns = (): GridColDef[] => [
         renderCell: renderSparkline,
     },
     {
+        field: 'outcomes',
+        headerName: 'Outcomes',
+        width: 125,
+        renderCell: renderBar,
+    },
+    {
         field: 'maybe_available_count',
         headerName: 'Avail?',
         width: 85,
@@ -62,10 +70,10 @@ export const getAssetColumns = (): GridColDef[] => [
         description: 'Number of patents that *might* be available',
     },
     {
-        field: 'total_enrollment',
-        headerName: 'Enroll.',
+        field: 'investment_level',
+        headerName: 'Saturation',
         width: 125,
-        renderCell: renderChip,
+        renderCell: renderSaturationChip,
     },
     {
         field: 'max_phase',

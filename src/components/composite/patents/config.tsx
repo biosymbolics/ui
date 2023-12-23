@@ -3,11 +3,9 @@
 import { GridColDef } from '@mui/x-data-grid/models/colDef';
 
 import {
-    formatBlank,
     formatName,
     formatNumber,
     formatYear,
-    renderPercent,
     unencodeHtml,
 } from '@/components/data/grid';
 
@@ -64,22 +62,22 @@ export const getPatentColumns = (): GridColDef[] => [
         valueFormatter: formatName,
         width: 200,
     },
-    {
-        field: 'probability_of_success',
-        headerName: 'PoS',
-        width: 85,
-        valueFormatter: formatBlank,
-        cellClassName: getScoresClass,
-        description: '**FAKE PLACEHOLDER**!! Estimated PoS.',
-    },
-    {
-        field: 'reformulation_score',
-        headerName: 'Reformulation⚠️',
-        width: 100,
-        valueFormatter: renderPercent,
-        cellClassName: getScoresClass,
-        description: '**FAKE PLACEHOLDER**!! Esimated reformulation potential.',
-    },
+    // {
+    //     field: 'probability_of_success',
+    //     headerName: 'PoS',
+    //     width: 85,
+    //     valueFormatter: formatBlank,
+    //     cellClassName: getScoresClass,
+    //     description: '**FAKE PLACEHOLDER**!! Estimated PoS.',
+    // },
+    // {
+    //     field: 'reformulation_score',
+    //     headerName: 'Reformulation⚠️',
+    //     width: 100,
+    //     valueFormatter: renderPercent,
+    //     cellClassName: getScoresClass,
+    //     description: '**FAKE PLACEHOLDER**!! Esimated reformulation potential.',
+    // },
     {
         field: 'search_rank',
         headerName: 'Relevance',

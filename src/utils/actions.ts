@@ -28,7 +28,7 @@ export const doFetch = async <T>(
 
     if (parsedRes.success === false) {
         const message = `Failed to parse: ${parsedRes.error.toString()}`;
-        console.error(message);
+        console.error(message, jsonResp);
         throw new Error(message);
     }
 

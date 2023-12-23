@@ -8,9 +8,10 @@ import {
     formatYear,
     renderChip,
     renderLabel,
-    renderPrimaryChip,
     renderPercent,
 } from '@/components/data/grid';
+
+import { renderStatusChip } from './client';
 
 import { getDropoutScoresClass, getRepurposeScoreClass } from '../styles';
 
@@ -55,7 +56,7 @@ export const getTrialColumns = (): GridColDef[] => [
     {
         field: 'status',
         headerName: 'Status',
-        renderCell: renderPrimaryChip,
+        renderCell: renderStatusChip,
         width: 125,
     },
     {
