@@ -4,26 +4,26 @@ import { cache } from 'react';
 import camelCase from 'lodash/fp/camelCase';
 import Box from '@mui/joy/Box';
 
-import { PATENT_GRAPH_API_URL } from '@/constants';
-import { Graph } from '@/components/charts/graph';
+import { PATENT_CHARACTERISTIC_API_URL } from '@/constants';
+import { Heatmap } from '@/components/charts/heatmap';
 import {
-    PatentGraph as PatentGraphType,
+    PatentCharacteristics as PatentCharacteristicsType,
     PatentSearchArgs,
-    PatentGraphSchema,
+    PatentCharacteristicsSchema,
 } from '@/types/patents';
 import { doFetch } from '@/utils/actions';
 import { formatKeys } from '@/utils/object';
 import { getQueryArgs } from '@/utils/patents';
 
-const fetchGraph = cache(
-    async (args: PatentSearchArgs): Promise<PatentGraphType> => {
+const fetchPatentCharacteristics = cache(
+    async (args: PatentSearchArgs): Promise<PatentCharacteristicsType> => {
         if (args.terms?.length === 0) {
-            return {} as PatentGraphType;
+            return {} as PatentCharacteristicsType;
         }
         const queryArgs = getQueryArgs(args, true);
         const res = await doFetch(
-            `${PATENT_GRAPH_API_URL}?${queryArgs}`,
-            PatentGraphSchema,
+            `${PATENT_CHARACTERISTIC_API_URL}?${queryArgs}`,
+            PatentCharacteristicsSchema,
             (response) => formatKeys(response, camelCase)
         );
 
@@ -31,14 +31,14 @@ const fetchGraph = cache(
     }
 );
 
-export const PatentGraph = async ({
+export const PatentCharacteristics = async ({
     pathname = '/core/dashboard',
     terms,
     ...args
 }: PatentSearchArgs & { pathname?: string }) => {
     try {
-        const graph = await fetchGraph({ terms, ...args });
-        return <Graph data={graph} pathname={pathname} />;
+        const data = await fetchPatentCharacteristics({ terms, ...args });
+        return <Heatmap data={data} pathname={pathname} />;
     } catch (e) {
         return (
             <Box>

@@ -92,3 +92,13 @@ export const PatentGraphSchema = z.object({
 export type PatentGraph = z.infer<typeof PatentGraphSchema>;
 export type PatentEdge = z.infer<typeof PatentEdgeSchema>;
 export type PatentNode = z.infer<typeof PatentNodeSchema>;
+
+export const PatentCharacteristicsSchema = z.array(
+    z.object({
+        head: z.string(),
+        tail: z.string(),
+        size: z.number(),
+    })
+);
+
+export type PatentCharacteristics = z.infer<typeof PatentCharacteristicsSchema>;

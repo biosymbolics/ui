@@ -238,7 +238,11 @@ const spec: VisualizationSpec = {
 /**
  * Graph chart
  */
-export const Graph = ({ data, title, ...props }: GraphProps): JSX.Element => (
+export const EdgeBundled = ({
+    data,
+    title,
+    ...props
+}: GraphProps): JSX.Element => (
     <>
         {title && <Typography level="title-md">{title}</Typography>}
 
