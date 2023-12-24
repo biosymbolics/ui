@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Typography from '@mui/joy/Typography';
 import { Vega, VisualizationSpec } from 'react-vega';
 
@@ -7,19 +8,22 @@ import { PatentCharacteristics } from '@/types/patents';
 
 import { BaseChartProps } from './types';
 
-type HeadmapSpecProps = {
+type HeadmapSpecProps<T extends Record<string, unknown>> = {
     colorField?: string;
+    getRows?: (terms: string[]) => Promise<T[]>;
     xField: string;
     yField: string;
     xFieldTitle?: string;
     yFieldTitle?: string;
 };
 
-type HeatmapProps = BaseChartProps & {
+type HeatmapProps<T extends Record<string, unknown>> = BaseChartProps & {
     data: PatentCharacteristics;
-} & HeadmapSpecProps;
+} & HeadmapSpecProps<T>;
 
-const getSpec: (props: HeadmapSpecProps) => VisualizationSpec = ({
+const getSpec: <T extends Record<string, unknown>>(
+    props: HeadmapSpecProps<T>
+) => VisualizationSpec = ({
     xField,
     xFieldTitle,
     yField,
@@ -86,17 +90,25 @@ const getSpec: (props: HeadmapSpecProps) => VisualizationSpec = ({
 /**
  * Graph chart
  */
-export const Heatmap = ({
+export const Heatmap = <
+    T extends Record<string, unknown> = Record<string, unknown>,
+>({
     data,
+    getRows,
     title,
     colorField,
     xField,
     yField,
     xFieldTitle = '',
     yFieldTitle = '',
-}: HeatmapProps): JSX.Element => {
-    const handleSelect = (...args: unknown[]) => {
-        console.info(args);
+}: HeatmapProps<T>): JSX.Element => {
+    const [rows, setRows] = useState<T[]>();
+    const handleSelect = async (...args: unknown[]) => {
+        if (!getRows) {
+            return;
+        }
+        const newRows = await getRows(args as string[]);
+        setRows(newRows);
     };
 
     const signalListeners = {
@@ -120,6 +132,8 @@ export const Heatmap = ({
                 signalListeners={signalListeners}
                 width={800}
             />
+
+            {rows && JSON.stringify(rows)}
         </>
     );
 };
