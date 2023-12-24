@@ -92,8 +92,8 @@ export const Heatmap = ({
     colorField,
     xField,
     yField,
-    xFieldTitle,
-    yFieldTitle,
+    xFieldTitle = '',
+    yFieldTitle = '',
 }: HeatmapProps): JSX.Element => {
     const handleSelect = (...args: unknown[]) => {
         console.info(args);

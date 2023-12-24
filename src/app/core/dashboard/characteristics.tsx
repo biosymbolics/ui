@@ -63,9 +63,8 @@ export const PatentCharacteristics = async ({
                         data={data}
                         pathname={pathname}
                         xField="head"
-                        xFieldTitle={headField}
+                        // xFieldTitle={headField}
                         yField="concept"
-                        yFieldTitle="UMLS Concept"
                     />
                 </Section>
             </>
