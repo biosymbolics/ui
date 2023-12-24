@@ -9,16 +9,19 @@ import { PATENT_CHARACTERISTIC_API_URL } from '@/constants';
 import { Heatmap } from '@/components/charts/heatmap';
 import { Section } from '@/components/layout/section';
 import {
-    PatentCharacteristics as PatentCharacteristicsType,
+    HeadField,
     PatentSearchArgs,
     PatentCharacteristicsSchema,
+    PatentCharacteristics as PatentCharacteristicsType,
 } from '@/types/patents';
 import { doFetch } from '@/utils/actions';
 import { formatKeys } from '@/utils/object';
 import { getQueryArgs } from '@/utils/patents';
 
 const fetchPatentCharacteristics = cache(
-    async (args: PatentSearchArgs): Promise<PatentCharacteristicsType> => {
+    async (
+        args: PatentSearchArgs & { headField: HeadField }
+    ): Promise<PatentCharacteristicsType> => {
         if (args.terms?.length === 0) {
             return {} as PatentCharacteristicsType;
         }
@@ -38,8 +41,13 @@ export const PatentCharacteristics = async ({
     terms,
     ...args
 }: PatentSearchArgs & { pathname?: string }) => {
+    const headField: HeadField = 'priority_year';
     try {
-        const data = await fetchPatentCharacteristics({ terms, ...args });
+        const data = await fetchPatentCharacteristics({
+            terms,
+            headField,
+            ...args,
+        });
         return (
             <>
                 <Section>
@@ -51,7 +59,14 @@ export const PatentCharacteristics = async ({
                     </Typography>
                 </Section>
                 <Section>
-                    <Heatmap data={data} pathname={pathname} />
+                    <Heatmap
+                        data={data}
+                        pathname={pathname}
+                        xField="head"
+                        xFieldTitle={headField}
+                        yField="concept"
+                        yFieldTitle="UMLS Concept"
+                    />
                 </Section>
             </>
         );

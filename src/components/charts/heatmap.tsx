@@ -7,11 +7,25 @@ import { PatentCharacteristics } from '@/types/patents';
 
 import { BaseChartProps } from './types';
 
-type HeatmapProps = BaseChartProps & {
-    data: PatentCharacteristics;
+type HeadmapSpecProps = {
+    colorField?: string;
+    xField: string;
+    yField: string;
+    xFieldTitle?: string;
+    yFieldTitle?: string;
 };
 
-const spec: VisualizationSpec = {
+type HeatmapProps = BaseChartProps & {
+    data: PatentCharacteristics;
+} & HeadmapSpecProps;
+
+const getSpec: (props: HeadmapSpecProps) => VisualizationSpec = ({
+    xField,
+    xFieldTitle,
+    yField,
+    yFieldTitle,
+    colorField = 'count',
+}) => ({
     $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
     width: 'container',
     height: { step: 30 },
@@ -36,17 +50,23 @@ const spec: VisualizationSpec = {
     ],
 
     encoding: {
-        x: { field: 'head', type: 'nominal', title: '' },
-        y: { field: 'tail', type: 'nominal', title: '' },
+        x: { field: xField, type: 'nominal', title: xFieldTitle },
+        y: { field: yField, type: 'nominal', title: yFieldTitle },
         fill: {
             scale: { scheme: 'lightorange' },
-            field: 'size',
+            field: colorField,
             type: 'quantitative',
         },
         fillOpacity: {
             condition: { param: 'highlight', value: 0.9 },
             value: 1,
         },
+        tooltip: [
+            { field: xField, type: 'nominal' },
+            { field: yField, type: 'nominal' },
+            { field: colorField, type: 'quantitative' },
+            { field: 'patents' },
+        ],
     },
     config: {
         font: 'monospace',
@@ -61,12 +81,20 @@ const spec: VisualizationSpec = {
             labelLimit: 500,
         },
     },
-};
+});
 
 /**
  * Graph chart
  */
-export const Heatmap = ({ data, title }: HeatmapProps): JSX.Element => {
+export const Heatmap = ({
+    data,
+    title,
+    colorField,
+    xField,
+    yField,
+    xFieldTitle,
+    yFieldTitle,
+}: HeatmapProps): JSX.Element => {
     const handleSelect = (...args: unknown[]) => {
         console.info(args);
     };
@@ -74,6 +102,14 @@ export const Heatmap = ({ data, title }: HeatmapProps): JSX.Element => {
     const signalListeners = {
         select: handleSelect,
     };
+
+    const spec = getSpec({
+        colorField,
+        xField,
+        yField,
+        xFieldTitle,
+        yFieldTitle,
+    });
     return (
         <>
             {title && <Typography level="title-md">{title}</Typography>}

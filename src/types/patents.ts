@@ -93,11 +93,20 @@ export type PatentGraph = z.infer<typeof PatentGraphSchema>;
 export type PatentEdge = z.infer<typeof PatentEdgeSchema>;
 export type PatentNode = z.infer<typeof PatentNodeSchema>;
 
+const HeadFieldEnum = z.enum([
+    'publication_number',
+    'assignee',
+    'priority_year',
+]);
+
+export type HeadField = z.infer<typeof HeadFieldEnum>;
+
 export const PatentCharacteristicsSchema = z.array(
     z.object({
+        concept: z.string(),
+        count: z.number(),
         head: z.string(),
-        tail: z.string(),
-        size: z.number(),
+        patents: z.array(z.string()),
     })
 );
 
