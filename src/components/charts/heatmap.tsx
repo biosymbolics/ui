@@ -104,6 +104,8 @@ export const Heatmap = <
 }: HeatmapProps<T>): JSX.Element => {
     const [rows, setRows] = useState<T[]>();
     const handleSelect = async (...args: unknown[]) => {
+        'use server';
+
         if (!getRows) {
             return;
         }
