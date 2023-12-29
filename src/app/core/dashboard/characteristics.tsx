@@ -63,7 +63,7 @@ export const PatentCharacteristics = async ({
                     <Heatmap
                         clickField="patents"
                         data={data}
-                        pathname={`${pathname}/patents`}
+                        pathname={`${pathname}/patents?terms=`}
                         xField="head"
                         yField="concept"
                     />

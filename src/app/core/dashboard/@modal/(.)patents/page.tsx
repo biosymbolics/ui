@@ -1,15 +1,15 @@
 import { Suspense } from 'react';
-import Skeleton from '@mui/joy/Skeleton';
+import CircularProgress from '@mui/joy/CircularProgress';
 
 import { fetchPatents } from '@/app/core/actions';
 import { PatentsDetail } from '@/components/composite/assets/client';
 import { RouteableModal as Modal } from '@/components/navigation/modal';
 
-const PatentsDetailInner = async ({
-    searchParams,
-}: {
+type Props = {
     searchParams: Record<string, string>;
-}) => {
+};
+
+const PatentsDetailInner = async ({ searchParams }: Props) => {
     const terms = searchParams.terms?.split(';') ?? null;
 
     if (!terms) {
@@ -19,13 +19,9 @@ const PatentsDetailInner = async ({
     return <PatentsDetail patents={patents} />;
 };
 
-const PatentsDetailModal = ({
-    searchParams,
-}: {
-    searchParams: Record<string, string>;
-}) => (
+const PatentsDetailModal = ({ searchParams }: Props) => (
     <Modal isOpen={!!searchParams.terms} title="Patents">
-        <Suspense fallback={<Skeleton />}>
+        <Suspense fallback={<CircularProgress />}>
             <PatentsDetailInner searchParams={searchParams} />
         </Suspense>
     </Modal>

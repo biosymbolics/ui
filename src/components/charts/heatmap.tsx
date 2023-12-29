@@ -106,14 +106,12 @@ export const Heatmap = ({
     const router = useRouter();
     const signalListeners = {
         select: (_: unknown, value: unknown) => {
-            console.info(value);
             if (!clickField || typeof value !== 'object') {
                 return;
             }
             const obj = value as Record<string, unknown>;
-            const urlTerms = (obj[clickField] as string[]).join(';');
-            console.info('Going to ', `${pathname}?terms=${urlTerms}`);
-            router.push(`${pathname}?terms=${urlTerms}`);
+            const urlParams = (obj[clickField] as string[]).join(';');
+            router.push(`${pathname}${urlParams}`);
         },
     };
 
