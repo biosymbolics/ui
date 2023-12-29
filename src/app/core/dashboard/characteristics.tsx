@@ -13,13 +13,10 @@ import {
     PatentSearchArgs,
     PatentCharacteristicsSchema,
     PatentCharacteristics as PatentCharacteristicsType,
-    Patent,
 } from '@/types/patents';
 import { doFetch } from '@/utils/actions';
 import { formatKeys } from '@/utils/object';
 import { getQueryArgs } from '@/utils/patents';
-
-import { fetchPatents } from '../actions';
 
 const fetchPatentCharacteristics = cache(
     async (
@@ -39,10 +36,6 @@ const fetchPatentCharacteristics = cache(
     }
 );
 
-const fetchPatentsById = cache((ids: string[]) =>
-    fetchPatents({ terms: ids, queryType: 'OR' })
-);
-
 export const PatentCharacteristics = async ({
     pathname = '/core/dashboard',
     terms,
@@ -55,6 +48,7 @@ export const PatentCharacteristics = async ({
             headField,
             ...args,
         });
+
         return (
             <>
                 <Section>
@@ -66,10 +60,10 @@ export const PatentCharacteristics = async ({
                     </Typography>
                 </Section>
                 <Section>
-                    <Heatmap<Patent>
-                        getRows={fetchPatentsById}
+                    <Heatmap
+                        clickField="patents"
                         data={data}
-                        pathname={pathname}
+                        pathname={`${pathname}/patents`}
                         xField="head"
                         yField="concept"
                     />

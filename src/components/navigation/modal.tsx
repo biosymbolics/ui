@@ -1,3 +1,5 @@
+'use client';
+
 import JoyModal from '@mui/joy/Modal';
 import ModalClose from '@mui/joy/ModalClose';
 import ModalDialog from '@mui/joy/ModalDialog';
@@ -18,7 +20,7 @@ type BaseModalProps = {
 
 type ControlledModalProps = {
     isOpen: boolean;
-    setIsOpen: (isOpen: boolean) => void; // TODO: XOR with buttonElement
+    setIsOpen?: (isOpen: boolean) => void; // TODO: XOR with buttonElement
 } & BaseModalProps;
 
 type ModalProps = {
@@ -37,7 +39,7 @@ const DefaultButtonElement = ({ onClick }: ModalButtonElementProps) => (
 export const ControlledModal = ({
     children,
     isOpen,
-    setIsOpen,
+    setIsOpen = () => {},
     title,
 }: ControlledModalProps) => (
     <JoyModal open={isOpen} onClose={() => setIsOpen(false)}>

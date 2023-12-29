@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Typography from '@mui/joy/Typography';
 import { Vega, VisualizationSpec } from 'react-vega';
 
@@ -8,22 +8,20 @@ import { PatentCharacteristics } from '@/types/patents';
 
 import { BaseChartProps } from './types';
 
-type HeadmapSpecProps<T extends Record<string, unknown>> = {
+type HeadmapSpecProps = {
     colorField?: string;
-    getRows?: (terms: string[]) => Promise<T[]>;
     xField: string;
     yField: string;
     xFieldTitle?: string;
     yFieldTitle?: string;
 };
 
-type HeatmapProps<T extends Record<string, unknown>> = BaseChartProps & {
+type HeatmapProps = BaseChartProps & {
+    clickField?: string;
     data: PatentCharacteristics;
-} & HeadmapSpecProps<T>;
+} & HeadmapSpecProps;
 
-const getSpec: <T extends Record<string, unknown>>(
-    props: HeadmapSpecProps<T>
-) => VisualizationSpec = ({
+const getSpec: (props: HeadmapSpecProps) => VisualizationSpec = ({
     xField,
     xFieldTitle,
     yField,
@@ -49,7 +47,11 @@ const getSpec: <T extends Record<string, unknown>>(
         },
         {
             name: 'select',
-            select: { type: 'point', on: 'click' },
+            select: {
+                fields: ['patents'],
+                on: 'click',
+                type: 'point',
+            },
         },
     ],
 
@@ -82,7 +84,7 @@ const getSpec: <T extends Record<string, unknown>>(
         },
         axisY: {
             labelFontSize: 12,
-            labelLimit: 500,
+            labelLimit: 250,
         },
     },
 });
@@ -90,31 +92,29 @@ const getSpec: <T extends Record<string, unknown>>(
 /**
  * Graph chart
  */
-export const Heatmap = <
-    T extends Record<string, unknown> = Record<string, unknown>,
->({
+export const Heatmap = ({
     data,
-    getRows,
-    title,
+    clickField,
     colorField,
+    pathname,
+    title,
     xField,
     yField,
     xFieldTitle = '',
     yFieldTitle = '',
-}: HeatmapProps<T>): JSX.Element => {
-    const [rows, setRows] = useState<T[]>();
-    const handleSelect = async (...args: unknown[]) => {
-        'use server';
-
-        if (!getRows) {
-            return;
-        }
-        const newRows = await getRows(args as string[]);
-        setRows(newRows);
-    };
-
+}: HeatmapProps): JSX.Element => {
+    const router = useRouter();
     const signalListeners = {
-        select: handleSelect,
+        select: (_: unknown, value: unknown) => {
+            console.info(value);
+            if (!clickField || typeof value !== 'object') {
+                return;
+            }
+            const obj = value as Record<string, unknown>;
+            const urlTerms = (obj[clickField] as string[]).join(';');
+            console.info('Going to ', `${pathname}?terms=${urlTerms}`);
+            router.push(`${pathname}?terms=${urlTerms}`);
+        },
     };
 
     const spec = getSpec({
@@ -134,8 +134,6 @@ export const Heatmap = <
                 signalListeners={signalListeners}
                 width={800}
             />
-
-            {rows && JSON.stringify(rows)}
         </>
     );
 };
