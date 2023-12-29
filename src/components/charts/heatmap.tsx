@@ -80,8 +80,8 @@ const getSpec: (props: HeadmapSpecProps) => VisualizationSpec = ({
         axis: { grid: true, tickBand: 'extent' },
         axisX: {
             orient: 'top',
-            labelFontSize: 14,
-            labelAngle: 0,
+            labelFontSize: 12,
+            labelAngle: -30,
         },
         axisY: {
             labelFontSize: 12,

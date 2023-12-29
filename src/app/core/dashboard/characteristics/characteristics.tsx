@@ -1,47 +1,23 @@
-'use server';
+'use client';
 
-import { cache } from 'react';
-import camelCase from 'lodash/fp/camelCase';
+import { useState } from 'react';
 import Box from '@mui/joy/Box';
 import Typography from '@mui/joy/Typography';
 
-import { DEFAULT_PATHNAME, PATENT_CHARACTERISTIC_API_URL } from '@/constants';
+import { DEFAULT_PATHNAME } from '@/constants';
 import { Heatmap } from '@/components/charts/heatmap';
 import { Section } from '@/components/layout/section';
-import {
-    HeadField,
-    PatentSearchArgs,
-    PatentCharacteristicsSchema,
-    PatentCharacteristics as PatentCharacteristicsType,
-} from '@/types/patents';
-import { doFetch } from '@/utils/actions';
-import { formatKeys } from '@/utils/object';
-import { getQueryArgs } from '@/utils/patents';
+import { Select } from '@/components/input/select';
+import { HeadField, PatentSearchArgs } from '@/types/patents';
 
-const fetchPatentCharacteristics = cache(
-    async (
-        args: PatentSearchArgs & { headField: HeadField }
-    ): Promise<PatentCharacteristicsType> => {
-        if (args.terms?.length === 0) {
-            return {} as PatentCharacteristicsType;
-        }
-        const queryArgs = getQueryArgs(args, true);
-        const res = await doFetch(
-            `${PATENT_CHARACTERISTIC_API_URL}?${queryArgs}`,
-            PatentCharacteristicsSchema,
-            (response) => formatKeys(response, camelCase)
-        );
-
-        return res;
-    }
-);
+import { fetchPatentCharacteristics } from './actions';
 
 export const PatentCharacteristics = async ({
     pathname = DEFAULT_PATHNAME,
     terms,
     ...args
 }: PatentSearchArgs & { pathname?: string }) => {
-    const headField: HeadField = 'priority_year';
+    const [headField, setHeadField] = useState<HeadField>('priority_year');
     try {
         const data = await fetchPatentCharacteristics({
             terms,
@@ -60,6 +36,17 @@ export const PatentCharacteristics = async ({
                     </Typography>
                 </Section>
                 <Section>
+                    <Select<HeadField>
+                        defaultValue={headField}
+                        label="Dimension"
+                        onChange={(e: unknown, value: HeadField | null) => {
+                            if (value) {
+                                setHeadField(value);
+                            }
+                        }}
+                        options={['priority_year', 'assignee']}
+                        sx={{ maxWidth: 400, mb: 3 }}
+                    />
                     <Heatmap
                         clickBaseUrl={`${pathname}/patents?terms=`}
                         clickField="patents"

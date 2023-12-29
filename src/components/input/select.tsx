@@ -24,6 +24,7 @@ type SelectProps<T extends BaseOption> = {
     options: T[];
     onChange?: JoySelectProps<T, false>['onChange'];
     size?: JoySelectProps<T, false>['size'];
+    sx?: JoySelectProps<T, false>['sx'];
     tooltip?: string;
 };
 
@@ -37,6 +38,7 @@ export const Select = <T extends BaseOption>({
     idField,
     label,
     options,
+    sx,
     tooltip,
     ...props
 }: SelectProps<T>): ReactElement<SelectProps<T>> => {
@@ -53,7 +55,7 @@ export const Select = <T extends BaseOption>({
     };
 
     return (
-        <FormControl id={formId} error={error}>
+        <FormControl id={formId} error={error} sx={sx}>
             {label && <FormLabel tooltip={tooltip}>{label}</FormLabel>}
             <JoySelect
                 placeholder="Choose one…"
