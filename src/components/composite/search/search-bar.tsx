@@ -29,9 +29,11 @@ export const SearchBar = ({
     const pathname = usePathname();
     const [newTerms, setTerms] = useState<string[] | null>(terms);
     const [newExemplarPatents, setExemplarPatents] = useState<string[] | null>(
-        exemplarPatents
+        exemplarPatents || null
     );
-    const [newQueryType, setQueryType] = useState<string | null>(queryType);
+    const [newQueryType, setQueryType] = useState<string | null>(
+        queryType || null
+    );
     const [newMinPatentYears, setMinPatentYears] = useState<number>(
         minPatentYears || 0
     );
