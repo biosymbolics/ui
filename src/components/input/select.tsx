@@ -24,7 +24,7 @@ type SelectProps<T extends BaseOption> = {
     options: T[];
     onChange?: JoySelectProps<T, false>['onChange'];
     size?: JoySelectProps<T, false>['size'];
-    sx: JoySelectProps<T, false>['sx'];
+    sx?: JoySelectProps<T, false>['sx'];
     tooltip?: string;
 };
 
