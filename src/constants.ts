@@ -14,3 +14,5 @@ export const TRIAL_SEARCH_API_URL = `${API_URL}/trials/search`;
 
 export const ASK_SEC_API_URL = 'http://localhost:3001/dev/sec/ask'; // `${API_URL}/sec/ask`;
 export const PREDICT_CLINDEV_API_URL = `${API_URL}/clindev/predict/timelines`;
+
+export const DEFAULT_PATHNAME = '/core/dashboard';

@@ -3,7 +3,7 @@
 import { cache } from 'react';
 import Box from '@mui/joy/Box';
 
-import { PATENT_SUMMARY_API_URL } from '@/constants';
+import { DEFAULT_PATHNAME, PATENT_SUMMARY_API_URL } from '@/constants';
 import { Bars } from '@/components/charts/html-bar';
 import {
     PatentSearchArgs,
@@ -44,7 +44,7 @@ const fetchSummaries = cache(
 // );
 
 export const Summary = async ({
-    pathname = '/core/dashboard',
+    pathname = DEFAULT_PATHNAME,
     terms,
     ...args
 }: PatentSearchArgs & { pathname?: string }) => {

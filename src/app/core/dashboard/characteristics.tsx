@@ -5,7 +5,7 @@ import camelCase from 'lodash/fp/camelCase';
 import Box from '@mui/joy/Box';
 import Typography from '@mui/joy/Typography';
 
-import { PATENT_CHARACTERISTIC_API_URL } from '@/constants';
+import { DEFAULT_PATHNAME, PATENT_CHARACTERISTIC_API_URL } from '@/constants';
 import { Heatmap } from '@/components/charts/heatmap';
 import { Section } from '@/components/layout/section';
 import {
@@ -37,7 +37,7 @@ const fetchPatentCharacteristics = cache(
 );
 
 export const PatentCharacteristics = async ({
-    pathname = '/core/dashboard',
+    pathname = DEFAULT_PATHNAME,
     terms,
     ...args
 }: PatentSearchArgs & { pathname?: string }) => {
@@ -61,9 +61,10 @@ export const PatentCharacteristics = async ({
                 </Section>
                 <Section>
                     <Heatmap
+                        clickBaseUrl={`${pathname}/patents?terms=`}
                         clickField="patents"
                         data={data}
-                        pathname={`${pathname}/patents?terms=`}
+                        pathname={pathname}
                         xField="head"
                         yField="concept"
                     />

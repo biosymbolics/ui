@@ -21,6 +21,8 @@ import MenuButton from '@mui/joy/MenuButton';
 import MenuItem from '@mui/joy/MenuItem';
 import Apps from '@mui/icons-material/Apps';
 
+import { DEFAULT_PATHNAME } from '@/constants';
+
 // The Menu is built on top of Popper v2, so it accepts `modifiers` prop that will be passed to the Popper.
 // https://popper.js.org/docs/v2/modifiers/offset/
 type MenuButtonProps = {
@@ -153,7 +155,7 @@ export const SideNav = () => {
                     onKeyDown={() => setMenuIndex(null)}
                     menu={
                         <Menu onClose={() => setMenuIndex(null)}>
-                            <MenuItem {...itemProps} href="/core/dashboard">
+                            <MenuItem {...itemProps} href={DEFAULT_PATHNAME}>
                                 Patents Search
                             </MenuItem>
                         </Menu>

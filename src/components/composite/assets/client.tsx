@@ -11,6 +11,7 @@ import {
 } from '@/components/data/grid';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
+import { DEFAULT_PATHNAME } from '@/constants';
 import { RegulatoryApproval } from '@/types/approvals';
 import { Entity } from '@/types/entities';
 import { Patent } from '@/types/patents';
@@ -166,7 +167,7 @@ export const renderAvailabilityModal = <T extends Entity>(
 
 export const renderMainTerm = getRenderTypography(
     'title-md',
-    (row: Entity) => `/core/dashboard?terms=${row.name}`
+    (row: Entity) => `${DEFAULT_PATHNAME}?terms=${row.name}`
 );
 
 export const renderSaturationChip = getRenderChip({

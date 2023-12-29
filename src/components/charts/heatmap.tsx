@@ -17,6 +17,7 @@ type HeadmapSpecProps = {
 };
 
 type HeatmapProps = BaseChartProps & {
+    clickBaseUrl?: string; // TODO: both or neither with clickField
     clickField?: string;
     data: PatentCharacteristics;
 } & HeadmapSpecProps;
@@ -94,9 +95,9 @@ const getSpec: (props: HeadmapSpecProps) => VisualizationSpec = ({
  */
 export const Heatmap = ({
     data,
+    clickBaseUrl,
     clickField,
     colorField,
-    pathname,
     title,
     xField,
     yField,
@@ -111,7 +112,7 @@ export const Heatmap = ({
             }
             const obj = value as Record<string, unknown>;
             const urlParams = (obj[clickField] as string[]).join(';');
-            router.push(`${pathname}${urlParams}`);
+            router.push(`${clickBaseUrl}${urlParams}`);
         },
     };
 

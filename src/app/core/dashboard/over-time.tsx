@@ -6,7 +6,7 @@ import Typography from '@mui/joy/Typography';
 import groupBy from 'lodash/fp/groupBy';
 import isEmpty from 'lodash/fp/isEmpty';
 
-import { PATENT_OVER_TIME_API_URL } from '@/constants';
+import { DEFAULT_PATHNAME, PATENT_OVER_TIME_API_URL } from '@/constants';
 import { Line } from '@/components/charts/line';
 import { Section } from '@/components/layout/section';
 import {
@@ -35,7 +35,7 @@ const fetchReports = cache(
 );
 
 export const OverTime = async ({
-    pathname = '/core/dashboard',
+    pathname = DEFAULT_PATHNAME,
     ...args
 }: PatentSearchArgs & { pathname?: string }) => {
     try {
