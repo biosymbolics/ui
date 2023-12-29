@@ -1,17 +1,15 @@
 'use client';
 
-import {
-    DefaultLayout,
-    DefaultLayoutProps,
-} from '@/components/layout/default-layout';
-import { useNavigation } from '@/hooks/navigation';
+import { DefaultLayoutProps } from '@/components/layout/default-layout';
 
 /**
  * Basic layout compound
  */
-export const Layout = (props: DefaultLayoutProps) => {
-    const { isPending } = useNavigation();
-    return <DefaultLayout isPending={isPending} {...props} />;
-};
+export const Layout = ({ children, modal }: DefaultLayoutProps) => (
+    <>
+        {children}
+        {modal}
+    </>
+);
 
 export default Layout;

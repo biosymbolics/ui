@@ -6,8 +6,9 @@ import ModalDialog from '@mui/joy/ModalDialog';
 import ModalOverflow from '@mui/joy/ModalOverflow';
 import Typography from '@mui/joy/Typography';
 import LaunchIcon from '@mui/icons-material/Launch';
-import React from 'react';
+import React, { useCallback } from 'react';
 import IconButton, { IconButtonProps } from '@mui/joy/IconButton';
+import { useRouter } from 'next/navigation';
 
 export type ModalButtonElementProps = {
     onClick: IconButtonProps['onClick'];
@@ -70,5 +71,23 @@ export const Modal = ({ buttonElement, children, title }: ModalProps) => {
                 {children}
             </ControlledModal>
         </>
+    );
+};
+
+export const RouteableModal = ({
+    children,
+    isOpen,
+    ...props
+}: ControlledModalProps) => {
+    const router = useRouter();
+
+    const onDismiss = useCallback(() => {
+        router.back();
+    }, [router]);
+
+    return (
+        <ControlledModal isOpen={isOpen} setIsOpen={onDismiss} {...props}>
+            {children}
+        </ControlledModal>
     );
 };
