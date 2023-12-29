@@ -1,6 +1,5 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import Divider from '@mui/joy/Divider';
 import Grid from '@mui/joy/Grid';
 import ListItem from '@mui/joy/ListItem';
@@ -15,6 +14,7 @@ import { Title } from '@/components/layout/title';
 import { formatLabel, formatPercent, getSelectableId } from '@/utils/string';
 import { Trial } from '@/types/trials';
 import { getRenderChip } from '@/components/data/grid';
+import { DEFAULT_PATHNAME } from '@/constants';
 
 const OutcomesList = ({ trial }: { trial: Trial }): JSX.Element => (
     <>
@@ -34,11 +34,12 @@ const OutcomesList = ({ trial }: { trial: Trial }): JSX.Element => (
  * Detail content panel for patents grid
  */
 export const TrialDetail = <T extends Trial>({
+    pathname = DEFAULT_PATHNAME,
     row: trial,
 }: {
+    pathname?: string;
     row: T;
 }): JSX.Element => {
-    const pathname = usePathname();
     const fields: (keyof T)[] = [
         'conditions',
         'mesh_conditions',

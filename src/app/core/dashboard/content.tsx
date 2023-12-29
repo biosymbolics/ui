@@ -12,7 +12,7 @@ import { Tabs } from '@/components/layout/tabs';
 import { PatentSearchArgs } from '@/types/patents';
 
 import { AssetList } from './asset';
-// import { PatentGraph } from './graph';
+import { PatentCharacteristics } from './characteristics';
 import { OverTime } from './over-time';
 import { Summary } from './summary';
 
@@ -43,14 +43,14 @@ export const Content = (args: PatentSearchArgs) => {
                     </Suspense>
                 ),
             },
-            // {
-            //     label: 'Graph',
-            //     panel: (
-            //         <Suspense fallback={<Skeleton />}>
-            //             <PatentGraph {...args} />
-            //         </Suspense>
-            //     ),
-            // },
+            {
+                label: 'Characteristics',
+                panel: (
+                    <Suspense fallback={<Skeleton />}>
+                        <PatentCharacteristics {...args} />
+                    </Suspense>
+                ),
+            },
         ];
         return (
             <Box sx={getStyles}>

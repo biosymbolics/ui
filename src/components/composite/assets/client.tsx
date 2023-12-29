@@ -11,6 +11,7 @@ import {
 } from '@/components/data/grid';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
+import { DEFAULT_PATHNAME } from '@/constants';
 import { RegulatoryApproval } from '@/types/approvals';
 import { Entity } from '@/types/entities';
 import { Patent } from '@/types/patents';
@@ -37,20 +38,20 @@ export const AssetDetail = <T extends Entity>({
 /**
  * Detail content panel for patents grid
  */
-export const PatentsDetail = <T extends Entity>({
-    row: asset,
+export const PatentsDetail = ({
+    patents,
 }: {
-    row: T;
+    patents: Patent[];
 }): JSX.Element => {
     const patentColumns = getPatentColumns();
     return (
         <Box sx={getStyles}>
-            {asset.patents.length > 0 && (
+            {patents.length > 0 && (
                 <DataGrid
                     columns={patentColumns}
                     detailComponent={PatentDetail<Patent>}
                     getRowId={(row: Patent) => row.publication_number}
-                    rows={asset.patents}
+                    rows={patents}
                     title="Patents"
                     variant="minimal"
                 />
@@ -130,7 +131,7 @@ export const renderPatentModal = <T extends Entity>(
         getRenderChip({ color: 'primary', onClick })(params);
     return (
         <Modal buttonElement={ButtonElement} title={row.name}>
-            <PatentsDetail row={row} />
+            <PatentsDetail patents={row.patents} />
         </Modal>
     );
 };
@@ -159,14 +160,14 @@ export const renderAvailabilityModal = <T extends Entity>(
         })({ ...params, value: (value || 0) > 0 ? value : '?' });
     return (
         <Modal buttonElement={ButtonElement} title={row.name}>
-            <PatentsDetail row={row} />
+            <PatentsDetail patents={row.patents} />
         </Modal>
     );
 };
 
 export const renderMainTerm = getRenderTypography(
     'title-md',
-    (row: Entity) => `/core/dashboard?terms=${row.name}`
+    (row: Entity) => `${DEFAULT_PATHNAME}?terms=${row.name}`
 );
 
 export const renderSaturationChip = getRenderChip({

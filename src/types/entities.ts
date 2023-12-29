@@ -33,6 +33,6 @@ export type Entity = z.infer<typeof EntitySchema>;
 export type EntityResponse = z.infer<typeof EntityResponseSchema>;
 
 export type EntitySearchArgs = {
-    queryType: string | null;
+    queryType?: string | null;
     terms: string[] | null;
 };

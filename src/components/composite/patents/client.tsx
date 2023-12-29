@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import NextLink from 'next/link';
-import { usePathname } from 'next/navigation';
 import Divider from '@mui/joy/Divider';
 import Grid from '@mui/joy/Grid';
 import Link from '@mui/joy/Link';
@@ -19,6 +18,7 @@ import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
 import { Patent } from '@/types/patents';
 import { formatLabel, getSelectableId } from '@/utils/string';
+import { DEFAULT_PATHNAME } from '@/constants';
 
 const SimilarPatents = ({ patent }: { patent: Patent }): JSX.Element => (
     <>
@@ -40,7 +40,7 @@ const SimilarPatents = ({ patent }: { patent: Patent }): JSX.Element => (
                             (
                             <Link
                                 component={NextLink}
-                                href={`/core/dashboard?terms=${s}`}
+                                href={`${DEFAULT_PATHNAME}?terms=${s}`}
                                 target="_blank"
                             >
                                 Search
@@ -57,8 +57,10 @@ const SimilarPatents = ({ patent }: { patent: Patent }): JSX.Element => (
  * Detail content panel for patents grid
  */
 export const PatentDetail = <T extends Patent>({
+    pathname = DEFAULT_PATHNAME,
     row: patent,
 }: {
+    pathname?: string;
     row: T;
 }): JSX.Element => {
     const domainsOfInterest: (keyof T)[] = [
@@ -71,7 +73,6 @@ export const PatentDetail = <T extends Patent>({
         'inventors',
         'mechanisms',
     ];
-    const pathname = usePathname();
     const trialInfo = patent.last_trial_status
         ? `\n\nLast trial update: ${patent.last_trial_status} on ${
               patent.last_trial_update

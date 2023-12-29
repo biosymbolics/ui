@@ -65,9 +65,9 @@ export type Patent = z.infer<typeof PatentSchema>;
 export type PatentResponse = z.infer<typeof PatentResponseSchema>;
 
 export type PatentSearchArgs = {
-    exemplarPatents: string[] | null;
-    minPatentYears: number | null;
-    queryType: string | null;
+    exemplarPatents?: string[] | null;
+    minPatentYears?: number | null;
+    queryType?: string | null;
     terms: string[] | null;
 };
 
@@ -92,3 +92,22 @@ export const PatentGraphSchema = z.object({
 export type PatentGraph = z.infer<typeof PatentGraphSchema>;
 export type PatentEdge = z.infer<typeof PatentEdgeSchema>;
 export type PatentNode = z.infer<typeof PatentNodeSchema>;
+
+const HeadFieldEnum = z.enum([
+    'publication_number',
+    'assignee',
+    'priority_year',
+]);
+
+export type HeadField = z.infer<typeof HeadFieldEnum>;
+
+export const PatentCharacteristicsSchema = z.array(
+    z.object({
+        concept: z.string(),
+        count: z.number(),
+        head: z.string(),
+        patents: z.array(z.string()),
+    })
+);
+
+export type PatentCharacteristics = z.infer<typeof PatentCharacteristicsSchema>;
