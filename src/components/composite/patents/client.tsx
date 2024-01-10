@@ -17,7 +17,7 @@ import { Metric } from '@/components/data/metric';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
 import { Patent } from '@/types/patents';
-import { formatLabel, getSelectableId } from '@/utils/string';
+import { getSelectableId } from '@/utils/string';
 import { DEFAULT_PATHNAME } from '@/constants';
 
 const SimilarPatents = ({ patent }: { patent: Patent }): JSX.Element => (
@@ -62,67 +62,69 @@ export const PatentDetail = <T extends Patent>({
 }: {
     pathname?: string;
     row: T;
-}): JSX.Element => {
-    const domainsOfInterest: (keyof T)[] = [
-        'assignees',
-        'attributes',
-        'biologics',
-        'compounds',
-        'devices',
-        'diseases',
-        'inventors',
-        'mechanisms',
-    ];
-    const trialInfo = patent.last_trial_status
-        ? `\n\nLast trial update: ${patent.last_trial_status} on ${
-              patent.last_trial_update
-          }. NCTs ${(patent.nct_ids || []).join(', ')}.`
-        : '';
-    return (
-        <Section mx={3}>
-            <Title
-                description={`${unescape(patent.abstract)}${trialInfo}`}
-                link={{ label: patent.publication_number, url: patent.url }}
-                title={unescape(patent.title)}
-                variant="soft"
-            />
+}): JSX.Element => (
+    <Section mx={3}>
+        <Title
+            description={unescape(patent.abstract)}
+            link={{ label: patent.id, url: patent.url }}
+            title={unescape(patent.title)}
+            variant="soft"
+        />
 
-            {domainsOfInterest.map((domain) => (
-                <Chips
-                    baseUrl={pathname}
-                    color="neutral"
-                    label={formatLabel(domain as string)}
-                    items={(patent[domain] as string[]) || []}
+        <Chips
+            baseUrl={pathname}
+            color="neutral"
+            label="Assignees"
+            items={(patent.assignees || []).map((a) => a.name)}
+        />
+        <Chips
+            baseUrl={pathname}
+            color="neutral"
+            label="Inventors"
+            items={(patent.inventors || []).map((a) => a.name)}
+        />
+        <Chips
+            baseUrl={pathname}
+            color="neutral"
+            label="Interventions"
+            items={patent.interventions.map((a) => a.name)}
+        />
+        <Chips
+            baseUrl={pathname}
+            color="neutral"
+            label="Indications"
+            items={patent.indications.map((a) => a.name)}
+        />
+        <Chips
+            baseUrl={pathname}
+            color="neutral"
+            label="Attributes"
+            items={patent.attributes}
+        />
+
+        <Divider sx={{ my: 3 }} />
+        <Grid container spacing={3}>
+            <Grid xs={6} sm={2}>
+                <Metric
+                    value={patent.suitability_score}
+                    label="Suitability"
+                    tooltip={patent.suitability_score_explanation || ''}
                 />
-            ))}
-
-            <Divider sx={{ my: 3 }} />
-            <Grid container spacing={3}>
-                <Grid xs={6} sm={2}>
-                    <Metric
-                        value={patent.suitability_score}
-                        label="Suitability"
-                        tooltip={patent.suitability_score_explanation || ''}
-                    />
-                </Grid>
-                <Grid xs={6} sm={2}>
-                    <Metric
-                        value={patent.patent_years}
-                        label="Patent Years Left"
-                    />
-                </Grid>
-                <Grid xs={6} sm={2}>
-                    <Metric
-                        value={patent.availability_likelihood}
-                        label="Likehood of Availability"
-                        tooltip={patent.availability_explanation}
-                    />
-                </Grid>
             </Grid>
-            <Divider sx={{ my: 3 }} />
-            <Section>
-                <SimilarPatents patent={patent} />
-            </Section>
+            <Grid xs={6} sm={2}>
+                <Metric value={patent.patent_years} label="Patent Years Left" />
+            </Grid>
+            <Grid xs={6} sm={2}>
+                <Metric
+                    value={patent.availability_likelihood}
+                    label="Likehood of Availability"
+                    tooltip={patent.availability_explanation}
+                />
+            </Grid>
+        </Grid>
+        <Divider sx={{ my: 3 }} />
+        <Section>
+            <SimilarPatents patent={patent} />
         </Section>
-    );
-};
+    </Section>
+);
