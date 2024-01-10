@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import Typography from '@mui/joy/Typography';
 import { Vega, VisualizationSpec } from 'react-vega';
 
-import { PatentCharacteristics } from '@/types/patents';
+import { PatentCharacteristics } from '@/types/documents/patents';
 
 import { BaseChartProps } from './types';
 

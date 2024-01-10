@@ -9,7 +9,7 @@ import {
     PatentSearchArgs,
     PatentsSummaries,
     PatentsSummarySchema,
-} from '@/types/patents';
+} from '@/types/documents/patents';
 import { doFetch } from '@/utils/actions';
 import { getQueryArgs } from '@/utils/patents';
 

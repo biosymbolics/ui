@@ -16,7 +16,7 @@ import { Chips } from '@/components/data/chip';
 import { Metric } from '@/components/data/metric';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
-import { Patent } from '@/types/patents';
+import { Patent } from '@/types/documents/patents';
 import { getSelectableId } from '@/utils/string';
 import { DEFAULT_PATHNAME } from '@/constants';
 

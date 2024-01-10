@@ -3,8 +3,7 @@
 import { Chips } from '@/components/data/chip';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
-import { formatLabel } from '@/utils/string';
-import { RegulatoryApproval } from '@/types/approvals';
+import { RegulatoryApproval } from '@/types/documents/approvals';
 import { DEFAULT_PATHNAME } from '@/constants';
 
 /**
@@ -16,27 +15,22 @@ export const ApprovalDetail = <T extends RegulatoryApproval>({
 }: {
     pathname?: string;
     row: T;
-}): JSX.Element => {
-    const fields: (keyof T)[] = ['indications', 'pharmacologic_classes'];
-    return (
-        <Section mx={3}>
-            <Title
-                link={{
-                    label: approval.ndc_code,
-                    url: approval.label_url,
-                }}
-                title={approval.brand_name}
-                variant="soft"
-            />
+}): JSX.Element => (
+    <Section mx={3}>
+        <Title
+            link={{
+                label: approval.id,
+                url: approval.url,
+            }}
+            title={approval.interventions?.[0]?.name || 'unknown'}
+            variant="soft"
+        />
 
-            {fields.map((field) => (
-                <Chips
-                    baseUrl={pathname}
-                    color="primary"
-                    label={formatLabel(field as string)}
-                    items={(approval[field] as string[]) || []}
-                />
-            ))}
-        </Section>
-    );
-};
+        <Chips
+            baseUrl={pathname}
+            color="primary"
+            label="Indications"
+            items={approval.indications.map((indication) => indication.name)}
+        />
+    </Section>
+);

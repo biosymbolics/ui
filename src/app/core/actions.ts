@@ -15,14 +15,14 @@ import {
     PatentResponse,
     PatentResponseSchema,
     PatentSearchArgs,
-} from '@/types/patents';
+} from '@/types/documents/patents';
 import { doFetch } from '@/utils/actions';
 import { getQueryArgs } from '@/utils/patents';
 import {
     TrialResponse,
     TrialResponseSchema,
     TrialSearchArgs,
-} from '@/types/trials';
+} from '@/types/documents/trials';
 import {
     AssetResponse,
     AssetResponseSchema,

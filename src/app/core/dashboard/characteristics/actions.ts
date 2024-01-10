@@ -9,7 +9,7 @@ import {
     PatentSearchArgs,
     PatentCharacteristicsSchema,
     PatentCharacteristics as PatentCharacteristicsType,
-} from '@/types/patents';
+} from '@/types/documents/patents';
 import { doFetch } from '@/utils/actions';
 import { formatKeys } from '@/utils/object';
 import { getQueryArgs } from '@/utils/patents';

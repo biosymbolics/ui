@@ -19,10 +19,12 @@ import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
 import { cheerfulFiestaPalette } from '@mui/x-charts/colorPalettes';
 import isEmpty from 'lodash/fp/isEmpty';
 import unescape from 'lodash/fp/unescape';
+import uniq from 'lodash/fp/uniq';
 import { format } from 'date-fns';
 
 import { Chip, ChipProps, formatChips } from '@/components/data/chip';
 import { formatLabel, formatPercent, title } from '@/utils/string';
+import { MappingObject } from '@/types/documents/common';
 
 /**
  * Format name
@@ -46,6 +48,36 @@ export const formatName = <T extends Record<string, unknown>>(
     }
 
     return title(value);
+};
+
+/**
+ * Format mapping object (from API)
+ */
+export const formatMappingObject = <T extends MappingObject>(
+    params: GridValueFormatterParams<T>
+): string => {
+    const { value } = params;
+
+    if (!value) {
+        return '';
+    }
+
+    return value.name;
+};
+
+/**
+ * Format mapping objects (from API)
+ */
+export const formatMappingObjects = <T extends MappingObject[]>(
+    params: GridValueFormatterParams<T>
+): string[] => {
+    const { value } = params;
+
+    if (!value) {
+        return [];
+    }
+
+    return uniq(value.map((v) => v.name));
 };
 
 /**
@@ -153,16 +185,25 @@ export const renderBoolean = <T extends Record<string, unknown>>(
 /**
  * Render string array as chips
  */
-export const renderList = (
-    params: GridRenderCellParams<string[]>
+export const renderList = <T extends Record<string, unknown>>(
+    params: GridRenderCellParams<T, unknown[]>,
+    formattedValue: string[] | undefined = undefined
 ): ReactNode => {
-    if (!Array.isArray(params.value)) {
-        console.error(`Expected list, got ${typeof params.value}`);
+    const value = formattedValue ?? params.value;
+
+    if (!Array.isArray(value)) {
+        console.error(`Expected list, got ${typeof value}`);
         return formatBlank();
     }
 
-    return formatChips({ isWrappable: false, items: params.value as string[] });
+    if (value.length === 0) {
+        return formatBlank();
+    }
+
+    return formatChips({ isWrappable: false, items: value as string[] });
 };
+
+export const renderChips = renderList;
 
 /**
  * Render string array as chips

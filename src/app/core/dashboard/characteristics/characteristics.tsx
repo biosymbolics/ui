@@ -8,7 +8,7 @@ import { DEFAULT_PATHNAME } from '@/constants';
 import { Heatmap } from '@/components/charts/heatmap';
 import { Section } from '@/components/layout/section';
 import { Select } from '@/components/input/select';
-import { HeadField, PatentSearchArgs } from '@/types/patents';
+import { HeadField, PatentSearchArgs } from '@/types/documents/patents';
 
 import { fetchPatentCharacteristics } from './actions';
 

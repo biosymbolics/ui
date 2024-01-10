@@ -48,15 +48,17 @@ const prefixIfLeadingDigit = (input: string): string =>
  * @param input (string or null)
  * @returns css-compliant selector id
  */
-export const getSelectableId = (input?: string | number): string =>
-    !isUndefined(input)
-        ? [
-              removeNonAlphanumeric,
-              replaceSpacesWithHyphens,
-              lower,
-              prefixIfLeadingDigit,
-          ].reduce((value, fn) => fn(value), input as string)
-        : generateRandomishId();
+export const getSelectableId = (input?: string | number): string => {
+    if (isUndefined(input) || !((typeof input) in ['number', 'string'])) {
+        return generateRandomishId();
+    }
+    return [
+        removeNonAlphanumeric,
+        replaceSpacesWithHyphens,
+        lower,
+        prefixIfLeadingDigit,
+    ].reduce((value, fn) => fn(value), input as string);
+};
 
 /**
  * Returns true if input seems to contain an abbreviation

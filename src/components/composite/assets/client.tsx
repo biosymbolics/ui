@@ -12,10 +12,10 @@ import {
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
 import { DEFAULT_PATHNAME } from '@/constants';
-import { RegulatoryApproval } from '@/types/approvals';
+import { RegulatoryApproval } from '@/types/documents/approvals';
 import { Asset } from '@/types/entities';
-import { Patent } from '@/types/patents';
-import { Trial } from '@/types/trials';
+import { Patent } from '@/types/documents/patents';
+import { Trial } from '@/types/documents/trials';
 
 import { PatentDetail, getPatentColumns } from '../patents';
 import { getStyles } from '../styles';
@@ -74,7 +74,6 @@ export const TrialsDetail = <T extends Asset>({
                 <DataGrid
                     columns={trialColumns}
                     detailComponent={TrialDetail<Trial>}
-                    getRowId={(row: Trial) => row.nct_id}
                     rows={asset.trials}
                     title="Trials"
                     variant="minimal"

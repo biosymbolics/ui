@@ -1,25 +1,21 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { z } from 'zod';
 
-const MappingObject = z.object({
-    name: z.string(),
-    canonical_name: z.union([z.string(), z.null()]),
-    instance_rollup: z.union([z.string(), z.null()]),
-});
+import { MappingObjectSchema } from './common';
 
 export const PatentSchema = z.object({
     id: z.string(),
     title: z.string(),
     abstract: z.string(),
     adj_patent_years: z.number(),
-    assignees: z.union([z.array(MappingObject), z.null()]),
+    assignees: z.union([z.array(MappingObjectSchema), z.null()]),
     attributes: z.array(z.string()),
     availability_likelihood: z.string(),
     availability_explanation: z.string(),
-    indications: z.array(MappingObject),
-    interventions: z.array(MappingObject),
+    indications: z.array(MappingObjectSchema),
+    interventions: z.array(MappingObjectSchema),
     exemplar_similarity: z.union([z.number(), z.null()]),
-    inventors: z.union([z.array(MappingObject), z.null()]),
+    inventors: z.union([z.array(MappingObjectSchema), z.null()]),
     ipc_codes: z.array(z.string()),
     patent_years: z.number(),
     priority_date: z.string(),

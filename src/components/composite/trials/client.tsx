@@ -12,7 +12,7 @@ import { Metric } from '@/components/data/metric';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
 import { formatLabel, formatPercent, getSelectableId } from '@/utils/string';
-import { Trial } from '@/types/trials';
+import { Trial } from '@/types/documents/trials';
 import { getRenderChip } from '@/components/data/grid';
 import { DEFAULT_PATHNAME } from '@/constants';
 
@@ -20,10 +20,10 @@ const OutcomesList = ({ trial }: { trial: Trial }): JSX.Element => (
     <>
         <Typography level="title-md">Outcomes</Typography>
         <List>
-            {trial.primary_outcomes.map((s, index) => (
-                <ListItem key={`${getSelectableId(s)}-${index}`}>
+            {trial.outcomes.map((o) => (
+                <ListItem key={getSelectableId(o.id)}>
                     <ListItemDecorator>·</ListItemDecorator>
-                    {s}
+                    {o.name} ({o.timeframe})
                 </ListItem>
             ))}
         </List>
@@ -40,22 +40,13 @@ export const TrialDetail = <T extends Trial>({
     pathname?: string;
     row: T;
 }): JSX.Element => {
-    const fields: (keyof T)[] = [
-        'conditions',
-        'mesh_conditions',
-        'interventions',
-    ];
+    const fields: (keyof T)[] = ['indications', 'interventions'];
     return (
         <Section mx={3}>
             <Title
-                link={{
-                    label: trial.nct_id,
-                    url: `https://clinicaltrials.gov/study/${trial.nct_id}`,
-                }}
+                link={{ label: trial.id, url: trial.url }}
                 title={trial.title}
-                description={`${
-                    trial.sponsor || 'Unknown sponsor'
-                } (${formatLabel(trial.sponsor_type)})`}
+                description={trial.sponsor?.name || 'Unknown sponsor'}
                 variant="soft"
             />
 
@@ -134,11 +125,11 @@ export const TrialDetail = <T extends Trial>({
                     <Metric
                         value={trial.termination_reason || '--'}
                         label="Termination Reason"
-                        tooltip={trial.why_stopped || undefined}
+                        tooltip={trial.termination_description || undefined}
                     />
                 </Grid>
             </Grid>
-            {trial.primary_outcomes.length > 0 && (
+            {trial.outcomes.length > 0 && (
                 <Section>
                     <OutcomesList trial={trial} />
                 </Section>

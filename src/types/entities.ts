@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { z } from 'zod';
 
-import { RegulatoryApprovalSchema } from './approvals';
-import { PatentSchema } from './patents';
-import { TrialSchema } from './trials';
+import { RegulatoryApprovalSchema } from './documents/approvals';
+import { PatentSchema } from './documents/patents';
+import { TrialSchema } from './documents/trials';
 
 export const AssetSchema = z.object({
     activity: z.array(z.number()),
