@@ -5,9 +5,8 @@ import { RegulatoryApprovalSchema } from './approvals';
 import { PatentSchema } from './patents';
 import { TrialSchema } from './trials';
 
-export const EntitySchema = z.object({
+export const AssetSchema = z.object({
     activity: z.array(z.number()),
-    approvals: z.array(RegulatoryApprovalSchema),
     approval_count: z.number(),
     investment_level: z.string(),
     is_approved: z.boolean(),
@@ -22,17 +21,18 @@ export const EntitySchema = z.object({
     patent_count: z.number(),
     percent_stopped: z.number(),
     record_count: z.number(),
+    regulatory_approvals: z.array(RegulatoryApprovalSchema),
     total_enrollment: z.number(),
     trials: z.array(TrialSchema),
     trial_count: z.number(),
 });
 
-export const EntityResponseSchema = z.array(EntitySchema);
+export const AssetResponseSchema = z.array(AssetSchema);
 
-export type Entity = z.infer<typeof EntitySchema>;
-export type EntityResponse = z.infer<typeof EntityResponseSchema>;
+export type Asset = z.infer<typeof AssetSchema>;
+export type AssetResponse = z.infer<typeof AssetResponseSchema>;
 
-export type EntitySearchArgs = {
+export type AssetSearchArgs = {
     queryType?: string | null;
     terms: string[] | null;
 };

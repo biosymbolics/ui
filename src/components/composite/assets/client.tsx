@@ -13,7 +13,7 @@ import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
 import { DEFAULT_PATHNAME } from '@/constants';
 import { RegulatoryApproval } from '@/types/approvals';
-import { Entity } from '@/types/entities';
+import { Asset } from '@/types/entities';
 import { Patent } from '@/types/patents';
 import { Trial } from '@/types/trials';
 
@@ -25,7 +25,7 @@ import { ApprovalDetail, getApprovalColumns } from '../approvals';
 /**
  * Detail content panel for assets
  */
-export const AssetDetail = <T extends Entity>({
+export const AssetDetail = <T extends Asset>({
     row: asset,
 }: {
     row: T;
@@ -50,7 +50,6 @@ export const PatentsDetail = ({
                 <DataGrid
                     columns={patentColumns}
                     detailComponent={PatentDetail<Patent>}
-                    getRowId={(row: Patent) => row.publication_number}
                     rows={patents}
                     title="Patents"
                     variant="minimal"
@@ -63,7 +62,7 @@ export const PatentsDetail = ({
 /**
  * Detail content panel for trials grid
  */
-export const TrialsDetail = <T extends Entity>({
+export const TrialsDetail = <T extends Asset>({
     row: asset,
 }: {
     row: T;
@@ -88,7 +87,7 @@ export const TrialsDetail = <T extends Entity>({
 /**
  * Detail content panel for approvals grid
  */
-export const ApprovalsDetail = <T extends Entity>({
+export const ApprovalsDetail = <T extends Asset>({
     row: asset,
 }: {
     row: T;
@@ -96,12 +95,11 @@ export const ApprovalsDetail = <T extends Entity>({
     const approvalColumns = getApprovalColumns();
     return (
         <Box sx={getStyles}>
-            {asset.approvals.length > 0 && (
+            {asset.regulatory_approvals.length > 0 && (
                 <DataGrid
                     columns={approvalColumns}
                     detailComponent={ApprovalDetail<RegulatoryApproval>}
-                    getRowId={(row: RegulatoryApproval) => row.ndc_code}
-                    rows={asset.approvals}
+                    rows={asset.regulatory_approvals}
                     title="Approvals"
                     variant="minimal"
                 />
@@ -110,7 +108,7 @@ export const ApprovalsDetail = <T extends Entity>({
     );
 };
 
-export const renderTrialModal = <T extends Entity>(
+export const renderTrialModal = <T extends Asset>(
     params: GridRenderCellParams<T, number>
 ): JSX.Element => {
     const { row } = params;
@@ -123,7 +121,7 @@ export const renderTrialModal = <T extends Entity>(
     );
 };
 
-export const renderPatentModal = <T extends Entity>(
+export const renderPatentModal = <T extends Asset>(
     params: GridRenderCellParams<T, number>
 ): JSX.Element => {
     const { row } = params;
@@ -136,7 +134,7 @@ export const renderPatentModal = <T extends Entity>(
     );
 };
 
-export const renderApprovalModel = <T extends Entity>(
+export const renderApprovalModel = <T extends Asset>(
     params: GridRenderCellParams<T, number>
 ): JSX.Element => {
     const { row } = params;
@@ -149,7 +147,7 @@ export const renderApprovalModel = <T extends Entity>(
     );
 };
 
-export const renderAvailabilityModal = <T extends Entity>(
+export const renderAvailabilityModal = <T extends Asset>(
     params: GridRenderCellParams<T, number>
 ): JSX.Element => {
     const { row, value } = params;
@@ -167,7 +165,7 @@ export const renderAvailabilityModal = <T extends Entity>(
 
 export const renderMainTerm = getRenderTypography(
     'title-md',
-    (row: Entity) => `${DEFAULT_PATHNAME}?terms=${row.name}`
+    (row: Asset) => `${DEFAULT_PATHNAME}?terms=${row.name}`
 );
 
 export const renderSaturationChip = getRenderChip({

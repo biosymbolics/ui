@@ -8,11 +8,11 @@ import 'server-only';
 
 import { getAssetColumns, AssetDetail } from '@/components/composite/assets';
 import { DataGrid } from '@/components/data/grid';
-import { Entity, EntitySearchArgs } from '@/types/entities';
+import { Asset, AssetSearchArgs } from '@/types/entities';
 
 import { fetchAssets } from '../actions';
 
-export const AssetList = async (args: EntitySearchArgs) => {
+export const AssetList = async (args: AssetSearchArgs) => {
     const columns = getAssetColumns();
     try {
         const assets = await fetchAssets(args);
@@ -22,7 +22,7 @@ export const AssetList = async (args: EntitySearchArgs) => {
                     // checkboxSelection
                     disableRowSelectionOnClick
                     columns={columns}
-                    detailComponent={AssetDetail<Entity>}
+                    detailComponent={AssetDetail<Asset>}
                     rows={assets.map((asset) => ({
                         ...asset,
                         id: asset.name,

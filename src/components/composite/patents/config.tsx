@@ -17,7 +17,7 @@ import {
 } from '../styles';
 
 export const getPatentColumns = (): GridColDef[] => [
-    { field: 'publication_number', headerName: 'Pub #', width: 170 },
+    { field: 'id', headerName: 'Pub #', width: 170 },
     {
         field: 'title',
         headerName: 'Title',

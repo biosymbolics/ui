@@ -1,39 +1,35 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { z } from 'zod';
 
+const MappingObject = z.object({
+    name: z.string(),
+    canonical_name: z.union([z.string(), z.null()]),
+    instance_rollup: z.union([z.string(), z.null()]),
+});
+
 export const PatentSchema = z.object({
-    publication_number: z.string(),
+    id: z.string(),
     title: z.string(),
     abstract: z.string(),
     adj_patent_years: z.number(),
-    assignees: z.array(z.string()),
+    assignees: z.union([z.array(z.string()), z.null()]),
     attributes: z.array(z.string()),
     availability_likelihood: z.string(),
     availability_explanation: z.string(),
-    biologics: z.array(z.string()),
-    compounds: z.array(z.string()),
-    devices: z.array(z.string()),
-    diseases: z.array(z.string()),
-    exemplar_similarity: z.number(),
-    // genes: z.array(z.string()),
-    indications: z.optional(z.union([z.array(z.string()), z.null()])),
-    inventors: z.array(z.string()),
+    indications: z.array(MappingObject),
+    interventions: z.array(MappingObject),
+    exemplar_similarity: z.union([z.number(), z.null()]),
+    inventors: z.union([z.array(z.string()), z.null()]),
     ipc_codes: z.array(z.string()),
-    last_trial_status: z.optional(z.union([z.string(), z.null()])),
-    last_trial_update: z.optional(z.union([z.string(), z.null()])),
-    max_trial_phase: z.optional(z.union([z.string(), z.null()])),
-    nct_ids: z.union([z.null(), z.array(z.union([z.string(), z.null()]))]),
     patent_years: z.number(),
     priority_date: z.string(),
     probability_of_success: z.number(),
-    mechanisms: z.array(z.string()),
     reformulation_score: z.optional(z.number()),
     score: z.number(),
-    search_rank: z.number(),
+    search_rank: z.union([z.number(), z.null()]),
     similar_patents: z.array(z.string()),
     suitability_score: z.number(),
     suitability_score_explanation: z.optional(z.union([z.string(), z.null()])),
-    termination_reason: z.optional(z.union([z.string(), z.null()])),
     url: z.string(),
 });
 

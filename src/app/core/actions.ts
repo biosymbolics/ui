@@ -24,9 +24,9 @@ import {
     TrialSearchArgs,
 } from '@/types/trials';
 import {
-    EntityResponse,
-    EntityResponseSchema,
-    EntitySearchArgs,
+    AssetResponse,
+    AssetResponseSchema,
+    AssetSearchArgs,
 } from '@/types/entities';
 
 const AutocompleteResponse = z.array(
@@ -81,14 +81,14 @@ export const fetchDescription = cache(
  * @returns patents promise
  */
 export const fetchAssets = cache(
-    async (args: EntitySearchArgs): Promise<EntityResponse> => {
+    async (args: AssetSearchArgs): Promise<AssetResponse> => {
         if (args.terms?.length === 0) {
             return [];
         }
         const queryArgs = getQueryArgs(args, true);
         const res = await doFetch(
             `${ENTITY_SEARCH_API_URL}?${queryArgs}`,
-            EntityResponseSchema
+            AssetResponseSchema
         );
 
         return res;
