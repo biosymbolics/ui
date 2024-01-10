@@ -3,6 +3,7 @@
 import { GridColDef } from '@mui/x-data-grid/models/colDef';
 
 import {
+    formatMappingObjects,
     formatName,
     formatNumber,
     formatYear,
@@ -59,8 +60,8 @@ export const getPatentColumns = (): GridColDef[] => [
     {
         field: 'assignees',
         headerName: 'Assignees',
-        valueFormatter: formatName,
         width: 200,
+        valueGetter: formatMappingObjects,
     },
     // {
     //     field: 'probability_of_success',
