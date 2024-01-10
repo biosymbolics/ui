@@ -19,7 +19,7 @@ export const ApprovalDetail = <T extends RegulatoryApproval>({
     <Section mx={3}>
         <Title
             link={{
-                label: approval.id,
+                label: `${approval.application_type} ${approval.id} (${approval.agency})`,
                 url: approval.url,
             }}
             title={approval.interventions?.[0]?.name || 'unknown'}

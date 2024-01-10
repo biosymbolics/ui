@@ -11,12 +11,14 @@ const OutcomeSchema = z.object({
     type: z.string(),
 });
 
+export type Outcome = z.infer<typeof OutcomeSchema>;
+
 export const TrialSchema = z.object({
     // blinding: z.string(),
     comparison_type: z.string(),
     design: z.string(),
     dropout_count: z.union([z.number(), z.null()]),
-    dropout_percent: z.optional(z.number()),
+    dropout_percent: z.union([z.number(), z.null()]),
     duration: z.union([z.number(), z.null()]),
     end_date: z.union([z.string(), z.null()]),
     enrollment: z.union([z.number(), z.null()]),
@@ -26,7 +28,7 @@ export const TrialSchema = z.object({
     interventions: z.array(MappingObjectSchema),
     masking: z.string(),
     max_timeframe: z.union([z.number(), z.null()]),
-    outcomes: z.array(OutcomeSchema),
+    outcomes: z.union([z.null(), z.array(OutcomeSchema)]),
     phase: z.string(),
     // primary_outcomes: z.array(z.string()),
     randomization: z.string(),

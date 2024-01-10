@@ -14,7 +14,7 @@ export const getApprovalColumns = (): GridColDef[] => [
         field: 'application_type',
         headerName: 'Type',
         renderCell: renderChip,
-        width: 100,
+        width: 200,
     },
     {
         field: 'agency',
@@ -23,24 +23,23 @@ export const getApprovalColumns = (): GridColDef[] => [
         width: 100,
     },
     {
+        field: 'approval_date',
+        headerName: 'Date',
+        width: 75,
+        valueFormatter: formatYear,
+    },
+    {
         field: 'interventions',
         headerName: 'Interventions',
         renderCell: renderChips,
         valueGetter: formatMappingObjects,
-        width: 200,
+        width: 250,
     },
     {
         field: 'indications',
         headerName: 'Indications',
         renderCell: renderChips,
         valueGetter: formatMappingObjects,
-        width: 175,
-    },
-
-    {
-        field: 'approval_date',
-        headerName: 'Date',
-        width: 75,
-        valueFormatter: formatYear,
+        width: 250,
     },
 ];
