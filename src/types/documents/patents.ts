@@ -98,7 +98,7 @@ export const PatentCharacteristicsSchema = z.array(
         concept: z.string(),
         count: z.number(),
         head: z.string(),
-        patents: z.array(z.string()),
+        documents: z.array(z.string()),
     })
 );
 

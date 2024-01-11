@@ -35,22 +35,22 @@ export const Content = (args: PatentSearchArgs) => {
                     </Suspense>
                 ),
             },
-            // {
-            //     label: 'Over Time',
-            //     panel: (
-            //         <Suspense fallback={<Skeleton />}>
-            //             <OverTime {...args} />
-            //         </Suspense>
-            //     ),
-            // },
-            // {
-            //     label: 'Characteristics',
-            //     panel: (
-            //         <Suspense fallback={<Skeleton />}>
-            //             <PatentCharacteristics {...args} />
-            //         </Suspense>
-            //     ),
-            // },
+            {
+                label: 'Over Time',
+                panel: (
+                    <Suspense fallback={<Skeleton />}>
+                        <OverTime {...args} />
+                    </Suspense>
+                ),
+            },
+            {
+                label: 'Characteristics',
+                panel: (
+                    <Suspense fallback={<Skeleton />}>
+                        <PatentCharacteristics {...args} />
+                    </Suspense>
+                ),
+            },
         ];
         return (
             <Box sx={getStyles}>
