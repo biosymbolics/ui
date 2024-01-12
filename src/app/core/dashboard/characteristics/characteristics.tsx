@@ -52,6 +52,7 @@ export const PatentCharacteristics = async ({
                         clickField="documents"
                         data={data}
                         pathname={pathname}
+                        tooltipFields={['documents']}
                         xField="head"
                         yField="concept"
                     />
