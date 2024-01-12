@@ -3,7 +3,7 @@
 import Typography from '@mui/joy/Typography';
 import { Vega, VisualizationSpec } from 'react-vega';
 
-import { PatentGraph } from '@/types/patents';
+import { PatentGraph } from '@/types/documents/patents';
 
 import { BaseChartProps } from './types';
 

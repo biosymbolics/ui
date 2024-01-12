@@ -2,29 +2,22 @@
 
 import { GridColDef } from '@mui/x-data-grid/models/colDef';
 
-import { formatYear, renderChip } from '@/components/data/grid';
+import {
+    formatMappingObjects,
+    formatYear,
+    renderChip,
+    renderChips,
+} from '@/components/data/grid';
 
 export const getApprovalColumns = (): GridColDef[] => [
-    {
-        field: 'brand_name',
-        headerName: 'Brand Name',
-        renderCell: renderChip,
-        width: 250,
-    },
-    {
-        field: 'generic_name',
-        headerName: 'Generic Name',
-        renderCell: renderChip,
-        width: 250,
-    },
     {
         field: 'application_type',
         headerName: 'Type',
         renderCell: renderChip,
-        width: 100,
+        width: 200,
     },
     {
-        field: 'regulatory_agency',
+        field: 'agency',
         headerName: 'Agency',
         renderCell: renderChip,
         width: 100,
@@ -34,5 +27,19 @@ export const getApprovalColumns = (): GridColDef[] => [
         headerName: 'Date',
         width: 75,
         valueFormatter: formatYear,
+    },
+    {
+        field: 'interventions',
+        headerName: 'Interventions',
+        renderCell: renderChips,
+        valueGetter: formatMappingObjects,
+        width: 250,
+    },
+    {
+        field: 'indications',
+        headerName: 'Indications',
+        renderCell: renderChips,
+        valueGetter: formatMappingObjects,
+        width: 250,
     },
 ];

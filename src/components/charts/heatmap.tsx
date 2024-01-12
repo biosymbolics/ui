@@ -4,12 +4,13 @@ import { useRouter } from 'next/navigation';
 import Typography from '@mui/joy/Typography';
 import { Vega, VisualizationSpec } from 'react-vega';
 
-import { PatentCharacteristics } from '@/types/patents';
+import { PatentCharacteristics } from '@/types/documents/patents';
 
 import { BaseChartProps } from './types';
 
 type HeadmapSpecProps = {
     colorField?: string;
+    tooltipFields?: string[];
     xField: string;
     yField: string;
     xFieldTitle?: string;
@@ -23,6 +24,7 @@ type HeatmapProps = BaseChartProps & {
 } & HeadmapSpecProps;
 
 const getSpec: (props: HeadmapSpecProps) => VisualizationSpec = ({
+    tooltipFields = [],
     xField,
     xFieldTitle,
     yField,
@@ -49,7 +51,7 @@ const getSpec: (props: HeadmapSpecProps) => VisualizationSpec = ({
         {
             name: 'select',
             select: {
-                fields: ['patents'],
+                fields: tooltipFields,
                 on: 'click',
                 type: 'point',
             },
@@ -72,7 +74,7 @@ const getSpec: (props: HeadmapSpecProps) => VisualizationSpec = ({
             { field: xField, type: 'nominal' },
             { field: yField, type: 'nominal' },
             { field: colorField, type: 'quantitative' },
-            { field: 'patents' },
+            ...tooltipFields.map((f) => ({ field: f })),
         ],
     },
     config: {
@@ -98,6 +100,7 @@ export const Heatmap = ({
     clickBaseUrl,
     clickField,
     colorField,
+    tooltipFields = [],
     title,
     xField,
     yField,
@@ -118,6 +121,7 @@ export const Heatmap = ({
 
     const spec = getSpec({
         colorField,
+        tooltipFields,
         xField,
         yField,
         xFieldTitle,

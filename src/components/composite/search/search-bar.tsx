@@ -9,7 +9,7 @@ import { Autocomplete } from '@/components/input';
 import { Slider } from '@/components/input/slider';
 import { Section } from '@/components/layout/section';
 import { useNavigation } from '@/hooks/navigation';
-import { PatentSearchArgs } from '@/types/patents';
+import { PatentSearchArgs } from '@/types/documents/patents';
 import { Option } from '@/types/select';
 import { getQueryArgs } from '@/utils/patents';
 import { Select } from '@/components/input/select';

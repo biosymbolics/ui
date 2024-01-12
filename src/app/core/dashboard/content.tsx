@@ -9,7 +9,7 @@ import WarningIcon from '@mui/icons-material/Warning';
 
 import { getStyles } from '@/components/composite/styles';
 import { Tabs } from '@/components/layout/tabs';
-import { PatentSearchArgs } from '@/types/patents';
+import { PatentSearchArgs } from '@/types/documents/patents';
 
 import { AssetList } from './asset';
 import { PatentCharacteristics } from './characteristics';

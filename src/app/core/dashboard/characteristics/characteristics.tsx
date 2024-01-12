@@ -8,7 +8,7 @@ import { DEFAULT_PATHNAME } from '@/constants';
 import { Heatmap } from '@/components/charts/heatmap';
 import { Section } from '@/components/layout/section';
 import { Select } from '@/components/input/select';
-import { HeadField, PatentSearchArgs } from '@/types/patents';
+import { HeadField, PatentSearchArgs } from '@/types/documents/patents';
 
 import { fetchPatentCharacteristics } from './actions';
 
@@ -17,7 +17,7 @@ export const PatentCharacteristics = async ({
     terms,
     ...args
 }: PatentSearchArgs & { pathname?: string }) => {
-    const [headField, setHeadField] = useState<HeadField>('priority_year');
+    const [headField, setHeadField] = useState<HeadField>('priority_date');
     try {
         const data = await fetchPatentCharacteristics({
             terms,
@@ -44,14 +44,15 @@ export const PatentCharacteristics = async ({
                                 setHeadField(value);
                             }
                         }}
-                        options={['priority_year', 'assignee']}
+                        options={['priority_date', 'id']}
                         sx={{ maxWidth: 400, mb: 3 }}
                     />
                     <Heatmap
                         clickBaseUrl={`${pathname}/patents?terms=`}
-                        clickField="patents"
+                        clickField="documents"
                         data={data}
                         pathname={pathname}
+                        tooltipFields={['documents']}
                         xField="head"
                         yField="concept"
                     />

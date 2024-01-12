@@ -1,37 +1,46 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { z } from 'zod';
 
+import { MappingObjectSchema } from './common';
+
+const OutcomeSchema = z.object({
+    id: z.number(),
+    description: z.string(),
+    name: z.string(),
+    timeframe: z.string(),
+    type: z.string(),
+});
+
+export type Outcome = z.infer<typeof OutcomeSchema>;
+
 export const TrialSchema = z.object({
-    blinding: z.string(),
+    // blinding: z.string(),
     comparison_type: z.string(),
-    condition: z.optional(z.union([z.string(), z.null()])),
-    conditions: z.array(z.string()),
     design: z.string(),
     dropout_count: z.union([z.number(), z.null()]),
-    dropout_percent: z.optional(z.number()),
+    dropout_percent: z.union([z.number(), z.null()]),
     duration: z.union([z.number(), z.null()]),
     end_date: z.union([z.string(), z.null()]),
     enrollment: z.union([z.number(), z.null()]),
     hypothesis_type: z.union([z.string(), z.null()]),
-    intervention: z.optional(z.union([z.string(), z.null()])),
-    interventions: z.array(z.string()),
+    id: z.string(),
+    indications: z.array(MappingObjectSchema),
+    interventions: z.array(MappingObjectSchema),
     masking: z.string(),
     max_timeframe: z.union([z.number(), z.null()]),
-    mesh_conditions: z.array(z.string()),
-    nct_id: z.string(),
+    outcomes: z.union([z.null(), z.array(OutcomeSchema)]),
     phase: z.string(),
-    primary_outcomes: z.array(z.string()),
+    // primary_outcomes: z.array(z.string()),
     randomization: z.string(),
     reformulation_score: z.optional(z.number()),
-    score: z.number(),
-    sponsor: z.union([z.string(), z.null()]),
-    sponsor_type: z.string(),
+    // score: z.number(),
+    sponsor: z.union([MappingObjectSchema, z.null()]),
     start_date: z.union([z.string(), z.null()]),
     status: z.string(),
+    termination_description: z.union([z.string(), z.null()]),
     termination_reason: z.union([z.string(), z.null()]),
-    time_frames: z.array(z.string()),
     title: z.string(),
-    why_stopped: z.union([z.string(), z.null()]),
+    url: z.string(),
 });
 
 export const TrialResponseSchema = z.array(TrialSchema);

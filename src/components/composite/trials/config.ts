@@ -3,10 +3,12 @@
 import { GridColDef } from '@mui/x-data-grid/models/colDef';
 
 import {
-    formatName,
+    formatMappingObject,
+    formatMappingObjects,
     formatNumber,
     formatYear,
     renderChip,
+    renderChips,
     renderLabel,
     renderPercent,
 } from '@/components/data/grid';
@@ -16,24 +18,26 @@ import { renderStatusChip } from './client';
 import { getDropoutScoresClass, getRepurposeScoreClass } from '../styles';
 
 export const getTrialColumns = (): GridColDef[] => [
-    { field: 'nct_id', headerName: 'Nct Id', width: 135 },
+    { field: 'id', headerName: 'Nct Id', width: 135 },
     {
-        field: 'intervention',
-        headerName: 'Intervention',
-        renderCell: renderChip,
+        field: 'interventions',
+        headerName: 'Interventions',
+        renderCell: renderChips,
+        valueGetter: formatMappingObjects,
         width: 200,
     },
     {
-        field: 'condition',
-        headerName: 'Condition',
-        renderCell: renderChip,
+        field: 'indications',
+        headerName: 'Indications',
+        renderCell: renderChips,
+        valueGetter: formatMappingObjects,
         width: 175,
     },
     {
         field: 'sponsor',
         headerName: 'Sponsor',
         width: 175,
-        valueFormatter: formatName,
+        valueGetter: formatMappingObject,
     },
     {
         field: 'start_date',
