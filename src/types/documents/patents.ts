@@ -12,8 +12,8 @@ export const PatentSchema = z.object({
     attributes: z.array(z.string()),
     availability_likelihood: z.string(),
     availability_explanation: z.string(),
-    indications: z.array(MappingObjectSchema),
-    interventions: z.array(MappingObjectSchema),
+    indications: z.union([z.array(MappingObjectSchema), z.null()]),
+    interventions: z.union([z.array(MappingObjectSchema), z.null()]),
     exemplar_similarity: z.union([z.number(), z.null()]),
     inventors: z.union([z.array(MappingObjectSchema), z.null()]),
     ipc_codes: z.array(z.string()),
@@ -85,11 +85,7 @@ export type PatentGraph = z.infer<typeof PatentGraphSchema>;
 export type PatentEdge = z.infer<typeof PatentEdgeSchema>;
 export type PatentNode = z.infer<typeof PatentNodeSchema>;
 
-const HeadFieldEnum = z.enum([
-    'publication_number',
-    'assignee',
-    'priority_year',
-]);
+const HeadFieldEnum = z.enum(['id', 'assignee', 'priority_date']);
 
 export type HeadField = z.infer<typeof HeadFieldEnum>;
 
@@ -97,7 +93,7 @@ export const PatentCharacteristicsSchema = z.array(
     z.object({
         concept: z.string(),
         count: z.number(),
-        head: z.string(),
+        head: z.union([z.string(), z.number()]),
         documents: z.array(z.string()),
     })
 );

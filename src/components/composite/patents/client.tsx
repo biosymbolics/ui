@@ -87,13 +87,13 @@ export const PatentDetail = <T extends Patent>({
             baseUrl={pathname}
             color="neutral"
             label="Interventions"
-            items={patent.interventions.map((a) => a.name)}
+            items={(patent.interventions || []).map((a) => a.name)}
         />
         <Chips
             baseUrl={pathname}
             color="neutral"
             label="Indications"
-            items={patent.indications.map((a) => a.name)}
+            items={(patent.indications || []).map((a) => a.name)}
         />
         <Chips
             baseUrl={pathname}

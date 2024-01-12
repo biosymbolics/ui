@@ -17,7 +17,7 @@ export const PatentCharacteristics = async ({
     terms,
     ...args
 }: PatentSearchArgs & { pathname?: string }) => {
-    const [headField, setHeadField] = useState<HeadField>('priority_year');
+    const [headField, setHeadField] = useState<HeadField>('priority_date');
     try {
         const data = await fetchPatentCharacteristics({
             terms,
@@ -44,7 +44,7 @@ export const PatentCharacteristics = async ({
                                 setHeadField(value);
                             }
                         }}
-                        options={['priority_year', 'assignee']}
+                        options={['priority_date', 'id']}
                         sx={{ maxWidth: 400, mb: 3 }}
                     />
                     <Heatmap
