@@ -1,5 +1,5 @@
 import { fetchPatents } from '@/app/core/actions';
-import { PatentsDetail } from '@/components/composite/assets/client';
+import { PatentsDetail } from '@/components/composite/patents/client';
 
 const PatentsDetailPage = async ({
     searchParams,

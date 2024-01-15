@@ -12,22 +12,27 @@ import {
 } from '@/constants';
 import { Option } from '@/types/select';
 import {
+    AssetResponse,
+    AssetResponseSchema,
+    AssetSearchArgs,
+} from '@/types/entities';
+import {
     PatentResponse,
     PatentResponseSchema,
     PatentSearchArgs,
 } from '@/types/documents/patents';
-import { doFetch } from '@/utils/actions';
-import { getQueryArgs } from '@/utils/patents';
+import {
+    RegulatoryApprovalResponse,
+    RegulatoryApprovalResponseSchema,
+    RegulatoryApprovalSearchArgs,
+} from '@/types/documents/approvals';
 import {
     TrialResponse,
     TrialResponseSchema,
     TrialSearchArgs,
 } from '@/types/documents/trials';
-import {
-    AssetResponse,
-    AssetResponseSchema,
-    AssetSearchArgs,
-} from '@/types/entities';
+import { doFetch } from '@/utils/actions';
+import { getQueryArgs } from '@/utils/patents';
 
 const AutocompleteResponse = z.array(
     z.object({
@@ -89,6 +94,28 @@ export const fetchAssets = cache(
         const res = await doFetch(
             `${ENTITY_SEARCH_API_URL}?${queryArgs}`,
             AssetResponseSchema
+        );
+
+        return res;
+    }
+);
+
+/**
+ * Fetch approvals from the API. Cached.
+ * @param args
+ * @returns approvals promise
+ */
+export const fetchApprovals = cache(
+    async (
+        args: RegulatoryApprovalSearchArgs
+    ): Promise<RegulatoryApprovalResponse> => {
+        if (args.terms?.length === 0) {
+            return [];
+        }
+        const queryArgs = getQueryArgs(args, true);
+        const res = await doFetch(
+            `${PATENT_SEARCH_API_URL}?${queryArgs}`,
+            RegulatoryApprovalResponseSchema
         );
 
         return res;

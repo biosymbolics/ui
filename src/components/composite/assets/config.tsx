@@ -1,14 +1,18 @@
 'use server';
 
-import { GridColDef } from '@mui/x-data-grid/models/colDef';
 import 'server-only';
 
 import {
+    DataGrid,
+    GridColDef,
     renderChip,
     renderOwnerChip,
     renderPercent,
     renderSparkline,
 } from '@/components/data/grid';
+import { Section } from '@/components/layout/section';
+import { Title } from '@/components/layout/title';
+import { Asset } from '@/types/entities';
 
 import {
     renderAvailabilityModal,
@@ -21,12 +25,18 @@ import {
 
 import { getStoppedPercentClass } from '../styles';
 
-export const getAssetColumns = (): GridColDef[] => [
+export const getAssetColumns = (isChild: boolean): GridColDef[] => [
     {
         field: 'name',
         headerName: 'Asset, Class or Target',
         width: 325,
         renderCell: renderMainTerm,
+    },
+    {
+        field: 'child_count',
+        headerName: 'Children',
+        width: 80,
+        hidden: isChild,
     },
     {
         field: 'approval_count',
@@ -85,3 +95,21 @@ export const getAssetColumns = (): GridColDef[] => [
         cellClassName: getStoppedPercentClass,
     },
 ];
+
+/**
+ * Detail content panel for assets
+ */
+export const AssetDetail = <T extends Asset>({
+    row: asset,
+}: {
+    row: T;
+}): JSX.Element => (
+    <Section mx={3}>
+        <Title title={asset.name} variant="soft" />
+        <DataGrid<Asset>
+            columns={getAssetColumns(true)}
+            rows={asset.children}
+            variant="minimal"
+        />
+    </Section>
+);

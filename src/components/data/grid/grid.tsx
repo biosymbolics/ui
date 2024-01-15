@@ -9,7 +9,8 @@ import {
     DataGridProProps as MuiDataGridProps,
     DataGridProProps,
 } from '@mui/x-data-grid-pro';
-import { GridColDef } from '@mui/x-data-grid';
+
+import { GridColDef } from './types';
 
 type DataGridVariant = 'standard' | 'minimal' | 'maximal';
 type DataGridProps<T> = {
@@ -81,7 +82,7 @@ export const DataGrid = <T extends Record<string, unknown>>({
     const columns =
         _columns ||
         Object.keys((rows?.[0] as Record<string, unknown>) || {}).map(
-            (field) => ({ field })
+            (field) => ({ field, hidden: false })
         );
 
     const density = getDensity(variant || 'standard');
@@ -95,7 +96,7 @@ export const DataGrid = <T extends Record<string, unknown>>({
             )}
             <MuiDataGrid
                 {...props}
-                columns={columns}
+                columns={columns.filter((c) => !c.hidden)}
                 density={density}
                 getDetailPanelHeight={getDetailPanelHeight}
                 getDetailPanelContent={

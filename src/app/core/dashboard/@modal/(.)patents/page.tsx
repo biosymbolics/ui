@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import CircularProgress from '@mui/joy/CircularProgress';
 
 import { fetchPatents } from '@/app/core/actions';
-import { PatentsDetail } from '@/components/composite/assets/client';
+import { PatentsDetail } from '@/components/composite/patents/client';
 import { RouteableModal as Modal } from '@/components/navigation/modal';
 
 type Props = {
