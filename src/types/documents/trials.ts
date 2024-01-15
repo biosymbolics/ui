@@ -5,10 +5,9 @@ import { MappingObjectSchema } from './common';
 
 const OutcomeSchema = z.object({
     id: z.number(),
-    description: z.string(),
+    description: z.union([z.null(), z.string()]),
     name: z.string(),
     timeframe: z.string(),
-    type: z.string(),
 });
 
 export type Outcome = z.infer<typeof OutcomeSchema>;
