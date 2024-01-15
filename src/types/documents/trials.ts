@@ -29,7 +29,6 @@ export const TrialSchema = z.object({
     max_timeframe: z.union([z.number(), z.null()]),
     outcomes: z.union([z.null(), z.array(OutcomeSchema)]),
     phase: z.string(),
-    // primary_outcomes: z.array(z.string()),
     randomization: z.string(),
     reformulation_score: z.optional(z.number()),
     // score: z.number(),

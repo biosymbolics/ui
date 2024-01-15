@@ -6,14 +6,18 @@ import Typography from '@mui/joy/Typography';
 import WarningIcon from '@mui/icons-material/Warning';
 import 'server-only';
 
-import { getAssetColumns, AssetDetail } from '@/components/composite/assets';
+import {
+    getAssetColumns,
+    AssetDetail,
+    AssetDetailProps,
+} from '@/components/composite/assets';
 import { DataGrid } from '@/components/data/grid';
-import { Asset, AssetSearchArgs } from '@/types/entities';
+import { AssetSearchArgs } from '@/types/entities';
 
 import { fetchAssets } from '../actions';
 
 export const AssetList = async (args: AssetSearchArgs) => {
-    const columns = getAssetColumns(false);
+    const columns = getAssetColumns(false, args);
     try {
         const assets = await fetchAssets(args);
         return (
@@ -22,7 +26,9 @@ export const AssetList = async (args: AssetSearchArgs) => {
                     // checkboxSelection
                     disableRowSelectionOnClick
                     columns={columns}
-                    detailComponent={AssetDetail<Asset>}
+                    detailComponent={(
+                        props: Omit<AssetDetailProps, 'columns'>
+                    ) => <AssetDetail {...props} columns={columns} />}
                     rows={assets}
                     variant="maximal"
                 />
