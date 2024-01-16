@@ -20,7 +20,7 @@ const PatentsDetailInner = async ({ searchParams }: Props) => {
 };
 
 const PatentsDetailModal = ({ searchParams }: Props) => (
-    <Modal isOpen={!!searchParams.terms} title="Patents">
+    <Modal isOpen={!!searchParams.terms} title={searchParams.terms || '??'}>
         <Suspense fallback={<CircularProgress />}>
             <PatentsDetailInner searchParams={searchParams} />
         </Suspense>

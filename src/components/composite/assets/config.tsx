@@ -37,6 +37,7 @@ export const getAssetColumns = (isChild: boolean): GridColDef[] => [
         headerName: 'Children',
         width: 80,
         hidden: isChild,
+        renderCell: renderChip,
     },
     {
         field: 'approval_count',
