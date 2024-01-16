@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import CircularProgress from '@mui/joy/CircularProgress';
 
 import { fetchPatents } from '@/app/core/actions';
-import { PatentsDetail } from '@/components/composite/assets/client';
+import { PatentsDetail } from '@/components/composite/patents/client';
 import { RouteableModal as Modal } from '@/components/navigation/modal';
 
 type Props = {
@@ -20,7 +20,7 @@ const PatentsDetailInner = async ({ searchParams }: Props) => {
 };
 
 const PatentsDetailModal = ({ searchParams }: Props) => (
-    <Modal isOpen={!!searchParams.terms} title="Patents">
+    <Modal isOpen={!!searchParams.terms} title={searchParams.terms || '??'}>
         <Suspense fallback={<CircularProgress />}>
             <PatentsDetailInner searchParams={searchParams} />
         </Suspense>

@@ -13,7 +13,7 @@ import { Asset, AssetSearchArgs } from '@/types/entities';
 import { fetchAssets } from '../actions';
 
 export const AssetList = async (args: AssetSearchArgs) => {
-    const columns = getAssetColumns();
+    const columns = getAssetColumns(false);
     try {
         const assets = await fetchAssets(args);
         return (
@@ -23,10 +23,7 @@ export const AssetList = async (args: AssetSearchArgs) => {
                     disableRowSelectionOnClick
                     columns={columns}
                     detailComponent={AssetDetail<Asset>}
-                    rows={assets.map((asset) => ({
-                        ...asset,
-                        id: asset.name,
-                    }))}
+                    rows={assets}
                     variant="maximal"
                 />
             </Box>

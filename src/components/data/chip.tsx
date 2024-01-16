@@ -47,7 +47,7 @@ export const Chip = ({
         <JoyChip
             slotProps={
                 href
-                    ? { action: { component: link, href, target: '_blank' } }
+                    ? { action: { component: link, href } } // target: '_blank'
                     : {}
             }
             startDecorator={icon}

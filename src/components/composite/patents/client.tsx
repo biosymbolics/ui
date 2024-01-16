@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import NextLink from 'next/link';
+import Box from '@mui/joy/Box';
 import Divider from '@mui/joy/Divider';
 import Grid from '@mui/joy/Grid';
 import Link from '@mui/joy/Link';
@@ -13,12 +14,15 @@ import Typography from '@mui/joy/Typography';
 import unescape from 'lodash/fp/unescape';
 
 import { Chips } from '@/components/data/chip';
+import { DataGrid } from '@/components/data/grid';
 import { Metric } from '@/components/data/metric';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
 import { Patent } from '@/types/documents/patents';
 import { getSelectableId } from '@/utils/string';
 import { DEFAULT_PATHNAME } from '@/constants';
+
+import { getPatentColumns } from './config';
 
 const SimilarPatents = ({ patent }: { patent: Patent }): JSX.Element => (
     <>
@@ -128,3 +132,28 @@ export const PatentDetail = <T extends Patent>({
         </Section>
     </Section>
 );
+
+/**
+ * Detail content panel for patents grid
+ */
+export const PatentsDetail = ({
+    patents,
+}: {
+    patents: Patent[];
+}): JSX.Element => {
+    const patentColumns = getPatentColumns();
+    // sx={getStyles}
+    return (
+        <Box>
+            {patents.length > 0 && (
+                <DataGrid
+                    columns={patentColumns}
+                    detailComponent={PatentDetail<Patent>}
+                    rows={patents}
+                    title="Patents"
+                    variant="minimal"
+                />
+            )}
+        </Box>
+    );
+};

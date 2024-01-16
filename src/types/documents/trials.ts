@@ -5,10 +5,9 @@ import { MappingObjectSchema } from './common';
 
 const OutcomeSchema = z.object({
     id: z.number(),
-    description: z.string(),
+    description: z.union([z.null(), z.string()]),
     name: z.string(),
     timeframe: z.string(),
-    type: z.string(),
 });
 
 export type Outcome = z.infer<typeof OutcomeSchema>;
@@ -24,13 +23,12 @@ export const TrialSchema = z.object({
     enrollment: z.union([z.number(), z.null()]),
     hypothesis_type: z.union([z.string(), z.null()]),
     id: z.string(),
-    indications: z.array(MappingObjectSchema),
-    interventions: z.array(MappingObjectSchema),
+    indications: z.union([z.array(MappingObjectSchema), z.null()]),
+    interventions: z.union([z.array(MappingObjectSchema), z.null()]),
     masking: z.string(),
     max_timeframe: z.union([z.number(), z.null()]),
     outcomes: z.union([z.null(), z.array(OutcomeSchema)]),
     phase: z.string(),
-    // primary_outcomes: z.array(z.string()),
     randomization: z.string(),
     reformulation_score: z.optional(z.number()),
     // score: z.number(),

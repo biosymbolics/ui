@@ -1,2 +1,1 @@
-export { ApprovalDetail } from './client';
-export { getApprovalColumns } from './config';
+export { ApprovalDetail, getApprovalColumns } from './client';

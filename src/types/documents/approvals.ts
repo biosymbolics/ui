@@ -8,9 +8,22 @@ export const RegulatoryApprovalSchema = z.object({
     application_type: z.string(),
     approval_date: z.string(),
     id: z.string(),
-    indications: z.array(MappingObjectSchema),
-    interventions: z.array(MappingObjectSchema),
+    indications: z.union([z.array(MappingObjectSchema), z.null()]),
+    interventions: z.union([z.array(MappingObjectSchema), z.null()]),
     url: z.string(),
 });
 
 export type RegulatoryApproval = z.infer<typeof RegulatoryApprovalSchema>;
+
+export const RegulatoryApprovalResponseSchema = z.array(
+    RegulatoryApprovalSchema
+);
+
+export type RegulatoryApprovalResponse = z.infer<
+    typeof RegulatoryApprovalResponseSchema
+>;
+
+export type RegulatoryApprovalSearchArgs = {
+    queryType?: string | null;
+    terms: string[] | null;
+};
