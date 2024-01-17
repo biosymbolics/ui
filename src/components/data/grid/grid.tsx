@@ -71,7 +71,7 @@ export const DataGrid = <T extends Record<string, unknown>>({
     const getDetailPanelContent = React.useCallback<
         NonNullable<DataGridProProps['getDetailPanelContent']>
     >(
-        ({ row }: { row: T }) => <DetailComponent row={row} />,
+        (_props: { row: T }) => _props && <DetailComponent row={_props.row} />,
         [DetailComponent]
     );
     const getDetailPanelHeight = React.useCallback(

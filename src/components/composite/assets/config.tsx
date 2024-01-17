@@ -12,7 +12,7 @@ import {
 } from '@/components/data/grid';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
-import { Asset } from '@/types/entities';
+import { Asset } from '@/types/assets';
 
 import {
     renderAvailabilityModal,
@@ -40,7 +40,7 @@ export const getAssetColumns = (isChild: boolean): GridColDef[] => [
         renderCell: renderChip,
     },
     {
-        field: 'approval_count',
+        field: 'regulatory_approval_count',
         headerName: 'Approvals',
         width: 80,
         renderCell: renderApprovalModel,
@@ -89,11 +89,28 @@ export const getAssetColumns = (isChild: boolean): GridColDef[] => [
         renderCell: renderChip,
     },
     {
-        field: 'percent_stopped',
+        field: 'percent_trials_stopped',
         headerName: '% Stopped',
         width: 85,
         valueFormatter: renderPercent,
         cellClassName: getStoppedPercentClass,
+    },
+    {
+        field: 'average_trial_dropout',
+        headerName: '% Dropout',
+        width: 85,
+        valueFormatter: renderPercent,
+        cellClassName: getStoppedPercentClass,
+    },
+    {
+        field: 'average_trial_duration',
+        headerName: 'Avg Duration',
+        width: 85,
+    },
+    {
+        field: 'average_trial_enrollment',
+        headerName: 'Avg Enrollment',
+        width: 85,
     },
 ];
 

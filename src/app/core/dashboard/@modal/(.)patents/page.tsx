@@ -9,22 +9,27 @@ type Props = {
     searchParams: Record<string, string>;
 };
 
-const PatentsDetailInner = async ({ searchParams }: Props) => {
-    const terms = searchParams.terms?.split(';') ?? null;
-
-    if (!terms) {
-        return null;
-    }
+const PatentsDetailInner = async ({ terms }: { terms: string[] }) => {
     const patents = await fetchPatents({ terms });
     return <PatentsDetail patents={patents} />;
 };
 
-const PatentsDetailModal = ({ searchParams }: Props) => (
-    <Modal isOpen={!!searchParams.terms} title={searchParams.terms || '??'}>
-        <Suspense fallback={<CircularProgress />}>
-            <PatentsDetailInner searchParams={searchParams} />
-        </Suspense>
-    </Modal>
-);
+const PatentsDetailModal = ({ searchParams }: Props) => {
+    const { ids: idsStr, terms: termsStr } = searchParams;
+    // if both ids and terms supplied, ids used for fetch and terms used for title.
+    const ids = idsStr?.split(';') || null;
+    const terms = termsStr?.split(';') ?? [];
+
+    if (!terms) {
+        return null;
+    }
+    return (
+        <Modal isOpen={!!searchParams.terms} title={termsStr || '??'}>
+            <Suspense fallback={<CircularProgress />}>
+                <PatentsDetailInner terms={ids || terms} />
+            </Suspense>
+        </Modal>
+    );
+};
 
 export default PatentsDetailModal;

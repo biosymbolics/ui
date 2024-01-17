@@ -15,7 +15,7 @@ import {
     AssetResponse,
     AssetResponseSchema,
     AssetSearchArgs,
-} from '@/types/entities';
+} from '@/types/assets';
 import {
     PatentResponse,
     PatentResponseSchema,

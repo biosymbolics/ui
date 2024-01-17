@@ -1,11 +1,20 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { z } from 'zod';
 
+const AssetActivitySchema = z.object({
+    year: z.number(),
+    patents: z.array(z.string()),
+    regulatory_approvals: z.array(z.string()),
+    trials: z.array(z.string()),
+});
+
 export const ChildAssetSchema = z.object({
     activity: z.array(z.number()),
-    approval_count: z.number(),
+    average_trial_dropout: z.number(),
+    average_trial_duration: z.number(),
+    average_trial_enrollment: z.number(),
+    detailed_activity: z.array(AssetActivitySchema),
     id: z.string(),
-    enrollment: z.number(),
     investment_level: z.string(),
     is_approved: z.boolean(),
     last_status: z.string(),
@@ -16,9 +25,13 @@ export const ChildAssetSchema = z.object({
     owners: z.array(z.string()),
     owner_count: z.number(),
     patent_count: z.number(),
-    percent_stopped: z.number(),
+    patent_ids: z.array(z.string()),
+    percent_trials_stopped: z.number(),
     record_count: z.number(),
+    regulatory_approval_count: z.number(),
+    regulatory_approval_ids: z.array(z.string()),
     trial_count: z.number(),
+    trial_ids: z.array(z.string()),
 });
 
 export const AssetSchema = ChildAssetSchema.and(
@@ -29,6 +42,7 @@ export const AssetResponseSchema = z.array(AssetSchema);
 
 export type Asset = z.infer<typeof AssetSchema>;
 export type AssetResponse = z.infer<typeof AssetResponseSchema>;
+export type AssetActivity = z.infer<typeof AssetActivitySchema>;
 
 export type AssetSearchArgs = {
     queryType?: string | null;
