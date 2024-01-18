@@ -2,6 +2,7 @@
 
 import 'server-only';
 
+// import { Line } from '@/components/charts/line';
 import {
     DataGrid,
     GridColDef,
@@ -129,5 +130,13 @@ export const AssetDetail = <T extends Asset>({
             rows={asset.children}
             variant="minimal"
         />
+        {/* <Line
+            data={asset.activity}
+            x="date"
+            y="count"
+            xLabel="Date"
+            yLabel="Activity"
+            title="Activity"
+        /> */}
     </Section>
 );

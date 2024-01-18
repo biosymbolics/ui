@@ -20,17 +20,13 @@ import {
     PatentResponse,
     PatentResponseSchema,
     PatentSearchArgs,
-} from '@/types/documents/patents';
-import {
     RegulatoryApprovalResponse,
     RegulatoryApprovalResponseSchema,
     RegulatoryApprovalSearchArgs,
-} from '@/types/documents/approvals';
-import {
     TrialResponse,
     TrialResponseSchema,
     TrialSearchArgs,
-} from '@/types/documents/trials';
+} from '@/types/documents';
 import { doFetch } from '@/utils/actions';
 import { getQueryArgs } from '@/utils/patents';
 

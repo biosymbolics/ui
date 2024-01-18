@@ -13,7 +13,7 @@ import { getSelectableId } from '@/utils/string';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type BaseOption = string | Record<string, any>;
 
-type SelectProps<T extends BaseOption> = {
+export type SelectProps<T extends BaseOption> = {
     defaultValue?: JoySelectProps<T, false>['defaultValue'];
     disabled?: JoySelectProps<T, false>['disabled'];
     error?: boolean;

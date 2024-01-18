@@ -7,8 +7,8 @@ import Typography from '@mui/joy/Typography';
 import { DEFAULT_PATHNAME } from '@/constants';
 import { Heatmap } from '@/components/charts/heatmap';
 import { Section } from '@/components/layout/section';
-import { Select } from '@/components/input/select';
-import { HeadField, PatentSearchArgs } from '@/types/documents/patents';
+import { Select } from '@/components/input';
+import { HeadField, PatentSearchArgs } from '@/types/documents';
 
 import { fetchPatentCharacteristics } from './actions';
 

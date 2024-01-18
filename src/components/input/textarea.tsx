@@ -10,7 +10,7 @@ import Typography from '@mui/joy/Typography';
 import { FormLabel } from '@/components/input/label';
 import { getSelectableId } from '@/utils/string';
 
-type TextareaProps = {
+export type TextareaProps = {
     defaultValue?: JoyTextareaProps['defaultValue'];
     disabled?: JoyTextareaProps['disabled'];
     error?: boolean;

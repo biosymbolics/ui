@@ -4,15 +4,12 @@ import { SetStateAction, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Grid from '@mui/joy/Grid';
 
-import { Button } from '@/components/input/button';
-import { Autocomplete } from '@/components/input';
-import { Slider } from '@/components/input/slider';
+import { Autocomplete, Button, Select, Slider } from '@/components/input';
 import { Section } from '@/components/layout/section';
 import { useNavigation } from '@/hooks/navigation';
-import { PatentSearchArgs } from '@/types/documents/patents';
+import { PatentSearchArgs } from '@/types/documents';
 import { Option } from '@/types/select';
 import { getQueryArgs } from '@/utils/patents';
-import { Select } from '@/components/input/select';
 
 import { FetchAutocompletions } from './types';
 

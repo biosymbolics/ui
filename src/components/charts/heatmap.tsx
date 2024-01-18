@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import Typography from '@mui/joy/Typography';
 import { Vega, VisualizationSpec } from 'react-vega';
 
-import { PatentCharacteristics } from '@/types/documents/patents';
+import { PatentCharacteristics } from '@/types/documents';
 
 import { BaseChartProps } from './types';
 
@@ -20,7 +20,7 @@ type HeadmapSpecProps = {
 type HeatmapProps = BaseChartProps & {
     clickBaseUrl?: string; // TODO: both or neither with clickField
     clickField?: string;
-    data: PatentCharacteristics;
+    data: PatentCharacteristics; // TODO: make generic
 } & HeadmapSpecProps;
 
 const getSpec: (props: HeadmapSpecProps) => VisualizationSpec = ({

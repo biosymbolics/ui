@@ -1,41 +1,65 @@
 'use client';
 
-import theme from '@/theme';
+import Typography from '@mui/joy/Typography';
+import {
+    LineChart as MuiLineChart,
+    LineChartProps as MuiLineChartProps,
+} from '@mui/x-charts/LineChart';
+import { mangoFusionPalette } from '@mui/x-charts/colorPalettes';
 
-import { ChartOptions, BaseApexChartProps } from './types';
-import { BaseApexChart } from './base-apex';
+import { BaseChartProps } from './types';
 
-type LineChartProps = BaseApexChartProps;
+type LineChartProps = BaseChartProps & {
+    isArea?: boolean;
+    series: {
+        name: string;
+        data: { showMark?: boolean; x: string | number; y: number }[];
+    }[];
+    tooltip?: MuiLineChartProps['tooltip'];
+};
+
+/**
+ * Get x ticks (taken from the longest series)
+ * @param series
+ * @returns x ticks
+ */
+const getXTicks = (series: LineChartProps['series']) =>
+    (
+        series.sort((a, b) => b.data.length - a.data.length).slice(0)[0] || {
+            data: [],
+        }
+    ).data.map(({ x }) => `${x}`);
 
 /**
  * Line chart
  */
-export const Line = (props: LineChartProps): JSX.Element => {
-    const colors = [
-        theme.colorSchemes.light.palette.primary[400],
-        theme.colorSchemes.light.palette.success[400],
-        theme.colorSchemes.light.palette.warning[400],
-        theme.colorSchemes.light.palette.danger[400],
-        theme.colorSchemes.light.palette.primary[600],
-        theme.colorSchemes.light.palette.success[600],
-        theme.colorSchemes.light.palette.warning[600],
-        theme.colorSchemes.light.palette.danger[600],
-        theme.colorSchemes.light.palette.primary[800],
-        theme.colorSchemes.light.palette.success[800],
-        theme.colorSchemes.light.palette.warning[800],
-        theme.colorSchemes.light.palette.danger[800],
-    ];
-
-    const options: ChartOptions = {
-        stroke: { curve: 'straight' },
-    };
-
+export const Line = ({
+    isArea = true,
+    series,
+    title,
+    tooltip,
+    ...props
+}: LineChartProps): JSX.Element => {
+    const xTicks = getXTicks(series);
     return (
-        <BaseApexChart
-            {...props}
-            additionalOptions={options}
-            colors={colors}
-            type="area"
-        />
+        <>
+            {title && <Typography level="h4">{title}</Typography>}
+            <MuiLineChart
+                {...props}
+                colors={mangoFusionPalette}
+                series={series.map((s) => ({
+                    area: isArea,
+                    label: s.name,
+                    data: s.data.map(({ y }) => y),
+                    showMark: ({ index }) => s.data[index].showMark || false,
+                    stack: 'total',
+                    valueFormatter: (value) =>
+                        value == null ? 'NaN' : `${value}`,
+                }))}
+                slotProps={{ legend: { hidden: true } }}
+                tooltip={tooltip}
+                xAxis={[{ data: xTicks, id: 'Years', scaleType: 'point' }]}
+            />
+        </>
     );
 };

@@ -7,12 +7,12 @@ import FormHelperText from '@mui/joy/FormHelperText';
 import FormControl from '@mui/joy/FormControl';
 import Typography from '@mui/joy/Typography';
 
-import { FormLabel } from '@/components/input/label';
 import { getSelectableId } from '@/utils/string';
 
+import { FormLabel } from './label';
 import { BaseInputProps } from './types';
 
-type CheckboxProps = {
+export type CheckboxProps = {
     defaultChecked?: JoyCheckboxProps['defaultChecked'];
     disabled?: JoyCheckboxProps['disabled'];
     checked?: JoyCheckboxProps['checked'];
