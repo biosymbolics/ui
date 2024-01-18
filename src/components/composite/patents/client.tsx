@@ -18,11 +18,13 @@ import { DataGrid } from '@/components/data/grid';
 import { Metric } from '@/components/data/metric';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
-import { Patent } from '@/types/documents/patents';
+import { Patent } from '@/types/documents';
 import { getSelectableId } from '@/utils/string';
 import { DEFAULT_PATHNAME } from '@/constants';
 
 import { getPatentColumns } from './config';
+
+import { getStyles } from '../styles';
 
 const SimilarPatents = ({ patent }: { patent: Patent }): JSX.Element => (
     <>
@@ -142,9 +144,8 @@ export const PatentsDetail = ({
     patents: Patent[];
 }): JSX.Element => {
     const patentColumns = getPatentColumns();
-    // sx={getStyles}
     return (
-        <Box>
+        <Box sx={getStyles}>
             {patents.length > 0 && (
                 <DataGrid
                     columns={patentColumns}

@@ -6,7 +6,7 @@ import CardActions from '@mui/joy/CardActions';
 import Typography from '@mui/joy/Typography';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
-import { Button } from '@/components/input/button';
+import { Button } from '@/components/input';
 
 const Home = (): JSX.Element => (
     <main>

@@ -6,7 +6,7 @@ import { Theme } from '@mui/joy/styles';
 import { GridCellParams } from '@mui/x-data-grid/models/params/gridCellParams';
 import clsx from 'clsx';
 
-import { Patent } from '@/types/documents/patents';
+import { Patent } from '@/types/documents';
 
 export const getPatentYearsClass = (params: GridCellParams<Patent>) => {
     const { value } = params;

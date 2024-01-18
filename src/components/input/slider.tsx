@@ -7,12 +7,12 @@ import {
 } from '@mui/joy/Slider';
 import Typography from '@mui/joy/Typography';
 
-import { FormLabel } from '@/components/input/label';
 import { getSelectableId } from '@/utils/string';
 
+import { FormLabel } from './label';
 import { BaseInputProps } from './types';
 
-type SliderProps = {
+export type SliderProps = {
     defaultValue?: JoySliderProps['defaultValue'];
     disabled?: JoySliderProps['disabled'];
     onChange?: JoySliderProps['onChange'];

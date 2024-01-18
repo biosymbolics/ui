@@ -7,7 +7,7 @@ import NextLink from 'next/link';
 
 import { XOR } from '@/types/helpers';
 
-type ButtonProps = {
+export type ButtonProps = {
     children: JoyButtonProps['children'];
     color?: JoyButtonProps['color'];
     disabled?: JoyButtonProps['disabled'];

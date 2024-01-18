@@ -14,7 +14,9 @@ import {
     renderChips,
 } from '@/components/data/grid';
 import { DEFAULT_PATHNAME } from '@/constants';
-import { RegulatoryApproval } from '@/types/documents/approvals';
+import { RegulatoryApproval } from '@/types/documents';
+
+import { getStyles } from '../styles';
 
 /**
  * Detail content panel for patents grid
@@ -90,10 +92,9 @@ export const ApprovalsDetail = ({
 }: {
     approvals: RegulatoryApproval[];
 }): JSX.Element => {
-    // sx={getStyles}
     const approvalColumns = getApprovalColumns();
     return (
-        <Box>
+        <Box sx={getStyles}>
             {false && (
                 <DataGrid
                     columns={approvalColumns}

@@ -6,8 +6,7 @@ import Box from '@mui/joy/Box';
 import Stack from '@mui/joy/Stack';
 
 import { useNavigation } from '@/hooks/navigation';
-import { Button } from '@/components/input/button';
-import { Input } from '@/components/input/input';
+import { Button, Input } from '@/components/input';
 
 export const Choose = ({ initial }: { initial: string }) => {
     const { navigate } = useNavigation();

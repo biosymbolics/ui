@@ -29,7 +29,11 @@ import { formatPercent, getSelectableId } from '@/utils/string';
 import { Outcome, Trial } from '@/types/documents/trials';
 import { DEFAULT_PATHNAME } from '@/constants';
 
-import { getDropoutScoresClass, getRepurposeScoreClass } from '../styles';
+import {
+    getDropoutScoresClass,
+    getRepurposeScoreClass,
+    getStyles,
+} from '../styles';
 
 export const renderStatusChip = getRenderChip({
     color: (v) => {
@@ -257,9 +261,8 @@ export const TrialDetail = <T extends Trial>({
  */
 export const TrialsDetail = ({ trials }: { trials: Trial[] }): JSX.Element => {
     const trialColumns = getTrialColumns();
-    // sx={getStyles}
     return (
-        <Box>
+        <Box sx={getStyles}>
             <DataGrid
                 columns={trialColumns}
                 detailComponent={TrialDetail<Trial>}

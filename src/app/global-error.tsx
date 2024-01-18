@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/input/button';
+import { Button } from '@/components/input';
 
 /**
  * Global error

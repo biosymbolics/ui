@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import { Button } from '@/components/input/button';
+import { Button } from '@/components/input';
 
 export const Error = ({
     error,
