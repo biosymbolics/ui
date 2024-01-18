@@ -9,7 +9,7 @@ import {
 /**
  * Basic layout compound
  */
-export const Layout = (props: DefaultLayoutProps) => {
+const Layout = (props: DefaultLayoutProps) => {
     const { isPending } = useNavigation();
 
     return <DefaultLayout isPending={isPending} {...props} />;
