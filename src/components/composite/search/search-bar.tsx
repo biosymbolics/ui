@@ -7,7 +7,7 @@ import Grid from '@mui/joy/Grid';
 import { Autocomplete, Button, Select, Slider } from '@/components/input';
 import { Section } from '@/components/layout/section';
 import { useNavigation } from '@/hooks/navigation';
-import { PatentSearchArgs } from '@/types/documents';
+import { PatentSearchArgs } from '@/types';
 import { Option } from '@/types/select';
 import { getQueryArgs } from '@/utils/patents';
 

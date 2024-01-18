@@ -14,7 +14,7 @@ import {
     renderChips,
 } from '@/components/data/grid';
 import { DEFAULT_PATHNAME } from '@/constants';
-import { RegulatoryApproval } from '@/types/documents';
+import { RegulatoryApproval } from '@/types';
 
 import { getStyles } from '../styles';
 

@@ -14,7 +14,7 @@ import {
     PatentSearchArgs,
     PatentsSummaries,
     PatentsSummarySchema,
-} from '@/types/documents';
+} from '@/types';
 import { doFetch } from '@/utils/actions';
 import { getQueryArgs } from '@/utils/patents';
 import { formatLabel } from '@/utils/string';

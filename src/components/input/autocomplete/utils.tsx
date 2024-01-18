@@ -3,9 +3,9 @@ import { createFilterOptions } from '@mui/joy/Autocomplete';
 import AutocompleteOption, {
     AutocompleteOptionProps,
 } from '@mui/joy/AutocompleteOption';
-import { ListItemDecorator } from '@mui/joy';
+import ListItemDecorator from '@mui/joy/ListItemDecorator';
 import Add from '@mui/icons-material/Add';
-import { isString } from 'lodash/fp';
+import isString from 'lodash/fp/isString';
 
 import { BaseOption } from './types';
 

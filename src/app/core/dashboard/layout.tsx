@@ -1,11 +1,17 @@
 'use client';
 
-import { DefaultLayoutProps } from '@/components/layout/default-layout';
+import { ReactNode } from 'react';
 
 /**
- * Basic layout compound
+ * Basic layout component
  */
-export const Layout = ({ children, modal }: DefaultLayoutProps) => (
+const Layout = ({
+    children,
+    modal,
+}: {
+    children: ReactNode;
+    modal: ReactNode;
+}) => (
     <>
         {children}
         {modal}
