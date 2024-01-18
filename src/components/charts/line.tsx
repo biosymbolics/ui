@@ -53,8 +53,8 @@ export const Line = ({
                     data: s.data.map(({ y }) => y),
                     showMark: ({ index }) => s.data[index].showMark || false,
                     stack: 'total',
-                    valueFormatter: (value) =>
-                        value == null ? 'NaN' : `${value}`,
+                    // valueFormatter: (value) =>
+                    //     value == null ? 'NaN' : `${value}`,
                 }))}
                 slotProps={{ legend: { hidden: true } }}
                 tooltip={tooltip}

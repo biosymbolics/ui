@@ -5,6 +5,7 @@ import Box from '@mui/joy/Box';
 
 import { DEFAULT_PATHNAME, PATENT_SUMMARY_API_URL } from '@/constants';
 import { Bars } from '@/components/charts/html-bar';
+import { getStyles } from '@/components/composite/styles';
 import {
     PatentSearchArgs,
     PatentsSummaries,
@@ -12,8 +13,6 @@ import {
 } from '@/types/documents';
 import { doFetch } from '@/utils/actions';
 import { getQueryArgs } from '@/utils/patents';
-
-import { getStyles } from '../../../components/composite/styles';
 
 const fetchSummaries = cache(
     async (args: PatentSearchArgs): Promise<PatentsSummaries> => {

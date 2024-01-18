@@ -8,6 +8,7 @@ import isEmpty from 'lodash/fp/isEmpty';
 
 import { DEFAULT_PATHNAME, PATENT_OVER_TIME_API_URL } from '@/constants';
 import { Line } from '@/components/charts/line';
+import { getStyles } from '@/components/composite/styles';
 import { Section } from '@/components/layout/section';
 import {
     PatentSearchArgs,
@@ -18,7 +19,11 @@ import { doFetch } from '@/utils/actions';
 import { getQueryArgs } from '@/utils/patents';
 import { formatLabel } from '@/utils/string';
 
-import { getStyles } from '../../../components/composite/styles';
+type OverTimeProps = PatentSearchArgs & {
+    pathname?: string;
+    maxSeries?: number;
+    minDataLength?: number;
+};
 
 const fetchReports = cache(
     async (args: PatentSearchArgs): Promise<PatentsSummaries> => {
@@ -36,8 +41,10 @@ const fetchReports = cache(
 
 export const OverTime = async ({
     pathname = DEFAULT_PATHNAME,
+    maxSeries = 8,
+    minDataLength = 3,
     ...args
-}: PatentSearchArgs & { pathname?: string }) => {
+}: OverTimeProps) => {
     try {
         const reports = await fetchReports(args);
 
@@ -49,12 +56,12 @@ export const OverTime = async ({
                         data: v
                             .map((v1) => ({
                                 x: v1.y as number,
-                                y: v1.count,
+                                y: v1.count > 0 ? v1.count : 1, // TEMP HACK: looks weird when y is 0
                             }))
                             .sort((a, b) => a.x - b.x),
                     }))
-                    .filter((v) => v.data.length > 2)
-                    .slice(0, 8)
+                    .filter((v) => v.data.length >= minDataLength)
+                    .slice(0, maxSeries)
                     .sort(),
                 title: formatLabel(r.x),
             }))
