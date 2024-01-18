@@ -13,7 +13,7 @@ import {
     PatentSearchArgs,
     PatentsSummaries,
     PatentsSummarySchema,
-} from '@/types/documents/patents';
+} from '@/types/documents';
 import { doFetch } from '@/utils/actions';
 import { getQueryArgs } from '@/utils/patents';
 import { formatLabel } from '@/utils/string';
@@ -54,7 +54,7 @@ export const OverTime = async ({
                             .sort((a, b) => a.x - b.x),
                     }))
                     .filter((v) => v.data.length > 2)
-                    .slice(0, 5)
+                    .slice(0, 8)
                     .sort(),
                 title: formatLabel(r.x),
             }))
