@@ -19,17 +19,17 @@ export const Answer = async (args: { ticker: string }) => {
         return (
             <Stack spacing={3}>
                 <Line
-                    annotations={events?.map((d) => ({
-                        x: d.date,
-                        label: d.details,
-                    }))}
+                    // annotations={events?.map((d) => ({
+                    //     x: d.date,
+                    //     label: d.details,
+                    // }))}
                     height={350}
                     pathname="/core/finance"
                     series={[
                         {
                             data: stock.map((d) => ({
                                 x: d.date,
-                                y: d.close.toPrecision(4),
+                                y: d.close,
                             })),
                             name: 'Closing price',
                         },
