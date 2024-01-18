@@ -3,9 +3,9 @@
 import { DefaultLayoutProps } from '@/components/layout/default-layout';
 
 /**
- * Basic layout compound
+ * Basic layout component
  */
-export const Layout = ({ children, modal }: DefaultLayoutProps) => (
+const Layout = ({ children, modal }: DefaultLayoutProps) => (
     <>
         {children}
         {modal}
