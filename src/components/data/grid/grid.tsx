@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Box from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
@@ -17,9 +18,10 @@ type DataGridProps<T> = {
     checkboxSelection?: MuiDataGridProps['checkboxSelection'];
     columns?: GridColDef[];
     detailComponent?: ({ row }: { row: T }) => JSX.Element;
-    detailHeight?: number;
+    detailHeight?: number | 'auto';
     disableRowSelectionOnClick?: MuiDataGridProps['disableRowSelectionOnClick'];
     getRowId?: MuiDataGridProps['getRowId'];
+    height?: number;
     initialState?: MuiDataGridProps['initialState'];
     isLoading?: MuiDataGridProps['loading'];
     rows: MuiDataGridProps['rows'];
@@ -61,6 +63,7 @@ export const DataGrid = <T extends Record<string, unknown>>({
     columns: _columns,
     detailComponent,
     detailHeight = 600,
+    height,
     isLoading,
     rows,
     variant,
@@ -88,7 +91,7 @@ export const DataGrid = <T extends Record<string, unknown>>({
     const density = getDensity(variant || 'standard');
 
     return (
-        <>
+        <Box display="inline" height={height}>
             {title && (
                 <Typography level={variant === 'minimal' ? 'h4' : 'h3'}>
                     {title}
@@ -109,6 +112,6 @@ export const DataGrid = <T extends Record<string, unknown>>({
                 }}
                 sx={{ border: 0 }}
             />
-        </>
+        </Box>
     );
 };

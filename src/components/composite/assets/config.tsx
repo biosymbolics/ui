@@ -2,7 +2,7 @@
 
 import 'server-only';
 
-// import { Line } from '@/components/charts/line';
+import { Line } from '@/components/charts/line';
 import {
     DataGrid,
     GridColDef,
@@ -13,7 +13,8 @@ import {
 } from '@/components/data/grid';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
-import { Asset } from '@/types/assets';
+import { DEFAULT_PATHNAME } from '@/constants';
+import { Asset, AssetActivity } from '@/types/assets';
 
 import {
     renderAvailabilityModal,
@@ -115,6 +116,23 @@ export const getAssetColumns = (isChild: boolean): GridColDef[] => [
     },
 ];
 
+const DocTypes: (keyof Omit<AssetActivity, 'year'>)[] = [
+    'patents',
+    'regulatory_approvals',
+    'trials',
+];
+
+const formatDetailData = (data: AssetActivity[]) =>
+    DocTypes.map((doc) => ({
+        name: doc,
+        data: data
+            .map((d) => ({
+                x: d.year,
+                y: d[doc].length,
+            }))
+            .sort((a, b) => a.x - b.x),
+    }));
+
 /**
  * Detail content panel for assets
  */
@@ -127,16 +145,15 @@ export const AssetDetail = <T extends Asset>({
         <Title title={asset.name} variant="soft" />
         <DataGrid<Asset>
             columns={getAssetColumns(true)}
+            height={400}
             rows={asset.children}
             variant="minimal"
         />
-        {/* <Line
-            data={asset.activity}
-            x="date"
-            y="count"
-            xLabel="Date"
-            yLabel="Activity"
-            title="Activity"
-        /> */}
+        <Line
+            height={300}
+            pathname={DEFAULT_PATHNAME}
+            series={formatDetailData(asset.detailed_activity)}
+            width={800}
+        />
     </Section>
 );

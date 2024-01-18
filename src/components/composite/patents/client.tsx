@@ -18,7 +18,7 @@ import { DataGrid } from '@/components/data/grid';
 import { Metric } from '@/components/data/metric';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
-import { Patent } from '@/types/documents';
+import { Patent } from '@/types';
 import { getSelectableId } from '@/utils/string';
 import { DEFAULT_PATHNAME } from '@/constants';
 
