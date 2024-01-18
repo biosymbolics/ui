@@ -23,6 +23,7 @@ export const AssetList = async (args: AssetSearchArgs) => {
                     disableRowSelectionOnClick
                     columns={columns}
                     detailComponent={AssetDetail<Asset>}
+                    detailHeight="auto"
                     rows={assets}
                     variant="maximal"
                 />
