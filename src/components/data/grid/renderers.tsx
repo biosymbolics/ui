@@ -337,8 +337,6 @@ export const getRenderTypography =
         }
         const url = getUrl ? getUrl(row) : undefined;
 
-        const typog = <Typography level={level}>{value}</Typography>;
-
         if (url) {
             return (
                 <NextLink passHref href={url} target="_blank">
@@ -346,7 +344,7 @@ export const getRenderTypography =
                 </NextLink>
             );
         }
-        return typog;
+        return <Typography level={level}>{value}</Typography>;
     };
 
 export const renderMainTypography = getRenderTypography('title-md');

@@ -6,34 +6,22 @@ import { Asset } from '@/types/assets';
 
 export const renderPatentModal = getRenderChip({
     color: 'neutral',
-    getUrl: (row: Asset) =>
-        `/core/dashboard/patents?terms=${row.name}&ids=${row.patent_ids.join(
-            ';'
-        )}`,
+    getUrl: (row: Asset) => `/core/dashboard/patents?terms=${row.name}`,
 });
 
 export const renderApprovalModel = getRenderChip({
     color: 'neutral',
-    getUrl: (row: Asset) =>
-        `/core/dashboard/approvals?terms=${
-            row.name
-        }&ids=${row.regulatory_approval_ids.join(';')}`,
+    getUrl: (row: Asset) => `/core/dashboard/approvals?terms=${row.name}`,
 });
 
 export const renderTrialModal = getRenderChip({
     color: 'neutral',
-    getUrl: (row: Asset) =>
-        `/core/dashboard/trials?terms=${row.name}&ids=${row.trial_ids.join(
-            ';'
-        )}`,
+    getUrl: (row: Asset) => `/core/dashboard/trials?terms=${row.name}}`,
 });
 
 export const renderAvailabilityModal = getRenderChip({
     color: (v) => ((v as number) > 0 ? 'success' : 'neutral'),
-    getUrl: (row: Asset) =>
-        `/core/dashboard/patents?terms=${row.name}&ids=${row.patent_ids.join(
-            ';'
-        )}`,
+    getUrl: (row: Asset) => `/core/dashboard/patents?terms=${row.name}`,
 });
 
 export const renderMainTerm = getRenderTypography(

@@ -15,9 +15,7 @@ const PatentsDetailInner = async ({ terms }: { terms: string[] }) => {
 };
 
 const PatentsDetailModal = ({ searchParams }: Props) => {
-    const { ids: idsStr, terms: termsStr } = searchParams;
-    // if both ids and terms supplied, ids used for fetch and terms used for title.
-    const ids = idsStr?.split(';') || null;
+    const { terms: termsStr } = searchParams;
     const terms = termsStr?.split(';') ?? [];
 
     if (!terms) {
@@ -26,7 +24,7 @@ const PatentsDetailModal = ({ searchParams }: Props) => {
     return (
         <Modal isOpen={!!searchParams.terms} title={termsStr || '??'}>
             <Suspense fallback={<CircularProgress />}>
-                <PatentsDetailInner terms={ids || terms} />
+                <PatentsDetailInner terms={terms} />
             </Suspense>
         </Modal>
     );

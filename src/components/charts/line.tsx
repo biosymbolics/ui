@@ -16,6 +16,7 @@ type LineChartProps = BaseChartProps & {
         data: { showMark?: boolean; x: string | number; y: number }[];
     }[];
     tooltip?: MuiLineChartProps['tooltip'];
+    variant?: 'default' | 'minimal';
 };
 
 /**
@@ -38,12 +39,17 @@ export const Line = ({
     series,
     title,
     tooltip,
+    variant = 'default',
     ...props
 }: LineChartProps): JSX.Element => {
     const xTicks = getXTicks(series);
     return (
         <>
-            {title && <Typography level="h4">{title}</Typography>}
+            {title && (
+                <Typography level={variant === 'minimal' ? 'title-md' : 'h4'}>
+                    {title}
+                </Typography>
+            )}
             <MuiLineChart
                 {...props}
                 colors={mangoFusionPalette}

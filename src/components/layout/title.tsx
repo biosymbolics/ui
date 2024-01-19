@@ -2,16 +2,19 @@ import NextLink from 'next/link';
 import Link from '@mui/joy/Link';
 import Sheet from '@mui/joy/Sheet';
 import Typography from '@mui/joy/Typography';
+import { ReactNode } from 'react';
 
 type TitleVariant = 'outlined' | 'soft' | 'plain' | 'solid';
 
 const MAX_WIDTH = 800;
 export const Title = ({
-    title,
+    children,
     description,
     link,
+    title,
     variant = 'plain',
 }: {
+    children?: ReactNode;
     title: string;
     description?: string;
     link?: { label: string; url: string };
@@ -31,5 +34,6 @@ export const Title = ({
                 {link.label}
             </Link>
         )}
+        {children}
     </Sheet>
 );

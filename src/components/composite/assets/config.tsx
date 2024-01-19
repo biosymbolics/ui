@@ -142,18 +142,21 @@ export const AssetDetail = <T extends Asset>({
     row: T;
 }): JSX.Element => (
     <Section mx={3}>
-        <Title title={asset.name} variant="soft" />
+        <Title title={asset.name} variant="soft">
+            <Line
+                height={150}
+                pathname={DEFAULT_PATHNAME}
+                series={formatDetailData(asset.detailed_activity)}
+                title="Activity Over Time"
+                variant="minimal"
+                width={800}
+            />
+        </Title>
         <DataGrid<Asset>
             columns={getAssetColumns(true)}
             height={400}
             rows={asset.children}
             variant="minimal"
-        />
-        <Line
-            height={300}
-            pathname={DEFAULT_PATHNAME}
-            series={formatDetailData(asset.detailed_activity)}
-            width={800}
         />
     </Section>
 );

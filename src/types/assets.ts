@@ -25,13 +25,10 @@ export const ChildAssetSchema = z.object({
     owners: z.array(z.string()),
     owner_count: z.number(),
     patent_count: z.number(),
-    patent_ids: z.array(z.string()),
     percent_trials_stopped: z.number(),
     record_count: z.number(),
     regulatory_approval_count: z.number(),
-    regulatory_approval_ids: z.array(z.string()),
     trial_count: z.number(),
-    trial_ids: z.array(z.string()),
 });
 
 export const AssetSchema = ChildAssetSchema.and(
