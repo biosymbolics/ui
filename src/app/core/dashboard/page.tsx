@@ -16,7 +16,6 @@ import { fetchAutocompletions } from '../actions';
 const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     const terms = searchParams.terms?.split(';') ?? null;
     const queryType = searchParams.queryType ?? 'AND';
-    const minPatentYears = parseInt(searchParams.minPatentYears ?? '10', 10);
     const exemplarPatents = searchParams.exemplarPatents?.split(';') ?? null;
 
     return (
@@ -25,7 +24,6 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
                 <SearchBar
                     exemplarPatents={exemplarPatents}
                     fetchAutocompletions={fetchAutocompletions}
-                    minPatentYears={minPatentYears}
                     queryType={queryType}
                     terms={terms || []}
                 />
@@ -45,7 +43,6 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
                     <Suspense fallback={<Skeleton height="80vh" />}>
                         <Content
                             exemplarPatents={exemplarPatents}
-                            minPatentYears={minPatentYears}
                             queryType={queryType}
                             terms={terms || []}
                         />

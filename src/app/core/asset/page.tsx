@@ -15,7 +15,6 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
                 <SearchBar
                     exemplarPatents={null}
                     fetchAutocompletions={fetchAutocompletions}
-                    minPatentYears={null}
                     queryType={null}
                     terms={null}
                 />

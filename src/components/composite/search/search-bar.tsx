@@ -4,7 +4,7 @@ import { SetStateAction, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Grid from '@mui/joy/Grid';
 
-import { Autocomplete, Button, Select, Slider } from '@/components/input';
+import { Autocomplete, Button, Select } from '@/components/input';
 import { Section } from '@/components/layout/section';
 import { useNavigation } from '@/hooks/navigation';
 import { PatentSearchArgs } from '@/types';
@@ -16,7 +16,6 @@ import { FetchAutocompletions } from './types';
 export const SearchBar = ({
     exemplarPatents,
     fetchAutocompletions,
-    minPatentYears,
     queryType,
     terms,
 }: {
@@ -31,17 +30,6 @@ export const SearchBar = ({
     const [newQueryType, setQueryType] = useState<string | null>(
         queryType || null
     );
-    const [newMinPatentYears, setMinPatentYears] = useState<number>(
-        minPatentYears || 0
-    );
-
-    const handlePatentLifeChange = (value: number) => {
-        if (typeof value !== 'number') {
-            console.warn(`Invalid value: ${JSON.stringify(value)}`);
-            return;
-        }
-        setMinPatentYears(value);
-    };
 
     return (
         <>
@@ -65,18 +53,6 @@ export const SearchBar = ({
             />
             <Section variant="l1">
                 <Grid container spacing={4}>
-                    <Grid xs={12} sm={4}>
-                        <Slider
-                            defaultValue={newMinPatentYears}
-                            label="Minimum Patent Years Left"
-                            min={0}
-                            max={20}
-                            onChange={(e, v) =>
-                                handlePatentLifeChange(v as number)
-                            }
-                            size="lg"
-                        />
-                    </Grid>
                     <Grid xs={12} sm={2}>
                         <Select
                             defaultValue={queryType}
@@ -127,7 +103,6 @@ export const SearchBar = ({
                             return;
                         }
                         const queryArgs = getQueryArgs({
-                            minPatentYears: newMinPatentYears,
                             queryType: newQueryType,
                             exemplarPatents: newExemplarPatents,
                             terms: newTerms,

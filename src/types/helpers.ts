@@ -16,3 +16,11 @@ export type ValueOf<T> = T[keyof T];
 export type XOR<T1, T2> =
     | (T1 & { [k in Exclude<keyof T2, keyof T1>]?: never })
     | (T2 & { [k in Exclude<keyof T1, keyof T2>]?: never });
+
+/**
+ * Checks if a key is a key of an object
+ */
+export const isKeyOfObject = <T extends Record<string, unknown>>(
+    obj: T,
+    key: string | number | symbol
+): key is keyof T => key in obj;

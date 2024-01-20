@@ -47,7 +47,7 @@ export const Autocomplete = <
 >({
     error,
     id,
-    isCreatable,
+    isCreatable = false,
     isMultiple,
     options: _options,
     optionFetcher = () => Promise.resolve([]),
@@ -128,6 +128,7 @@ export const Autocomplete = <
                     setInput(newInputValue.trim());
                 }}
                 options={options}
+                renderOption={getRenderOption(optionLabelField)}
                 size={size === 'xlg' ? 'lg' : size}
                 sx={{ mb: size === 'xlg' ? 2 : 0 }}
             />
