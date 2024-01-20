@@ -16,7 +16,7 @@ export const renderApprovalModel = getRenderChip({
 
 export const renderTrialModal = getRenderChip({
     color: 'neutral',
-    getUrl: (row: Asset) => `/core/dashboard/trials?terms=${row.name}}`,
+    getUrl: (row: Asset) => `/core/dashboard/trials?terms=${row.name}`,
 });
 
 export const renderAvailabilityModal = getRenderChip({

@@ -17,7 +17,6 @@ export type CreatableProps<T> = {
 type NotCreatableProps = {
     isCreatable?: false;
     optionIdField?: never;
-    optionLabelField?: never;
 };
 
 export type AutocompleteBaseProps<
@@ -43,6 +42,7 @@ export type AutocompleteBaseProps<
      * label/title for the autocomplete box
      */
     label?: string;
+    optionLabelField?: keyof T;
     onChange?: JoyAutocompleteProps<T, Multiple>['onChange'];
     placeholder?: JoyAutocompleteProps<T, Multiple>['placeholder'];
     size?: JoyAutocompleteProps<T, Multiple>['size'];

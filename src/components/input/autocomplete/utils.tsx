@@ -7,7 +7,25 @@ import ListItemDecorator from '@mui/joy/ListItemDecorator';
 import Add from '@mui/icons-material/Add';
 import isString from 'lodash/fp/isString';
 
+import { isKeyOfObject } from '@/types/helpers';
+
 import { BaseOption } from './types';
+
+const getLabel = <T extends BaseOption>(
+    option: T,
+    optionLabelField: keyof T | undefined
+): string => {
+    if (isString(option)) {
+        return option;
+    }
+    if (!optionLabelField) {
+        if (isKeyOfObject(option, 'label')) {
+            return option.label as string;
+        }
+        throw new Error('Option must be a string or have an optionLabelField');
+    }
+    return option[optionLabelField] as string;
+};
 
 /**
  * Get render option
@@ -15,18 +33,18 @@ import { BaseOption } from './types';
  * @returns renderOption method
  */
 export const getRenderOption =
-    <T extends BaseOption>(optionLabelField: keyof T) =>
+    <T extends BaseOption>(optionLabelField: keyof T | undefined) =>
     (
         props: AutocompleteOptionProps,
         option: T
     ): ReactElement<AutocompleteOptionProps> => {
         const { component } = props;
-        const { [optionLabelField]: label } = option;
-        const isAdd = (label as string).startsWith('Add "');
+        const label = getLabel(option, optionLabelField);
+        const isAdd = label.startsWith('Add "');
         return (
             <AutocompleteOption
                 {...props}
-                key="autocomplete-add"
+                key={`autocomplete-add-${label}`}
                 component={component || 'div'}
             >
                 {isAdd && (
