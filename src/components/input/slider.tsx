@@ -17,13 +17,18 @@ type Tuple = [number, number];
 export type SliderProps<T extends number | Tuple> = {
     defaultValue?: T | undefined;
     disabled?: JoySliderProps['disabled'];
-    onChange?: JoySliderProps['onChange'];
+    onChange?: ((value: T) => void) | undefined;
     orientation?: JoySliderProps['orientation'];
     marks?: JoySliderProps['marks'];
     min?: JoySliderProps['min'];
+    /**
+     * Minimum distance between the two thumbs
+     */
+    minDistance?: number;
     max?: JoySliderProps['max'];
     size?: JoySliderProps['size'];
     step?: JoySliderProps['step'];
+    sx?: JoySliderProps['sx'];
     valueLabelDisplay?: JoySliderProps['valueLabelDisplay'];
 } & BaseInputProps;
 
@@ -36,17 +41,20 @@ export const Slider = <T extends number | Tuple>({
     helperText,
     id,
     label,
+    minDistance = 1,
+    onChange = () => {},
     size = 'sm',
     tooltip,
+    sx = { mr: 1 },
     ...props
 }: SliderProps<T>): ReactElement<SliderProps<T>> => {
     const [value, setValue] = useState<number | Tuple | undefined>(
         defaultValue
     );
     const formId = id || getSelectableId(label);
-    const minDistance = 1;
 
     const handleChange = (
+        e: Event,
         newValue: number | number[] | undefined,
         activeThumb: number
     ) => {
@@ -67,7 +75,7 @@ export const Slider = <T extends number | Tuple>({
         }
     };
     return (
-        <FormControl id={formId} error={error} sx={{ mr: 1 }}>
+        <FormControl id={formId} error={error} sx={sx}>
             {label && (
                 <FormLabel title={tooltip}>
                     <Typography>{label}</Typography>
@@ -79,7 +87,8 @@ export const Slider = <T extends number | Tuple>({
                 valueLabelDisplay="auto"
                 variant="soft"
                 {...props}
-                onChange={(e, v, at) => handleChange(v, at)}
+                onChange={handleChange}
+                onChangeCommitted={(_, v) => onChange(v as T)}
                 size={size}
                 value={value}
             />

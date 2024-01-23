@@ -57,8 +57,10 @@ export type Patent = z.infer<typeof PatentSchema>;
 export type PatentResponse = z.infer<typeof PatentResponseSchema>;
 
 export type PatentSearchArgs = {
+    endYear?: number;
     exemplarPatents?: string[] | null;
     queryType?: string | null;
+    startYear?: number;
     terms: string[] | null;
 };
 

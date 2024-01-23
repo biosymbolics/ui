@@ -13,10 +13,15 @@ import { getQueryArgs } from '@/utils/patents';
 
 import { FetchAutocompletions } from './types';
 
+/**
+ * Search bar for assets
+ */
 export const SearchBar = ({
+    endYear = 2024,
     exemplarPatents,
     fetchAutocompletions,
     queryType,
+    startYear = 2014,
     terms,
 }: {
     fetchAutocompletions: FetchAutocompletions;
@@ -30,6 +35,10 @@ export const SearchBar = ({
     const [newQueryType, setQueryType] = useState<string | null>(
         queryType || null
     );
+    const [newYearRange, setYearRange] = useState<[number, number]>([
+        startYear,
+        endYear,
+    ]);
 
     return (
         <>
@@ -55,11 +64,13 @@ export const SearchBar = ({
             <Section variant="l1">
                 <Grid container spacing={2}>
                     <Grid xs={12} sm={6}>
-                        <Slider
-                            defaultValue={[2013, 2024]}
+                        <Slider<[number, number]>
+                            defaultValue={newYearRange}
                             label="Year Range"
-                            min={1980}
-                            max={2024}
+                            onChange={(value) => setYearRange(value)}
+                            min={2000}
+                            minDistance={2}
+                            max={2025}
                             size="lg"
                             valueLabelDisplay="on"
                         />
@@ -111,12 +122,14 @@ export const SearchBar = ({
                 <Button
                     onClick={() => {
                         if (!newTerms) {
-                            console.debug("No terms selected, can't search");
+                            console.warn("No terms selected, can't search");
                             return;
                         }
                         const queryArgs = getQueryArgs({
+                            endYear: newYearRange?.[1],
                             queryType: newQueryType,
                             exemplarPatents: newExemplarPatents,
+                            startYear: newYearRange?.[0],
                             terms: newTerms,
                         });
                         navigate(`${pathname}?${queryArgs}`);
