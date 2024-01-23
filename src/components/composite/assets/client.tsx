@@ -207,7 +207,7 @@ export const AssetDetail = <T extends Asset>(props: {
             <DataGrid<Asset>
                 columns={columns}
                 getRowId={getRowId}
-                height={Math.min(400, asset.children.length * 50)}
+                height={Math.min(400, 100 + asset.children.length * 35)}
                 rows={asset.children}
                 variant="minimal"
             />
