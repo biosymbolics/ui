@@ -16,12 +16,16 @@ import { PatentCharacteristics } from './characteristics';
 import { OverTime } from './over-time';
 import { Summary } from './summary';
 
-export type ContentArgs = PatentSearchArgs & { headField: HeadField };
+export type ContentArgs = PatentSearchArgs & {
+    headField: HeadField;
+    tab: string;
+};
 
-export const Content = (args: ContentArgs) => {
+export const Content = ({ tab, ...args }: ContentArgs) => {
     try {
         const tabs = [
             {
+                id: 'assets',
                 label: 'Assets',
                 panel: (
                     <Suspense fallback={<Skeleton />}>
@@ -30,6 +34,7 @@ export const Content = (args: ContentArgs) => {
                 ),
             },
             {
+                id: 'summary',
                 label: 'Summary',
                 panel: (
                     <Suspense fallback={<Skeleton />}>
@@ -38,6 +43,7 @@ export const Content = (args: ContentArgs) => {
                 ),
             },
             {
+                id: 'over-time',
                 label: 'Over Time',
                 panel: (
                     <Suspense fallback={<Skeleton />}>
@@ -46,6 +52,7 @@ export const Content = (args: ContentArgs) => {
                 ),
             },
             {
+                id: 'characteristics',
                 label: 'Characteristics',
                 panel: (
                     <Suspense fallback={<Skeleton />}>
@@ -56,7 +63,7 @@ export const Content = (args: ContentArgs) => {
         ];
         return (
             <Box sx={getStyles}>
-                <Tabs tabs={tabs} />
+                <Tabs openId={tab} tabs={tabs} />
             </Box>
         );
     } catch (e) {

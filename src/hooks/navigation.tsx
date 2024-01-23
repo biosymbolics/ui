@@ -18,6 +18,7 @@ type NavigationContextType = {
     isPending: boolean;
     navigate: (url: string, options?: NavigateOptions) => void;
     params: ReadonlyURLSearchParams;
+    setParam: (key: string, value: string) => void;
 };
 
 const NavigationContext = createContext({
@@ -26,6 +27,9 @@ const NavigationContext = createContext({
         console.warn(`No impl when attempting to route to ${url}`);
     }) as NavigationContextType['navigate'],
     params: new URLSearchParams() as ReadonlyURLSearchParams,
+    setParam: (key: string, value: string) => {
+        console.warn(`No impl when attempting to set param ${key} to ${value}`);
+    },
 });
 
 export const NavigationProvider = ({ children }: { children: ReactNode }) => {
@@ -38,11 +42,14 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
             isPending,
             navigate: (url: string, options?: NavigateOptions) => {
                 startTransition(() => {
-                    if (options?.scroll === false) {
-                        Router.replace(url, options);
-                    } else {
-                        Router.push(url, options);
-                    }
+                    Router.push(url, options);
+                });
+            },
+            setParam: (key: string, value: string) => {
+                const newParams = new URLSearchParams(params);
+                newParams.set(key, value);
+                Router.replace(`?${newParams.toString()}`, {
+                    scroll: false, // TODO!
                 });
             },
             params,

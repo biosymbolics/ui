@@ -6,9 +6,10 @@ import TabList from '@mui/joy/TabList';
 import TabPanel from '@mui/joy/TabPanel';
 import JoyTabs from '@mui/joy/Tabs';
 
-import { getSelectableId } from '@/utils/string';
+import { useNavigation } from '@/hooks/navigation';
 
 type TabDef = {
+    id: string;
     label: string;
     panel: ReactNode;
 };
@@ -17,23 +18,32 @@ type TabDef = {
  * Tab component
  * @param props.tabs
  */
-export const Tabs = ({ tabs }: { tabs: TabDef[] }): JSX.Element => (
-    <JoyTabs>
-        <TabList>
-            {tabs.map(({ label }) => (
-                <Tab key={`${getSelectableId(label)}-tab`} variant="soft">
-                    {label}
-                </Tab>
+export const Tabs = ({
+    openId,
+    tabs,
+}: {
+    openId?: string;
+    tabs: TabDef[];
+}): JSX.Element => {
+    const { setParam } = useNavigation();
+    return (
+        <JoyTabs onChange={(e, id) => setParam('tab', `${id}`)} value={openId}>
+            <TabList>
+                {tabs.map(({ id, label }) => (
+                    <Tab key={`${id}-tab`} value={id} variant="soft">
+                        {label}
+                    </Tab>
+                ))}
+            </TabList>
+            {tabs.map(({ id, panel }) => (
+                <TabPanel
+                    key={`${id}-panel`}
+                    value={id}
+                    sx={{ minHeight: '100vh' }}
+                >
+                    {panel}
+                </TabPanel>
             ))}
-        </TabList>
-        {tabs.map(({ label, panel }, idx) => (
-            <TabPanel
-                key={`${getSelectableId(label)}-panel`}
-                value={idx}
-                sx={{ minHeight: '100vh' }}
-            >
-                {panel}
-            </TabPanel>
-        ))}
-    </JoyTabs>
-);
+        </JoyTabs>
+    );
+};

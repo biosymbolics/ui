@@ -13,7 +13,7 @@ export const PatentCharacteristicsControl = ({
     terms,
     children,
 }: PatentSearchArgs & { children: ReactNode; headField: HeadField }) => {
-    const { params, navigate } = useNavigation();
+    const { setParam } = useNavigation();
 
     return (
         <>
@@ -31,11 +31,7 @@ export const PatentCharacteristicsControl = ({
                     label="Dimension"
                     onChange={(e: unknown, value: HeadField | null) => {
                         if (value) {
-                            const newParams = new URLSearchParams(params);
-                            newParams.set('headField', value);
-                            navigate(`?${newParams.toString()}`, {
-                                scroll: false,
-                            });
+                            setParam('headField', value);
                         }
                     }}
                     options={['priority_date', 'id']}
