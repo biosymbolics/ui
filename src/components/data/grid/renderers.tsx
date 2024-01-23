@@ -259,7 +259,9 @@ export const renderOwnerChip = getRenderChip({
 });
 
 export const getRenderSparkline =
-    <T extends Record<string, unknown>>() =>
+    <T extends Record<string, unknown>>(
+        height: number | undefined = undefined // defaults nicely to varying row heights
+    ) =>
     (params: GridRenderCellParams<T, number[]>): ReactNode => {
         const { value } = params;
         if (!value) {
@@ -271,7 +273,7 @@ export const getRenderSparkline =
                 curve="natural"
                 colors={cheerfulFiestaPalette}
                 data={value}
-                height={50}
+                height={height}
                 margin={{ top: 10, right: 0, bottom: 10, left: 0 }}
                 plotType="line"
             />
@@ -281,7 +283,9 @@ export const getRenderSparkline =
 export const renderSparkline = getRenderSparkline();
 
 export const getRenderBar =
-    <T extends Record<string, unknown>>() =>
+    <T extends Record<string, unknown>>(
+        height: number | undefined = undefined
+    ) =>
     (params: GridRenderCellParams<T, Record<string, number>>): ReactNode => {
         const { value } = params;
         if (!value || isEmpty(value)) {
@@ -296,7 +300,7 @@ export const getRenderBar =
                 xAxis={{
                     data: Object.keys(value),
                 }}
-                height={50}
+                height={height}
                 margin={{ top: 10, right: 0, bottom: 10, left: 0 }}
                 plotType="bar"
             />
