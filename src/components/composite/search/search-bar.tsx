@@ -57,10 +57,11 @@ export const SearchBar = ({
                     <Grid xs={12} sm={6}>
                         <Slider
                             defaultValue={[2013, 2024]}
+                            label="Year Range"
                             min={1980}
                             max={2024}
                             size="lg"
-                            // valueLabelDisplay="auto"
+                            valueLabelDisplay="on"
                         />
                     </Grid>
 

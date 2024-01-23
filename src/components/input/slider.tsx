@@ -67,7 +67,7 @@ export const Slider = <T extends number | Tuple>({
         }
     };
     return (
-        <FormControl id={formId} error={error}>
+        <FormControl id={formId} error={error} sx={{ mr: 1 }}>
             {label && (
                 <FormLabel title={tooltip}>
                     <Typography>{label}</Typography>
