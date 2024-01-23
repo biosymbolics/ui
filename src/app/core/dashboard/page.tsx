@@ -17,14 +17,22 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     const terms = searchParams.terms?.split(';') ?? null;
     const queryType = searchParams.queryType ?? 'AND';
     const exemplarPatents = searchParams.exemplarPatents?.split(';') ?? null;
+    const startYear = searchParams.startYear
+        ? parseInt(searchParams.startYear, 10)
+        : undefined;
+    const endYear = searchParams.endYear
+        ? parseInt(searchParams.endYear, 10)
+        : undefined;
 
     return (
         <>
             <Section variant="separated">
                 <SearchBar
+                    endYear={endYear}
                     exemplarPatents={exemplarPatents}
                     fetchAutocompletions={fetchAutocompletions}
                     queryType={queryType}
+                    startYear={startYear}
                     terms={terms || []}
                 />
             </Section>
@@ -42,8 +50,10 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
                 <Section>
                     <Suspense fallback={<Skeleton height="80vh" />}>
                         <Content
+                            endYear={endYear}
                             exemplarPatents={exemplarPatents}
                             queryType={queryType}
+                            startYear={startYear}
                             terms={terms || []}
                         />
                     </Suspense>
