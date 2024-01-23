@@ -4,7 +4,7 @@ import { SetStateAction, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Grid from '@mui/joy/Grid';
 
-import { Autocomplete, Button, Select } from '@/components/input';
+import { Autocomplete, Button, Select, Slider } from '@/components/input';
 import { Section } from '@/components/layout/section';
 import { useNavigation } from '@/hooks/navigation';
 import { PatentSearchArgs } from '@/types';
@@ -47,12 +47,23 @@ export const SearchBar = ({
                     setTerms(values.map((v) => v.id));
                 }}
                 optionFetcher={fetchAutocompletions}
+                optionLabelField="label"
                 size="xlg"
                 tooltip="Compounds, diseases, MoAs, pharmaceutical companies, etc."
                 variant="soft"
             />
             <Section variant="l1">
-                <Grid container spacing={4}>
+                <Grid container spacing={2}>
+                    <Grid xs={12} sm={6}>
+                        <Slider
+                            defaultValue={[2013, 2024]}
+                            min={1980}
+                            max={2024}
+                            size="lg"
+                            // valueLabelDisplay="auto"
+                        />
+                    </Grid>
+
                     <Grid xs={12} sm={2}>
                         <Select
                             defaultValue={queryType}
