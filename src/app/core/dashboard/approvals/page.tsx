@@ -6,8 +6,14 @@ const ApprovalsDetailPage = async ({
 }: {
     searchParams: Record<string, string>;
 }) => {
+    const ids = searchParams.ids?.split(';') ?? null;
     const terms = searchParams.terms?.split(';') ?? null;
-    const approvals = await fetchApprovals({ terms, queryType: 'OR' });
+
+    if (!terms && !ids) {
+        return null;
+    }
+
+    const approvals = await fetchApprovals({ terms: ids || terms });
     return <ApprovalsDetail approvals={approvals} />;
 };
 

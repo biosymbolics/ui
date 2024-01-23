@@ -95,15 +95,13 @@ export const ApprovalsDetail = ({
     const approvalColumns = getApprovalColumns();
     return (
         <Box sx={getStyles}>
-            {false && (
-                <DataGrid
-                    columns={approvalColumns}
-                    detailComponent={ApprovalDetail<RegulatoryApproval>}
-                    rows={approvals}
-                    title="Approvals"
-                    variant="minimal"
-                />
-            )}
+            <DataGrid
+                columns={approvalColumns}
+                detailComponent={ApprovalDetail<RegulatoryApproval>}
+                rows={approvals}
+                title="Approvals"
+                variant="minimal"
+            />
         </Box>
     );
 };

@@ -2,6 +2,7 @@ export const API_URL = 'http://localhost:3001/dev'; // 'https://api.biosymbolics
 export const API_KEY = 'Ahu8ef3VoNzBqn'; // /biosymbolics/pipeline/api/free-key
 
 export const ENTITY_SEARCH_API_URL = `${API_URL}/assets/search`;
+export const REGULATORY_APPROVAL_SEARCH_API_URL = `${API_URL}/approvals/search`;
 export const PATENT_SEARCH_API_URL = `${API_URL}/patents/search`;
 export const PATENT_CHARACTERISTIC_API_URL = `${API_URL}/reports/characteristics`;
 export const PATENT_SUMMARY_API_URL = `${API_URL}/reports/summarize`;
