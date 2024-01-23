@@ -62,7 +62,7 @@ const getDensity = (variant: DataGridVariant): MuiDataGridProps['density'] => {
 export const DataGrid = <T extends Record<string, unknown>>({
     columns: _columns,
     detailComponent,
-    detailHeight = 600,
+    detailHeight = 'auto',
     height,
     isLoading,
     rows,

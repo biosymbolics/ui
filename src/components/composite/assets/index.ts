@@ -1,1 +1,1 @@
-export { getAssetColumns, AssetDetail } from './config';
+export { AssetDetail, getAssetColumns, AssetGrid } from './client';
