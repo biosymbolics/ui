@@ -25,6 +25,7 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
         ? parseInt(searchParams.endYear, 10)
         : undefined;
     const headField = (searchParams.headField as HeadField) || 'priority_date';
+    const { tab } = searchParams;
 
     return (
         <>
@@ -57,6 +58,7 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
                             headField={headField}
                             queryType={queryType}
                             startYear={startYear}
+                            tab={tab}
                             terms={terms || []}
                         />
                     </Suspense>

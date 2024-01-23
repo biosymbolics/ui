@@ -6,14 +6,15 @@ import Typography from '@mui/joy/Typography';
 import { Section } from '@/components/layout/section';
 import { Select } from '@/components/input';
 import { useNavigation } from '@/hooks/navigation';
-import { HeadField, PatentSearchArgs } from '@/types';
+import { HeadField, PatentCharacteristic, PatentSearchArgs } from '@/types';
+import { DEFAULT_PATHNAME } from '@/constants';
 
 export const PatentCharacteristicsControl = ({
     headField,
     terms,
     children,
 }: PatentSearchArgs & { children: ReactNode; headField: HeadField }) => {
-    const { params, navigate } = useNavigation();
+    const { setParam } = useNavigation();
 
     return (
         <>
@@ -31,11 +32,7 @@ export const PatentCharacteristicsControl = ({
                     label="Dimension"
                     onChange={(e: unknown, value: HeadField | null) => {
                         if (value) {
-                            const newParams = new URLSearchParams(params);
-                            newParams.set('headField', value);
-                            navigate(`?${newParams.toString()}`, {
-                                scroll: false,
-                            });
+                            setParam('headField', value);
                         }
                     }}
                     options={['priority_date', 'id']}
@@ -45,4 +42,13 @@ export const PatentCharacteristicsControl = ({
             </Section>
         </>
     );
+};
+
+export const getClickUrl = (
+    object: PatentCharacteristic,
+    pathname: string = DEFAULT_PATHNAME
+) => {
+    const ids = object.documents?.join(';');
+    const term = `${object.concept} x ${object.head}`;
+    return `${pathname}/patents?ids=${ids}&terms=${term}`;
 };

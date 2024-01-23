@@ -4,8 +4,6 @@ import { useRouter } from 'next/navigation';
 import Typography from '@mui/joy/Typography';
 import { Vega, VisualizationSpec } from 'react-vega';
 
-import { PatentCharacteristics } from '@/types';
-
 import { BaseChartProps } from './types';
 
 type HeadmapSpecProps = {
@@ -17,10 +15,9 @@ type HeadmapSpecProps = {
     yFieldTitle?: string;
 };
 
-type HeatmapProps = BaseChartProps & {
-    clickBaseUrl?: string; // TODO: both or neither with clickField
-    clickField?: string;
-    data: PatentCharacteristics; // TODO: make generic
+type HeatmapProps<DT extends Record<string, unknown>> = BaseChartProps & {
+    data: DT[];
+    getClickUrl?: (obj: DT) => string;
 } & HeadmapSpecProps;
 
 const getSpec: (props: HeadmapSpecProps) => VisualizationSpec = ({
@@ -95,27 +92,26 @@ const getSpec: (props: HeadmapSpecProps) => VisualizationSpec = ({
 /**
  * Graph chart
  */
-export const Heatmap = ({
+export const Heatmap = <DT extends Record<string, unknown>>({
     data,
-    clickBaseUrl,
-    clickField,
     colorField,
+    getClickUrl,
     tooltipFields = [],
     title,
     xField,
     yField,
     xFieldTitle = '',
     yFieldTitle = '',
-}: HeatmapProps): JSX.Element => {
+}: HeatmapProps<DT>): JSX.Element => {
     const router = useRouter();
     const signalListeners = {
         select: (_: unknown, value: unknown) => {
-            if (!clickField || typeof value !== 'object') {
+            if (!getClickUrl || typeof value !== 'object') {
                 return;
             }
-            const obj = value as Record<string, unknown>;
-            const urlParams = (obj[clickField] as string[]).join(';');
-            router.push(`${clickBaseUrl}${urlParams}`);
+            const obj = value as DT;
+            const url = getClickUrl(obj);
+            router.push(url);
         },
     };
 

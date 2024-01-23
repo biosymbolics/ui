@@ -86,13 +86,13 @@ const HeadFieldEnum = z.enum(['id', 'assignee', 'priority_date']);
 
 export type HeadField = z.infer<typeof HeadFieldEnum>;
 
-export const PatentCharacteristicsSchema = z.array(
-    z.object({
-        concept: z.string(),
-        count: z.number(),
-        head: z.union([z.string(), z.number()]),
-        documents: z.array(z.string()),
-    })
-);
+const PatentCharacteristicSchema = z.object({
+    concept: z.string(),
+    count: z.number(),
+    head: z.union([z.string(), z.number()]),
+    documents: z.array(z.string()),
+});
+export const PatentCharacteristicsSchema = z.array(PatentCharacteristicSchema);
 
+export type PatentCharacteristic = z.infer<typeof PatentCharacteristicSchema>;
 export type PatentCharacteristics = z.infer<typeof PatentCharacteristicsSchema>;
