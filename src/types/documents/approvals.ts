@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { z } from 'zod';
 
-import { MappingObjectSchema } from './common';
+import { BaseSearchArgs, MappingObjectSchema } from './common';
 
 export const RegulatoryApprovalSchema = z.object({
     agency: z.optional(z.string()),
@@ -23,7 +23,4 @@ export type RegulatoryApprovalResponse = z.infer<
     typeof RegulatoryApprovalResponseSchema
 >;
 
-export type RegulatoryApprovalSearchArgs = {
-    queryType?: string | null;
-    terms: string[] | null;
-};
+export type RegulatoryApprovalSearchArgs = BaseSearchArgs;

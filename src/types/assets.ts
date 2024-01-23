@@ -20,15 +20,19 @@ export const ChildAssetSchema = z.object({
     last_status: z.string(),
     last_updated: z.union([z.number(), z.null()]),
     maybe_available_count: z.number(),
+    maybe_available_ids: z.array(z.string()),
     max_phase: z.string(),
     name: z.string(),
     owners: z.array(z.string()),
     owner_count: z.number(),
     patent_count: z.number(),
+    patent_ids: z.array(z.string()),
     percent_trials_stopped: z.number(),
     record_count: z.number(),
     regulatory_approval_count: z.number(),
+    regulatory_approval_ids: z.array(z.string()),
     trial_count: z.number(),
+    trial_ids: z.array(z.string()),
 });
 
 export const AssetSchema = ChildAssetSchema.and(
@@ -41,7 +45,12 @@ export type Asset = z.infer<typeof AssetSchema>;
 export type AssetResponse = z.infer<typeof AssetResponseSchema>;
 export type AssetActivity = z.infer<typeof AssetActivitySchema>;
 
+/**
+ * TODO: combine with BaseSearchArgs in src/types/documents/common.ts
+ */
 export type AssetSearchArgs = {
+    endYear?: number;
     queryType?: string | null;
+    startYear?: number;
     terms: string[] | null;
 };

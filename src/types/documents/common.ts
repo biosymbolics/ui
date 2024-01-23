@@ -8,3 +8,10 @@ export const MappingObjectSchema = z.object({
 });
 
 export type MappingObject = z.infer<typeof MappingObjectSchema>;
+
+export type BaseSearchArgs = {
+    endYear?: number;
+    queryType?: string | null;
+    startYear?: number;
+    terms: string[] | null;
+};

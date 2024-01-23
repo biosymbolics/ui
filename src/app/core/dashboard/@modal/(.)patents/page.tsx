@@ -15,16 +15,16 @@ const PatentsDetailInner = async ({ terms }: { terms: string[] }) => {
 };
 
 const PatentsDetailModal = ({ searchParams }: Props) => {
-    const { terms: termsStr } = searchParams;
-    const terms = termsStr?.split(';') ?? [];
+    const ids = searchParams.ids?.split(';') ?? null;
+    const terms = searchParams.terms?.split(';') ?? null;
 
-    if (!terms) {
+    if (!terms && !ids) {
         return null;
     }
     return (
-        <Modal isOpen={!!searchParams.terms} title={termsStr || '??'}>
+        <Modal isOpen={!!searchParams.terms} title={searchParams.terms || '??'}>
             <Suspense fallback={<CircularProgress />}>
-                <PatentsDetailInner terms={terms} />
+                <PatentsDetailInner terms={ids || terms} />
             </Suspense>
         </Modal>
     );

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { z } from 'zod';
 
-import { MappingObjectSchema } from './common';
+import { BaseSearchArgs, MappingObjectSchema } from './common';
 
 export const PatentSchema = z.object({
     id: z.string(),
@@ -56,12 +56,8 @@ export type PatentsTopics = z.infer<typeof PatentsTopicSchema>;
 export type Patent = z.infer<typeof PatentSchema>;
 export type PatentResponse = z.infer<typeof PatentResponseSchema>;
 
-export type PatentSearchArgs = {
-    endYear?: number;
+export type PatentSearchArgs = BaseSearchArgs & {
     exemplarPatents?: string[] | null;
-    queryType?: string | null;
-    startYear?: number;
-    terms: string[] | null;
 };
 
 const PatentEdgeSchema = z.object({
