@@ -7,6 +7,7 @@ import {
     ENTITY_SEARCH_API_URL,
     PATENT_AUTOCOMPLETE_API_URL,
     PATENT_SEARCH_API_URL,
+    REGULATORY_APPROVAL_SEARCH_API_URL,
     TERM_DESCRIPTION_API_URL,
     TRIAL_SEARCH_API_URL,
 } from '@/constants';
@@ -110,7 +111,7 @@ export const fetchApprovals = cache(
         }
         const queryArgs = getQueryArgs(args, true);
         const res = await doFetch(
-            `${PATENT_SEARCH_API_URL}?${queryArgs}`,
+            `${REGULATORY_APPROVAL_SEARCH_API_URL}?${queryArgs}`,
             RegulatoryApprovalResponseSchema
         );
 

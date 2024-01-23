@@ -9,22 +9,25 @@ type Props = {
     searchParams: Record<string, string>;
 };
 
-const ApprovalsDetailInner = async ({ searchParams }: Props) => {
-    const terms = searchParams.terms?.split(';') ?? null;
-
-    if (!terms) {
-        return null;
-    }
+const ApprovalsDetailInner = async ({ terms }: { terms: string[] }) => {
     const approvals = await fetchApprovals({ terms });
     return <ApprovalsDetail approvals={approvals} />;
 };
 
-const ApprovalsDetailModal = ({ searchParams }: Props) => (
-    <Modal isOpen={!!searchParams.terms} title="Approvals">
-        <Suspense fallback={<CircularProgress />}>
-            <ApprovalsDetailInner searchParams={searchParams} />
-        </Suspense>
-    </Modal>
-);
+const ApprovalsDetailModal = ({ searchParams }: Props) => {
+    const ids = searchParams.ids?.split(';') ?? null;
+    const terms = searchParams.terms?.split(';') ?? null;
+
+    if (!terms && !ids) {
+        return null;
+    }
+    return (
+        <Modal isOpen={!!searchParams.terms} title="Approvals">
+            <Suspense fallback={<CircularProgress />}>
+                <ApprovalsDetailInner terms={ids || terms} />
+            </Suspense>
+        </Modal>
+    );
+};
 
 export default ApprovalsDetailModal;

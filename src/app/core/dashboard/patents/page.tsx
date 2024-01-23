@@ -6,8 +6,13 @@ const PatentsDetailPage = async ({
 }: {
     searchParams: Record<string, string>;
 }) => {
+    const ids = searchParams.ids?.split(';') ?? null;
     const terms = searchParams.terms?.split(';') ?? null;
-    const patents = await fetchPatents({ terms });
+
+    if (!terms && !ids) {
+        return null;
+    }
+    const patents = await fetchPatents({ terms: ids || terms });
     return <PatentsDetail patents={patents} />;
 };
 

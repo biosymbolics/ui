@@ -6,8 +6,13 @@ const TrialsDetailPage = async ({
 }: {
     searchParams: Record<string, string>;
 }) => {
+    const ids = searchParams.ids?.split(';') ?? null;
     const terms = searchParams.terms?.split(';') ?? null;
-    const trials = await fetchTrials({ terms, queryType: 'OR' });
+
+    if (!terms && !ids) {
+        return null;
+    }
+    const trials = await fetchTrials({ terms: ids || terms });
     return <TrialsDetail trials={trials} />;
 };
 

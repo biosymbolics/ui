@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { z } from 'zod';
 
-import { MappingObjectSchema } from './common';
+import { BaseSearchArgs, MappingObjectSchema } from './common';
 
 const OutcomeSchema = z.object({
     id: z.number(),
@@ -46,7 +46,4 @@ export const TrialResponseSchema = z.array(TrialSchema);
 export type Trial = z.infer<typeof TrialSchema>;
 export type TrialResponse = z.infer<typeof TrialResponseSchema>;
 
-export type TrialSearchArgs = {
-    queryType: string | null;
-    terms: string[] | null;
-};
+export type TrialSearchArgs = BaseSearchArgs;

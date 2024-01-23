@@ -9,22 +9,25 @@ type Props = {
     searchParams: Record<string, string>;
 };
 
-const TrialsDetailInner = async ({ searchParams }: Props) => {
-    const terms = searchParams.terms?.split(';') ?? null;
-
-    if (!terms) {
-        return null;
-    }
-    const trials = await fetchTrials({ terms, queryType: 'OR' });
+const TrialsDetailInner = async ({ terms }: { terms: string[] }) => {
+    const trials = await fetchTrials({ terms });
     return <TrialsDetail trials={trials} />;
 };
 
-const TrialsDetailModal = ({ searchParams }: Props) => (
-    <Modal isOpen={!!searchParams.terms} title="Trials">
-        <Suspense fallback={<CircularProgress />}>
-            <TrialsDetailInner searchParams={searchParams} />
-        </Suspense>
-    </Modal>
-);
+const TrialsDetailModal = ({ searchParams }: Props) => {
+    const ids = searchParams.ids?.split(';') ?? null;
+    const terms = searchParams.terms?.split(';') ?? null;
+
+    if (!terms && !ids) {
+        return null;
+    }
+    return (
+        <Modal isOpen={!!searchParams.terms} title="Trials">
+            <Suspense fallback={<CircularProgress />}>
+                <TrialsDetailInner terms={ids || terms} />
+            </Suspense>
+        </Modal>
+    );
+};
 
 export default TrialsDetailModal;
