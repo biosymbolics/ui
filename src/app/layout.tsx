@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { Mulish } from 'next/font/google';
 
 import MuiXLicense from '@/components/data/mui-license';
@@ -26,7 +27,9 @@ const RootLayout = ({
     >
         <body className={mulish.className}>
             <ThemeRegistry options={{ key: 'joy' }}>
-                <NavigationProvider>{children}</NavigationProvider>
+                <Suspense>
+                    <NavigationProvider>{children}</NavigationProvider>
+                </Suspense>
                 <MuiXLicense />
             </ThemeRegistry>
         </body>
