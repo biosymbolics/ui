@@ -1,63 +1,31 @@
-'use client';
+'use server';
 
-import { useState } from 'react';
 import Box from '@mui/joy/Box';
-import Typography from '@mui/joy/Typography';
 
 import { DEFAULT_PATHNAME } from '@/constants';
 import { Heatmap } from '@/components/charts/heatmap';
-import { Section } from '@/components/layout/section';
-import { Select } from '@/components/input';
 import { HeadField, PatentSearchArgs } from '@/types';
 
 import { fetchPatentCharacteristics } from './actions';
+import { PatentCharacteristicsControl } from './control';
 
-export const PatentCharacteristics = async ({
+const CharacteristicsInner = async ({
     pathname = DEFAULT_PATHNAME,
-    terms,
     ...args
-}: PatentSearchArgs & { pathname?: string }) => {
-    const [headField, setHeadField] = useState<HeadField>('priority_date');
+}: PatentSearchArgs & { headField: HeadField; pathname?: string }) => {
     try {
-        const data = await fetchPatentCharacteristics({
-            terms,
-            headField,
-            ...args,
-        });
+        const data = await fetchPatentCharacteristics(args);
 
         return (
-            <>
-                <Section>
-                    <Typography level="h3">Patent Characteristics</Typography>
-                    <Typography gutterBottom level="body-md">
-                        UMLS concepts directly or indirectly associated with
-                        patents for search{' '}
-                        <b>{(terms || []).map((t) => `'${t}'`).join(', ')}</b>
-                    </Typography>
-                </Section>
-                <Section>
-                    <Select<HeadField>
-                        defaultValue={headField}
-                        label="Dimension"
-                        onChange={(e: unknown, value: HeadField | null) => {
-                            if (value) {
-                                setHeadField(value);
-                            }
-                        }}
-                        options={['priority_date', 'id']}
-                        sx={{ maxWidth: 400, mb: 3 }}
-                    />
-                    <Heatmap
-                        clickBaseUrl={`${pathname}/patents?terms=`}
-                        clickField="documents"
-                        data={data}
-                        pathname={pathname}
-                        tooltipFields={['documents']}
-                        xField="head"
-                        yField="concept"
-                    />
-                </Section>
-            </>
+            <Heatmap
+                clickBaseUrl={`${pathname}/patents?terms=`}
+                clickField="documents"
+                data={data}
+                pathname={pathname}
+                tooltipFields={['documents']}
+                xField="head"
+                yField="concept"
+            />
         );
     } catch (e) {
         return (
@@ -68,3 +36,14 @@ export const PatentCharacteristics = async ({
         );
     }
 };
+
+export const PatentCharacteristics = (
+    args: PatentSearchArgs & {
+        headField: HeadField;
+        pathname?: string;
+    }
+) => (
+    <PatentCharacteristicsControl {...args}>
+        <CharacteristicsInner {...args} />
+    </PatentCharacteristicsControl>
+);

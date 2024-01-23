@@ -9,14 +9,16 @@ import WarningIcon from '@mui/icons-material/Warning';
 
 import { getStyles } from '@/components/composite/styles';
 import { Tabs } from '@/components/layout/tabs';
-import { PatentSearchArgs } from '@/types';
+import { HeadField, PatentSearchArgs } from '@/types';
 
 import { AssetList } from './asset';
 import { PatentCharacteristics } from './characteristics';
 import { OverTime } from './over-time';
 import { Summary } from './summary';
 
-export const Content = (args: PatentSearchArgs) => {
+export type ContentArgs = PatentSearchArgs & { headField: HeadField };
+
+export const Content = (args: ContentArgs) => {
     try {
         const tabs = [
             {

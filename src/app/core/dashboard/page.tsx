@@ -6,6 +6,7 @@ import Typography from '@mui/joy/Typography';
 
 import { SearchBar } from '@/components/composite';
 import { Section } from '@/components/layout/section';
+import { HeadField } from '@/types';
 import { formatLabel } from '@/utils/string';
 
 import { Description } from './description';
@@ -23,6 +24,7 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     const endYear = searchParams.endYear
         ? parseInt(searchParams.endYear, 10)
         : undefined;
+    const headField = (searchParams.headField as HeadField) || 'priority_date';
 
     return (
         <>
@@ -52,6 +54,7 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
                         <Content
                             endYear={endYear}
                             exemplarPatents={exemplarPatents}
+                            headField={headField}
                             queryType={queryType}
                             startYear={startYear}
                             terms={terms || []}

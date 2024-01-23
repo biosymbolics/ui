@@ -7,34 +7,47 @@ import React, {
     useMemo,
     useTransition,
 } from 'react';
-import { useRouter } from 'next/navigation';
+import {
+    ReadonlyURLSearchParams,
+    useRouter,
+    useSearchParams,
+} from 'next/navigation';
+import { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 type NavigationContextType = {
     isPending: boolean;
-    navigate: (url: string) => void;
+    navigate: (url: string, options?: NavigateOptions) => void;
+    params: ReadonlyURLSearchParams;
 };
 
 const NavigationContext = createContext({
     isPending: false,
-    navigate: (url: string) => {
+    navigate: ((url: string) => {
         console.warn(`No impl when attempting to route to ${url}`);
-    },
+    }) as NavigationContextType['navigate'],
+    params: new URLSearchParams() as ReadonlyURLSearchParams,
 });
 
 export const NavigationProvider = ({ children }: { children: ReactNode }) => {
     const Router = useRouter();
+    const params = useSearchParams();
     const [isPending, startTransition] = useTransition();
 
     const context: NavigationContextType = useMemo(
         () => ({
             isPending,
-            navigate: (url: string) => {
+            navigate: (url: string, options?: NavigateOptions) => {
                 startTransition(() => {
-                    Router.push(url);
+                    if (options?.scroll === false) {
+                        Router.replace(url, options);
+                    } else {
+                        Router.push(url, options);
+                    }
                 });
             },
+            params,
         }),
-        [Router, isPending]
+        [Router, isPending, params]
     );
 
     return (
