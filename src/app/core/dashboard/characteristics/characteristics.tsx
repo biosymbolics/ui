@@ -4,10 +4,10 @@ import Box from '@mui/joy/Box';
 
 import { DEFAULT_PATHNAME } from '@/constants';
 import { Heatmap } from '@/components/charts/heatmap';
-import { HeadField, PatentSearchArgs } from '@/types';
+import { HeadField, PatentCharacteristic, PatentSearchArgs } from '@/types';
 
 import { fetchPatentCharacteristics } from './actions';
-import { PatentCharacteristicsControl } from './control';
+import { PatentCharacteristicsControl, getClickUrl } from './control';
 
 const CharacteristicsInner = async ({
     pathname = DEFAULT_PATHNAME,
@@ -17,12 +17,11 @@ const CharacteristicsInner = async ({
         const data = await fetchPatentCharacteristics(args);
 
         return (
-            <Heatmap
-                clickBaseUrl={`${pathname}/patents?terms=`}
-                clickField="documents"
+            <Heatmap<PatentCharacteristic>
+                getClickUrl={getClickUrl}
                 data={data}
                 pathname={pathname}
-                tooltipFields={['documents']}
+                tooltipFields={['head', 'concept', 'documents']}
                 xField="head"
                 yField="concept"
             />

@@ -6,7 +6,8 @@ import Typography from '@mui/joy/Typography';
 import { Section } from '@/components/layout/section';
 import { Select } from '@/components/input';
 import { useNavigation } from '@/hooks/navigation';
-import { HeadField, PatentSearchArgs } from '@/types';
+import { HeadField, PatentCharacteristic, PatentSearchArgs } from '@/types';
+import { DEFAULT_PATHNAME } from '@/constants';
 
 export const PatentCharacteristicsControl = ({
     headField,
@@ -41,4 +42,13 @@ export const PatentCharacteristicsControl = ({
             </Section>
         </>
     );
+};
+
+export const getClickUrl = (
+    object: PatentCharacteristic,
+    pathname: string = DEFAULT_PATHNAME
+) => {
+    const ids = object.documents?.join(';');
+    const term = `${object.concept} x ${object.head}`;
+    return `${pathname}/patents?ids=${ids}&terms=${term}`;
 };
