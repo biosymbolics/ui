@@ -203,15 +203,14 @@ export const AssetDetail = <T extends Asset>(props: {
                     width={800}
                 />
             </Title>
-            {asset.children.length > 1 && (
-                <DataGrid<Asset>
-                    columns={columns}
-                    getRowId={getRowId}
-                    height={400}
-                    rows={asset.children}
-                    variant="minimal"
-                />
-            )}
+
+            <DataGrid<Asset>
+                columns={columns}
+                getRowId={getRowId}
+                height={Math.min(400, asset.children.length * 50)}
+                rows={asset.children}
+                variant="minimal"
+            />
         </Section>
     );
 };
