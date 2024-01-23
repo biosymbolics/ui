@@ -18,7 +18,7 @@ import { FetchAutocompletions } from './types';
  */
 export const SearchBar = ({
     endYear = 2024,
-    exemplarPatents,
+    // exemplarPatents,
     fetchAutocompletions,
     queryType,
     startYear = 2014,
@@ -29,9 +29,9 @@ export const SearchBar = ({
     const { navigate } = useNavigation();
     const pathname = usePathname();
     const [newTerms, setTerms] = useState<string[] | null>(terms);
-    const [newExemplarPatents, setExemplarPatents] = useState<string[] | null>(
-        exemplarPatents || null
-    );
+    // const [newExemplarPatents, setExemplarPatents] = useState<string[] | null>(
+    //     exemplarPatents || null
+    // );
     const [newQueryType, setQueryType] = useState<string | null>(
         queryType || null
     );
@@ -72,6 +72,7 @@ export const SearchBar = ({
                             minDistance={2}
                             max={2025}
                             size="lg"
+                            sx={{ mr: 3 }}
                             valueLabelDisplay="on"
                         />
                     </Grid>
@@ -90,7 +91,7 @@ export const SearchBar = ({
                         />
                     </Grid>
                 </Grid>
-                <Grid container spacing={4} sx={{ mt: 1 }}>
+                {/* <Grid container spacing={4} sx={{ mt: 1 }}>
                     <Grid xs={12} sm={6}>
                         <Autocomplete<Option, true, false>
                             isMultiple
@@ -116,7 +117,7 @@ export const SearchBar = ({
                             variant="soft"
                         />
                     </Grid>
-                </Grid>
+                </Grid> */}
             </Section>
             <Section variant="l2">
                 <Button
@@ -128,7 +129,7 @@ export const SearchBar = ({
                         const queryArgs = getQueryArgs({
                             endYear: newYearRange?.[1],
                             queryType: newQueryType,
-                            exemplarPatents: newExemplarPatents,
+                            exemplarPatents: [], // TODO
                             startYear: newYearRange?.[0],
                             terms: newTerms,
                         });
