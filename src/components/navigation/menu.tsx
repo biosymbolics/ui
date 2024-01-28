@@ -158,6 +158,9 @@ export const SideNav = () => {
                             <MenuItem {...itemProps} href={DEFAULT_PATHNAME}>
                                 Patents Search
                             </MenuItem>
+                            <MenuItem {...itemProps} href="/core/sec">
+                                SEC
+                            </MenuItem>
                         </Menu>
                     }
                 >
