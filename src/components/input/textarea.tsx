@@ -13,14 +13,18 @@ import { getSelectableId } from '@/utils/string';
 export type TextareaProps = {
     defaultValue?: JoyTextareaProps['defaultValue'];
     disabled?: JoyTextareaProps['disabled'];
+    endDecorator?: ReactElement;
     error?: boolean;
     helperText?: string;
     id?: JoyTextareaProps['id'];
     label?: string;
+    maxRows?: JoyTextareaProps['maxRows'];
     minRows?: JoyTextareaProps['minRows'];
     onChange?: JoyTextareaProps['onChange'];
+    placeholder?: JoyTextareaProps['placeholder'];
     size?: JoyTextareaProps['size'];
     tooltip?: string;
+    variant?: JoyTextareaProps['variant'];
 };
 
 /**
@@ -46,7 +50,17 @@ export const TextArea = ({
                     </Typography>
                 </FormLabel>
             )}
-            <JoyTextarea variant="soft" {...props} size={size} />
+            <JoyTextarea
+                variant="soft"
+                {...props}
+                size={size}
+                sx={{
+                    // eslint-disable-next-line @typescript-eslint/naming-convention
+                    '& textarea:first-of-type': {
+                        minHeight: 72,
+                    },
+                }}
+            />
             {helperText && <FormHelperText>{helperText}</FormHelperText>}
         </FormControl>
     );

@@ -16,7 +16,6 @@ type MessagesPaneProps = {
 
 export const ChatPane = ({ chat }: MessagesPaneProps) => {
     const [chatMessages, setChatMessages] = useState(chat.messages);
-    const [textAreaValue, setTextAreaValue] = useState('');
 
     useEffect(() => {
         setChatMessages(chat.messages);
@@ -25,13 +24,13 @@ export const ChatPane = ({ chat }: MessagesPaneProps) => {
     return (
         <Sheet
             sx={{
-                height: {
-                    xs: 'calc(100dvh - var(--Header-height))',
-                    lg: '100dvh',
-                },
+                backgroundColor: 'background.level1',
                 display: 'flex',
                 flexDirection: 'column',
-                backgroundColor: 'background.level1',
+                height: {
+                    xs: 'calc(100dvh)',
+                    lg: '100dvh',
+                },
             }}
         >
             <Box
@@ -40,7 +39,7 @@ export const ChatPane = ({ chat }: MessagesPaneProps) => {
                     flex: 1,
                     minHeight: 0,
                     px: 2,
-                    py: 3,
+                    py: 5,
                     overflowY: 'scroll',
                     flexDirection: 'column-reverse',
                 }}
@@ -49,7 +48,7 @@ export const ChatPane = ({ chat }: MessagesPaneProps) => {
                     {chatMessages.map((message: ChatProps, index: number) => (
                         <Stack key={index} direction="row" spacing={2}>
                             <Avatar>
-                                {message.sender !== 'You' ? 'BIO' : 'ME'}
+                                {message.sender !== 'You' ? 'BSY' : 'ME'}
                             </Avatar>
                             <ChatBubble {...message} />
                         </Stack>
@@ -57,9 +56,7 @@ export const ChatPane = ({ chat }: MessagesPaneProps) => {
                 </Stack>
             </Box>
             <ChatInput
-                textAreaValue={textAreaValue}
-                setTextAreaValue={setTextAreaValue}
-                onSubmit={() => {
+                onSubmit={(value: string) => {
                     const newId = chatMessages.length + 1;
                     const newIdString = newId.toString();
                     setChatMessages([
@@ -67,7 +64,7 @@ export const ChatPane = ({ chat }: MessagesPaneProps) => {
                         {
                             id: newIdString,
                             sender: 'You',
-                            content: textAreaValue,
+                            content: value,
                             timestamp: 'Just now',
                         },
                     ]);
