@@ -1,72 +1,135 @@
 'use client';
 
-import Chart from 'react-apexcharts';
-import { useColorScheme } from '@mui/joy/styles';
+import { useRouter } from 'next/navigation';
+import Typography from '@mui/joy/Typography';
+import { Vega, VisualizationSpec } from 'react-vega';
 
-import { useNavigation } from '@/hooks/navigation';
-import theme from '@/theme';
+import { BaseChartProps } from './types';
 
-import { ChartOptions, BaseApexChartProps } from './types';
+type GanttSpecProps = {
+    colorField?: string;
+    tooltipFields?: string[];
+    xField: string;
+    x2Field: string;
+    yField: string;
+    xFieldTitle?: string;
+    yFieldTitle?: string;
+};
+
+type GanttProps<DT extends Record<string, unknown>> = BaseChartProps & {
+    data: DT[];
+    getClickUrl?: (obj: DT) => string;
+    width?: number;
+} & GanttSpecProps;
+
+const getSpec: (props: GanttSpecProps) => VisualizationSpec = ({
+    tooltipFields = [],
+    xField,
+    x2Field,
+    xFieldTitle,
+    yField,
+    yFieldTitle,
+    colorField,
+}) => ({
+    $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+    width: 'container',
+    height: { step: 60 },
+    background: 'transparent',
+    data: {
+        name: 'data',
+    },
+    mark: {
+        type: 'bar',
+        cursor: 'pointer',
+        tooltip: true,
+        width: { band: 0.7 },
+    },
+    params: [
+        {
+            name: 'highlight',
+            select: { type: 'point', on: 'pointerover' },
+        },
+        {
+            name: 'select',
+            select: {
+                fields: tooltipFields,
+                on: 'click',
+                type: 'point',
+            },
+        },
+    ],
+    encoding: {
+        color: { field: colorField },
+        x: { field: xField, type: 'quantitative', title: xFieldTitle },
+        x2: { field: x2Field, title: xFieldTitle },
+        y: { field: yField, type: 'ordinal', title: yFieldTitle },
+        tooltip: [
+            { field: xField, type: 'quantitative', title: 'start' }, // TODO
+            { field: x2Field, type: 'quantitative', title: 'end' }, // TODO
+            { field: yField, type: 'ordinal', title: yFieldTitle || yField },
+            ...tooltipFields.map((f) => ({ field: f })),
+        ],
+    },
+    config: {
+        font: 'monospace',
+        axisX: {
+            orient: 'bottom',
+            labelFontSize: 12,
+        },
+        axisY: {
+            labelFontSize: 12,
+            labelLimit: 250,
+        },
+    },
+});
 
 /**
- * Timeline/gantt-style bar chart
+ * Graph chart
  */
-export const Timeline = ({
-    height,
-    pathname,
-    series,
+export const Gantt = <DT extends Record<string, unknown>>({
+    data,
+    colorField,
+    getClickUrl,
+    tooltipFields = [],
     title,
-}: BaseApexChartProps): JSX.Element => {
-    const { navigate } = useNavigation();
-    const { mode } = useColorScheme();
-
-    const options: ChartOptions = {
-        dataLabels: {
-            enabled: false,
+    xField = 'start',
+    x2Field = 'end',
+    yField,
+    xFieldTitle = '',
+    yFieldTitle = '',
+    width = 800,
+}: GanttProps<DT>): JSX.Element => {
+    const router = useRouter();
+    const signalListeners = {
+        select: (_: unknown, value: unknown) => {
+            if (!getClickUrl || typeof value !== 'object') {
+                return;
+            }
+            const obj = value as DT;
+            const url = getClickUrl(obj);
+            router.push(url);
         },
-        yaxis: {
-            labels: mode === 'dark' ? { style: { colors: 'white' } } : {},
-        },
-        plotOptions: {
-            bar: {
-                horizontal: true,
-            },
-        },
-        colors: [theme.colorSchemes.light.palette.primary[400]],
-        chart: {
-            events: {
-                click: (
-                    event,
-                    chartContext,
-                    config: {
-                        globals: { seriesNames: string[] };
-                        seriesIndex: number;
-                    }
-                ) => {
-                    const seriesIdx = config?.seriesIndex || 0;
-                    const term = config.globals?.seriesNames?.[seriesIdx];
-
-                    if (!term) {
-                        console.warn("Couldn't find term for index", seriesIdx);
-                        return;
-                    }
-                    navigate(`${pathname}?terms=${term}`);
-                },
-            },
-        },
-        grid: { padding: { right: 30, left: 20 } },
-        series,
-        stroke: { curve: 'straight' },
-        title: { text: title, align: 'left' },
-        xaxis: { type: 'datetime' },
     };
 
+    const spec = getSpec({
+        colorField,
+        tooltipFields,
+        xField,
+        x2Field,
+        yField,
+        xFieldTitle,
+        yFieldTitle,
+    });
     return (
-        <Chart
-            height={height}
-            options={options}
-            series={series}
-            type="rangeBar"
-        />
+        <>
+            {title && <Typography level="title-md">{title}</Typography>}
+
+            <Vega
+                spec={spec}
+                data={{ data }}
+                signalListeners={signalListeners}
+                width={width}
+            />
+        </>
     );
 };

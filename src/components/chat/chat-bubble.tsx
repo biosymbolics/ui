@@ -5,7 +5,7 @@ import Box from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet';
 import ReactMarkdown from 'react-markdown';
 
-import { Timeline } from '@/components/charts/gantt';
+import { Gantt } from '@/components/charts/gantt';
 import { Heatmap } from '@/components/charts/heatmap';
 import { ClindevResponseSchema } from '@/types/clindev';
 import { InterventionDropoutReportSchema } from '@/types/chat';
@@ -53,19 +53,20 @@ const getChild = (
         const { data } = parsed;
         return (
             <Box sx={{ my: 2 }}>
-                {description && description}
-                <Timeline
+                {description || ''}
+                <Gantt
                     height={400}
                     pathname="/core/chat"
-                    series={[
-                        {
-                            name: 'Years',
-                            data: data.map((d) => ({
-                                x: d.stage || '???',
-                                y: [d.offset, d.offset + d.median_duration],
-                            })),
-                        },
-                    ]}
+                    xField="x"
+                    xFieldTitle="Years"
+                    x2Field="x2"
+                    yField="y"
+                    yFieldTitle="Stage"
+                    data={data.map((d) => ({
+                        y: d.stage || '???',
+                        x: d.offset,
+                        x2: d.offset + d.median_duration,
+                    }))}
                 />
             </Box>
         );
