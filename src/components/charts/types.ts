@@ -1,10 +1,6 @@
-import { ApexOptions } from 'apexcharts';
-
 export type ChartSeries = {
     data: { x: string; y: [number, number] }[];
 };
-
-export type ChartOptions = ApexOptions;
 
 type AnnotationType = 'xaxis'; // TODO more
 
@@ -21,12 +17,6 @@ export type BaseChartProps = {
     pathname: string;
     title?: string;
     width?: number;
-};
-
-export type BaseApexChartProps = BaseChartProps & {
-    annotations?: AnnotationSpec[];
-    colors?: string[];
-    series: ApexOptions['series'];
 };
 
 export type SparklineProps = {
