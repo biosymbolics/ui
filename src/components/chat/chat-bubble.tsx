@@ -41,9 +41,6 @@ const getChild = (
         );
     }
     if (type === 'timeline') {
-        if (typeof window === 'undefined') {
-            return <span />;
-        }
         const parsed = ClindevResponseSchema.safeParse(JSON.parse(content));
         if (parsed.success === false) {
             const message = `Failed to parse: ${parsed.error.toString()}`;
