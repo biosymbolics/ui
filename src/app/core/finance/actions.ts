@@ -1,6 +1,6 @@
 import { cache } from 'react';
 
-import { ASK_SEC_API_URL } from '@/constants';
+import { CHAT_URL } from '@/constants';
 import { doFetch } from '@/utils/actions';
 import { EventsResponse, EventsResponseSchema } from '@/types/sec';
 
@@ -10,7 +10,7 @@ export const getEvents = cache(
             return null;
         }
         const res = await doFetch(
-            `${ASK_SEC_API_URL}?question=${encodeURIComponent(
+            `${CHAT_URL}?question=${encodeURIComponent(
                 ticker
             )}&question_type=events`,
             EventsResponseSchema

@@ -6,7 +6,7 @@ import Typography from '@mui/joy/Typography';
 import groupBy from 'lodash/fp/groupBy';
 import isEmpty from 'lodash/fp/isEmpty';
 
-import { DEFAULT_PATHNAME, PATENT_OVER_TIME_API_URL } from '@/constants';
+import { DEFAULT_PATHNAME, OVER_TIME_API_URL } from '@/constants';
 import { Line } from '@/components/charts/line';
 import { getStyles } from '@/components/composite/styles';
 import { Section } from '@/components/layout/section';
@@ -32,7 +32,7 @@ const fetchReports = cache(
         }
         const queryArgs = getQueryArgs(args, true);
         const res = await doFetch(
-            `${PATENT_OVER_TIME_API_URL}?${queryArgs}`,
+            `${OVER_TIME_API_URL}?${queryArgs}`,
             PatentsSummarySchema
         );
         return res;

@@ -3,7 +3,7 @@
 import { cache } from 'react';
 import Box from '@mui/joy/Box';
 
-import { DEFAULT_PATHNAME, PATENT_SUMMARY_API_URL } from '@/constants';
+import { DEFAULT_PATHNAME, SUMMARY_API_URL } from '@/constants';
 import { Bars } from '@/components/charts/html-bar';
 import { getStyles } from '@/components/composite/styles';
 import {
@@ -21,7 +21,7 @@ const fetchSummaries = cache(
         }
         const queryArgs = getQueryArgs(args, true);
         const res = await doFetch(
-            `${PATENT_SUMMARY_API_URL}?${queryArgs}`,
+            `${SUMMARY_API_URL}?${queryArgs}`,
             PatentsSummarySchema
         );
         return res;
@@ -35,7 +35,7 @@ const fetchSummaries = cache(
 //         }
 //         const queryArgs = getQueryArgs(args, true);
 //         const res = await doFetch(
-//             `${PATENT_TOPIC_API_URL}?${queryArgs}`,
+//             `${TOPIC_API_URL}?${queryArgs}`,
 //             PatentsTopicSchema
 //         );
 //         return res;

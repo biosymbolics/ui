@@ -5,7 +5,7 @@ import { z } from 'zod';
 
 import {
     ENTITY_SEARCH_API_URL,
-    PATENT_AUTOCOMPLETE_API_URL,
+    AUTOCOMPLETE_API_URL,
     PATENT_SEARCH_API_URL,
     REGULATORY_APPROVAL_SEARCH_API_URL,
     TERM_DESCRIPTION_API_URL,
@@ -50,7 +50,7 @@ export const fetchAutocompletions = async (
     'use server';
 
     const res = await doFetch(
-        `${PATENT_AUTOCOMPLETE_API_URL}?mode=${mode}&string=${str}`,
+        `${AUTOCOMPLETE_API_URL}?mode=${mode}&string=${str}`,
         AutocompleteResponse
     );
     return res;

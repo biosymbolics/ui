@@ -127,7 +127,7 @@ export const SideNav = () => {
     const [menuIndex, setMenuIndex] = useState<null | number>(null);
     const itemProps = {
         component: Link,
-        onClick: () => setMenuIndex(null),
+        // onClick: () => setMenuIndex(null),
     };
 
     const createHandleLeaveMenu =
@@ -158,8 +158,14 @@ export const SideNav = () => {
                             <MenuItem {...itemProps} href={DEFAULT_PATHNAME}>
                                 Patents Search
                             </MenuItem>
-                            <MenuItem {...itemProps} href="/core/sec">
-                                SEC
+                            <MenuItem {...itemProps} href="/core/chat">
+                                Chat
+                            </MenuItem>
+                            {/* <MenuItem {...itemProps} href="/core/finance">
+                                Finance
+                            </MenuItem> */}
+                            <MenuItem {...itemProps} href="/core/clindev">
+                                Clinical Development
                             </MenuItem>
                         </Menu>
                     }
