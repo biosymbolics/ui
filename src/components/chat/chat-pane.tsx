@@ -47,7 +47,11 @@ export const ChatPane = ({ chat }: MessagesPaneProps) => {
                 <Stack spacing={2} justifyContent="flex-end">
                     {chatMessages.map((message: ChatProps, index: number) => (
                         <Stack key={index} direction="row" spacing={2}>
-                            <Avatar>
+                            <Avatar
+                                variant={
+                                    message.sender !== 'You' ? 'solid' : 'soft'
+                                }
+                            >
                                 {message.sender !== 'You' ? 'BSY' : 'ME'}
                             </Avatar>
                             <ChatBubble {...message} />

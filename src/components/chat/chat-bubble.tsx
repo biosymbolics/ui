@@ -1,7 +1,8 @@
+'use client';
+
 import * as React from 'react';
 import Box from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet';
-import Typography from '@mui/joy/Typography';
 import ReactMarkdown from 'react-markdown';
 
 import { ChatProps } from './types';
@@ -19,9 +20,9 @@ export const ChatBubble = ({ content }: ChatBubbleProps) => (
                     borderRadius: 'lg',
                 }}
             >
-                <Typography sx={{ color: 'text.secondary' }}>
+                <Box sx={{ color: 'text.secondary' }}>
                     <ReactMarkdown>{content}</ReactMarkdown>
-                </Typography>
+                </Box>
             </Sheet>
         </Box>
     </Box>

@@ -1,9 +1,16 @@
 'use server';
 
-import { ChatPane } from '@/components/chat';
+import { Suspense } from 'react';
 
-import { chats } from './data';
+import { Contents } from './contents';
 
-const Page = () => <ChatPane chat={chats[0]} />;
+const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
+    const chatId = searchParams.chatId ?? 'belowCash';
+    return (
+        <Suspense>
+            <Contents chatId={chatId} />
+        </Suspense>
+    );
+};
 
 export default Page;
