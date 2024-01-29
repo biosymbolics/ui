@@ -10,4 +10,12 @@ export const ClindevResponseSchema = z.array(
     })
 );
 
+export const DataHeatmapSchema = z.array(
+    z.object({
+        intervention: z.string(),
+        reason: z.string(),
+        count: z.number(),
+    })
+);
+
 export type ClindevResponse = z.infer<typeof ClindevResponseSchema>;

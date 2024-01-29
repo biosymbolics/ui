@@ -5,7 +5,7 @@ import { Suspense } from 'react';
 import { Contents } from './contents';
 
 const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
-    const chatId = searchParams.chatId ?? 'belowCash';
+    const { chatId } = searchParams;
     return (
         <Suspense>
             <Contents chatId={chatId} />

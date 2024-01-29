@@ -5,11 +5,12 @@ import Box from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet';
 import ReactMarkdown from 'react-markdown';
 
-import { ClindevResponseSchema } from '@/types/clindev';
+import { ClindevResponseSchema, DataHeatmapSchema } from '@/types/clindev';
 
 import { ChatProps } from './types';
 
 import { Timeline } from '../charts/gantt';
+import { Heatmap } from '../charts/heatmap';
 
 type ChatBubbleProps = ChatProps;
 
@@ -18,6 +19,25 @@ const getChild = (
     content: string,
     description: string | null = null
 ) => {
+    if (type === 'heatmap') {
+        const parsed = DataHeatmapSchema.safeParse(JSON.parse(content));
+        if (parsed.success === false) {
+            const message = `Failed to parse: ${parsed.error.toString()}`;
+            console.error(message, parsed);
+            throw new Error(message);
+        }
+        const { data } = parsed;
+        return (
+            <Heatmap
+                data={data}
+                pathname=""
+                tooltipFields={['reason', 'intervention']}
+                xField="reason"
+                yField="intervention"
+                width={600}
+            />
+        );
+    }
     if (type === 'timeline') {
         if (typeof window === 'undefined') {
             return <span />;

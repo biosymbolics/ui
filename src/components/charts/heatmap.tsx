@@ -18,6 +18,7 @@ type HeadmapSpecProps = {
 type HeatmapProps<DT extends Record<string, unknown>> = BaseChartProps & {
     data: DT[];
     getClickUrl?: (obj: DT) => string;
+    width?: number;
 } & HeadmapSpecProps;
 
 const getSpec: (props: HeadmapSpecProps) => VisualizationSpec = ({
@@ -102,6 +103,7 @@ export const Heatmap = <DT extends Record<string, unknown>>({
     yField,
     xFieldTitle = '',
     yFieldTitle = '',
+    width = 800,
 }: HeatmapProps<DT>): JSX.Element => {
     const router = useRouter();
     const signalListeners = {
@@ -131,7 +133,7 @@ export const Heatmap = <DT extends Record<string, unknown>>({
                 spec={spec}
                 data={{ data }}
                 signalListeners={signalListeners}
-                width={800}
+                width={width}
             />
         </>
     );

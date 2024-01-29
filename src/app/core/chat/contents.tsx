@@ -8,6 +8,7 @@ import Link from '@mui/joy/Link';
 import List from '@mui/joy/List';
 import ListItem from '@mui/joy/ListItem';
 import Typography from '@mui/joy/Typography';
+import startCase from 'lodash/fp/startCase';
 
 import { ChatPane } from '@/components/chat';
 
@@ -19,8 +20,7 @@ export const Contents = async ({ chatId }: { chatId: string | null }) => {
     if (!chatId || !chats[chatId]) {
         return (
             <Box>
-                <Typography level="h2">Chat not found</Typography>
-                <Typography level="h4">Available chats:</Typography>
+                <Typography level="h2">Available Chats</Typography>
                 <List marker="circle">
                     {Object.keys(chats).map((c) => (
                         <ListItem key={c}>
@@ -28,7 +28,7 @@ export const Contents = async ({ chatId }: { chatId: string | null }) => {
                                 component={NextLink}
                                 href={`/core/chat?chatId=${c}`}
                             >
-                                {c}
+                                {startCase(c)}
                             </Link>
                         </ListItem>
                     ))}
