@@ -288,6 +288,13 @@ export const getChats: () => Promise<Record<string, ChatsProps>> = async () =>
                     timestamp: 'Wednesday 9:30am',
                     sender: biosymBot,
                 },
+                {
+                    id: '10',
+                    content:
+                        'Is there a correlation between dropout rates and trial duration?',
+                    timestamp: 'Wednesday 9:31am',
+                    sender: 'You',
+                },
             ],
         },
         drugDeliverySystems: {
