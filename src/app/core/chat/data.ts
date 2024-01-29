@@ -147,6 +147,49 @@ export const getChats: () => Promise<Record<string, ChatsProps>> = async () =>
                     timestamp: 'Wednesday 9:25am',
                     sender: 'You',
                 },
+                {
+                    id: '8',
+                    content:
+                        'What are typical clinical development timelines in PAH?',
+                    timestamp: 'Wednesday 9:30am',
+                    sender: 'You',
+                },
+                {
+                    id: '9',
+                    type: 'timeline',
+                    description:
+                        'Here are typical clinical development timelines in PAH, in years:',
+                    content: `
+                        [
+                            {
+                                "stage": "Phase 1",
+                                "offset": 0,
+                                "median_duration": 1.5,
+                                "iqr": 0.5
+                            },
+                            {
+                                "stage": "Phase 2",
+                                "offset": 1.5,
+                                "median_duration": 2,
+                                "iqr": 0.7
+                            },
+                            {
+                                "stage": "Phase 3",
+                                "offset": 3.5,
+                                "median_duration": 3,
+                                "iqr": 1
+                            },
+                            {
+                                "stage": "FDA Review",
+                                "offset": 6.5,
+                                "median_duration": 1.5,
+                                "iqr": 0.5
+                            }
+                        ]
+                        `,
+                    timestamp: 'Wednesday 9:30am',
+                    sender: biosymBot,
+                },
             ],
         },
         terminationReason: {

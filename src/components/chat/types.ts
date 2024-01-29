@@ -7,6 +7,8 @@ export type UserProps = {
 export type ChatProps = {
     id: string;
     content: string;
+    description?: string;
+    type?: 'text' | 'timeline';
     timestamp: string;
     unread?: boolean;
     sender: UserProps | 'You';

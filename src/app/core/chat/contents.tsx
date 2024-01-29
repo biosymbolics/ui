@@ -1,5 +1,7 @@
 'use server';
 
+import 'server-only';
+
 import NextLink from 'next/link';
 import Box from '@mui/joy/Box';
 import Link from '@mui/joy/Link';
