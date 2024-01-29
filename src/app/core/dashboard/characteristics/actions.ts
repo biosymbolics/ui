@@ -3,7 +3,7 @@
 import { cache } from 'react';
 import camelCase from 'lodash/fp/camelCase';
 
-import { PATENT_CHARACTERISTIC_API_URL } from '@/constants';
+import { CHARACTERISTIC_API_URL } from '@/constants';
 import {
     HeadField,
     PatentSearchArgs,
@@ -23,7 +23,7 @@ export const fetchPatentCharacteristics = cache(
         }
         const queryArgs = getQueryArgs(args, true);
         const res = await doFetch(
-            `${PATENT_CHARACTERISTIC_API_URL}?${queryArgs}`,
+            `${CHARACTERISTIC_API_URL}?${queryArgs}`,
             PatentCharacteristicsSchema,
             (response) => formatKeys(response, camelCase)
         );

@@ -1,6 +1,7 @@
 'use client';
 
 import Chart from 'react-apexcharts';
+import { useColorScheme } from '@mui/joy/styles';
 
 import { useNavigation } from '@/hooks/navigation';
 import theme from '@/theme';
@@ -17,8 +18,15 @@ export const Timeline = ({
     title,
 }: BaseApexChartProps): JSX.Element => {
     const { navigate } = useNavigation();
+    const { mode } = useColorScheme();
 
     const options: ChartOptions = {
+        dataLabels: {
+            enabled: false,
+        },
+        yaxis: {
+            labels: mode === 'dark' ? { style: { colors: 'white' } } : {},
+        },
         plotOptions: {
             bar: {
                 horizontal: true,
