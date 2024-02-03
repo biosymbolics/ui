@@ -46,7 +46,9 @@ const DetailPanelContent = ({ row }: { row: Row }) => (
 );
 
 const NoRows = (): JSX.Element => (
-    <Typography level="h3">no results</Typography>
+    <Typography level="h4" sx={{ ml: 3, my: 2 }}>
+        no results
+    </Typography>
 );
 
 const getDensity = (variant: DataGridVariant): MuiDataGridProps['density'] => {

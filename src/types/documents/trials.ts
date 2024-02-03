@@ -12,12 +12,20 @@ const OutcomeSchema = z.object({
 
 export type Outcome = z.infer<typeof OutcomeSchema>;
 
+const DropoutReasonSchema = z.object({
+    count: z.number(),
+    reason: z.string(),
+});
+
+export type DropoutReason = z.infer<typeof DropoutReasonSchema>;
+
 export const TrialSchema = z.object({
     // blinding: z.string(),
     comparison_type: z.string(),
     design: z.string(),
     dropout_count: z.union([z.number(), z.null()]),
     dropout_percent: z.union([z.number(), z.null()]),
+    dropout_reasons: z.union([z.array(DropoutReasonSchema), z.null()]),
     duration: z.union([z.number(), z.null()]),
     end_date: z.union([z.string(), z.null()]),
     enrollment: z.union([z.number(), z.null()]),
