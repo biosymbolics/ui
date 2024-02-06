@@ -5,6 +5,7 @@ import { Vega, VisualizationSpec } from 'react-vega';
 
 import { PatentGraph } from '@/types';
 
+import { DEFAULT_VEGA_THEME } from './constants';
 import { BaseChartProps } from './types';
 
 type GraphProps = BaseChartProps & {
@@ -246,6 +247,12 @@ export const EdgeBundled = ({
     <>
         {title && <Typography level="title-md">{title}</Typography>}
 
-        <Vega spec={spec} data={data} {...props} />
+        <Vega
+            actions={false}
+            data={data}
+            spec={spec}
+            theme={DEFAULT_VEGA_THEME}
+            {...props}
+        />
     </>
 );
