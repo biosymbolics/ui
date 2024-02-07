@@ -16,7 +16,7 @@ export const PatentSchema = z.object({
     interventions: z.union([z.array(MappingObjectSchema), z.null()]),
     exemplar_similarity: z.union([z.number(), z.null()]),
     inventors: z.union([z.array(MappingObjectSchema), z.null()]),
-    ipc_codes: z.array(z.string()),
+    // ipc_codes: z.array(z.string()),
     patent_years: z.number(),
     priority_date: z.string(),
     probability_of_success: z.number(),

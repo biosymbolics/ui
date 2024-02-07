@@ -162,9 +162,9 @@ export const getAssetColumns = (isChild: boolean): GridColDef[] => [
 export const getRowId = (row: Asset) => `nested-${row.id}`;
 
 const DocTypes: (keyof Omit<AssetActivity, 'year'>)[] = [
-    'patent_count',
-    'regulatory_approval_count',
-    'trial_count',
+    'patents',
+    'regulatory_approvals',
+    'trials',
 ];
 
 const formatDetailData = (data: AssetActivity[]) =>

@@ -3,9 +3,9 @@ import { z } from 'zod';
 
 const AssetActivitySchema = z.object({
     year: z.number(),
-    patent_count: z.number(),
-    regulatory_approval_count: z.number(),
-    trial_count: z.number(),
+    patents: z.number(),
+    regulatory_approvals: z.number(),
+    trials: z.number(),
 });
 
 export const ChildAssetSchema = z.object({

@@ -89,7 +89,7 @@ export const fetchAssets = cache(
         }
         const queryArgs = getQueryArgs(args, true);
         const res = await doFetch(
-            `${ENTITY_SEARCH_API_URL}?${queryArgs}&limit=200`, // if more, risks exceeding next's 2MB cache limit
+            `${ENTITY_SEARCH_API_URL}?${queryArgs}&limit=100`, // if more, risks exceeding next's 2MB cache limit
             AssetResponseSchema
         );
 
