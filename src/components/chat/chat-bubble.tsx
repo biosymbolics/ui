@@ -30,14 +30,16 @@ const getChild = (
         }
         const { data } = parsed;
         return (
-            <Heatmap
-                data={data}
-                pathname=""
-                tooltipFields={['reason', 'intervention']}
-                xField="reason"
-                yField="intervention"
-                width={600}
-            />
+            <Box sx={{ my: 2 }}>
+                <Heatmap
+                    data={data}
+                    pathname=""
+                    tooltipFields={['reason', 'intervention']}
+                    xField="reason"
+                    yField="intervention"
+                    width={600}
+                />
+            </Box>
         );
     }
     if (type === 'timeline') {

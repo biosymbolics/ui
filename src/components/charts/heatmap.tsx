@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import Typography from '@mui/joy/Typography';
 import { Vega, VisualizationSpec } from 'react-vega';
 
+import { DEFAULT_VEGA_THEME } from './constants';
 import { BaseChartProps } from './types';
 
 type HeadmapSpecProps = {
@@ -130,9 +131,11 @@ export const Heatmap = <DT extends Record<string, unknown>>({
             {title && <Typography level="title-md">{title}</Typography>}
 
             <Vega
+                actions={false}
                 spec={spec}
                 data={{ data }}
                 signalListeners={signalListeners}
+                theme={DEFAULT_VEGA_THEME}
                 width={width}
             />
         </>

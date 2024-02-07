@@ -243,7 +243,7 @@ export const getChats: () => Promise<Record<string, ChatsProps>> = async () =>
                     {"intervention" : "chelating agents", "reason" : "Lack of Efficacy", "count" : 10}]`,
                     type: 'heatmap',
                     timestamp: 'Wednesday 9:25am',
-                    sender: 'You',
+                    sender: biosymBot,
                 },
                 {
                     id: '8',
