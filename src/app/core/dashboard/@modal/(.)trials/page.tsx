@@ -22,7 +22,7 @@ const TrialsDetailModal = ({ searchParams }: Props) => {
         return null;
     }
     return (
-        <Modal isOpen={!!searchParams.terms} title="Trials">
+        <Modal isOpen={!!searchParams.terms} title={searchParams.terms ?? '??'}>
             <Suspense fallback={<CircularProgress />}>
                 <TrialsDetailInner terms={ids || terms} />
             </Suspense>

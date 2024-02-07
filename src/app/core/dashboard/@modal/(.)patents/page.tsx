@@ -22,7 +22,7 @@ const PatentsDetailModal = ({ searchParams }: Props) => {
         return null;
     }
     return (
-        <Modal isOpen={!!searchParams.terms} title={searchParams.terms || '??'}>
+        <Modal isOpen={!!searchParams.terms} title={searchParams.terms ?? '??'}>
             <Suspense fallback={<CircularProgress />}>
                 <PatentsDetailInner terms={ids || terms} />
             </Suspense>

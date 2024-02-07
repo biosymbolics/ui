@@ -22,7 +22,7 @@ const ApprovalsDetailModal = ({ searchParams }: Props) => {
         return null;
     }
     return (
-        <Modal isOpen={!!searchParams.terms} title="Approvals">
+        <Modal isOpen={!!searchParams.terms} title={searchParams.terms ?? '??'}>
             <Suspense fallback={<CircularProgress />}>
                 <ApprovalsDetailInner terms={ids || terms} />
             </Suspense>

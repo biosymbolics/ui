@@ -123,7 +123,7 @@ export const getAssetColumns = (isChild: boolean): GridColDef[] => [
     },
     {
         field: 'investment_level',
-        headerName: 'Saturation',
+        headerName: 'Investment',
         width: 125,
         renderCell: renderSaturationChip,
     },
@@ -162,9 +162,9 @@ export const getAssetColumns = (isChild: boolean): GridColDef[] => [
 export const getRowId = (row: Asset) => `nested-${row.id}`;
 
 const DocTypes: (keyof Omit<AssetActivity, 'year'>)[] = [
-    'patents',
-    'regulatory_approvals',
-    'trials',
+    'patent_count',
+    'regulatory_approval_count',
+    'trial_count',
 ];
 
 const formatDetailData = (data: AssetActivity[]) =>
@@ -173,7 +173,7 @@ const formatDetailData = (data: AssetActivity[]) =>
         data: data
             .map((d) => ({
                 x: d.year,
-                y: d[doc].length,
+                y: d[doc],
             }))
             .sort((a, b) => a.x - b.x),
     }));
