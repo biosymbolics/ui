@@ -41,7 +41,7 @@ const fetchReports = cache(
 
 export const OverTime = async ({
     pathname = DEFAULT_PATHNAME,
-    maxSeries = 8,
+    maxSeries = 8, // server-side limit too (10 by default)
     minDataLength = 3,
     ...args
 }: OverTimeProps) => {
