@@ -61,14 +61,19 @@ const FindBuyersInner = async ({
             useGptExpansion: useGptExpansion ?? true,
         });
 
+        const hasExpandedDescription =
+            expandedDescription && expandedDescription !== description;
+
         return (
             <>
-                <Section variant="l2">
-                    <Typography level="h3">Expanded Description</Typography>
-                    <ReactMarkdown>
-                        {expandedDescription || '(none)'}
-                    </ReactMarkdown>
-                </Section>
+                {hasExpandedDescription && (
+                    <Section variant="l2">
+                        <Typography level="h3">Expanded Description</Typography>
+                        <ReactMarkdown>
+                            {expandedDescription || '(none)'}
+                        </ReactMarkdown>
+                    </Section>
+                )}
                 <Section variant="l2">
                     <Box sx={getStyles}>
                         <DataGrid<PotentialBuyer>
