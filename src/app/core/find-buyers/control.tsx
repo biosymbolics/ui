@@ -27,7 +27,7 @@ export const FindBuyersControl = ({
                         aria-label="Message"
                         defaultValue={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        minRows={8}
+                        minRows={4}
                         maxRows={20}
                     />
                 </Section>
