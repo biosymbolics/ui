@@ -5,46 +5,14 @@ import Box from '@mui/joy/Box';
 import Skeleton from '@mui/joy/Skeleton';
 import Typography from '@mui/joy/Typography';
 import ReactMarkdown from 'react-markdown';
+import truncate from 'lodash/fp/truncate';
 
-import { getStyles } from '@/components/composite/styles';
-import {
-    DataGrid,
-    GridColDef,
-    renderChip,
-    renderChips,
-    renderMainTypography,
-} from '@/components/data/grid';
 import { Section } from '@/components/layout/section';
-import { FindBuyersParams, PotentialBuyer } from '@/types';
+import { FindBuyersParams } from '@/types';
 
 import { findBuyers } from './actions';
 import { FindBuyersControl } from './control';
-
-export const getFindBuyerColumns = (): GridColDef[] => [
-    {
-        field: 'name',
-        headerName: 'Name',
-        renderCell: renderMainTypography,
-        width: 200,
-    },
-    {
-        field: 'ids',
-        headerName: 'Ids',
-        renderCell: renderChips,
-        width: 450,
-    },
-    {
-        field: 'count',
-        headerName: 'Count',
-        renderCell: renderChip,
-        width: 100,
-    },
-    {
-        field: 'score',
-        headerName: 'Score',
-        width: 100,
-    },
-];
+import { BuyerGrid } from './client';
 
 const FindBuyersInner = async ({
     description,
@@ -55,7 +23,6 @@ const FindBuyersInner = async ({
     }
 
     try {
-        const findBuyerColumns = getFindBuyerColumns();
         const { description: expandedDescription, buyers } = await findBuyers({
             description,
             useGptExpansion: useGptExpansion ?? true,
@@ -64,24 +31,24 @@ const FindBuyersInner = async ({
         const hasExpandedDescription =
             expandedDescription && expandedDescription !== description;
 
+        // TODO: expandable text component
         return (
             <>
                 {hasExpandedDescription && (
                     <Section variant="l2">
                         <Typography level="h3">Expanded Description</Typography>
                         <ReactMarkdown>
-                            {expandedDescription || '(none)'}
+                            {truncate(
+                                {
+                                    length: 550,
+                                },
+                                expandedDescription || '(none)'
+                            )}
                         </ReactMarkdown>
                     </Section>
                 )}
                 <Section variant="l2">
-                    <Box sx={getStyles}>
-                        <DataGrid<PotentialBuyer>
-                            columns={findBuyerColumns}
-                            rows={buyers}
-                            title="Potential Buyers"
-                        />
-                    </Box>
+                    <BuyerGrid buyers={buyers} />
                 </Section>
             </>
         );
