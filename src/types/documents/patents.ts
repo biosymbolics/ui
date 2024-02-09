@@ -28,6 +28,7 @@ export const PatentSchema = z.object({
     suitability_score_explanation: z.optional(z.union([z.string(), z.null()])),
     url: z.string(),
 });
+export const PatentResponseSchema = z.array(PatentSchema);
 
 const PatentSummarySchema = z.object({
     count: z.number(),
@@ -49,8 +50,6 @@ const PatentTopicSchema = z.object({
 });
 export const PatentsTopicSchema = z.array(PatentTopicSchema);
 
-export const PatentResponseSchema = z.array(PatentSchema);
-
 export type PatentsSummaries = z.infer<typeof PatentsSummarySchema>;
 export type PatentsTopics = z.infer<typeof PatentsTopicSchema>;
 export type Patent = z.infer<typeof PatentSchema>;
@@ -65,25 +64,21 @@ const PatentEdgeSchema = z.object({
     target: z.string(),
     weight: z.number(),
 });
-
 const PatentNodeSchema = z.object({
     id: z.string(),
     label: z.string(),
     group: z.string(),
     parent: z.optional(z.string()),
 });
-
 export const PatentGraphSchema = z.object({
     edges: z.array(PatentEdgeSchema),
     nodes: z.array(PatentNodeSchema),
 });
-
 export type PatentGraph = z.infer<typeof PatentGraphSchema>;
 export type PatentEdge = z.infer<typeof PatentEdgeSchema>;
 export type PatentNode = z.infer<typeof PatentNodeSchema>;
 
 const HeadFieldEnum = z.enum(['id', 'assignee', 'priority_date']);
-
 export type HeadField = z.infer<typeof HeadFieldEnum>;
 
 const PatentCharacteristicSchema = z.object({
@@ -93,6 +88,37 @@ const PatentCharacteristicSchema = z.object({
     documents: z.array(z.string()),
 });
 export const PatentCharacteristicsSchema = z.array(PatentCharacteristicSchema);
-
 export type PatentCharacteristic = z.infer<typeof PatentCharacteristicSchema>;
 export type PatentCharacteristics = z.infer<typeof PatentCharacteristicsSchema>;
+
+export const PotentialBuyerSchema = z.object({
+    id: z.number(),
+    name: z.string(),
+    ids: z.array(z.string()),
+    count: z.optional(z.number()),
+    titles: z.array(z.string()),
+    // terms: z.array(z.string()),
+    min_age: z.optional(z.number()),
+    avg_age: z.optional(z.number()),
+    max_relevance_score: z.optional(z.number()),
+    avg_relevance_score: z.optional(z.number()),
+    score: z.number(),
+});
+export const PotentialBuyersSchema = z.array(PotentialBuyerSchema);
+export type PotentialBuyers = z.infer<typeof PotentialBuyersSchema>;
+export type PotentialBuyer = z.infer<typeof PotentialBuyerSchema>;
+
+const FindBuyersParamsSchema = z.object({
+    description: z.string(),
+    useGptExpansion: z.optional(z.boolean()),
+});
+export type FindBuyersParams = z.infer<typeof FindBuyersParamsSchema>;
+
+export const PotentialBuyerResponseSchema = z.object({
+    buyers: PotentialBuyersSchema,
+    description: z.string(),
+});
+
+export type PotentialBuyerResponse = z.infer<
+    typeof PotentialBuyerResponseSchema
+>;

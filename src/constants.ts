@@ -13,7 +13,9 @@ export const PATENT_SEARCH_API_URL = `${API_URL}/patents/search`;
 export const REGULATORY_APPROVAL_SEARCH_API_URL = `${API_URL}/approvals/search`;
 export const TRIAL_SEARCH_API_URL = `${API_URL}/trials/search`;
 
-export const CHAT_URL = 'http://localhost:3001/dev/chat'; // nx
+export const CHAT_URL = 'http://localhost:3001/dev/chat';
 export const PREDICT_CLINDEV_API_URL = `${API_URL}/clindev/predict/timelines`;
+
+export const FIND_BUYERS_URL = 'http://localhost:3001/dev/patents/buyers';
 
 export const DEFAULT_PATHNAME = '/core/dashboard';

@@ -14,11 +14,16 @@ import {
 } from 'next/navigation';
 import { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
+type ParamValues = {
+    [key: string]: string | boolean | number;
+};
+
 type NavigationContextType = {
     isPending: boolean;
     navigate: (url: string, options?: NavigateOptions) => void;
     params: ReadonlyURLSearchParams;
     setParam: (key: string, value: string) => void;
+    setParams: (newParamsValues: ParamValues) => void;
 };
 
 const NavigationContext = createContext({
@@ -29,6 +34,11 @@ const NavigationContext = createContext({
     params: new URLSearchParams() as ReadonlyURLSearchParams,
     setParam: (key: string, value: string) => {
         console.warn(`No impl when attempting to set param ${key} to ${value}`);
+    },
+    setParams: (newParams: ParamValues) => {
+        console.warn(
+            `No impl when attempting to set params ${JSON.stringify(newParams)}`
+        );
     },
 });
 
@@ -48,6 +58,15 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
             setParam: (key: string, value: string) => {
                 const newParams = new URLSearchParams(params);
                 newParams.set(key, value);
+                Router.replace(`?${newParams.toString()}`, {
+                    scroll: false, // TODO!
+                });
+            },
+            setParams: (newParamsValues: ParamValues) => {
+                const newParams = new URLSearchParams(params);
+                Object.entries(newParamsValues).forEach(([k, v]) =>
+                    newParams.set(k, `${v}`)
+                );
                 Router.replace(`?${newParams.toString()}`, {
                     scroll: false, // TODO!
                 });
