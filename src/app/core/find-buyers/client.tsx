@@ -14,6 +14,7 @@ import {
     GridColDef,
     getRenderTypography,
     renderChip,
+    renderPrimaryChip,
 } from '@/components/data/grid';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
@@ -37,12 +38,39 @@ export const findBuyerColumns: GridColDef[] = [
         field: 'count',
         headerName: 'Count',
         renderCell: renderChip,
+        description: 'Number of sufficiently similar patents',
         width: 100,
     },
     {
         field: 'score',
         headerName: 'Score',
+        renderCell: renderPrimaryChip,
+        description: 'Overall relevancy score with recency weighting',
         width: 100,
+    },
+    {
+        field: 'minAge',
+        headerName: 'Min Age',
+        description: 'Minimum patent age',
+        width: 100,
+    },
+    {
+        field: 'avgAge',
+        headerName: 'Avg Age',
+        description: 'Average patent age',
+        width: 100,
+    },
+    {
+        field: 'avgRelevanceScore',
+        headerName: 'Avg Rel.',
+        description: 'Average semantic similarity / relevance score',
+        width: 125,
+    },
+    {
+        field: 'maxRelevanceScore',
+        headerName: 'Max Rel.',
+        description: 'Max semantic similarity / relevance score',
+        width: 125,
     },
 ];
 

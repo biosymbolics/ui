@@ -17,7 +17,7 @@ import { BuyerGrid } from './client';
 const FindBuyersInner = async ({
     description,
     useGptExpansion,
-}: FindBuyersParams) => {
+}: FindBuyersParams): Promise<JSX.Element> => {
     if (!description) {
         return <Box>Please enter a description</Box>;
     }

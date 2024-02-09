@@ -95,13 +95,13 @@ export const PotentialBuyerSchema = z.object({
     id: z.number(),
     name: z.string(),
     ids: z.array(z.string()),
-    count: z.optional(z.number()),
+    count: z.number(),
     titles: z.array(z.string()),
     // terms: z.array(z.string()),
-    min_age: z.optional(z.number()),
-    avg_age: z.optional(z.number()),
-    max_relevance_score: z.optional(z.number()),
-    avg_relevance_score: z.optional(z.number()),
+    minAge: z.number(),
+    avgAge: z.number(),
+    maxRelevanceScore: z.number(),
+    avgRelevanceScore: z.number(),
     score: z.number(),
 });
 export const PotentialBuyersSchema = z.array(PotentialBuyerSchema);
