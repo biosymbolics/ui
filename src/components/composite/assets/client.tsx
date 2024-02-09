@@ -19,7 +19,7 @@ import { Asset, AssetActivity } from '@/types/assets';
 import { getStoppedPercentClass } from '../styles';
 
 export const renderPatentModal = getRenderChip({
-    color: 'neutral',
+    color: 'primary',
     getUrl: (row: Asset) =>
         `/core/dashboard/patents?ids=${row.patent_ids.join(';')}&terms=${
             row.name
@@ -27,7 +27,7 @@ export const renderPatentModal = getRenderChip({
 });
 
 export const renderApprovalModel = getRenderChip({
-    color: 'neutral',
+    color: 'primary',
     getUrl: (row: Asset) =>
         `/core/dashboard/approvals?ids=${row.regulatory_approval_ids.join(
             ';'
@@ -35,7 +35,7 @@ export const renderApprovalModel = getRenderChip({
 });
 
 export const renderTrialModal = getRenderChip({
-    color: 'neutral',
+    color: 'primary',
     getUrl: (row: Asset) =>
         `/core/dashboard/trials?ids=${row.trial_ids.join(';')}&terms=${
             row.name
@@ -79,7 +79,7 @@ export const getAssetColumns = (isChild: boolean): GridColDef[] => [
     },
     {
         field: 'child_count',
-        headerName: 'Children',
+        headerName: 'Subs',
         width: 80,
         hidden: isChild,
         renderCell: renderChip,

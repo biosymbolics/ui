@@ -145,19 +145,22 @@ export const getTrialColumns = (): GridColDef[] => [
     },
 ];
 
-const OutcomesList = ({ outcomes }: { outcomes: Outcome[] }): JSX.Element => (
-    <>
-        <Typography level="title-md">Outcomes</Typography>
-        <List>
-            {outcomes.map((o) => (
-                <ListItem key={getSelectableId(o.id)}>
-                    <ListItemDecorator>·</ListItemDecorator>
-                    {o.name} ({o.timeframe})
-                </ListItem>
-            ))}
-        </List>
-    </>
-);
+const OutcomesList = ({ outcomes }: { outcomes: Outcome[] }): JSX.Element =>
+    outcomes.length < 1 ? (
+        <span />
+    ) : (
+        <>
+            <Typography level="title-md">Outcomes</Typography>
+            <List>
+                {outcomes.map((o) => (
+                    <ListItem key={getSelectableId(o.id)}>
+                        <ListItemDecorator>·</ListItemDecorator>
+                        {o.name} ({o.timeframe})
+                    </ListItem>
+                ))}
+            </List>
+        </>
+    );
 
 /**
  * Detail content panel for patents grid
