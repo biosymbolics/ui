@@ -3,6 +3,7 @@
 import React, {
     ReactNode,
     createContext,
+    useCallback,
     useContext,
     useMemo,
     useTransition,
@@ -22,15 +23,15 @@ type NavigationContextType = {
     isPending: boolean;
     navigate: (url: string, options?: NavigateOptions) => void;
     params: ReadonlyURLSearchParams;
-    setParam: (key: string, value: string) => void;
-    setParams: (newParamsValues: ParamValues) => void;
+    setParam: (key: string, value: string, nagivate?: boolean) => void;
+    setParams: (newParamsValues: ParamValues, nagivate?: boolean) => void;
 };
 
-const NavigationContext = createContext({
+const NavigationContext = createContext<NavigationContextType>({
     isPending: false,
-    navigate: ((url: string) => {
+    navigate: (url: string) => {
         console.warn(`No impl when attempting to route to ${url}`);
-    }) as NavigationContextType['navigate'],
+    },
     params: new URLSearchParams() as ReadonlyURLSearchParams,
     setParam: (key: string, value: string) => {
         console.warn(`No impl when attempting to set param ${key} to ${value}`);
@@ -47,6 +48,23 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
     const params = useSearchParams();
     const [isPending, startTransition] = useTransition();
 
+    const setParams = useCallback(
+        (newParamsValues: ParamValues, nagivate: boolean = false) => {
+            const newParams = new URLSearchParams(params);
+            Object.entries(newParamsValues).forEach(([k, v]) =>
+                newParams.set(k, `${v}`)
+            );
+            if (nagivate) {
+                startTransition(() => {
+                    Router.push(`?${newParams.toString()}`);
+                });
+            } else {
+                Router.replace(`?${newParams.toString()}`);
+            }
+        },
+        [Router, params]
+    );
+
     const context: NavigationContextType = useMemo(
         () => ({
             isPending,
@@ -55,25 +73,17 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
                     Router.push(url, options);
                 });
             },
-            setParam: (key: string, value: string) => {
-                const newParams = new URLSearchParams(params);
-                newParams.set(key, value);
-                Router.replace(`?${newParams.toString()}`, {
-                    scroll: false, // TODO!
-                });
+            setParam: (
+                key: string,
+                value: string,
+                nagivate: boolean = false
+            ) => {
+                setParams({ [key]: value }, nagivate);
             },
-            setParams: (newParamsValues: ParamValues) => {
-                const newParams = new URLSearchParams(params);
-                Object.entries(newParamsValues).forEach(([k, v]) =>
-                    newParams.set(k, `${v}`)
-                );
-                Router.replace(`?${newParams.toString()}`, {
-                    scroll: false, // TODO!
-                });
-            },
+            setParams,
             params,
         }),
-        [Router, isPending, params]
+        [Router, isPending, params, setParams]
     );
 
     return (

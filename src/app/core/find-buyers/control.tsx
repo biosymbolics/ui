@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import { ReactNode, useState, useTransition } from 'react';
 
 import { Section } from '@/components/layout/section';
 import { Button, Checkbox, TextArea } from '@/components/input';
@@ -17,6 +17,7 @@ export const FindBuyersControl = ({
     const [useGptExpansion, setUseGptExpansion] = useState<boolean>(
         initialUseGptExpansion
     );
+    const [isPending] = useTransition();
 
     return (
         <>
@@ -42,11 +43,15 @@ export const FindBuyersControl = ({
                 <Section variant="l2">
                     <Button
                         color="primary"
+                        isLoading={isPending}
                         onClick={() => {
-                            setParams({
-                                description,
-                                useGptExpansion,
-                            });
+                            setParams(
+                                {
+                                    description,
+                                    useGptExpansion,
+                                },
+                                true
+                            );
                         }}
                         size="lg"
                         sx={{ ml: 'auto' }}
