@@ -36,6 +36,7 @@ export const FindBuyersControl = ({
                         checked={useGptExpansion}
                         onChange={(e) => setUseGptExpansion(e.target.checked)}
                         label="Expand with GPT?"
+                        tooltip="Use GPT to expand to generate a description from a small snippet of text. Mostly for testing. This will result in a 10-30 more seconds of waiting."
                     />
                 </Section>
                 <Section variant="l2">

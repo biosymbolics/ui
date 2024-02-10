@@ -1,11 +1,13 @@
 'use server';
 
 import { Suspense } from 'react';
+import Alert from '@mui/joy/Alert';
 import Box from '@mui/joy/Box';
 import Skeleton from '@mui/joy/Skeleton';
 import Typography from '@mui/joy/Typography';
 import ReactMarkdown from 'react-markdown';
 import truncate from 'lodash/fp/truncate';
+import LightbulbIcon from '@mui/icons-material/Lightbulb';
 
 import { Section } from '@/components/layout/section';
 import { FindBuyersParams } from '@/types';
@@ -19,7 +21,18 @@ const FindBuyersInner = async ({
     useGptExpansion,
 }: FindBuyersParams): Promise<JSX.Element> => {
     if (!description) {
-        return <Box>Please enter a description</Box>;
+        return (
+            <Alert
+                variant="soft"
+                color="primary"
+                startDecorator={<LightbulbIcon />}
+            >
+                <Typography level="h4">Please enter a description</Typography>
+                <Typography level="body-md">
+                    Enter a 2-3 paragraph description of the invention.
+                </Typography>
+            </Alert>
+        );
     }
 
     try {
