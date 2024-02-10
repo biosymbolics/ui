@@ -18,7 +18,7 @@ export const Title = ({
     title: string;
     description?: string;
     link?: { label: string; url: string };
-    variant: TitleVariant;
+    variant?: TitleVariant;
 }) => (
     <Sheet variant={variant} sx={{ mx: -3, mb: 2, mt: -3, px: 3, py: 2 }}>
         <Typography gutterBottom level="h3" maxWidth={MAX_WIDTH}>

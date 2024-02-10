@@ -33,10 +33,16 @@ export const Checkbox = ({
     const formId = id || getSelectableId(label);
 
     return (
-        <FormControl id={formId} error={error}>
+        <FormControl
+            id={formId}
+            error={error}
+            sx={{ alignItems: 'center', flexDirection: 'row' }}
+        >
             {label && (
-                <FormLabel tooltip={tooltip}>
-                    <Typography>{label}</Typography>
+                <FormLabel tooltip={tooltip} sx={{ mb: 0 }}>
+                    <Typography level="body-lg" sx={{ mr: 1 }}>
+                        {label}
+                    </Typography>
                 </FormLabel>
             )}
             <JoyCheckbox size="md" variant="outlined" {...props} />

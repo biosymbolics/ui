@@ -91,33 +91,6 @@ export const SearchBar = ({
                         />
                     </Grid>
                 </Grid>
-                {/* <Grid container spacing={4} sx={{ mt: 1 }}>
-                    <Grid xs={12} sm={6}>
-                        <Autocomplete<Option, true, false>
-                            isMultiple
-                            defaultValue={(exemplarPatents || []).map(
-                                (patent) => ({
-                                    id: patent,
-                                    label: patent,
-                                })
-                            )}
-                            isOptionEqualToValue={(
-                                option: Option,
-                                value: Option
-                            ) => option.id === value.id}
-                            label="Exemplar Patents"
-                            onChange={(e, values) => {
-                                setExemplarPatents(values.map((v) => v.id));
-                            }}
-                            optionFetcher={(str: string) =>
-                                fetchAutocompletions(str, 'id')
-                            }
-                            size="md"
-                            tooltip="Patents that exemplify what you are looking for, against which we'll perform cosine similarity comparisons against the embedded representations of the patents in our database."
-                            variant="soft"
-                        />
-                    </Grid>
-                </Grid> */}
             </Section>
             <Section variant="l2">
                 <Button
