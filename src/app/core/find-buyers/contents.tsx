@@ -38,7 +38,7 @@ const FindBuyersInner = async ({
     try {
         const { description: expandedDescription, buyers } = await findBuyers({
             description,
-            useGptExpansion: useGptExpansion ?? true,
+            useGptExpansion,
         });
 
         const hasExpandedDescription =
