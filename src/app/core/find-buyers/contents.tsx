@@ -77,7 +77,9 @@ const FindBuyersInner = async ({
 
 export const FindBuyers = (args: FindBuyersParams) => (
     <FindBuyersControl {...args}>
-        <Suspense fallback={<Skeleton height="80vh" />}>
+        <Suspense
+            fallback={<Skeleton height="80vh" sx={{ position: 'relative' }} />}
+        >
             <FindBuyersInner {...args} />
         </Suspense>
     </FindBuyersControl>
