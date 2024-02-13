@@ -19,6 +19,7 @@ import { BuyerGrid } from './client';
 const FindBuyersInner = async ({
     description,
     useGptExpansion,
+    k,
 }: FindBuyersParams): Promise<JSX.Element> => {
     if (!description) {
         return (
@@ -39,6 +40,7 @@ const FindBuyersInner = async ({
         const { description: expandedDescription, buyers } = await findBuyers({
             description,
             useGptExpansion,
+            k,
         });
 
         const hasExpandedDescription =
