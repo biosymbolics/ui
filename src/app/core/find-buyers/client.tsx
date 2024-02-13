@@ -20,7 +20,7 @@ import {
 } from '@/components/data/grid';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
-import { PotentialBuyer, PotentialBuyers, RelevanceByYear } from '@/types';
+import { PotentialBuyer, PotentialBuyers } from '@/types';
 import { DEFAULT_PATHNAME } from '@/constants';
 import { Line } from '@/components/charts/line';
 
@@ -114,14 +114,6 @@ const TitleList = ({
     </>
 );
 
-const formatDetailData = (data: RelevanceByYear[]) =>
-    data
-        .map((d) => ({
-            x: d.year,
-            y: d.relevance,
-        }))
-        .sort((a, b) => a.x - b.x);
-
 export const BuyerDetail = <T extends PotentialBuyer>({
     row: buyer,
 }: {
@@ -135,7 +127,12 @@ export const BuyerDetail = <T extends PotentialBuyer>({
                 series={[
                     {
                         name: 'patents',
-                        data: formatDetailData(buyer.relevanceByYear),
+                        data: buyer.relevanceByYear
+                            .map((d) => ({
+                                x: d.year,
+                                y: d.relevance,
+                            }))
+                            .sort((a, b) => a.x - b.x),
                     },
                 ]}
                 title="Activity Over Time"
