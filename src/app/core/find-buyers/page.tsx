@@ -7,7 +7,7 @@ import { FindBuyers } from './contents';
 const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     const description = searchParams.description ?? '';
     const useGptExpansion = searchParams.useGptExpansion === 'true';
-    const k = parseInt(searchParams.k ?? 100, 10);
+    const k = parseInt(searchParams.k ?? 1000, 10);
 
     return (
         <>
