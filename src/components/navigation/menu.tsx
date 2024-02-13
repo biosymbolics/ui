@@ -167,6 +167,9 @@ export const SideNav = () => {
                             <MenuItem {...itemProps} href="/core/clindev">
                                 Clinical Development
                             </MenuItem>
+                            <MenuItem {...itemProps} href="/core/find-buyers">
+                                Buyer Finder
+                            </MenuItem>
                         </Menu>
                     }
                 >
