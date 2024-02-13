@@ -213,6 +213,7 @@ export const getRenderChip =
         color: _color = 'primary',
         getUrl,
         getTooltip,
+        openInNewTab = true,
         onClick,
     }: {
         color:
@@ -220,6 +221,7 @@ export const getRenderChip =
             | ((value: number | string) => ChipProps['color']);
         getUrl?: (row: T) => string | undefined;
         getTooltip?: (row: T) => string | ReactNode | undefined;
+        openInNewTab?: boolean;
         onClick?: IconButtonProps['onClick'];
     }) =>
     (params: GridRenderCellParams<T, string | number>): ReactNode => {
@@ -238,7 +240,13 @@ export const getRenderChip =
             typeof _color === 'function' ? _color(value as number) : _color;
 
         return (
-            <Chip color={color} href={href} onClick={onClick} tooltip={tooltip}>
+            <Chip
+                color={color}
+                href={href}
+                onClick={onClick}
+                openInNewTab={openInNewTab}
+                tooltip={tooltip}
+            >
                 {formatLabel(value)}
             </Chip>
         );

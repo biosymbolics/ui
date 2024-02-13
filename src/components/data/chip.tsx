@@ -1,4 +1,4 @@
-import link from 'next/link';
+import NextLink from 'next/link';
 import React, { ReactNode } from 'react';
 import { ColorPaletteProp } from '@mui/joy/styles';
 import { default as JoyChip, ChipProps as JoyChipProps } from '@mui/joy/Chip';
@@ -17,6 +17,7 @@ export type ChipProps = {
     component?: JoyChipProps['component'];
     href?: string;
     icon?: React.ReactNode;
+    openInNewTab?: boolean;
     onClick?: JoyChipProps['onClick'];
     size?: JoyChipProps['size'];
     sx?: JoyChipProps['sx'];
@@ -40,6 +41,7 @@ export const Chip = ({
     children,
     href,
     icon,
+    openInNewTab = true,
     tooltip,
     ...props
 }: ChipProps): JSX.Element => {
@@ -47,7 +49,13 @@ export const Chip = ({
         <JoyChip
             slotProps={
                 href
-                    ? { action: { component: link, href } } // target: '_blank'
+                    ? {
+                          action: {
+                              component: NextLink,
+                              href,
+                              target: openInNewTab ? '_blank' : undefined,
+                          },
+                      }
                     : {}
             }
             startDecorator={icon}
