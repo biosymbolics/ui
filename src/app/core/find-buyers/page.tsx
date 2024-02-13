@@ -7,15 +7,17 @@ import { FindBuyers } from './contents';
 const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     const description = searchParams.description ?? '';
     const useGptExpansion = searchParams.useGptExpansion === 'true';
+    const k = parseInt(searchParams.k ?? 100, 10);
 
     return (
         <>
             <Typography gutterBottom level="h1">
-                Find Buyers
+                Search for Potential IP Buyers
             </Typography>
             <FindBuyers
                 description={description}
                 useGptExpansion={useGptExpansion}
+                k={k}
             />
         </>
     );

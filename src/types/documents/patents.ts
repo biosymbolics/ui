@@ -91,17 +91,27 @@ export const PatentCharacteristicsSchema = z.array(PatentCharacteristicSchema);
 export type PatentCharacteristic = z.infer<typeof PatentCharacteristicSchema>;
 export type PatentCharacteristics = z.infer<typeof PatentCharacteristicsSchema>;
 
+const RelevanceByYearSchema = z.object({
+    year: z.number(),
+    relevance: z.number(),
+});
+
+export type RelevanceByYear = z.infer<typeof RelevanceByYearSchema>;
+
 export const PotentialBuyerSchema = z.object({
     id: z.number(),
     name: z.string(),
     ids: z.array(z.string()),
     count: z.number(),
+    symbol: z.optional(z.union([z.string(), z.null()])),
     titles: z.array(z.string()),
     // terms: z.array(z.string()),
     minAge: z.number(),
     avgAge: z.number(),
     maxRelevanceScore: z.number(),
     avgRelevanceScore: z.number(),
+    activity: z.array(z.number()),
+    relevanceByYear: z.array(RelevanceByYearSchema),
     score: z.number(),
 });
 export const PotentialBuyersSchema = z.array(PotentialBuyerSchema);
@@ -111,6 +121,7 @@ export type PotentialBuyer = z.infer<typeof PotentialBuyerSchema>;
 const FindBuyersParamsSchema = z.object({
     description: z.string(),
     useGptExpansion: z.optional(z.boolean()),
+    k: z.optional(z.number()),
 });
 export type FindBuyersParams = z.infer<typeof FindBuyersParamsSchema>;
 

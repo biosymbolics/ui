@@ -224,7 +224,7 @@ export const getRenderChip =
     }) =>
     (params: GridRenderCellParams<T, string | number>): ReactNode => {
         const { value, row } = params;
-        if (value === null || typeof value === 'undefined') {
+        if (value === null || typeof value === 'undefined' || value === '') {
             return formatBlank();
         }
         if (typeof value !== 'string' && typeof value !== 'number') {

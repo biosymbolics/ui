@@ -12,20 +12,30 @@ import { getStyles } from '@/components/composite/styles';
 import {
     DataGrid,
     GridColDef,
+    getRenderChip,
     getRenderTypography,
     renderChip,
     renderPrimaryChip,
+    renderSparkline,
 } from '@/components/data/grid';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
-import { PotentialBuyer, PotentialBuyers } from '@/types';
-import { getSelectableId } from '@/utils/string';
+import { PotentialBuyer, PotentialBuyers, RelevanceByYear } from '@/types';
 import { DEFAULT_PATHNAME } from '@/constants';
+import { Line } from '@/components/charts/line';
 
 export const renderBuyerName = getRenderTypography(
     'title-md',
     (row: PotentialBuyer) => `${DEFAULT_PATHNAME}?terms=${row.name}`
 );
+
+export const renderTicker = getRenderChip({
+    color: 'success',
+    getUrl: (row: PotentialBuyer) =>
+        row.symbol
+            ? `https://finance.yahoo.com/quote/${row.symbol.toUpperCase()}`
+            : '',
+});
 
 export const findBuyerColumns: GridColDef[] = [
     {
@@ -35,10 +45,16 @@ export const findBuyerColumns: GridColDef[] = [
         width: 300,
     },
     {
+        field: 'symbol',
+        headerName: 'Ticker',
+        renderCell: renderTicker,
+        width: 125,
+    },
+    {
         field: 'count',
         headerName: 'Count',
         renderCell: renderChip,
-        description: 'Number of sufficiently similar patents',
+        description: 'Number of similar patents',
         width: 100,
     },
     {
@@ -49,15 +65,15 @@ export const findBuyerColumns: GridColDef[] = [
         width: 100,
     },
     {
+        field: 'activity',
+        headerName: 'Activity',
+        width: 125,
+        renderCell: renderSparkline,
+    },
+    {
         field: 'minAge',
         headerName: 'Min Age',
         description: 'Minimum patent age',
-        width: 100,
-    },
-    {
-        field: 'avgAge',
-        headerName: 'Avg Age',
-        description: 'Average patent age',
         width: 100,
     },
     {
@@ -66,21 +82,22 @@ export const findBuyerColumns: GridColDef[] = [
         description: 'Average semantic similarity / relevance score',
         width: 125,
     },
-    {
-        field: 'maxRelevanceScore',
-        headerName: 'Max Rel.',
-        description: 'Max semantic similarity / relevance score',
-        width: 125,
-    },
 ];
 
-const PatentList = ({ patentIds }: { patentIds: string[] }): JSX.Element => (
+const TitleList = ({
+    ids,
+    titles,
+}: {
+    ids: string[];
+    titles: string[];
+}): JSX.Element => (
     <>
-        <Typography level="title-md">Patent Ids</Typography>
+        <Typography level="title-md">Patents</Typography>
         <List>
-            {patentIds.map((id) => (
+            {ids.map((id, i) => (
                 <ListItem key={id}>
                     <ListItemDecorator>·</ListItemDecorator>
+
                     <Link
                         component={NextLink}
                         href={`https://patents.google.com/patent/${id.replaceAll(
@@ -89,7 +106,7 @@ const PatentList = ({ patentIds }: { patentIds: string[] }): JSX.Element => (
                         )}`}
                         target="_blank"
                     >
-                        {id}
+                        {titles[i]}
                     </Link>
                 </ListItem>
             ))}
@@ -97,19 +114,13 @@ const PatentList = ({ patentIds }: { patentIds: string[] }): JSX.Element => (
     </>
 );
 
-const TitleList = ({ titles }: { titles: string[] }): JSX.Element => (
-    <>
-        <Typography level="title-md">Titles</Typography>
-        <List>
-            {titles.map((title) => (
-                <ListItem key={getSelectableId(title)}>
-                    <ListItemDecorator>·</ListItemDecorator>
-                    {title}
-                </ListItem>
-            ))}
-        </List>
-    </>
-);
+const formatDetailData = (data: RelevanceByYear[]) =>
+    data
+        .map((d) => ({
+            x: d.year,
+            y: d.relevance,
+        }))
+        .sort((a, b) => a.x - b.x);
 
 export const BuyerDetail = <T extends PotentialBuyer>({
     row: buyer,
@@ -117,9 +128,22 @@ export const BuyerDetail = <T extends PotentialBuyer>({
     row: T;
 }): JSX.Element => (
     <Section mx={3}>
-        <Title title={buyer.name} variant="soft" />
-        <TitleList titles={buyer.titles} />
-        <PatentList patentIds={buyer.ids} />
+        <Title title={buyer.name} variant="soft">
+            <Line
+                height={150}
+                pathname={DEFAULT_PATHNAME}
+                series={[
+                    {
+                        name: 'patents',
+                        data: formatDetailData(buyer.relevanceByYear),
+                    },
+                ]}
+                title="Activity Over Time"
+                variant="minimal"
+                width={800}
+            />
+        </Title>
+        <TitleList ids={buyer.ids} titles={buyer.titles} />
     </Section>
 );
 
