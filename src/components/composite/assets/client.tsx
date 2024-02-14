@@ -24,6 +24,7 @@ export const renderPatentModal = getRenderChip({
         `/core/dashboard/patents?ids=${row.patent_ids.join(';')}&terms=${
             row.name
         }`,
+    openInNewTab: false,
 });
 
 export const renderApprovalModel = getRenderChip({
@@ -32,6 +33,7 @@ export const renderApprovalModel = getRenderChip({
         `/core/dashboard/approvals?ids=${row.regulatory_approval_ids.join(
             ';'
         )}&terms=${row.name}`,
+    openInNewTab: false,
 });
 
 export const renderTrialModal = getRenderChip({
@@ -40,6 +42,7 @@ export const renderTrialModal = getRenderChip({
         `/core/dashboard/trials?ids=${row.trial_ids.join(';')}&terms=${
             row.name
         }`,
+    openInNewTab: false,
 });
 
 export const renderAvailabilityModal = getRenderChip({
@@ -48,6 +51,7 @@ export const renderAvailabilityModal = getRenderChip({
         `/core/dashboard/patents?ids=${row.maybe_available_ids.join(
             ';'
         )}&terms=${row.name}`,
+    openInNewTab: false,
 });
 
 export const renderMainTerm = getRenderTypography(

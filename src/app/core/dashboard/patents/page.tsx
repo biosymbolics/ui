@@ -13,6 +13,7 @@ const PatentsDetailPage = async ({
         return null;
     }
     const patents = await fetchPatents({ terms: ids || terms });
+
     return <PatentsDetail patents={patents} />;
 };
 

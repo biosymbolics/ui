@@ -101,10 +101,6 @@ export const formatLabel = (
     if (exceptionRe && new RegExp(exceptionRe).test(strInput)) {
         return strInput;
     }
-    if (strInput.length < 5) {
-        // arbitrary-ish. good for stock tickers.
-        return strInput.toUpperCase();
-    }
     return title(strInput.replace(/_/g, ' '));
 };
 
