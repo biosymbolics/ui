@@ -28,7 +28,7 @@ export const SearchBar = ({
     endYear: initialEndYear = 2024,
     fetchAutocompletions,
     k: initialK,
-    queryType: initialQueryType,
+    queryType: initialQueryType = 'AND',
     startYear: initialStartYear = 2014,
     terms: initialTerms,
     variant = 'assets',
@@ -79,11 +79,11 @@ export const SearchBar = ({
                     <TextArea
                         aria-label="description"
                         defaultValue={description || undefined}
-                        label="Description"
+                        label="Technology Description"
                         onChange={(e) => setDescription(e.target.value)}
                         maxRows={20}
                         minRows={2}
-                        placeholder="Enter a description"
+                        placeholder="(optional) describe the invention or technology you are interested in."
                     />
                 </Section>
             )}
@@ -107,9 +107,9 @@ export const SearchBar = ({
                         <Grid xs={12} sm={4}>
                             <Slider<number>
                                 defaultValue={k}
-                                label="Nearest Neighbors"
+                                label="K Nearest Neighbors"
                                 onChange={(newK) => setK(newK)}
-                                min={50}
+                                min={100}
                                 max={5000}
                                 size="lg"
                                 step={100}
