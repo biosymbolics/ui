@@ -2,6 +2,7 @@
 
 import { cache } from 'react';
 import { z } from 'zod';
+import isEmpty from 'lodash/fp/isEmpty';
 
 import {
     ENTITY_SEARCH_API_URL,
@@ -126,7 +127,8 @@ export const fetchApprovals = cache(
  */
 export const fetchPatents = cache(
     async (args: PatentSearchArgs): Promise<PatentResponse> => {
-        if (args.terms?.length === 0) {
+        const { description, terms } = args;
+        if (isEmpty(terms) && isEmpty(description)) {
             return [];
         }
         const queryArgs = getQueryArgs(args, true);

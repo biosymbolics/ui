@@ -6,6 +6,7 @@ import Typography from '@mui/joy/Typography';
 
 import { SearchBar } from '@/components/composite';
 import { Section } from '@/components/layout/section';
+import { BaseSearchArgsSchema } from '@/types/documents/common';
 import { HeadField } from '@/types';
 import { formatLabel } from '@/utils/string';
 
@@ -15,15 +16,7 @@ import { Content } from './content';
 import { fetchAutocompletions } from '../actions';
 
 const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
-    const terms = searchParams.terms?.split(';') ?? null;
-    const queryType = searchParams.queryType ?? 'AND';
-    const exemplarPatents = searchParams.exemplarPatents?.split(';') ?? null;
-    const startYear = searchParams.startYear
-        ? parseInt(searchParams.startYear, 10)
-        : undefined;
-    const endYear = searchParams.endYear
-        ? parseInt(searchParams.endYear, 10)
-        : undefined;
+    const { terms, ...params } = BaseSearchArgsSchema.parse(searchParams);
     const headField = (searchParams.headField as HeadField) || 'priority_date';
     const { tab } = searchParams;
 
@@ -31,11 +24,8 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
         <>
             <Section variant="separated">
                 <SearchBar
-                    endYear={endYear}
-                    exemplarPatents={exemplarPatents}
+                    {...params}
                     fetchAutocompletions={fetchAutocompletions}
-                    queryType={queryType}
-                    startYear={startYear}
                     terms={terms || []}
                 />
             </Section>
@@ -53,11 +43,8 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
                 <Section>
                     <Suspense fallback={<Skeleton height="80vh" />}>
                         <Content
-                            endYear={endYear}
-                            exemplarPatents={exemplarPatents}
+                            {...params}
                             headField={headField}
-                            queryType={queryType}
-                            startYear={startYear}
                             tab={tab}
                             terms={terms || []}
                         />

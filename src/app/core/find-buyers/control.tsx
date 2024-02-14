@@ -31,7 +31,7 @@ export const FindBuyersControl = ({
                         Invention Description
                     </Typography>
                     <TextArea
-                        aria-label="Message"
+                        aria-label="description"
                         defaultValue={description}
                         onChange={(e) => setDescription(e.target.value)}
                         maxRows={20}
