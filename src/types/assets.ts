@@ -52,5 +52,5 @@ export type AssetSearchArgs = {
     endYear?: number;
     queryType?: string | null;
     startYear?: number;
-    terms: string[] | null;
+    terms?: string[] | null;
 };

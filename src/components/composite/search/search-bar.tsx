@@ -3,42 +3,55 @@
 import { SetStateAction, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Grid from '@mui/joy/Grid';
+import isEmpty from 'lodash/fp/isEmpty';
 
-import { Autocomplete, Button, Select, Slider } from '@/components/input';
+import {
+    Autocomplete,
+    Button,
+    Select,
+    Slider,
+    TextArea,
+} from '@/components/input';
 import { Section } from '@/components/layout/section';
 import { useNavigation } from '@/hooks/navigation';
 import { PatentSearchArgs } from '@/types';
 import { Option } from '@/types/select';
 import { getQueryArgs } from '@/utils/patents';
 
-import { FetchAutocompletions } from './types';
+import { FetchAutocompletions, SearchBarVariant } from './types';
 
 /**
  * Search bar for assets
  */
 export const SearchBar = ({
-    endYear = 2024,
-    // exemplarPatents,
+    description: initialDescription,
+    endYear: initialEndYear = 2024,
     fetchAutocompletions,
-    queryType,
-    startYear = 2014,
-    terms,
+    k: initialK,
+    queryType: initialQueryType = 'AND',
+    startYear: initialStartYear = 2014,
+    terms: initialTerms,
+    variant = 'assets',
 }: {
     fetchAutocompletions: FetchAutocompletions;
+    variant?: SearchBarVariant;
 } & PatentSearchArgs): JSX.Element => {
     const { navigate } = useNavigation();
     const pathname = usePathname();
-    const [newTerms, setTerms] = useState<string[] | null>(terms);
-    // const [newExemplarPatents, setExemplarPatents] = useState<string[] | null>(
-    //     exemplarPatents || null
-    // );
-    const [newQueryType, setQueryType] = useState<string | null>(
-        queryType || null
+    const [terms, setTerms] = useState<string[]>(initialTerms || []);
+    const [description, setDescription] = useState<string | null>(
+        initialDescription || null
+    );
+    const [k, setK] = useState<number>(initialK || 1000);
+    const [queryType, setQueryType] = useState<string | null>(
+        initialQueryType || null
     );
     const [newYearRange, setYearRange] = useState<[number, number]>([
-        startYear,
-        endYear,
+        initialStartYear,
+        initialEndYear,
     ]);
+
+    const includeDescription = variant === 'patents';
 
     return (
         <>
@@ -61,9 +74,22 @@ export const SearchBar = ({
                 tooltip="Compounds, diseases, MoAs, pharmaceutical companies, etc."
                 variant="soft"
             />
+            {includeDescription && (
+                <Section variant="l2">
+                    <TextArea
+                        aria-label="description"
+                        defaultValue={description || undefined}
+                        label="Technology Description"
+                        onChange={(e) => setDescription(e.target.value)}
+                        maxRows={20}
+                        minRows={2}
+                        placeholder="(optional) describe the invention or technology you are interested in."
+                    />
+                </Section>
+            )}
             <Section variant="l1">
                 <Grid container spacing={2}>
-                    <Grid xs={12} sm={6}>
+                    <Grid xs={12} sm={4}>
                         <Slider<[number, number]>
                             defaultValue={newYearRange}
                             label="Year Range"
@@ -76,6 +102,22 @@ export const SearchBar = ({
                             valueLabelDisplay="on"
                         />
                     </Grid>
+
+                    {includeDescription && (
+                        <Grid xs={12} sm={4}>
+                            <Slider<number>
+                                defaultValue={k}
+                                label="K Nearest Neighbors"
+                                onChange={(newK) => setK(newK)}
+                                min={100}
+                                max={5000}
+                                size="lg"
+                                step={100}
+                                sx={{ mr: 3 }}
+                                tooltip="How distantly to search for related IP. Higher values will take longer to compute."
+                            />
+                        </Grid>
+                    )}
 
                     <Grid xs={12} sm={2}>
                         <Select
@@ -95,16 +137,19 @@ export const SearchBar = ({
             <Section variant="l2">
                 <Button
                     onClick={() => {
-                        if (!newTerms) {
-                            console.warn("No terms selected, can't search");
+                        if (isEmpty(terms) && isEmpty(description)) {
+                            console.warn(
+                                "No terms selected nor description specified; can't search"
+                            );
                             return;
                         }
                         const queryArgs = getQueryArgs({
                             endYear: newYearRange?.[1],
-                            queryType: newQueryType,
-                            exemplarPatents: [], // TODO
+                            description,
+                            k,
+                            queryType,
                             startYear: newYearRange?.[0],
-                            terms: newTerms,
+                            terms,
                         });
                         navigate(`${pathname}?${queryArgs}`);
                     }}

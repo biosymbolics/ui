@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { z } from 'zod';
 
-import { BaseSearchArgs, MappingObjectSchema } from './common';
+import {
+    BaseSearchArgsSchema,
+    MappingObjectSchema,
+    paramInteger,
+    paramStringArray,
+} from './common';
 
 export const PatentSchema = z.object({
     id: z.string(),
@@ -12,11 +17,10 @@ export const PatentSchema = z.object({
     attributes: z.array(z.string()),
     availability_likelihood: z.string(),
     availability_explanation: z.string(),
+    description_similarity: z.union([z.number(), z.null()]),
     indications: z.union([z.array(MappingObjectSchema), z.null()]),
     interventions: z.union([z.array(MappingObjectSchema), z.null()]),
-    exemplar_similarity: z.union([z.number(), z.null()]),
     inventors: z.union([z.array(MappingObjectSchema), z.null()]),
-    // ipc_codes: z.array(z.string()),
     patent_years: z.number(),
     priority_date: z.string(),
     probability_of_success: z.number(),
@@ -55,9 +59,22 @@ export type PatentsTopics = z.infer<typeof PatentsTopicSchema>;
 export type Patent = z.infer<typeof PatentSchema>;
 export type PatentResponse = z.infer<typeof PatentResponseSchema>;
 
-export type PatentSearchArgs = BaseSearchArgs & {
-    exemplarPatents?: string[] | null;
-};
+export const PatentSearchArgsSchema = BaseSearchArgsSchema.extend({
+    description: z.optional(z.string()),
+    k: z.optional(paramInteger),
+});
+
+export type PatentSearchArgs = z.infer<typeof PatentSearchArgsSchema>;
+
+export const PatentSearchArgsWithIdsSchema = PatentSearchArgsSchema.extend({
+    ids: z.optional(
+        z.union([paramStringArray, z.array(z.string()).nullable()])
+    ),
+});
+
+export type PatentSearchArgsWithIds = z.infer<
+    typeof PatentSearchArgsWithIdsSchema
+>;
 
 const PatentEdgeSchema = z.object({
     source: z.string(),

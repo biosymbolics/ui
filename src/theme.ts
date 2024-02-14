@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { extendTheme } from '@mui/joy/styles';
+import extendTheme from '@mui/joy/styles/extendTheme';
 import { Mulish } from 'next/font/google';
 
 const mulish = Mulish({ subsets: ['latin'] });

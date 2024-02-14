@@ -21,9 +21,25 @@ type ParamValues = {
 
 type NavigationContextType = {
     isPending: boolean;
+    /**
+     * Set url & navigating (wraps next/router.push)
+     * @param url
+     * @param options
+     */
     navigate: (url: string, options?: NavigateOptions) => void;
     params: ReadonlyURLSearchParams;
+    /**
+     * Set parameter in url
+     * @param key
+     * @param value
+     * @param nagivate if true, will navigate to new url (next/router.push)
+     */
     setParam: (key: string, value: string, nagivate?: boolean) => void;
+    /**
+     * Set multiple parameters in url
+     * @param newParamsValues
+     * @param nagivate if true, will navigate to new url (next/router.push)
+     */
     setParams: (newParamsValues: ParamValues, nagivate?: boolean) => void;
 };
 
@@ -73,6 +89,7 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
                     Router.push(url, options);
                 });
             },
+            params,
             setParam: (
                 key: string,
                 value: string,
@@ -81,9 +98,8 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
                 setParams({ [key]: value }, nagivate);
             },
             setParams,
-            params,
         }),
-        [Router, isPending, params, setParams]
+        [Router, isPending, setParams, params]
     );
 
     return (

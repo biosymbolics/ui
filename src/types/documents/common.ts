@@ -9,9 +9,29 @@ export const MappingObjectSchema = z.object({
 
 export type MappingObject = z.infer<typeof MappingObjectSchema>;
 
-export type BaseSearchArgs = {
-    endYear?: number;
-    queryType?: string | null;
-    startYear?: number;
-    terms: string[] | null;
-};
+// turn ; delimited string into array
+export const paramStringArray = z.preprocess((value) => {
+    if (typeof value === 'string') {
+        return value.split(';');
+    }
+    return value;
+}, z.array(z.string()));
+
+// turn ; delimited string into array
+export const paramInteger = z.preprocess((value) => {
+    if (typeof value === 'string') {
+        return parseInt(value, 10);
+    }
+    return value;
+}, z.number());
+
+export const BaseSearchArgsSchema = z.object({
+    endYear: z.optional(paramInteger),
+    queryType: z.optional(z.string()),
+    startYear: z.optional(paramInteger),
+    terms: z.optional(
+        z.union([paramStringArray, z.array(z.string()).nullable()])
+    ),
+});
+
+export type BaseSearchArgs = z.infer<typeof BaseSearchArgsSchema>;

@@ -1,9 +1,12 @@
+'use server';
+
 import { Suspense } from 'react';
 import CircularProgress from '@mui/joy/CircularProgress';
 
 import { fetchApprovals } from '@/app/core/actions';
 import { ApprovalsDetail } from '@/components/composite/approvals/client';
 import { RouteableModal as Modal } from '@/components/navigation/modal';
+import { PatentSearchArgsWithIdsSchema } from '@/types';
 
 type Props = {
     searchParams: Record<string, string>;
@@ -15,16 +18,13 @@ const ApprovalsDetailInner = async ({ terms }: { terms: string[] }) => {
 };
 
 const ApprovalsDetailModal = ({ searchParams }: Props) => {
-    const ids = searchParams.ids?.split(';') ?? null;
-    const terms = searchParams.terms?.split(';') ?? null;
+    const { ids, terms, ...params } =
+        PatentSearchArgsWithIdsSchema.parse(searchParams);
 
-    if (!terms && !ids) {
-        return null;
-    }
     return (
-        <Modal isOpen={!!searchParams.terms} title={searchParams.terms ?? '??'}>
+        <Modal isOpen title={searchParams.terms ?? '??'}>
             <Suspense fallback={<CircularProgress />}>
-                <ApprovalsDetailInner terms={ids || terms} />
+                <ApprovalsDetailInner {...params} terms={ids || terms || []} />
             </Suspense>
         </Modal>
     );

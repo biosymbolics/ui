@@ -86,13 +86,6 @@ export const getPatentColumns = (): GridColDef[] => [
         width: 100,
     },
     {
-        field: 'exemplar_similarity',
-        headerName: 'Similarity',
-        valueFormatter: formatNumber,
-        width: 100,
-        description: 'Similarity to exemplar patent.',
-    },
-    {
         field: 'priority_date',
         headerName: 'Priority Year',
         valueFormatter: formatYear,
