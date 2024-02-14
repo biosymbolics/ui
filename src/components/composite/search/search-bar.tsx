@@ -3,6 +3,7 @@
 import { SetStateAction, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Grid from '@mui/joy/Grid';
+import isEmpty from 'lodash/fp/isEmpty';
 
 import {
     Autocomplete,
@@ -129,8 +130,10 @@ export const SearchBar = ({
             <Section variant="l2">
                 <Button
                     onClick={() => {
-                        if (!terms) {
-                            console.warn("No terms selected, can't search");
+                        if (isEmpty(terms) && isEmpty(description)) {
+                            console.warn(
+                                "No terms selected nor description specified; can't search"
+                            );
                             return;
                         }
                         const queryArgs = getQueryArgs({

@@ -3,7 +3,7 @@
 import React from 'react';
 import useSWR from 'swr';
 import FormHelperText from '@mui/joy/FormHelperText';
-import { default as JoyAutocomplete } from '@mui/joy/Autocomplete';
+import JoyAutocomplete from '@mui/joy/Autocomplete';
 import FormControl from '@mui/joy/FormControl';
 import Typography, { TypographyProps } from '@mui/joy/Typography';
 import isEmpty from 'lodash/fp/isEmpty';

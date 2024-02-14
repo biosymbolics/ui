@@ -1,7 +1,7 @@
 import NextLink from 'next/link';
 import React, { ReactNode } from 'react';
 import { ColorPaletteProp } from '@mui/joy/styles';
-import { default as JoyChip, ChipProps as JoyChipProps } from '@mui/joy/Chip';
+import JoyChip, { ChipProps as JoyChipProps } from '@mui/joy/Chip';
 import Box from '@mui/joy/Box';
 import Grid from '@mui/joy/Grid';
 import Tooltip from '@mui/joy/Tooltip';

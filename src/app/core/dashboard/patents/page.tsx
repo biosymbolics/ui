@@ -41,6 +41,7 @@ const PatentsDetailPage = ({
 }: {
     searchParams: Record<string, string>;
 }) => {
+    console.info({ searchParams });
     const { ids, terms, ...params } =
         PatentSearchArgsWithIdsSchema.parse(searchParams);
 
