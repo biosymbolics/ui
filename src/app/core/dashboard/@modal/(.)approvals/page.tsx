@@ -20,7 +20,7 @@ const ApprovalsDetailModal = ({ searchParams }: Props) => {
         PatentSearchArgsWithIdsSchema.parse(searchParams);
 
     return (
-        <Modal isOpen={!!searchParams.terms} title={searchParams.terms ?? '??'}>
+        <Modal isOpen title={searchParams.terms ?? '??'}>
             <Suspense fallback={<CircularProgress />}>
                 <ApprovalsDetailInner {...params} terms={ids || terms || []} />
             </Suspense>

@@ -37,8 +37,8 @@ export const SearchBar = ({
     const { navigate } = useNavigation();
     const pathname = usePathname();
     const [terms, setTerms] = useState<string[]>(initialTerms || []);
-    const [description, setDescription] = useState<string | undefined>(
-        initialDescription
+    const [description, setDescription] = useState<string | null>(
+        initialDescription || null
     );
     const [k, setK] = useState<number>(initialK || 1000);
     const [queryType, setQueryType] = useState<string | null>(
@@ -73,7 +73,7 @@ export const SearchBar = ({
             <Section variant="l2">
                 <TextArea
                     aria-label="description"
-                    defaultValue={description}
+                    defaultValue={description || undefined}
                     label="Description"
                     onChange={(e) => setDescription(e.target.value)}
                     maxRows={20}

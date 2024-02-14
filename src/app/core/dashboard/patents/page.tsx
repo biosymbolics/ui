@@ -1,3 +1,5 @@
+'use server';
+
 import { Suspense } from 'react';
 import Alert from '@mui/joy/Alert';
 import Skeleton from '@mui/joy/Skeleton';
@@ -11,7 +13,7 @@ import { PatentsDetail } from '@/components/composite/patents/client';
 import { Section } from '@/components/layout/section';
 import { PatentSearchArgs, PatentSearchArgsWithIdsSchema } from '@/types';
 
-const PatentPage = async (args: PatentSearchArgs) => {
+const PatentPageInner = async (args: PatentSearchArgs) => {
     const { description, terms } = args;
     if (isEmpty(terms) && isEmpty(description)) {
         return (
@@ -36,12 +38,7 @@ const PatentPage = async (args: PatentSearchArgs) => {
     }
 };
 
-const PatentsDetailPage = ({
-    searchParams,
-}: {
-    searchParams: Record<string, string>;
-}) => {
-    console.info({ searchParams });
+const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     const { ids, terms, ...params } =
         PatentSearchArgsWithIdsSchema.parse(searchParams);
 
@@ -51,13 +48,13 @@ const PatentsDetailPage = ({
                 <SearchBar
                     {...params}
                     fetchAutocompletions={fetchAutocompletions}
-                    terms={terms}
+                    terms={ids || terms}
                 />
             </Section>
             <Section variant="main">
                 <Section>
                     <Suspense fallback={<Skeleton height="80vh" />}>
-                        <PatentPage {...params} terms={ids || terms} />
+                        <PatentPageInner {...params} terms={ids || terms} />
                     </Suspense>
                 </Section>
             </Section>
@@ -65,4 +62,4 @@ const PatentsDetailPage = ({
     );
 };
 
-export default PatentsDetailPage;
+export default Page;
