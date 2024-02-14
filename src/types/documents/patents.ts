@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { z } from 'zod';
 
-import { BaseSearchArgsSchema, MappingObjectSchema } from './common';
+import {
+    BaseSearchArgsSchema,
+    MappingObjectSchema,
+    paramStringArray,
+} from './common';
 
 export const PatentSchema = z.object({
     id: z.string(),
@@ -62,7 +66,7 @@ export const PatentSearchArgsSchema = BaseSearchArgsSchema.extend({
 export type PatentSearchArgs = z.infer<typeof PatentSearchArgsSchema>;
 
 export const PatentSearchArgsWithIdsSchema = PatentSearchArgsSchema.extend({
-    ids: z.optional(z.array(z.string())),
+    ids: z.union([paramStringArray, z.array(z.string()).nullable()]),
 });
 
 export type PatentSearchArgsWithIds = z.infer<

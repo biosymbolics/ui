@@ -10,7 +10,7 @@ export const MappingObjectSchema = z.object({
 export type MappingObject = z.infer<typeof MappingObjectSchema>;
 
 // turn ; delimited string into array
-const paramStringArray = z.preprocess((value) => {
+export const paramStringArray = z.preprocess((value) => {
     if (typeof value === 'string') {
         return value.split(';');
     }
