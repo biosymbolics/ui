@@ -81,7 +81,6 @@ export const SearchBar = ({
                     placeholder="Enter a description"
                 />
             </Section>
-            {pathname}
             <Section variant="l1">
                 <Grid container spacing={2}>
                     <Grid xs={12} sm={4}>
