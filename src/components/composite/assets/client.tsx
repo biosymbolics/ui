@@ -21,9 +21,7 @@ import { getStoppedPercentClass } from '../styles';
 export const renderPatentModal = getRenderChip({
     color: 'primary',
     getUrl: (row: Asset) =>
-        `/core/dashboard/patents?ids=${row.patent_ids.join(';')}&terms=${
-            row.name
-        }`,
+        `/core/patents?ids=${row.patent_ids.join(';')}&terms=${row.name}`,
     openInNewTab: false,
 });
 
