@@ -66,7 +66,9 @@ export const PatentSearchArgsSchema = BaseSearchArgsSchema.extend({
 export type PatentSearchArgs = z.infer<typeof PatentSearchArgsSchema>;
 
 export const PatentSearchArgsWithIdsSchema = PatentSearchArgsSchema.extend({
-    ids: z.union([paramStringArray, z.array(z.string()).nullable()]),
+    ids: z.optional(
+        z.union([paramStringArray, z.array(z.string()).nullable()])
+    ),
 });
 
 export type PatentSearchArgsWithIds = z.infer<
