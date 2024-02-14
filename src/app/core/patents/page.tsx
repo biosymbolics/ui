@@ -49,6 +49,7 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
                     {...params}
                     fetchAutocompletions={fetchAutocompletions}
                     terms={ids || terms}
+                    variant="patents"
                 />
             </Section>
             <Section variant="main">
