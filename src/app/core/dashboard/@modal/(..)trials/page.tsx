@@ -1,3 +1,5 @@
+'use server';
+
 import { Suspense } from 'react';
 import CircularProgress from '@mui/joy/CircularProgress';
 
