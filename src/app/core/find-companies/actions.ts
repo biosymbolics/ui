@@ -18,7 +18,7 @@ import { formatKeys } from '@/utils/object';
  * @param args.description
  * @param args.useGptExpansion
  */
-export const FindCompanies = cache(
+export const findCompanies = cache(
     async (args: FindCompaniesParams): Promise<CompanyResponse> => {
         const queryArgs = getQueryArgs(args, true);
         const res = await doFetch(
