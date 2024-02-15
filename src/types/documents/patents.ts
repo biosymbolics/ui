@@ -115,7 +115,7 @@ const RelevanceByYearSchema = z.object({
 
 export type RelevanceByYear = z.infer<typeof RelevanceByYearSchema>;
 
-export const PotentialBuyerSchema = z.object({
+export const Companieschema = z.object({
     id: z.number(),
     name: z.string(),
     ids: z.array(z.string()),
@@ -131,22 +131,20 @@ export const PotentialBuyerSchema = z.object({
     relevanceByYear: z.array(RelevanceByYearSchema),
     score: z.number(),
 });
-export const PotentialBuyersSchema = z.array(PotentialBuyerSchema);
-export type PotentialBuyers = z.infer<typeof PotentialBuyersSchema>;
-export type PotentialBuyer = z.infer<typeof PotentialBuyerSchema>;
+export const CompaniesSchema = z.array(Companieschema);
+export type Companies = z.infer<typeof CompaniesSchema>;
+export type Company = z.infer<typeof Companieschema>;
 
-const FindBuyersParamsSchema = z.object({
+const FindCompaniesParamsSchema = z.object({
     description: z.string(),
     useGptExpansion: z.optional(z.boolean()),
     k: z.optional(z.number()),
 });
-export type FindBuyersParams = z.infer<typeof FindBuyersParamsSchema>;
+export type FindCompaniesParams = z.infer<typeof FindCompaniesParamsSchema>;
 
-export const PotentialBuyerResponseSchema = z.object({
-    buyers: PotentialBuyersSchema,
+export const CompanyResponseSchema = z.object({
+    companies: CompaniesSchema,
     description: z.string(),
 });
 
-export type PotentialBuyerResponse = z.infer<
-    typeof PotentialBuyerResponseSchema
->;
+export type CompanyResponse = z.infer<typeof CompanyResponseSchema>;

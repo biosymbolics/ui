@@ -13,7 +13,6 @@ import {
 import {
     getAvailabilityClass,
     getPatentYearsClass,
-    getScoresClass,
     getTolerantScoresClass,
 } from '../styles';
 
@@ -33,29 +32,20 @@ export const getPatentColumns = (): GridColDef[] => [
         cellClassName: getTolerantScoresClass,
         description: 'Overall score',
     },
+    // {
+    //     field: 'suitability_score',
+    //     headerName: 'Suitability',
+    //     width: 85,
+    //     valueFormatter: formatNumber,
+    //     cellClassName: getScoresClass,
+    //     description:
+    //         'Suitability of patent, in terms of patent type (CoM vs MoU), patented thing (compound > device) and patent years remaining.',
+    // },
     {
-        field: 'suitability_score',
-        headerName: 'Suitability',
-        width: 85,
-        valueFormatter: formatNumber,
-        cellClassName: getScoresClass,
-        description:
-            'Suitability of patent, in terms of patent type (CoM vs MoU), patented thing (compound > device) and patent years remaining.',
-    },
-    {
-        field: 'patent_years',
-        headerName: 'Yrs Left',
-        width: 75,
-        description: 'Patent years remaining.',
-        cellClassName: getPatentYearsClass,
-    },
-    {
-        field: 'availability_likelihood',
-        headerName: 'Est. Avail',
-        width: 100,
-        valueFormatter: formatName,
-        cellClassName: getAvailabilityClass,
-        description: 'Likehood of patent being available.',
+        field: 'priority_date',
+        headerName: 'Priority Year',
+        valueFormatter: formatYear,
+        width: 125,
     },
     {
         field: 'assignees',
@@ -80,15 +70,24 @@ export const getPatentColumns = (): GridColDef[] => [
     //     description: '**FAKE PLACEHOLDER**!! Esimated reformulation potential.',
     // },
     {
+        field: 'patent_years',
+        headerName: 'Yrs Left',
+        width: 75,
+        description: 'Patent years remaining.',
+        cellClassName: getPatentYearsClass,
+    },
+    {
+        field: 'availability_likelihood',
+        headerName: 'Est. Avail',
+        width: 100,
+        valueFormatter: formatName,
+        cellClassName: getAvailabilityClass,
+        description: 'Likehood of patent being available.',
+    },
+    {
         field: 'search_rank',
         headerName: 'Relevance',
         valueFormatter: formatNumber,
         width: 100,
-    },
-    {
-        field: 'priority_date',
-        headerName: 'Priority Year',
-        valueFormatter: formatYear,
-        width: 125,
     },
 ];

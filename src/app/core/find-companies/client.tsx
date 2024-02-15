@@ -20,28 +20,28 @@ import {
 } from '@/components/data/grid';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
-import { PotentialBuyer, PotentialBuyers } from '@/types';
+import { Company, Companies } from '@/types';
 import { DEFAULT_PATHNAME } from '@/constants';
 import { Line } from '@/components/charts/line';
 
-export const renderBuyerName = getRenderTypography(
+export const renderCompanyName = getRenderTypography(
     'title-md',
-    (row: PotentialBuyer) => `${DEFAULT_PATHNAME}?terms=${row.name}`
+    (row: Company) => `${DEFAULT_PATHNAME}?terms=${row.name}`
 );
 
 export const renderTicker = getRenderChip({
     color: 'success',
-    getUrl: (row: PotentialBuyer) =>
+    getUrl: (row: Company) =>
         row.symbol
             ? `https://finance.yahoo.com/quote/${row.symbol.toUpperCase()}`
             : '',
 });
 
-export const findBuyerColumns: GridColDef[] = [
+export const findCompanyColumns: GridColDef[] = [
     {
         field: 'name',
         headerName: 'Name',
-        renderCell: renderBuyerName,
+        renderCell: renderCompanyName,
         width: 300,
     },
     {
@@ -114,20 +114,20 @@ const TitleList = ({
     </>
 );
 
-export const BuyerDetail = <T extends PotentialBuyer>({
-    row: buyer,
+export const CompanyDetail = <T extends Company>({
+    row: company,
 }: {
     row: T;
 }): JSX.Element => (
     <Section mx={3}>
-        <Title title={buyer.name} variant="soft">
+        <Title title={company.name} variant="soft">
             <Line
                 height={150}
                 pathname={DEFAULT_PATHNAME}
                 series={[
                     {
                         name: 'patents',
-                        data: buyer.relevanceByYear
+                        data: company.relevanceByYear
                             .map((d) => ({
                                 x: d.year,
                                 y: d.relevance,
@@ -140,17 +140,17 @@ export const BuyerDetail = <T extends PotentialBuyer>({
                 width={800}
             />
         </Title>
-        <TitleList ids={buyer.ids} titles={buyer.titles} />
+        <TitleList ids={company.ids} titles={company.titles} />
     </Section>
 );
 
-export const BuyerGrid = ({ buyers }: { buyers: PotentialBuyers }) => (
+export const CompanyGrid = ({ companies }: { companies: Companies }) => (
     <Box sx={getStyles}>
-        <DataGrid<PotentialBuyer>
-            columns={findBuyerColumns}
-            detailComponent={BuyerDetail<PotentialBuyer>}
-            rows={buyers}
-            title="Potential Buyers"
+        <DataGrid<Company>
+            columns={findCompanyColumns}
+            detailComponent={CompanyDetail<Company>}
+            rows={companies}
+            title="Potential Companies"
         />
     </Box>
 );

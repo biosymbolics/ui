@@ -10,17 +10,17 @@ import truncate from 'lodash/fp/truncate';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
 
 import { Section } from '@/components/layout/section';
-import { FindBuyersParams } from '@/types';
+import { FindCompaniesParams } from '@/types';
 
-import { findBuyers } from './actions';
-import { FindBuyersControl } from './control';
-import { BuyerGrid } from './client';
+import { findCompanies } from './actions';
+import { FindCompaniesControl } from './control';
+import { CompanyGrid } from './client';
 
-const FindBuyersInner = async ({
+const FindCompaniesInner = async ({
     description,
     useGptExpansion,
     k,
-}: FindBuyersParams): Promise<JSX.Element> => {
+}: FindCompaniesParams): Promise<JSX.Element> => {
     if (!description) {
         return (
             <Alert
@@ -37,11 +37,12 @@ const FindBuyersInner = async ({
     }
 
     try {
-        const { description: expandedDescription, buyers } = await findBuyers({
-            description,
-            useGptExpansion,
-            k,
-        });
+        const { description: expandedDescription, companies } =
+            await findCompanies({
+                description,
+                useGptExpansion,
+                k,
+            });
 
         const hasExpandedDescription =
             expandedDescription && expandedDescription !== description;
@@ -63,26 +64,26 @@ const FindBuyersInner = async ({
                     </Section>
                 )}
                 <Section variant="l2">
-                    <BuyerGrid buyers={buyers} />
+                    <CompanyGrid companies={companies} />
                 </Section>
             </>
         );
     } catch (e) {
         return (
             <Box>
-                Failed to fetch buyers:{' '}
+                Failed to fetch companies:{' '}
                 {e instanceof Error ? e.message : JSON.stringify(e)}
             </Box>
         );
     }
 };
 
-export const FindBuyers = (args: FindBuyersParams) => (
-    <FindBuyersControl {...args}>
+export const FindCompanies = (args: FindCompaniesParams) => (
+    <FindCompaniesControl {...args}>
         <Suspense
             fallback={<Skeleton height="80vh" sx={{ position: 'relative' }} />}
         >
-            <FindBuyersInner {...args} />
+            <FindCompaniesInner {...args} />
         </Suspense>
-    </FindBuyersControl>
+    </FindCompaniesControl>
 );

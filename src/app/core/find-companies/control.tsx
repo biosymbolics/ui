@@ -6,15 +6,15 @@ import Typography from '@mui/joy/Typography';
 
 import { Section } from '@/components/layout/section';
 import { Button, Checkbox, Slider, TextArea } from '@/components/input';
-import { FindBuyersParams } from '@/types';
+import { FindCompaniesParams } from '@/types';
 import { useNavigation } from '@/hooks/navigation';
 
-export const FindBuyersControl = ({
+export const FindCompaniesControl = ({
     description: initialDescription = '',
     children,
     useGptExpansion: initialUseGptExpansion = true,
     k: initialK = 1000,
-}: FindBuyersParams & { children: ReactNode }) => {
+}: FindCompaniesParams & { children: ReactNode }) => {
     const { setParams } = useNavigation();
     const [description, setDescription] = useState<string>(initialDescription);
     const [useGptExpansion, setUseGptExpansion] = useState<boolean>(

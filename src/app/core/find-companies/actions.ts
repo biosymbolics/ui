@@ -3,27 +3,27 @@
 import { cache } from 'react';
 import camelCase from 'lodash/fp/camelCase';
 
-import { FIND_BUYERS_URL } from '@/constants';
+import { FIND_COMPANIES_URL } from '@/constants';
 import {
-    FindBuyersParams,
-    PotentialBuyerResponse,
-    PotentialBuyerResponseSchema,
+    FindCompaniesParams,
+    CompanyResponse,
+    CompanyResponseSchema,
 } from '@/types';
 import { getQueryArgs } from '@/utils/patents';
 import { doFetch } from '@/utils/actions';
 import { formatKeys } from '@/utils/object';
 
 /**
- * FindBuyers
+ * FindCompanies
  * @param args.description
  * @param args.useGptExpansion
  */
-export const findBuyers = cache(
-    async (args: FindBuyersParams): Promise<PotentialBuyerResponse> => {
+export const FindCompanies = cache(
+    async (args: FindCompaniesParams): Promise<CompanyResponse> => {
         const queryArgs = getQueryArgs(args, true);
         const res = await doFetch(
-            `${FIND_BUYERS_URL}?${queryArgs}`,
-            PotentialBuyerResponseSchema,
+            `${FIND_COMPANIES_URL}?${queryArgs}`,
+            CompanyResponseSchema,
             (response) => formatKeys(response, camelCase)
         );
         return res;
