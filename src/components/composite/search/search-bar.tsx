@@ -74,7 +74,7 @@ export const SearchBar = ({
                 <TextArea
                     aria-label="description"
                     defaultValue={description || undefined}
-                    label="Technology Description"
+                    label="Describe technology, platform, or theme"
                     onChange={(e) => setDescription(e.target.value)}
                     maxRows={20}
                     minRows={2}
@@ -101,14 +101,14 @@ export const SearchBar = ({
                     <Grid xs={12} sm={4}>
                         <Slider<number>
                             defaultValue={k}
-                            label="K Nearest Neighbors"
+                            label="Search Breadth"
                             onChange={(newK) => setK(newK)}
                             min={100}
                             max={5000}
                             size="lg"
                             step={100}
                             sx={{ mr: 3 }}
-                            tooltip="How distantly to search for related IP. Higher values will take longer to compute."
+                            tooltip="KNN, aka how distantly to search for related IP. Higher values will take longer to compute."
                         />
                     </Grid>
 

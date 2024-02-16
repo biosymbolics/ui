@@ -78,7 +78,7 @@ export const findCompanyColumns: GridColDef[] = [
     },
     {
         field: 'avgRelevanceScore',
-        headerName: 'Avg Rel.',
+        headerName: 'Relevance',
         description: 'Average semantic similarity / relevance score',
         width: 125,
     },
@@ -150,7 +150,7 @@ export const CompanyGrid = ({ companies }: { companies: Companies }) => (
             columns={findCompanyColumns}
             detailComponent={CompanyDetail<Company>}
             rows={companies}
-            title="Potential Companies"
+            title="Companies"
         />
     </Box>
 );
