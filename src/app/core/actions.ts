@@ -85,7 +85,7 @@ export const fetchDescription = cache(
  */
 export const fetchAssets = cache(
     async (args: AssetSearchArgs): Promise<AssetResponse> => {
-        if (args.terms?.length === 0) {
+        if (isEmpty(args.terms) && isEmpty(args.description)) {
             return [];
         }
         const queryArgs = getQueryArgs(args, true);

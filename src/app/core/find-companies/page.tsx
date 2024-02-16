@@ -2,7 +2,7 @@
 
 import Typography from '@mui/joy/Typography';
 
-import { FindBuyers } from './contents';
+import { FindCompanies } from './contents';
 
 const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     const description = searchParams.description ?? '';
@@ -12,9 +12,9 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     return (
         <>
             <Typography gutterBottom level="h1">
-                Search for Potential IP Buyers
+                Search for Companies
             </Typography>
-            <FindBuyers
+            <FindCompanies
                 description={description}
                 useGptExpansion={useGptExpansion}
                 k={k}

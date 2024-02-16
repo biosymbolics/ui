@@ -18,7 +18,7 @@ import { PatentSearchArgs } from '@/types';
 import { Option } from '@/types/select';
 import { getQueryArgs } from '@/utils/patents';
 
-import { FetchAutocompletions, SearchBarVariant } from './types';
+import { FetchAutocompletions } from './types';
 
 /**
  * Search bar for assets
@@ -31,10 +31,8 @@ export const SearchBar = ({
     queryType: initialQueryType = 'AND',
     startYear: initialStartYear = 2014,
     terms: initialTerms,
-    variant = 'assets',
 }: {
     fetchAutocompletions: FetchAutocompletions;
-    variant?: SearchBarVariant;
 } & PatentSearchArgs): JSX.Element => {
     const { navigate } = useNavigation();
     const pathname = usePathname();
@@ -50,8 +48,6 @@ export const SearchBar = ({
         initialStartYear,
         initialEndYear,
     ]);
-
-    const includeDescription = variant === 'patents';
 
     return (
         <>
@@ -74,19 +70,18 @@ export const SearchBar = ({
                 tooltip="Compounds, diseases, MoAs, pharmaceutical companies, etc."
                 variant="soft"
             />
-            {includeDescription && (
-                <Section variant="l2">
-                    <TextArea
-                        aria-label="description"
-                        defaultValue={description || undefined}
-                        label="Technology Description"
-                        onChange={(e) => setDescription(e.target.value)}
-                        maxRows={20}
-                        minRows={2}
-                        placeholder="(optional) describe the invention or technology you are interested in."
-                    />
-                </Section>
-            )}
+            <Section variant="l2">
+                <TextArea
+                    aria-label="description"
+                    defaultValue={description || undefined}
+                    label="Describe technology, platform, or theme"
+                    onChange={(e) => setDescription(e.target.value)}
+                    maxRows={20}
+                    minRows={2}
+                    placeholder="(optional) describe the invention or technology you are interested in."
+                />
+            </Section>
+
             <Section variant="l1">
                 <Grid container spacing={2}>
                     <Grid xs={12} sm={4}>
@@ -103,21 +98,19 @@ export const SearchBar = ({
                         />
                     </Grid>
 
-                    {includeDescription && (
-                        <Grid xs={12} sm={4}>
-                            <Slider<number>
-                                defaultValue={k}
-                                label="K Nearest Neighbors"
-                                onChange={(newK) => setK(newK)}
-                                min={100}
-                                max={5000}
-                                size="lg"
-                                step={100}
-                                sx={{ mr: 3 }}
-                                tooltip="How distantly to search for related IP. Higher values will take longer to compute."
-                            />
-                        </Grid>
-                    )}
+                    <Grid xs={12} sm={4}>
+                        <Slider<number>
+                            defaultValue={k}
+                            label="Search Breadth"
+                            onChange={(newK) => setK(newK)}
+                            min={100}
+                            max={5000}
+                            size="lg"
+                            step={100}
+                            sx={{ mr: 3 }}
+                            tooltip="KNN, aka how distantly to search for related IP. Higher values will take longer to compute."
+                        />
+                    </Grid>
 
                     <Grid xs={12} sm={2}>
                         <Select

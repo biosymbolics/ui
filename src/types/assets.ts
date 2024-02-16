@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { z } from 'zod';
 
+import { PatentSearchArgs } from '.';
+
 const AssetActivitySchema = z.object({
     year: z.number(),
     patents: z.number(),
@@ -45,12 +47,4 @@ export type Asset = z.infer<typeof AssetSchema>;
 export type AssetResponse = z.infer<typeof AssetResponseSchema>;
 export type AssetActivity = z.infer<typeof AssetActivitySchema>;
 
-/**
- * TODO: combine with BaseSearchArgs in src/types/documents/common.ts
- */
-export type AssetSearchArgs = {
-    endYear?: number;
-    queryType?: string | null;
-    startYear?: number;
-    terms?: string[] | null;
-};
+export type AssetSearchArgs = PatentSearchArgs;

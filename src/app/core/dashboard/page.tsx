@@ -30,11 +30,11 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
             </Section>
             <Section variant="main">
                 <Section>
-                    <Typography level="h1">
-                        {terms
-                            ? terms.map((t) => formatLabel(t)).join(', ')
-                            : 'No terms selected'}
-                    </Typography>
+                    {terms && (
+                        <Typography level="h1">
+                            {terms.map((t) => formatLabel(t)).join(', ')}
+                        </Typography>
+                    )}
                     <Suspense fallback={<Skeleton />}>
                         {terms && <Description terms={terms} />}
                     </Suspense>

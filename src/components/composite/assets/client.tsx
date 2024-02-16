@@ -28,27 +28,25 @@ export const renderPatentModal = getRenderChip({
 export const renderApprovalModel = getRenderChip({
     color: 'primary',
     getUrl: (row: Asset) =>
-        `/core/dashboard/approvals?ids=${row.regulatory_approval_ids.join(
-            ';'
-        )}&terms=${row.name}`,
+        `/core/approvals?ids=${row.regulatory_approval_ids.join(';')}&terms=${
+            row.name
+        }`,
     openInNewTab: false,
 });
 
 export const renderTrialModal = getRenderChip({
     color: 'primary',
     getUrl: (row: Asset) =>
-        `/core/dashboard/trials?ids=${row.trial_ids.join(';')}&terms=${
-            row.name
-        }`,
+        `/core/trials?ids=${row.trial_ids.join(';')}&terms=${row.name}`,
     openInNewTab: false,
 });
 
 export const renderAvailabilityModal = getRenderChip({
     color: (v) => ((v as number) > 0 ? 'success' : 'neutral'),
     getUrl: (row: Asset) =>
-        `/core/dashboard/patents?ids=${row.maybe_available_ids.join(
-            ';'
-        )}&terms=${row.name}`,
+        `/core/patents?ids=${row.maybe_available_ids.join(';')}&terms=${
+            row.name
+        }`,
     openInNewTab: false,
 });
 

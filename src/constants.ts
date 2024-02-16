@@ -16,6 +16,6 @@ export const TRIAL_SEARCH_API_URL = `${API_URL}/trials/search`;
 export const CHAT_URL = 'http://localhost:3001/dev/chat';
 export const PREDICT_CLINDEV_API_URL = `${API_URL}/clindev/predict/timelines`;
 
-export const FIND_BUYERS_URL = 'http://localhost:3001/dev/patents/buyers';
+export const FIND_COMPANIES_URL = 'http://localhost:3001/dev/patents/companies';
 
 export const DEFAULT_PATHNAME = '/core/dashboard';
