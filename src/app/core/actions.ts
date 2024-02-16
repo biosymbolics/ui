@@ -39,6 +39,8 @@ const AutocompleteResponse = z.array(
     })
 );
 
+type AutocompleteTypes = 'entity' | 'owner';
+
 /**
  * Autocomplete terms or ids from the API.
  * @param str search string
@@ -46,12 +48,12 @@ const AutocompleteResponse = z.array(
  */
 export const fetchAutocompletions = async (
     str: string,
-    mode: 'id' | 'term' = 'term'
+    types: AutocompleteTypes[] = ['entity', 'owner']
 ): Promise<Option[]> => {
     'use server';
 
     const res = await doFetch(
-        `${AUTOCOMPLETE_API_URL}?mode=${mode}&string=${str}`,
+        `${AUTOCOMPLETE_API_URL}?types=${types.join(';')}&string=${str}`,
         AutocompleteResponse
     );
     return res;

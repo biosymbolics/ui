@@ -9,6 +9,25 @@ const biosymBot: UserProps = {
 
 export const getChats: () => Promise<Record<string, ChatsProps>> = async () =>
     Promise.resolve({
+        findExceptionalCompanies: {
+            id: '1',
+            sender: biosymBot,
+            messages: [
+                {
+                    id: '1',
+                    content:
+                        'What are promising seed-stage biotechs, innovating in drug delivery systems?',
+                    timestamp: 'Wednesday 9:00am',
+                    sender: 'You',
+                },
+                {
+                    id: '2',
+                    timestamp: 'Wednesday 11:30am',
+                    sender: biosymBot,
+                    content: '...',
+                },
+            ],
+        },
         tradingBelowCash: {
             id: '1',
             sender: biosymBot,
@@ -326,7 +345,7 @@ The ideal candidate is a hydrophilic, high molecular weight CNS-active compound 
                 {
                     id: '3',
                     content:
-                        'What are some compounds that failed clinical trials for indications in CNS, with off-target effects in the periphery?',
+                        'What are compounds that failed clinical trials for indications in CNS, with off-target effects in the periphery?',
                     timestamp: 'Wednesday 9:22am',
                     sender: 'You',
                 },

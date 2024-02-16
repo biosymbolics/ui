@@ -5,17 +5,22 @@ import Grid from '@mui/joy/Grid';
 import Typography from '@mui/joy/Typography';
 
 import { Section } from '@/components/layout/section';
-import { Button, Slider, TextArea } from '@/components/input';
+import { Autocomplete, Button, Slider, TextArea } from '@/components/input';
+import { Option } from '@/types/select';
 import { FindCompaniesParams } from '@/types';
 import { useNavigation } from '@/hooks/navigation';
+
+import { fetchAutocompletions } from '../actions';
 
 export const FindCompaniesControl = ({
     description: initialDescription = '',
     children,
+    companies: initialCompanies = [],
     k: initialK = 1000,
 }: FindCompaniesParams & { children: ReactNode }) => {
     const { setParams } = useNavigation();
     const [description, setDescription] = useState<string>(initialDescription);
+    const [companies, setCompanies] = useState<string[]>(initialCompanies);
     const [k, setK] = useState<number>(initialK);
     const [isPending] = useTransition();
 
@@ -36,7 +41,34 @@ export const FindCompaniesControl = ({
                     />
                 </Section>
                 <Section variant="l2">
-                    <Grid container justifyContent="space-between">
+                    <Grid container>
+                        <Grid xs={12} sm={4}>
+                            <Autocomplete<Option, true, false>
+                                isMultiple
+                                defaultValue={(companies || []).map(
+                                    (company) => ({
+                                        id: company,
+                                        label: company,
+                                    })
+                                )}
+                                isOptionEqualToValue={(
+                                    option: Option,
+                                    value: Option
+                                ) => option.id === value.id}
+                                label="Select Companies"
+                                onChange={(e, values) => {
+                                    setCompanies(values.map((v) => v.id));
+                                }}
+                                optionFetcher={(string) =>
+                                    fetchAutocompletions(string, ['owner'])
+                                }
+                                optionLabelField="label"
+                                size="md"
+                                sx={{ mr: 3 }}
+                                tooltip="Select compan(y|ies) for which you want to find similar entities."
+                                variant="soft"
+                            />
+                        </Grid>
                         <Grid xs={12} sm={4}>
                             <Slider<number>
                                 defaultValue={k}
@@ -61,6 +93,7 @@ export const FindCompaniesControl = ({
                                 {
                                     description,
                                     k,
+                                    companies: companies.join(';'),
                                 },
                                 true
                             );

@@ -56,6 +56,7 @@ export const Autocomplete = <
     helperText,
     label,
     size,
+    sx,
     tooltip,
     ...props
 }: AutocompleteProps<T, Multiple, Creatable>): JSX.Element => {
@@ -103,7 +104,7 @@ export const Autocomplete = <
             : {};
 
     return (
-        <FormControl id={formId} error={error}>
+        <FormControl id={formId} error={error} sx={sx}>
             {label && (
                 <FormLabel tooltip={tooltip}>
                     <Typography

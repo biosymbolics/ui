@@ -79,5 +79,6 @@ export type AutocompleteProps<
     'size'
 > & {
     size?: AutocompleteBaseProps<T, Multiple, Creatable>['size'] | 'xlg';
+    sx?: JoyAutocompleteProps<T, Multiple>['sx'];
     tooltip?: string;
 };

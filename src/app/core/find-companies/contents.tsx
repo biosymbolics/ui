@@ -5,8 +5,6 @@ import Alert from '@mui/joy/Alert';
 import Box from '@mui/joy/Box';
 import Skeleton from '@mui/joy/Skeleton';
 import Typography from '@mui/joy/Typography';
-import ReactMarkdown from 'react-markdown';
-import truncate from 'lodash/fp/truncate';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
 
 import { Section } from '@/components/layout/section';
@@ -17,8 +15,8 @@ import { FindCompaniesControl } from './control';
 import { CompanyGrid } from './client';
 
 const FindCompaniesInner = async ({
+    companies,
     description,
-    useGptExpansion,
     k,
 }: FindCompaniesParams): Promise<JSX.Element> => {
     if (!description) {
@@ -28,45 +26,29 @@ const FindCompaniesInner = async ({
                 color="primary"
                 startDecorator={<LightbulbIcon />}
             >
-                <Typography level="h4">Please enter a description</Typography>
+                <Typography level="h4">
+                    Please enter a description or select companies
+                </Typography>
                 <Typography level="body-md">
-                    Enter a 2-3 paragraph description of the invention.
+                    Enter a 2-3 paragraph description, or select similar
+                    companies
                 </Typography>
             </Alert>
         );
     }
 
     try {
-        const { description: expandedDescription, companies } =
-            await findCompanies({
-                description,
-                useGptExpansion,
-                k,
-            });
-
-        const hasExpandedDescription =
-            expandedDescription && expandedDescription !== description;
+        const { companies: foundCompanies } = await findCompanies({
+            companies,
+            description,
+            k,
+        });
 
         // TODO: expandable text component
         return (
-            <>
-                {hasExpandedDescription && (
-                    <Section variant="l2">
-                        <Typography level="h3">Expanded Description</Typography>
-                        <ReactMarkdown>
-                            {truncate(
-                                {
-                                    length: 550,
-                                },
-                                expandedDescription || '(none)'
-                            )}
-                        </ReactMarkdown>
-                    </Section>
-                )}
-                <Section variant="l2">
-                    <CompanyGrid companies={companies} />
-                </Section>
-            </>
+            <Section variant="l2">
+                <CompanyGrid companies={foundCompanies} />
+            </Section>
         );
     } catch (e) {
         return (
