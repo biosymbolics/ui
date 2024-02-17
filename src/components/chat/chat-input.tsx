@@ -1,30 +1,30 @@
 'use client';
 
-import * as React from 'react';
+import { useState } from 'react';
 import Box from '@mui/joy/Box';
 
 import { Button, TextArea } from '@/components/input';
 
 export type ChatInputProps = {
-    onSubmit: (value: string) => void;
+    onSubmit: (prompt: string) => void;
 };
 
 export const ChatInput = ({ onSubmit }: ChatInputProps) => {
-    const handleClick = (value: string) => {
-        onSubmit(value.trim());
-    };
-    console.info(handleClick);
+    const [prompt, setPrompt] = useState<string>('');
+
     return (
         <Box sx={{ px: 2, pb: 5 }}>
             <TextArea
                 placeholder="Type something here…"
-                aria-label="Message"
+                aria-label="Prompt"
+                id="prompt"
                 minRows={3}
                 maxRows={10}
+                onChange={(e) => setPrompt(e.target.value)}
                 endDecorator={
                     <Button
                         color="primary"
-                        onClick={() => {}}
+                        onClick={() => onSubmit(prompt)}
                         size="lg"
                         sx={{ ml: 'auto' }}
                     >

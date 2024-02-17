@@ -1,25 +1,27 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Box from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 
+import {
+    MockChatMessage,
+    MockChatParams,
+    MockChatParamsSchema,
+} from '@/types/chat';
+
 import { Avatar } from './avatar';
 import { ChatBubble } from './chat-bubble';
 import { ChatInput } from './chat-input';
-import { ChatProps, ChatsProps } from './types';
 
-type MessagesPaneProps = {
-    chat: ChatsProps;
+type ChatPaneProps = {
+    conversationKey: string;
+    send: (message: MockChatParams) => Promise<MockChatMessage>;
 };
 
-export const ChatPane = ({ chat }: MessagesPaneProps) => {
-    const [chatMessages, setChatMessages] = useState(chat.messages);
-
-    useEffect(() => {
-        setChatMessages(chat.messages);
-    }, [chat.messages]);
+export const ChatPane = ({ conversationKey, send }: ChatPaneProps) => {
+    const [messages, setMessages] = useState<MockChatMessage[]>([]);
 
     return (
         <Sheet
@@ -45,8 +47,8 @@ export const ChatPane = ({ chat }: MessagesPaneProps) => {
                 }}
             >
                 <Stack spacing={2} justifyContent="flex-end">
-                    {chatMessages.map((message: ChatProps, index: number) => (
-                        <Stack key={index} direction="row" spacing={2}>
+                    {messages.map((message: MockChatMessage) => (
+                        <Stack key={message.id} direction="row" spacing={2}>
                             <Avatar
                                 variant={
                                     message.sender !== 'You' ? 'solid' : 'soft'
@@ -60,18 +62,30 @@ export const ChatPane = ({ chat }: MessagesPaneProps) => {
                 </Stack>
             </Box>
             <ChatInput
-                onSubmit={(value: string) => {
-                    const newId = chatMessages.length + 1;
-                    const newIdString = newId.toString();
-                    setChatMessages([
-                        ...chatMessages,
+                onSubmit={(prompt: string) => {
+                    console.info(prompt);
+                    const newId = messages.length + 1;
+                    const data = MockChatParamsSchema.parse({
+                        conversationKey,
+                        messageKey: (newId + 1).toString(),
+                        prompt,
+                    });
+                    setMessages((prev) => [
+                        ...prev,
                         {
-                            id: newIdString,
+                            id: newId.toString(),
                             sender: 'You',
-                            content: value,
-                            timestamp: 'Just now',
+                            content: data.prompt,
                         },
                     ]);
+
+                    send(data)
+                        .then((m) => {
+                            setMessages((prev) => [...prev, m]);
+                        })
+                        .catch((e) => console.error(e));
+
+                    return new FormData();
                 }}
             />
         </Sheet>

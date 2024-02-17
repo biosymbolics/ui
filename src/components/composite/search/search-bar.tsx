@@ -16,7 +16,7 @@ import { Section } from '@/components/layout/section';
 import { useNavigation } from '@/hooks/navigation';
 import { PatentSearchArgs } from '@/types';
 import { Option } from '@/types/select';
-import { getQueryArgs } from '@/utils/patents';
+import { getQueryArgs } from '@/utils/api';
 
 import { FetchAutocompletions } from './types';
 

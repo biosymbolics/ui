@@ -16,8 +16,9 @@ export type ButtonProps = {
     isLoading?: JoyButtonProps['loading'];
     size?: JoyButtonProps['size'];
     sx?: JoyButtonProps['sx'];
+    type?: JoyButtonProps['type'];
     variant?: JoyButtonProps['variant'];
-} & XOR<{ onClick: JoyButtonProps['onClick'] }, { href: string }>;
+} & XOR<{ onClick: JoyButtonProps['onClick'] }, { href?: string }>;
 
 /**
  * Button wrapper

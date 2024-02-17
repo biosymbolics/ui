@@ -12,23 +12,34 @@ import startCase from 'lodash/fp/startCase';
 
 import { ChatPane } from '@/components/chat';
 
-import { getChats } from './data';
+import { chat } from './actions';
 
-export const Contents = async ({ chatId }: { chatId: string | null }) => {
-    const chats = await getChats();
+const CONVERSATION_IDS = [
+    'findExceptionalCompanies',
+    'tradingBelowCash',
+    'clinicalTrialHighDropout',
+    'drugDeliverySystems',
+];
 
-    if (!chatId || !chats[chatId]) {
+export const Contents = ({
+    conversationKey,
+}: {
+    conversationKey: string | null;
+}) => {
+    'use server';
+
+    if (!conversationKey || !CONVERSATION_IDS.includes(conversationKey)) {
         return (
             <Box>
                 <Typography level="h2">Available Chats</Typography>
                 <List marker="circle">
-                    {Object.keys(chats).map((c) => (
-                        <ListItem key={c}>
+                    {CONVERSATION_IDS.map((cId) => (
+                        <ListItem key={cId}>
                             <Link
                                 component={NextLink}
-                                href={`/core/chat?chatId=${c}`}
+                                href={`/core/chat?conversationKey=${cId}`}
                             >
-                                {startCase(c)}
+                                {startCase(cId)}
                             </Link>
                         </ListItem>
                     ))}
@@ -36,6 +47,6 @@ export const Contents = async ({ chatId }: { chatId: string | null }) => {
             </Box>
         );
     }
-    const chat = chats[chatId];
-    return <ChatPane chat={chat} />;
+
+    return <ChatPane conversationKey={conversationKey} send={chat} />;
 };

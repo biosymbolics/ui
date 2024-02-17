@@ -125,7 +125,7 @@ export const CompanySchema = z.object({
     // terms: z.array(z.string()),
     minAge: z.number(),
     avgAge: z.number(),
-    avgRelevanceScore: z.number(),
+    relevanceScore: z.number(),
     wheelhouseScore: z.number(),
     activity: z.array(z.number()),
     countByYear: z.array(CountByYearSchema),

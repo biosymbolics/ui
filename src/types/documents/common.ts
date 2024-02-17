@@ -17,13 +17,19 @@ export const paramStringArray = z.preprocess((value) => {
     return value;
 }, z.array(z.string()));
 
-// turn ; delimited string into array
 export const paramInteger = z.preprocess((value) => {
     if (typeof value === 'string') {
         return parseInt(value, 10);
     }
     return value;
 }, z.number());
+
+export const paramString = z.preprocess((value) => {
+    if (typeof value === 'number') {
+        return `${value}`;
+    }
+    return value;
+}, z.string());
 
 export const BaseSearchArgsSchema = z.object({
     endYear: z.optional(paramInteger),

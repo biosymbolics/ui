@@ -42,7 +42,7 @@ export const FindCompaniesControl = ({
                 </Section>
                 <Section variant="l2">
                     <Grid container>
-                        <Grid xs={12} sm={4}>
+                        <Grid xs={12} sm={6}>
                             <Autocomplete<Option, true, false>
                                 isMultiple
                                 defaultValue={(companies || []).map(
@@ -74,7 +74,7 @@ export const FindCompaniesControl = ({
                                 defaultValue={k}
                                 label="Search Breadth"
                                 onChange={(newK) => setK(newK)}
-                                min={50}
+                                min={100}
                                 max={5000}
                                 size="lg"
                                 step={100}

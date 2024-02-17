@@ -77,7 +77,7 @@ export const findCompanyColumns: GridColDef[] = [
         width: 100,
     },
     {
-        field: 'avgRelevanceScore',
+        field: 'relevanceScore',
         headerName: 'Relevance',
         description: 'Average semantic similarity / relevance score',
         width: 125,

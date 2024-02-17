@@ -6,6 +6,7 @@ import Box from '@mui/joy/Box';
 import Skeleton from '@mui/joy/Skeleton';
 import Typography from '@mui/joy/Typography';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
+import isEmpty from 'lodash/fp/isEmpty';
 
 import { Section } from '@/components/layout/section';
 import { FindCompaniesParams } from '@/types';
@@ -19,7 +20,7 @@ const FindCompaniesInner = async ({
     description,
     k,
 }: FindCompaniesParams): Promise<JSX.Element> => {
-    if (!description) {
+    if (isEmpty(description) && isEmpty(companies)) {
         return (
             <Alert
                 variant="soft"

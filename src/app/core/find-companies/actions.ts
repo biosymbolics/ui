@@ -9,7 +9,7 @@ import {
     CompanyResponse,
     CompanyResponseSchema,
 } from '@/types';
-import { getQueryArgs } from '@/utils/patents';
+import { getQueryArgs } from '@/utils/api';
 import { doFetch } from '@/utils/actions';
 import { formatKeys } from '@/utils/object';
 

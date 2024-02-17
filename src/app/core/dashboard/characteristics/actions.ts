@@ -12,7 +12,7 @@ import {
 } from '@/types';
 import { doFetch } from '@/utils/actions';
 import { formatKeys } from '@/utils/object';
-import { getQueryArgs } from '@/utils/patents';
+import { getQueryArgs } from '@/utils/api';
 
 export const fetchPatentCharacteristics = cache(
     async (
