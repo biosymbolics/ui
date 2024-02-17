@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
 import Box from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 
+import { ChatProvider, useChat } from '@/hooks/chat';
 import {
     MockChatMessage,
     MockChatParams,
@@ -20,8 +20,8 @@ type ChatPaneProps = {
     send: (message: MockChatParams) => Promise<MockChatMessage>;
 };
 
-export const ChatPane = ({ conversationKey, send }: ChatPaneProps) => {
-    const [messages, setMessages] = useState<MockChatMessage[]>([]);
+const ChatPaneInner = ({ conversationKey, send }: ChatPaneProps) => {
+    const { addMessage, messages } = useChat();
 
     return (
         <Sheet
@@ -63,31 +63,29 @@ export const ChatPane = ({ conversationKey, send }: ChatPaneProps) => {
             </Box>
             <ChatInput
                 onSubmit={(prompt: string) => {
-                    console.info(prompt);
                     const newId = messages.length + 1;
                     const data = MockChatParamsSchema.parse({
                         conversationKey,
                         messageKey: (newId + 1).toString(),
                         prompt,
                     });
-                    setMessages((prev) => [
-                        ...prev,
-                        {
-                            id: newId.toString(),
-                            sender: 'You',
-                            content: data.prompt,
-                        },
-                    ]);
+                    addMessage({
+                        id: newId.toString(),
+                        sender: 'You',
+                        content: prompt,
+                    });
 
                     send(data)
-                        .then((m) => {
-                            setMessages((prev) => [...prev, m]);
-                        })
+                        .then((m) => addMessage(m))
                         .catch((e) => console.error(e));
-
-                    return new FormData();
                 }}
             />
         </Sheet>
     );
 };
+
+export const ChatPane = (props: ChatPaneProps) => (
+    <ChatProvider>
+        <ChatPaneInner {...props} />
+    </ChatProvider>
+);

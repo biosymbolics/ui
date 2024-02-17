@@ -24,13 +24,17 @@ export const ChatInput = ({ onSubmit }: ChatInputProps) => {
                 endDecorator={
                     <Button
                         color="primary"
-                        onClick={() => onSubmit(prompt)}
+                        onClick={() => {
+                            onSubmit(prompt);
+                            setPrompt('');
+                        }}
                         size="lg"
                         sx={{ ml: 'auto' }}
                     >
                         Submit
                     </Button>
                 }
+                value={prompt}
                 variant="outlined"
             />
         </Box>
