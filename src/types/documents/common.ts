@@ -25,10 +25,22 @@ export const paramInteger = z.preprocess((value) => {
 }, z.number());
 
 export const paramString = z.preprocess((value) => {
+    if (typeof value === 'string') {
+        return value;
+    }
     if (typeof value === 'number') {
         return `${value}`;
     }
-    return value;
+    if (typeof value === 'boolean') {
+        return value ? 'true' : 'false';
+    }
+    if (Array.isArray(value)) {
+        return value.join(';');
+    }
+    if (value === null) {
+        return '';
+    }
+    throw new Error('Invalid value');
 }, z.string());
 
 export const BaseSearchArgsSchema = z.object({

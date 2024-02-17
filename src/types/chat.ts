@@ -1,7 +1,5 @@
 import { z } from 'zod';
 
-import { paramString } from './documents/common';
-
 // one off schema for mock chat data map
 export const InterventionDropoutReportSchema = z.array(
     z.object({
@@ -20,7 +18,7 @@ export const MockChatParamsSchema = z.object({
 export type MockChatParams = z.infer<typeof MockChatParamsSchema>;
 
 export const MockChatMessageSchema = z.object({
-    id: paramString,
+    id: z.string(),
     content: z.string(),
     sender: z.optional(z.string()),
     type: z.optional(z.string()),

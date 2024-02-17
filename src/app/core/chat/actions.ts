@@ -15,7 +15,6 @@ import { formatKeys } from '@/utils/object';
 
 /**
  * Chat
- * encodeURIComponent
  */
 export const chat = cache(
     async (args: MockChatParams): Promise<MockChatMessage> => {
