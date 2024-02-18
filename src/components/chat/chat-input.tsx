@@ -28,7 +28,7 @@ export const ChatInput = ({ error, isPending, onSubmit }: ChatInputProps) => {
                 endDecorator={
                     <Button
                         color="primary"
-                        isLoading={isPending}
+                        disabled={isPending}
                         onClick={() => {
                             onSubmit(prompt);
                             setPrompt('');
