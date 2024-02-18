@@ -12,8 +12,6 @@ import startCase from 'lodash/fp/startCase';
 
 import { ChatPane } from '@/components/chat';
 
-import { chat } from './actions';
-
 const CONVERSATION_IDS = [
     'findExceptionalCompanies',
     'tradingBelowCash',
@@ -22,13 +20,11 @@ const CONVERSATION_IDS = [
 ];
 
 export const Contents = ({
-    conversationKey,
+    conversationId,
 }: {
-    conversationKey: string | null;
+    conversationId: string | null;
 }) => {
-    'use server';
-
-    if (!conversationKey || !CONVERSATION_IDS.includes(conversationKey)) {
+    if (!conversationId || !CONVERSATION_IDS.includes(conversationId)) {
         return (
             <Box>
                 <Typography level="h2">Available Chats</Typography>
@@ -37,7 +33,7 @@ export const Contents = ({
                         <ListItem key={cId}>
                             <Link
                                 component={NextLink}
-                                href={`/core/chat?conversationKey=${cId}`}
+                                href={`/core/chat?conversationId=${cId}`}
                             >
                                 {startCase(cId)}
                             </Link>
@@ -48,5 +44,5 @@ export const Contents = ({
         );
     }
 
-    return <ChatPane conversationKey={conversationKey} send={chat} />;
+    return <ChatPane conversationId={conversationId} />;
 };

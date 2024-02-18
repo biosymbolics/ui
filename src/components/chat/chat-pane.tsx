@@ -4,24 +4,19 @@ import Box from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 
-import { ChatProvider, useChat } from '@/hooks/chat';
-import {
-    MockChatMessage,
-    MockChatParams,
-    MockChatParamsSchema,
-} from '@/types/chat';
+import { ChatProvider, useChat } from '@/hooks/chat/chat-hook';
+import { MockChatMessage } from '@/types/chat';
 
 import { Avatar } from './avatar';
 import { ChatBubble } from './chat-bubble';
 import { ChatInput } from './chat-input';
 
 type ChatPaneProps = {
-    conversationKey: string;
-    send: (message: MockChatParams) => Promise<MockChatMessage>;
+    conversationId: string;
 };
 
-const ChatPaneInner = ({ conversationKey, send }: ChatPaneProps) => {
-    const { addMessage, messages } = useChat();
+const ChatPaneInner = ({ conversationId }: ChatPaneProps) => {
+    const { messages, send } = useChat();
 
     return (
         <Sheet
@@ -48,7 +43,11 @@ const ChatPaneInner = ({ conversationKey, send }: ChatPaneProps) => {
             >
                 <Stack spacing={2} justifyContent="flex-end">
                     {messages.map((message: MockChatMessage) => (
-                        <Stack key={message.id} direction="row" spacing={2}>
+                        <Stack
+                            key={`${message.conversationId}-${message.messageId}`}
+                            direction="row"
+                            spacing={2}
+                        >
                             <Avatar
                                 variant={
                                     message.sender !== 'You' ? 'solid' : 'soft'
@@ -63,21 +62,12 @@ const ChatPaneInner = ({ conversationKey, send }: ChatPaneProps) => {
             </Box>
             <ChatInput
                 onSubmit={(prompt: string) => {
-                    const newId = messages.length + 1;
-                    const data = MockChatParamsSchema.parse({
-                        conversationKey,
-                        messageKey: (newId + 1).toString(),
-                        prompt,
-                    });
-                    addMessage({
-                        id: newId.toString(),
+                    send({
+                        messageId: messages.length + 1,
+                        conversationId,
                         sender: 'You',
                         content: prompt,
-                    });
-
-                    send(data)
-                        .then((m) => addMessage(m))
-                        .catch((e) => console.error(e));
+                    }).catch((e) => console.error(e));
                 }}
             />
         </Sheet>

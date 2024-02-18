@@ -10,18 +10,20 @@ import React, {
 
 import { MockChatMessage } from '@/types/chat';
 
+import { send } from './chat-actions';
+
 type ChatContextType = {
-    addMessage: (message: MockChatMessage) => void;
     clearMessages: () => void;
     isPending: boolean;
     messages: MockChatMessage[];
+    send: (args: MockChatMessage) => Promise<MockChatMessage>;
 };
 
 const ChatContext = createContext<ChatContextType>({
-    addMessage: () => {},
     clearMessages: () => {},
     isPending: false,
     messages: [],
+    send,
 });
 
 export const ChatProvider = ({ children }: { children: ReactNode }) => {
@@ -29,10 +31,15 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
 
     const context: ChatContextType = useMemo(
         () => ({
-            addMessage: (message) => setMessages((prev) => [...prev, message]),
             clearMessages: () => setMessages([]),
             isPending: false,
             messages,
+            send: async (message) => {
+                setMessages((prev) => [...prev, { ...message, sender: 'You' }]);
+                const response = await send(message);
+                setMessages((prev) => [...prev, response]);
+                return response;
+            },
         }),
         [messages]
     );
