@@ -10,13 +10,14 @@ import { MockChatMessage } from '@/types/chat';
 import { Avatar } from './avatar';
 import { ChatBubble } from './chat-bubble';
 import { ChatInput } from './chat-input';
+import { ChatLoader } from './chat-loader';
 
 type ChatPaneProps = {
     conversationId: string;
 };
 
 const ChatPaneInner = ({ conversationId }: ChatPaneProps) => {
-    const { messages, send } = useChat();
+    const { isPending, messages, send } = useChat();
 
     return (
         <Sheet
@@ -50,22 +51,24 @@ const ChatPaneInner = ({ conversationId }: ChatPaneProps) => {
                         >
                             <Avatar
                                 variant={
-                                    message.sender !== 'You' ? 'solid' : 'soft'
+                                    message.sender === 'ME' ? 'soft' : 'solid'
                                 }
                             >
-                                {message.sender !== 'You' ? 'BSY' : 'ME'}
+                                {message.sender || 'BSY'}
                             </Avatar>
                             <ChatBubble {...message} />
                         </Stack>
                     ))}
+                    <ChatLoader isShowing={isPending} sender="BSY" />
                 </Stack>
             </Box>
             <ChatInput
+                isPending={isPending}
                 onSubmit={(prompt: string) => {
                     send({
                         messageId: messages.length + 1,
                         conversationId,
-                        sender: 'You',
+                        sender: 'ME',
                         content: prompt,
                     }).catch((e) => console.error(e));
                 }}

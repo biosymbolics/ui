@@ -6,10 +6,11 @@ import Box from '@mui/joy/Box';
 import { Button, TextArea } from '@/components/input';
 
 export type ChatInputProps = {
+    isPending: boolean;
     onSubmit: (prompt: string) => void;
 };
 
-export const ChatInput = ({ onSubmit }: ChatInputProps) => {
+export const ChatInput = ({ isPending, onSubmit }: ChatInputProps) => {
     const [prompt, setPrompt] = useState<string>('');
 
     return (
@@ -24,6 +25,7 @@ export const ChatInput = ({ onSubmit }: ChatInputProps) => {
                 endDecorator={
                     <Button
                         color="primary"
+                        isLoading={isPending}
                         onClick={() => {
                             onSubmit(prompt);
                             setPrompt('');
@@ -31,7 +33,7 @@ export const ChatInput = ({ onSubmit }: ChatInputProps) => {
                         size="lg"
                         sx={{ ml: 'auto' }}
                     >
-                        Submit
+                        Send
                     </Button>
                 }
                 value={prompt}

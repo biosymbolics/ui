@@ -27,21 +27,24 @@ const ChatContext = createContext<ChatContextType>({
 });
 
 export const ChatProvider = ({ children }: { children: ReactNode }) => {
+    const [isPending, setIsPending] = useState(false);
     const [messages, setMessages] = useState<MockChatMessage[]>([]);
 
     const context: ChatContextType = useMemo(
         () => ({
             clearMessages: () => setMessages([]),
-            isPending: false,
+            isPending,
             messages,
             send: async (message) => {
-                setMessages((prev) => [...prev, { ...message, sender: 'You' }]);
+                setIsPending(true);
+                setMessages((prev) => [...prev, { ...message, sender: 'ME' }]);
                 const response = await send(message);
                 setMessages((prev) => [...prev, response]);
+                setIsPending(false);
                 return response;
             },
         }),
-        [messages]
+        [isPending, messages]
     );
 
     return (
