@@ -6,11 +6,12 @@ import Box from '@mui/joy/Box';
 import { Button, TextArea } from '@/components/input';
 
 export type ChatInputProps = {
+    error?: string | null;
     isPending: boolean;
     onSubmit: (prompt: string) => void;
 };
 
-export const ChatInput = ({ isPending, onSubmit }: ChatInputProps) => {
+export const ChatInput = ({ error, isPending, onSubmit }: ChatInputProps) => {
     const [prompt, setPrompt] = useState<string>('');
 
     return (
@@ -18,6 +19,8 @@ export const ChatInput = ({ isPending, onSubmit }: ChatInputProps) => {
             <TextArea
                 placeholder="Type something here…"
                 aria-label="Prompt"
+                error={!!error}
+                helperText={error || undefined}
                 id="prompt"
                 minRows={3}
                 maxRows={10}

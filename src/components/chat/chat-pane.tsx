@@ -17,7 +17,7 @@ type ChatPaneProps = {
 };
 
 const ChatPaneInner = ({ conversationId }: ChatPaneProps) => {
-    const { isPending, messages, send } = useChat();
+    const { error, isPending, messages, send } = useChat();
 
     return (
         <Sheet
@@ -63,6 +63,7 @@ const ChatPaneInner = ({ conversationId }: ChatPaneProps) => {
                 </Stack>
             </Box>
             <ChatInput
+                error={error}
                 isPending={isPending}
                 onSubmit={(prompt: string) => {
                     send({

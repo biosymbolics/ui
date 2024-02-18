@@ -41,6 +41,7 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
             messages,
             send: async (message) => {
                 setIsPending(true);
+                setError(null);
                 setMessages((prev) => [...prev, { ...message, sender: 'ME' }]);
 
                 try {
