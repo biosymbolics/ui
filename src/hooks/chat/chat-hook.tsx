@@ -14,37 +14,48 @@ import { send } from './chat-actions';
 
 type ChatContextType = {
     clearMessages: () => void;
+    error: string | null;
     isPending: boolean;
     messages: MockChatMessage[];
-    send: (args: MockChatMessage) => Promise<MockChatMessage>;
+    send: (args: MockChatMessage) => Promise<MockChatMessage | null>;
 };
 
 const ChatContext = createContext<ChatContextType>({
     clearMessages: () => {},
+    error: null,
     isPending: false,
     messages: [],
     send,
 });
 
 export const ChatProvider = ({ children }: { children: ReactNode }) => {
+    const [error, setError] = useState<string | null>(null);
     const [isPending, setIsPending] = useState(false);
     const [messages, setMessages] = useState<MockChatMessage[]>([]);
 
     const context: ChatContextType = useMemo(
         () => ({
             clearMessages: () => setMessages([]),
+            error,
             isPending,
             messages,
             send: async (message) => {
                 setIsPending(true);
                 setMessages((prev) => [...prev, { ...message, sender: 'ME' }]);
-                const response = await send(message);
-                setMessages((prev) => [...prev, response]);
-                setIsPending(false);
-                return response;
+
+                try {
+                    const response = await send(message);
+                    setMessages((prev) => [...prev, response]);
+                    setIsPending(false);
+                    return response;
+                } catch (e) {
+                    setError('Failed to send message');
+                    setIsPending(false);
+                    return null;
+                }
             },
         }),
-        [isPending, messages]
+        [error, isPending, messages]
     );
 
     return (
