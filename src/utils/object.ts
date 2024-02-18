@@ -9,6 +9,9 @@ export const formatKeys = <T>(
     obj: T,
     formatter: (key: string) => string
 ): T => {
+    if (!obj) {
+        return null as T;
+    }
     if (Array.isArray(obj)) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return obj.map((item) => formatKeys(item, formatter)) as T;

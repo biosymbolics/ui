@@ -12,8 +12,6 @@ import { Tabs } from '@/components/layout/tabs';
 import { HeadField, PatentSearchArgs } from '@/types';
 
 import { AssetList } from './asset';
-import { PatentCharacteristics } from './characteristics';
-import { OverTime } from './over-time';
 import { Summary } from './summary';
 
 export type ContentArgs = PatentSearchArgs & {
@@ -42,24 +40,24 @@ export const Content = ({ tab, ...args }: ContentArgs) => {
                     </Suspense>
                 ),
             },
-            {
-                id: 'over-time',
-                label: 'Over Time',
-                panel: (
-                    <Suspense fallback={<Skeleton />}>
-                        <OverTime {...args} />
-                    </Suspense>
-                ),
-            },
-            {
-                id: 'characteristics',
-                label: 'Characteristics',
-                panel: (
-                    <Suspense fallback={<Skeleton />}>
-                        <PatentCharacteristics {...args} />
-                    </Suspense>
-                ),
-            },
+            // {
+            //     id: 'over-time',
+            //     label: 'Over Time',
+            //     panel: (
+            //         <Suspense fallback={<Skeleton />}>
+            //             <OverTime {...args} />
+            //         </Suspense>
+            //     ),
+            // },
+            // {
+            //     id: 'characteristics',
+            //     label: 'Characteristics',
+            //     panel: (
+            //         <Suspense fallback={<Skeleton />}>
+            //             <PatentCharacteristics {...args} />
+            //         </Suspense>
+            //     ),
+            // },
         ];
         return (
             <Box sx={getStyles}>

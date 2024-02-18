@@ -3,6 +3,7 @@
 import * as React from 'react';
 import Box from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet';
+import Typography from '@mui/joy/Typography';
 import ReactMarkdown from 'react-markdown';
 
 import { Gantt } from '@/components/charts/gantt';
@@ -29,6 +30,7 @@ const getChild = (
         const { data } = parsed;
         return (
             <Box sx={{ my: 2 }}>
+                {description || ''}
                 <Heatmap
                     data={data}
                     pathname=""
@@ -50,7 +52,9 @@ const getChild = (
         const { data } = parsed;
         return (
             <Box sx={{ my: 2 }}>
-                {description || ''}
+                {description && (
+                    <Typography gutterBottom>{description}</Typography>
+                )}
                 <Gantt
                     height={400}
                     pathname="/core/chat"
@@ -72,7 +76,7 @@ const getChild = (
 };
 
 export const ChatBubble = ({
-    // description,
+    description,
     content,
     type = 'STANDARD',
 }: ChatBubbleProps) => (
@@ -87,7 +91,7 @@ export const ChatBubble = ({
                 }}
             >
                 <Box sx={{ color: 'text.secondary' }}>
-                    {getChild(type, content)}
+                    {getChild(type, content, description)}
                 </Box>
             </Sheet>
         </Box>

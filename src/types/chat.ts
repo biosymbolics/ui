@@ -11,6 +11,7 @@ export const InterventionDropoutReportSchema = z.array(
 
 export const MockChatMessageSchema = z.object({
     content: z.string(),
+    description: z.optional(z.union([z.null(), z.string()])),
     messageId: z.number(),
     conversationId: z.string(),
     sender: z.optional(z.string()),
