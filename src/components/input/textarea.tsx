@@ -24,6 +24,7 @@ export type TextareaProps = {
     placeholder?: JoyTextareaProps['placeholder'];
     size?: JoyTextareaProps['size'];
     tooltip?: string;
+    value?: JoyTextareaProps['value'];
     variant?: JoyTextareaProps['variant'];
 };
 

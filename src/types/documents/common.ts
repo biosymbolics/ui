@@ -17,13 +17,31 @@ export const paramStringArray = z.preprocess((value) => {
     return value;
 }, z.array(z.string()));
 
-// turn ; delimited string into array
 export const paramInteger = z.preprocess((value) => {
     if (typeof value === 'string') {
         return parseInt(value, 10);
     }
     return value;
 }, z.number());
+
+export const paramString = z.preprocess((value) => {
+    if (typeof value === 'string') {
+        return value;
+    }
+    if (typeof value === 'number') {
+        return `${value}`;
+    }
+    if (typeof value === 'boolean') {
+        return value ? 'true' : 'false';
+    }
+    if (Array.isArray(value)) {
+        return value.join(';');
+    }
+    if (value === null) {
+        return '';
+    }
+    throw new Error('Invalid value');
+}, z.string());
 
 export const BaseSearchArgsSchema = z.object({
     endYear: z.optional(paramInteger),

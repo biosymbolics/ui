@@ -5,10 +5,10 @@ import { Suspense } from 'react';
 import { Contents } from './contents';
 
 const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
-    const { chatId } = searchParams;
+    const { conversationId } = searchParams;
     return (
         <Suspense>
-            <Contents chatId={chatId} />
+            <Contents conversationId={conversationId} />
         </Suspense>
     );
 };

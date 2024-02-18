@@ -38,6 +38,14 @@ const theme = extendTheme({
                 },
             },
         },
+
+        JoyButton: {
+            styleOverrides: {
+                root: () => ({
+                    minHeight: '2.5rem',
+                }),
+            },
+        },
     },
     colorSchemes: {
         light: {

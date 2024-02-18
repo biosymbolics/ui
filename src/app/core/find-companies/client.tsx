@@ -20,7 +20,7 @@ import {
 } from '@/components/data/grid';
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
-import { Company, Companies } from '@/types';
+import { Company } from '@/types';
 import { DEFAULT_PATHNAME } from '@/constants';
 import { Line } from '@/components/charts/line';
 
@@ -77,9 +77,16 @@ export const findCompanyColumns: GridColDef[] = [
         width: 100,
     },
     {
-        field: 'avgRelevanceScore',
+        field: 'relevanceScore',
         headerName: 'Relevance',
         description: 'Average semantic similarity / relevance score',
+        width: 125,
+    },
+    {
+        field: 'wheelhouseScore',
+        headerName: 'Wheelhouse',
+        description:
+            'How similar is this set of patents to the overall company portfolio?',
         width: 125,
     },
 ];
@@ -127,10 +134,10 @@ export const CompanyDetail = <T extends Company>({
                 series={[
                     {
                         name: 'patents',
-                        data: company.relevanceByYear
+                        data: company.countByYear
                             .map((d) => ({
                                 x: d.year,
-                                y: d.relevance,
+                                y: d.count,
                             }))
                             .sort((a, b) => a.x - b.x),
                     },
@@ -144,7 +151,7 @@ export const CompanyDetail = <T extends Company>({
     </Section>
 );
 
-export const CompanyGrid = ({ companies }: { companies: Companies }) => (
+export const CompanyGrid = ({ companies }: { companies: Company[] }) => (
     <Box sx={getStyles}>
         <DataGrid<Company>
             columns={findCompanyColumns}

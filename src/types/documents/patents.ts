@@ -108,14 +108,14 @@ export const PatentCharacteristicsSchema = z.array(PatentCharacteristicSchema);
 export type PatentCharacteristic = z.infer<typeof PatentCharacteristicSchema>;
 export type PatentCharacteristics = z.infer<typeof PatentCharacteristicsSchema>;
 
-const RelevanceByYearSchema = z.object({
+const CountByYearSchema = z.object({
     year: z.number(),
-    relevance: z.number(),
+    count: z.number(),
 });
 
-export type RelevanceByYear = z.infer<typeof RelevanceByYearSchema>;
+export type RelevanceByYear = z.infer<typeof CountByYearSchema>;
 
-export const Companieschema = z.object({
+export const CompanySchema = z.object({
     id: z.number(),
     name: z.string(),
     ids: z.array(z.string()),
@@ -125,20 +125,17 @@ export const Companieschema = z.object({
     // terms: z.array(z.string()),
     minAge: z.number(),
     avgAge: z.number(),
-    maxRelevanceScore: z.number(),
-    avgRelevanceScore: z.number(),
+    relevanceScore: z.number(),
+    wheelhouseScore: z.number(),
     activity: z.array(z.number()),
-    relevanceByYear: z.array(RelevanceByYearSchema),
+    countByYear: z.array(CountByYearSchema),
     score: z.number(),
 });
-export const CompaniesSchema = z.array(Companieschema);
-export type Companies = z.infer<typeof CompaniesSchema>;
-export type Company = z.infer<typeof Companieschema>;
+export const CompaniesSchema = z.array(CompanySchema);
+export type Company = z.infer<typeof CompanySchema>;
 
-const FindCompaniesParamsSchema = z.object({
-    description: z.string(),
-    useGptExpansion: z.optional(z.boolean()),
-    k: z.optional(z.number()),
+export const FindCompaniesParamsSchema = PatentSearchArgsSchema.extend({
+    companies: z.optional(paramStringArray), // OR with description
 });
 export type FindCompaniesParams = z.infer<typeof FindCompaniesParamsSchema>;
 

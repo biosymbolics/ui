@@ -1,2 +1,2 @@
 export { ChatPane } from './chat-pane';
-export type { ChatsProps, UserProps } from './types';
+export type { UserProps } from './types';

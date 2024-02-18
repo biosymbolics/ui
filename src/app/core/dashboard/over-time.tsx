@@ -16,7 +16,7 @@ import {
     PatentsSummarySchema,
 } from '@/types';
 import { doFetch } from '@/utils/actions';
-import { getQueryArgs } from '@/utils/patents';
+import { getQueryArgs } from '@/utils/api';
 import { formatLabel } from '@/utils/string';
 
 type OverTimeProps = PatentSearchArgs & {

@@ -1,25 +1,23 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Box from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 
+import { ChatProvider, useChat } from '@/hooks/chat/chat-hook';
+import { MockChatMessage } from '@/types/chat';
+
 import { Avatar } from './avatar';
 import { ChatBubble } from './chat-bubble';
 import { ChatInput } from './chat-input';
-import { ChatProps, ChatsProps } from './types';
+import { ChatLoader } from './chat-loader';
 
-type MessagesPaneProps = {
-    chat: ChatsProps;
+type ChatPaneProps = {
+    conversationId: string;
 };
 
-export const ChatPane = ({ chat }: MessagesPaneProps) => {
-    const [chatMessages, setChatMessages] = useState(chat.messages);
-
-    useEffect(() => {
-        setChatMessages(chat.messages);
-    }, [chat.messages]);
+const ChatPaneInner = ({ conversationId }: ChatPaneProps) => {
+    const { error, isPending, messages, send } = useChat();
 
     return (
         <Sheet
@@ -45,35 +43,43 @@ export const ChatPane = ({ chat }: MessagesPaneProps) => {
                 }}
             >
                 <Stack spacing={2} justifyContent="flex-end">
-                    {chatMessages.map((message: ChatProps, index: number) => (
-                        <Stack key={index} direction="row" spacing={2}>
+                    {messages.map((message: MockChatMessage) => (
+                        <Stack
+                            key={`${message.conversationId}-${message.messageId}`}
+                            direction="row"
+                            spacing={2}
+                        >
                             <Avatar
                                 variant={
-                                    message.sender !== 'You' ? 'solid' : 'soft'
+                                    message.sender === 'ME' ? 'soft' : 'solid'
                                 }
                             >
-                                {message.sender !== 'You' ? 'BSY' : 'ME'}
+                                {message.sender || 'BSY'}
                             </Avatar>
                             <ChatBubble {...message} />
                         </Stack>
                     ))}
+                    <ChatLoader isShowing={isPending} sender="BSY" />
                 </Stack>
             </Box>
             <ChatInput
-                onSubmit={(value: string) => {
-                    const newId = chatMessages.length + 1;
-                    const newIdString = newId.toString();
-                    setChatMessages([
-                        ...chatMessages,
-                        {
-                            id: newIdString,
-                            sender: 'You',
-                            content: value,
-                            timestamp: 'Just now',
-                        },
-                    ]);
+                error={error}
+                isPending={isPending}
+                onSubmit={(prompt: string) => {
+                    send({
+                        messageId: messages.length + 1,
+                        conversationId,
+                        sender: 'ME',
+                        content: prompt,
+                    }).catch((e) => console.error(e));
                 }}
             />
         </Sheet>
     );
 };
+
+export const ChatPane = (props: ChatPaneProps) => (
+    <ChatProvider>
+        <ChatPaneInner {...props} />
+    </ChatProvider>
+);

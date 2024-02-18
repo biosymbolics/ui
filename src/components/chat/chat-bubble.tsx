@@ -8,18 +8,16 @@ import ReactMarkdown from 'react-markdown';
 import { Gantt } from '@/components/charts/gantt';
 import { Heatmap } from '@/components/charts/heatmap';
 import { ClindevResponseSchema } from '@/types/clindev';
-import { InterventionDropoutReportSchema } from '@/types/chat';
+import { InterventionDropoutReportSchema, MockChatMessage } from '@/types/chat';
 
-import { ChatProps } from './types';
-
-type ChatBubbleProps = ChatProps;
+type ChatBubbleProps = MockChatMessage;
 
 const getChild = (
     type: string,
     content: string,
     description: string | null = null
 ) => {
-    if (type === 'heatmap') {
+    if (type === 'HEATMAP') {
         const parsed = InterventionDropoutReportSchema.safeParse(
             JSON.parse(content)
         );
@@ -42,7 +40,7 @@ const getChild = (
             </Box>
         );
     }
-    if (type === 'timeline') {
+    if (type === 'TIMELINE') {
         const parsed = ClindevResponseSchema.safeParse(JSON.parse(content));
         if (parsed.success === false) {
             const message = `Failed to parse: ${parsed.error.toString()}`;
@@ -74,9 +72,9 @@ const getChild = (
 };
 
 export const ChatBubble = ({
-    description,
+    // description,
     content,
-    type = 'text',
+    type = 'STANDARD',
 }: ChatBubbleProps) => (
     <Box sx={{ width: '90%' }}>
         <Box sx={{ position: 'relative' }}>
@@ -89,7 +87,7 @@ export const ChatBubble = ({
                 }}
             >
                 <Box sx={{ color: 'text.secondary' }}>
-                    {getChild(type, content, description)}
+                    {getChild(type, content)}
                 </Box>
             </Sheet>
         </Box>

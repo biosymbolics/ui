@@ -8,3 +8,13 @@ export const InterventionDropoutReportSchema = z.array(
         count: z.number(),
     })
 );
+
+export const MockChatMessageSchema = z.object({
+    content: z.string(),
+    messageId: z.number(),
+    conversationId: z.string(),
+    sender: z.optional(z.string()),
+    type: z.optional(z.string()),
+});
+
+export type MockChatMessage = z.infer<typeof MockChatMessageSchema>;
