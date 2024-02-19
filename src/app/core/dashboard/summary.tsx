@@ -13,6 +13,7 @@ import {
 } from '@/types';
 import { doFetch } from '@/utils/actions';
 import { getQueryArgs } from '@/utils/api';
+import { SearchError } from '@/components/composite';
 
 const fetchSummaries = cache(
     async (args: PatentSearchArgs): Promise<PatentsSummaries> => {
@@ -70,11 +71,6 @@ export const Summary = async ({
             </Box>
         );
     } catch (e) {
-        return (
-            <Box>
-                Failed to fetch patents:{' '}
-                {e instanceof Error ? e.message : JSON.stringify(e)}
-            </Box>
-        );
+        return <SearchError error={e} />;
     }
 };

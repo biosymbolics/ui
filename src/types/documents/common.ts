@@ -26,6 +26,7 @@ export const paramInteger = z.preprocess((value) => {
 
 export const BaseSearchArgsSchema = z.object({
     description: z.optional(z.string()),
+    k: z.optional(paramInteger),
     endYear: z.optional(paramInteger),
     queryType: z.optional(z.string()),
     startYear: z.optional(paramInteger),

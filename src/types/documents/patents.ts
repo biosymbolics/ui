@@ -4,7 +4,6 @@ import { z } from 'zod';
 import {
     BaseSearchArgsSchema,
     MappingObjectSchema,
-    paramInteger,
     paramStringArray,
 } from './common';
 
@@ -59,10 +58,7 @@ export type PatentsTopics = z.infer<typeof PatentsTopicSchema>;
 export type Patent = z.infer<typeof PatentSchema>;
 export type PatentResponse = z.infer<typeof PatentResponseSchema>;
 
-export const PatentSearchArgsSchema = BaseSearchArgsSchema.extend({
-    description: z.optional(z.string()),
-    k: z.optional(paramInteger),
-});
+export const PatentSearchArgsSchema = BaseSearchArgsSchema;
 
 export type PatentSearchArgs = z.infer<typeof PatentSearchArgsSchema>;
 
