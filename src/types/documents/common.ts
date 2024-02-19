@@ -24,6 +24,10 @@ export const paramInteger = z.preprocess((value) => {
     return value;
 }, z.number());
 
+export const SearchTypes = ['intervention', 'indication', 'company'] as const;
+const SearchTypeSchema = z.enum(SearchTypes);
+export type SearchType = z.infer<typeof SearchTypeSchema>;
+
 export const BaseSearchArgsSchema = z.object({
     description: z.optional(z.string()),
     k: z.optional(paramInteger),
@@ -33,6 +37,7 @@ export const BaseSearchArgsSchema = z.object({
     terms: z.optional(
         z.union([paramStringArray, z.array(z.string()).nullable()])
     ),
+    type: z.optional(SearchTypeSchema),
 });
 
 export type BaseSearchArgs = z.infer<typeof BaseSearchArgsSchema>;

@@ -14,7 +14,7 @@ import { Content } from './content';
 import { fetchAutocompletions } from '../actions';
 
 const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
-    const { terms, ...params } = BaseSearchArgsSchema.parse(searchParams);
+    const { terms, type, ...params } = BaseSearchArgsSchema.parse(searchParams);
     const headField = (searchParams.headField as HeadField) || 'priority_date';
     const { tab } = searchParams;
 

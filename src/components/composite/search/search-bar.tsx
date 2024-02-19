@@ -14,7 +14,7 @@ import {
 } from '@/components/input';
 import { Section } from '@/components/layout/section';
 import { useNavigation } from '@/hooks/navigation';
-import { PatentSearchArgs } from '@/types';
+import { BaseSearchArgs, SearchTypes, SearchType } from '@/types';
 import { Option } from '@/types/select';
 import { getQueryArgs } from '@/utils/api';
 
@@ -31,12 +31,14 @@ export const SearchBar = ({
     queryType: initialQueryType = 'AND',
     startYear: initialStartYear = 2014,
     terms: initialTerms,
+    type: initialType,
 }: {
     fetchAutocompletions: FetchAutocompletions;
-} & PatentSearchArgs): JSX.Element => {
+} & BaseSearchArgs): JSX.Element => {
     const { navigate } = useNavigation();
     const pathname = usePathname();
     const [terms, setTerms] = useState<string[]>(initialTerms || []);
+    const [type, setType] = useState<SearchType | null>(initialType || null);
     const [description, setDescription] = useState<string | null>(
         initialDescription || null
     );
@@ -125,6 +127,20 @@ export const SearchBar = ({
                             options={['AND', 'OR']}
                         />
                     </Grid>
+
+                    <Grid xs={12} sm={2}>
+                        <Select
+                            defaultValue={type}
+                            label="Term Type"
+                            onChange={(
+                                e: unknown,
+                                value: SetStateAction<SearchType | null>
+                            ) => {
+                                setType(value);
+                            }}
+                            options={[...SearchTypes]}
+                        />
+                    </Grid>
                 </Grid>
             </Section>
             <Section variant="l2">
@@ -143,6 +159,7 @@ export const SearchBar = ({
                             queryType,
                             startYear: newYearRange?.[0],
                             terms,
+                            type,
                         });
                         navigate(`${pathname}?${queryArgs}`);
                     }}
