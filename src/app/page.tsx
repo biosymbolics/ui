@@ -40,8 +40,8 @@ const Home = (): JSX.Element => (
                     </Typography>
                     <Typography gutterBottom level="body-md">
                         Our first product, currently in alpha, is a biomedical
-                        asset explorer with NPV estimation. We are seeking early
-                        partners. If you are a biomedical PE buyout fund
+                        entity explorer with NPV estimation. We are seeking
+                        early partners. If you are a biomedical PE buyout fund
                         interested in having an outsized influence on the
                         roadmap and the potential for disease area exclusivity,
                         let&apos;s talk.

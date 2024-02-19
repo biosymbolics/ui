@@ -9,7 +9,7 @@ import { useNavigation } from '@/hooks/navigation';
 import { HeadField, PatentCharacteristic, PatentSearchArgs } from '@/types';
 import { DEFAULT_PATHNAME } from '@/constants';
 
-export const PatentCharacteristicsControl = ({
+export const DocumentCharacteristicsControl = ({
     headField,
     terms,
     children,

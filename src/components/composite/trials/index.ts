@@ -1,1 +1,1 @@
-export { TrialDetail, getTrialColumns } from './client';
+export { TrialDetail, TrialsDetail, getTrialColumns } from './client';

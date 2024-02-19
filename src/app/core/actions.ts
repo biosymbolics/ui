@@ -14,10 +14,10 @@ import {
 } from '@/constants';
 import { Option } from '@/types/select';
 import {
-    AssetResponse,
-    AssetResponseSchema,
-    AssetSearchArgs,
-} from '@/types/assets';
+    EntityResponse,
+    EntityResponseSchema,
+    EntitySearchArgs,
+} from '@/types/entities';
 import {
     PatentResponse,
     PatentResponseSchema,
@@ -85,15 +85,15 @@ export const fetchDescription = cache(
  * @param args
  * @returns patents promise
  */
-export const fetchAssets = cache(
-    async (args: AssetSearchArgs): Promise<AssetResponse> => {
+export const fetchEntities = cache(
+    async (args: EntitySearchArgs): Promise<EntityResponse> => {
         if (isEmpty(args.terms) && isEmpty(args.description)) {
             return [];
         }
         const queryArgs = getQueryArgs(args, true);
         const res = await doFetch(
             `${ENTITY_SEARCH_API_URL}?${queryArgs}&limit=100`, // if more, risks exceeding next's 2MB cache limit
-            AssetResponseSchema
+            EntityResponseSchema
         );
 
         return res;

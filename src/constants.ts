@@ -3,7 +3,7 @@ export const API_KEY = 'Ahu8ef3VoNzBqn'; // /biosymbolics/pipeline/api/free-key
 
 export const AUTOCOMPLETE_API_URL = `${API_URL}/autocomplete`;
 export const CHARACTERISTIC_API_URL = `${API_URL}/reports/characteristics`;
-export const ENTITY_SEARCH_API_URL = `${API_URL}/assets/search`;
+export const ENTITY_SEARCH_API_URL = `${API_URL}/entities/search`;
 export const OVER_TIME_API_URL = `${API_URL}/reports/time`;
 export const SUMMARY_API_URL = `${API_URL}/reports/summarize`;
 export const TERM_DESCRIPTION_API_URL = `${API_URL}/terms/describe`;

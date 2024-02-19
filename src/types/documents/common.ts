@@ -24,32 +24,21 @@ export const paramInteger = z.preprocess((value) => {
     return value;
 }, z.number());
 
-export const paramString = z.preprocess((value) => {
-    if (typeof value === 'string') {
-        return value;
-    }
-    if (typeof value === 'number') {
-        return `${value}`;
-    }
-    if (typeof value === 'boolean') {
-        return value ? 'true' : 'false';
-    }
-    if (Array.isArray(value)) {
-        return value.join(';');
-    }
-    if (value === null) {
-        return '';
-    }
-    throw new Error('Invalid value');
-}, z.string());
+// vs EntityType??
+export const SearchTypes = ['intervention', 'indication', 'company'] as const;
+const SearchTypeSchema = z.enum(SearchTypes);
+export type SearchType = z.infer<typeof SearchTypeSchema>;
 
 export const BaseSearchArgsSchema = z.object({
+    description: z.optional(z.string()),
+    k: z.optional(paramInteger),
     endYear: z.optional(paramInteger),
     queryType: z.optional(z.string()),
     startYear: z.optional(paramInteger),
     terms: z.optional(
         z.union([paramStringArray, z.array(z.string()).nullable()])
     ),
+    type: z.optional(SearchTypeSchema),
 });
 
 export type BaseSearchArgs = z.infer<typeof BaseSearchArgsSchema>;

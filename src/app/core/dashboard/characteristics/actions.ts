@@ -7,24 +7,24 @@ import { CHARACTERISTIC_API_URL } from '@/constants';
 import {
     HeadField,
     PatentSearchArgs,
-    PatentCharacteristicsSchema,
-    PatentCharacteristics as PatentCharacteristicsType,
+    DocumentCharacteristicsSchema,
+    DocumentCharacteristics as DocumentCharacteristicsType,
 } from '@/types';
 import { doFetch } from '@/utils/actions';
 import { formatKeys } from '@/utils/object';
 import { getQueryArgs } from '@/utils/api';
 
-export const fetchPatentCharacteristics = cache(
+export const fetchDocumentCharacteristics = cache(
     async (
         args: PatentSearchArgs & { headField: HeadField }
-    ): Promise<PatentCharacteristicsType> => {
+    ): Promise<DocumentCharacteristicsType> => {
         if (args.terms?.length === 0) {
-            return {} as PatentCharacteristicsType;
+            return {} as DocumentCharacteristicsType;
         }
         const queryArgs = getQueryArgs(args, true);
         const res = await doFetch(
             `${CHARACTERISTIC_API_URL}?${queryArgs}`,
-            PatentCharacteristicsSchema,
+            DocumentCharacteristicsSchema,
             (response) => formatKeys(response, camelCase)
         );
 

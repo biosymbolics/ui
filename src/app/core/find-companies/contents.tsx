@@ -16,11 +16,11 @@ import { FindCompaniesControl } from './control';
 import { CompanyGrid } from './client';
 
 const FindCompaniesInner = async ({
-    companies,
     description,
     k,
+    similarCompanies,
 }: FindCompaniesParams): Promise<JSX.Element> => {
-    if (isEmpty(description) && isEmpty(companies)) {
+    if (isEmpty(description) && isEmpty(similarCompanies)) {
         return (
             <Alert
                 variant="soft"
@@ -40,9 +40,9 @@ const FindCompaniesInner = async ({
 
     try {
         const { companies: foundCompanies } = await findCompanies({
-            companies,
             description,
             k,
+            similarCompanies,
         });
 
         // TODO: expandable text component

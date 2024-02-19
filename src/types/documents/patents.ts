@@ -4,7 +4,6 @@ import { z } from 'zod';
 import {
     BaseSearchArgsSchema,
     MappingObjectSchema,
-    paramInteger,
     paramStringArray,
 } from './common';
 
@@ -59,10 +58,7 @@ export type PatentsTopics = z.infer<typeof PatentsTopicSchema>;
 export type Patent = z.infer<typeof PatentSchema>;
 export type PatentResponse = z.infer<typeof PatentResponseSchema>;
 
-export const PatentSearchArgsSchema = BaseSearchArgsSchema.extend({
-    description: z.optional(z.string()),
-    k: z.optional(paramInteger),
-});
+export const PatentSearchArgsSchema = BaseSearchArgsSchema;
 
 export type PatentSearchArgs = z.infer<typeof PatentSearchArgsSchema>;
 
@@ -98,15 +94,19 @@ export type PatentNode = z.infer<typeof PatentNodeSchema>;
 const HeadFieldEnum = z.enum(['id', 'assignee', 'priority_date']);
 export type HeadField = z.infer<typeof HeadFieldEnum>;
 
-const PatentCharacteristicSchema = z.object({
+const DocumentCharacteristicschema = z.object({
     concept: z.string(),
     count: z.number(),
     head: z.union([z.string(), z.number()]),
     documents: z.array(z.string()),
 });
-export const PatentCharacteristicsSchema = z.array(PatentCharacteristicSchema);
-export type PatentCharacteristic = z.infer<typeof PatentCharacteristicSchema>;
-export type PatentCharacteristics = z.infer<typeof PatentCharacteristicsSchema>;
+export const DocumentCharacteristicsSchema = z.array(
+    DocumentCharacteristicschema
+);
+export type PatentCharacteristic = z.infer<typeof DocumentCharacteristicschema>;
+export type DocumentCharacteristics = z.infer<
+    typeof DocumentCharacteristicsSchema
+>;
 
 const CountByYearSchema = z.object({
     year: z.number(),
@@ -135,7 +135,7 @@ export const CompaniesSchema = z.array(CompanySchema);
 export type Company = z.infer<typeof CompanySchema>;
 
 export const FindCompaniesParamsSchema = PatentSearchArgsSchema.extend({
-    companies: z.optional(paramStringArray), // OR with description
+    similarCompanies: z.optional(paramStringArray), // OR with description
 });
 export type FindCompaniesParams = z.infer<typeof FindCompaniesParamsSchema>;
 

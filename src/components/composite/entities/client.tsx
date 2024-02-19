@@ -14,20 +14,20 @@ import {
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
 import { DEFAULT_PATHNAME } from '@/constants';
-import { Asset, AssetActivity } from '@/types/assets';
+import { Entity, EntityActivity, EntityCategory } from '@/types/entities';
 
 import { getStoppedPercentClass } from '../styles';
 
 export const renderPatentModal = getRenderChip({
     color: 'primary',
-    getUrl: (row: Asset) =>
+    getUrl: (row: Entity) =>
         `/core/patents?ids=${row.patent_ids.join(';')}&terms=${row.name}`,
     openInNewTab: false,
 });
 
 export const renderApprovalModel = getRenderChip({
     color: 'primary',
-    getUrl: (row: Asset) =>
+    getUrl: (row: Entity) =>
         `/core/approvals?ids=${row.regulatory_approval_ids.join(';')}&terms=${
             row.name
         }`,
@@ -36,14 +36,14 @@ export const renderApprovalModel = getRenderChip({
 
 export const renderTrialModal = getRenderChip({
     color: 'primary',
-    getUrl: (row: Asset) =>
+    getUrl: (row: Entity) =>
         `/core/trials?ids=${row.trial_ids.join(';')}&terms=${row.name}`,
     openInNewTab: false,
 });
 
 export const renderAvailabilityModal = getRenderChip({
     color: (v) => ((v as number) > 0 ? 'success' : 'neutral'),
-    getUrl: (row: Asset) =>
+    getUrl: (row: Entity) =>
         `/core/patents?ids=${row.maybe_available_ids.join(';')}&terms=${
             row.name
         }`,
@@ -52,7 +52,7 @@ export const renderAvailabilityModal = getRenderChip({
 
 export const renderMainTerm = getRenderTypography(
     'title-md',
-    (row: Asset) => `${DEFAULT_PATHNAME}?terms=${row.name}`
+    (row: Entity) => `${DEFAULT_PATHNAME}?terms=${row.name}`
 );
 
 export const renderSaturationChip = getRenderChip({
@@ -70,10 +70,23 @@ export const renderSaturationChip = getRenderChip({
     },
 });
 
-export const getAssetColumns = (isChild: boolean): GridColDef[] => [
+const getTermLabel = (category: EntityCategory) => {
+    if (category === 'owner') {
+        return 'Company';
+    }
+    if (category === 'intervention') {
+        return 'Drug, Class or Target';
+    }
+    return 'Indication';
+};
+
+export const getEntityColumns = (
+    category: EntityCategory,
+    isChild: boolean
+): GridColDef[] => [
     {
         field: 'name',
-        headerName: 'Asset, Class or Target',
+        headerName: getTermLabel(category),
         width: 325,
         renderCell: renderMainTerm,
     },
@@ -105,6 +118,7 @@ export const getAssetColumns = (isChild: boolean): GridColDef[] => [
     {
         field: 'owner_count',
         headerName: 'Owners',
+        hidden: category === 'owner',
         width: 80,
         renderCell: renderOwnerChip,
     },
@@ -117,6 +131,7 @@ export const getAssetColumns = (isChild: boolean): GridColDef[] => [
     {
         field: 'maybe_available_count',
         headerName: 'Avail?',
+        hidden: category !== 'intervention',
         width: 85,
         renderCell: renderAvailabilityModal,
         description: 'Number of patents that *might* be available',
@@ -159,15 +174,15 @@ export const getAssetColumns = (isChild: boolean): GridColDef[] => [
     },
 ];
 
-export const getRowId = (row: Asset) => `nested-${row.id}`;
+export const getRowId = (row: Entity) => `nested-${row.id}`;
 
-const DocTypes: (keyof Omit<AssetActivity, 'year'>)[] = [
+const DocTypes: (keyof Omit<EntityActivity, 'year'>)[] = [
     'patents',
     'regulatory_approvals',
     'trials',
 ];
 
-const formatDetailData = (data: AssetActivity[]) =>
+const formatDetailData = (data: EntityActivity[]) =>
     DocTypes.map((doc) => ({
         name: doc,
         data: data
@@ -178,52 +193,69 @@ const formatDetailData = (data: AssetActivity[]) =>
             .sort((a, b) => a.x - b.x),
     }));
 
-/**
- * Detail content panel for assets
- */
-export const AssetDetail = <T extends Asset>(props: {
+type EntityDetailProps<T extends Entity> = {
+    category: EntityCategory;
     row: T;
-}): JSX.Element => {
+};
+
+/**
+ * Detail content panel for entities
+ */
+export const EntityDetail = <T extends Entity>(
+    props: EntityDetailProps<T>
+): JSX.Element => {
     // sometimes props is null; mui datagrid bug?
     if (!props || !props?.row) {
         return <span />;
     }
-    const { row: asset } = props;
+    const { category, row: entity } = props;
 
-    const columns = getAssetColumns(true);
+    const columns = getEntityColumns(category, true);
     return (
         <Section mx={3}>
-            <Title title={asset.name} variant="soft">
+            <Title title={entity.name} variant="soft">
                 <Line
                     height={150}
                     pathname={DEFAULT_PATHNAME}
-                    series={formatDetailData(asset.detailed_activity)}
+                    series={formatDetailData(entity.detailed_activity)}
                     title="Activity Over Time"
                     variant="minimal"
                     width={800}
                 />
             </Title>
 
-            <DataGrid<Asset>
+            <DataGrid<Entity>
                 columns={columns}
                 getRowId={getRowId}
-                height={Math.min(400, 100 + asset.children.length * 35)}
-                rows={asset.children}
+                height={Math.min(400, 100 + entity.children.length * 35)}
+                rows={entity.children}
                 variant="minimal"
             />
         </Section>
     );
 };
 
-export const AssetGrid = ({ assets }: { assets: Asset[] }) => {
-    const columns = getAssetColumns(false);
+const getEntityDetail =
+    (category: EntityCategory) =>
+    (props: Omit<EntityDetailProps<Entity>, 'category'>) => (
+        <EntityDetail<Entity> {...props} category={category} />
+    );
+
+export const EntityGrid = ({
+    category,
+    entities,
+}: {
+    category: EntityCategory;
+    entities: Entity[];
+}) => {
+    const columns = getEntityColumns(category, false);
     return (
         <DataGrid
             disableRowSelectionOnClick
             columns={columns}
-            detailComponent={AssetDetail<Asset>}
+            detailComponent={getEntityDetail(category)}
             detailHeight="auto"
-            rows={assets}
+            rows={entities}
             variant="maximal"
         />
     );
