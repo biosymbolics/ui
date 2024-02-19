@@ -15,7 +15,7 @@ import { fetchAutocompletions } from '../actions';
 export const FindCompaniesControl = ({
     description: initialDescription = '',
     children,
-    companies: initialCompanies = [],
+    similarCompanies: initialCompanies = [],
     k: initialK = 1000,
 }: FindCompaniesParams & { children: ReactNode }) => {
     const { setParams } = useNavigation();
