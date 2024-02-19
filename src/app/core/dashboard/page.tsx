@@ -6,7 +6,7 @@ import Typography from '@mui/joy/Typography';
 
 import { SearchBar } from '@/components/composite';
 import { Section } from '@/components/layout/section';
-import { HeadField, PatentSearchArgsSchema } from '@/types';
+import { HeadField, BaseSearchArgsSchema } from '@/types';
 import { formatLabel } from '@/utils/string';
 
 import { Content } from './content';
@@ -14,7 +14,7 @@ import { Content } from './content';
 import { fetchAutocompletions } from '../actions';
 
 const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
-    const { terms, ...params } = PatentSearchArgsSchema.parse(searchParams);
+    const { terms, ...params } = BaseSearchArgsSchema.parse(searchParams);
     const headField = (searchParams.headField as HeadField) || 'priority_date';
     const { tab } = searchParams;
 
