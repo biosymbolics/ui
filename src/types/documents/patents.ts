@@ -135,7 +135,7 @@ export const CompaniesSchema = z.array(CompanySchema);
 export type Company = z.infer<typeof CompanySchema>;
 
 export const FindCompaniesParamsSchema = PatentSearchArgsSchema.extend({
-    companies: z.optional(paramStringArray), // OR with description
+    similarCompanies: z.optional(paramStringArray), // OR with description
 });
 export type FindCompaniesParams = z.infer<typeof FindCompaniesParamsSchema>;
 

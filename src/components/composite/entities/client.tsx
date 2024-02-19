@@ -14,7 +14,7 @@ import {
 import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
 import { DEFAULT_PATHNAME } from '@/constants';
-import { Entity, EntityActivity } from '@/types/entities';
+import { Entity, EntityActivity, EntityCategory } from '@/types/entities';
 
 import { getStoppedPercentClass } from '../styles';
 
@@ -70,10 +70,23 @@ export const renderSaturationChip = getRenderChip({
     },
 });
 
-export const getEntityColumns = (isChild: boolean): GridColDef[] => [
+const getTermLabel = (category: EntityCategory) => {
+    if (category === 'owner') {
+        return 'Company';
+    }
+    if (category === 'intervention') {
+        return 'Drug, Class or Target';
+    }
+    return 'Indication';
+};
+
+export const getEntityColumns = (
+    category: EntityCategory,
+    isChild: boolean
+): GridColDef[] => [
     {
         field: 'name',
-        headerName: 'Entity, Class or Target',
+        headerName: getTermLabel(category),
         width: 325,
         renderCell: renderMainTerm,
     },
@@ -105,6 +118,7 @@ export const getEntityColumns = (isChild: boolean): GridColDef[] => [
     {
         field: 'owner_count',
         headerName: 'Owners',
+        hidden: category === 'owner',
         width: 80,
         renderCell: renderOwnerChip,
     },
@@ -117,6 +131,7 @@ export const getEntityColumns = (isChild: boolean): GridColDef[] => [
     {
         field: 'maybe_available_count',
         headerName: 'Avail?',
+        hidden: category !== 'intervention',
         width: 85,
         renderCell: renderAvailabilityModal,
         description: 'Number of patents that *might* be available',
@@ -178,19 +193,24 @@ const formatDetailData = (data: EntityActivity[]) =>
             .sort((a, b) => a.x - b.x),
     }));
 
+type EntityDetailProps<T extends Entity> = {
+    category: EntityCategory;
+    row: T;
+};
+
 /**
  * Detail content panel for entities
  */
-export const EntityDetail = <T extends Entity>(props: {
-    row: T;
-}): JSX.Element => {
+export const EntityDetail = <T extends Entity>(
+    props: EntityDetailProps<T>
+): JSX.Element => {
     // sometimes props is null; mui datagrid bug?
     if (!props || !props?.row) {
         return <span />;
     }
-    const { row: entity } = props;
+    const { category, row: entity } = props;
 
-    const columns = getEntityColumns(true);
+    const columns = getEntityColumns(category, true);
     return (
         <Section mx={3}>
             <Title title={entity.name} variant="soft">
@@ -215,13 +235,25 @@ export const EntityDetail = <T extends Entity>(props: {
     );
 };
 
-export const EntityGrid = ({ entities }: { entities: Entity[] }) => {
-    const columns = getEntityColumns(false);
+const getEntityDetail =
+    (category: EntityCategory) =>
+    (props: Omit<EntityDetailProps<Entity>, 'category'>) => (
+        <EntityDetail<Entity> {...props} category={category} />
+    );
+
+export const EntityGrid = ({
+    category,
+    entities,
+}: {
+    category: EntityCategory;
+    entities: Entity[];
+}) => {
+    const columns = getEntityColumns(category, false);
     return (
         <DataGrid
             disableRowSelectionOnClick
             columns={columns}
-            detailComponent={EntityDetail<Entity>}
+            detailComponent={getEntityDetail(category)}
             detailHeight="auto"
             rows={entities}
             variant="maximal"

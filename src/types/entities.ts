@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { z } from 'zod';
 
-import { PatentSearchArgs } from './documents/patents';
+import { BaseSearchArgs } from './documents/common';
 
 const EntityActivitySchema = z.object({
     year: z.number(),
@@ -47,4 +47,13 @@ export type Entity = z.infer<typeof EntitySchema>;
 export type EntityResponse = z.infer<typeof EntityResponseSchema>;
 export type EntityActivity = z.infer<typeof EntityActivitySchema>;
 
-export type EntitySearchArgs = PatentSearchArgs;
+export const EntityCategories = [
+    'intervention',
+    'indication',
+    'owner',
+] as const;
+const EntityCategorySchema = z.enum(EntityCategories);
+export type EntityCategory = z.infer<typeof EntityCategorySchema>;
+export type EntitySearchArgs = BaseSearchArgs & {
+    entityCategory: EntityCategory;
+};

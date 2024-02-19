@@ -22,17 +22,21 @@ type TabDef = { id: string; label: string; panel: JSX.Element };
 
 const getTabsForType = ({ tab, type, ...args }: ContentArgs): TabDef[] => {
     const tabs = {
-        companies: {
-            id: 'companies',
-            label: 'Companies',
-            panel: <span>hi</span>,
+        owners: {
+            id: 'owners',
+            label: 'Owners',
+            panel: (
+                <Suspense fallback={<Skeleton />}>
+                    <EntityList {...args} entityCategory="owner" />
+                </Suspense>
+            ),
         },
         interventions: {
             id: 'interventions',
             label: 'Interventions',
             panel: (
                 <Suspense fallback={<Skeleton />}>
-                    <EntityList {...args} />
+                    <EntityList {...args} entityCategory="intervention" />
                 </Suspense>
             ),
         },
@@ -41,7 +45,7 @@ const getTabsForType = ({ tab, type, ...args }: ContentArgs): TabDef[] => {
             label: 'Indications',
             panel: (
                 <Suspense fallback={<Skeleton />}>
-                    <EntityList {...args} />
+                    <EntityList {...args} entityCategory="indication" />
                 </Suspense>
             ),
         },
@@ -94,14 +98,14 @@ const getTabsForType = ({ tab, type, ...args }: ContentArgs): TabDef[] => {
 
     const typeToTabs: Record<SearchType | 'unknown', TabDef[]> = {
         intervention: [
-            tabs.companies,
+            tabs.owners,
             tabs.indications,
             tabs.patents,
             tabs.trials,
             tabs.summary,
         ],
         indication: [
-            tabs.companies,
+            tabs.owners,
             tabs.interventions,
             tabs.patents,
             tabs.trials,

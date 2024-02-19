@@ -1,5 +1,3 @@
-'use client';
-
 import Alert from '@mui/joy/Alert';
 import Typography from '@mui/joy/Typography';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';

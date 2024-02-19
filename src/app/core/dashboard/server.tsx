@@ -18,7 +18,10 @@ export const EntityList = async (args: EntitySearchArgs) => {
         const entities = await fetchEntities(args);
         return (
             <Box height="100vh">
-                <EntityGrid entities={entities} />
+                <EntityGrid
+                    category={args.entityCategory}
+                    entities={entities}
+                />
             </Box>
         );
     } catch (e) {
