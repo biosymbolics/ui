@@ -1,2 +1,2 @@
-export { PatentDetail } from './client';
+export { PatentDetail, PatentsDetail } from './client';
 export { getPatentColumns } from './config';

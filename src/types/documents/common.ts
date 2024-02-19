@@ -24,26 +24,8 @@ export const paramInteger = z.preprocess((value) => {
     return value;
 }, z.number());
 
-export const paramString = z.preprocess((value) => {
-    if (typeof value === 'string') {
-        return value;
-    }
-    if (typeof value === 'number') {
-        return `${value}`;
-    }
-    if (typeof value === 'boolean') {
-        return value ? 'true' : 'false';
-    }
-    if (Array.isArray(value)) {
-        return value.join(';');
-    }
-    if (value === null) {
-        return '';
-    }
-    throw new Error('Invalid value');
-}, z.string());
-
 export const BaseSearchArgsSchema = z.object({
+    description: z.optional(z.string()),
     endYear: z.optional(paramInteger),
     queryType: z.optional(z.string()),
     startYear: z.optional(paramInteger),

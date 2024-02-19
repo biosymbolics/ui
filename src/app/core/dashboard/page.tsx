@@ -9,7 +9,6 @@ import { Section } from '@/components/layout/section';
 import { HeadField, PatentSearchArgsSchema } from '@/types';
 import { formatLabel } from '@/utils/string';
 
-import { Description } from './description';
 import { Content } from './content';
 
 import { fetchAutocompletions } from '../actions';
@@ -35,9 +34,9 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
                             {terms.map((t) => formatLabel(t)).join(', ')}
                         </Typography>
                     )}
-                    <Suspense fallback={<Skeleton />}>
+                    {/* <Suspense fallback={<Skeleton />}>
                         {terms && <Description terms={terms} />}
-                    </Suspense>
+                    </Suspense> */}
                 </Section>
                 <Section>
                     <Suspense fallback={<Skeleton height="80vh" />}>

@@ -11,7 +11,7 @@ import { getStyles } from '@/components/composite/styles';
 import { Tabs } from '@/components/layout/tabs';
 import { HeadField, PatentSearchArgs } from '@/types';
 
-import { AssetList } from './asset';
+import { AssetList, PatentList, TrialList } from './server';
 import { Summary } from './summary';
 
 export type ContentArgs = PatentSearchArgs & {
@@ -28,6 +28,24 @@ export const Content = ({ tab, ...args }: ContentArgs) => {
                 panel: (
                     <Suspense fallback={<Skeleton />}>
                         <AssetList {...args} />
+                    </Suspense>
+                ),
+            },
+            {
+                id: 'patents',
+                label: 'Patents',
+                panel: (
+                    <Suspense fallback={<Skeleton />}>
+                        <PatentList {...args} />
+                    </Suspense>
+                ),
+            },
+            {
+                id: 'trials',
+                label: 'Trials',
+                panel: (
+                    <Suspense fallback={<Skeleton />}>
+                        <TrialList {...args} />
                     </Suspense>
                 ),
             },

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { z } from 'zod';
 
-import { PatentSearchArgs } from '.';
+import { PatentSearchArgs } from './documents/patents';
 
 const AssetActivitySchema = z.object({
     year: z.number(),
