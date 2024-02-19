@@ -13,7 +13,7 @@ import { AssetSearchArgs, PatentSearchArgs, TrialSearchArgs } from '@/types';
 
 import { fetchAssets, fetchPatents, fetchTrials } from '../actions';
 
-export const AssetList = async (args: AssetSearchArgs) => {
+export const EntityList = async (args: AssetSearchArgs) => {
     try {
         const assets = await fetchAssets(args);
         return (

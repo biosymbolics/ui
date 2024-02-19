@@ -1,1 +1,1 @@
-export { PatentCharacteristics } from './characteristics';
+export { DocumentCharacteristics } from './characteristics';
