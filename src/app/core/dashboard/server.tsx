@@ -6,19 +6,19 @@ import Box from '@mui/joy/Box';
 import isEmpty from 'lodash/fp/isEmpty';
 
 import { SearchCriteriaError, SearchError } from '@/components/composite';
-import { AssetGrid } from '@/components/composite/assets';
+import { EntityGrid } from '@/components/composite/entities';
 import { PatentsDetail } from '@/components/composite/patents';
 import { TrialsDetail } from '@/components/composite/trials';
-import { AssetSearchArgs, PatentSearchArgs, TrialSearchArgs } from '@/types';
+import { EntitySearchArgs, PatentSearchArgs, TrialSearchArgs } from '@/types';
 
-import { fetchAssets, fetchPatents, fetchTrials } from '../actions';
+import { fetchEntities, fetchPatents, fetchTrials } from '../actions';
 
-export const EntityList = async (args: AssetSearchArgs) => {
+export const EntityList = async (args: EntitySearchArgs) => {
     try {
-        const assets = await fetchAssets(args);
+        const entities = await fetchEntities(args);
         return (
             <Box height="100vh">
-                <AssetGrid assets={assets} />
+                <EntityGrid entities={entities} />
             </Box>
         );
     } catch (e) {

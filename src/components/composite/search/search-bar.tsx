@@ -21,7 +21,7 @@ import { getQueryArgs } from '@/utils/api';
 import { FetchAutocompletions } from './types';
 
 /**
- * Search bar for assets
+ * Search bar for entities
  */
 export const SearchBar = ({
     description: initialDescription,

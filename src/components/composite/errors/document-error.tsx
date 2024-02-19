@@ -16,7 +16,7 @@ export const SearchCriteriaError = () => (
 
 export const SearchError = ({ error }: { error: unknown }) => (
     <Alert startDecorator={<WarningIcon />} variant="soft" color="warning">
-        <Typography level="h4">Failed to fetch assets</Typography>
+        <Typography level="h4">Failed to fetch entities</Typography>
         <Typography>
             {error instanceof Error ? error.message : JSON.stringify(error)}
         </Typography>
