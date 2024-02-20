@@ -13,9 +13,9 @@ export const DocumentCharacteristicsControl = ({
 }: PatentSearchArgs & { children: ReactNode }) => (
     <>
         <Section>
-            <Typography level="h3">Patent Characteristics</Typography>
+            <Typography level="h3">Landscape</Typography>
             <Typography gutterBottom level="body-md">
-                Entities associated with patents for search{' '}
+                Entities associated with search{' '}
                 <b>{(terms || []).map((t) => `'${t}'`).join(', ')}</b>
             </Typography>
         </Section>

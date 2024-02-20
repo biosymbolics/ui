@@ -86,7 +86,7 @@ const getTabsForType = ({ tab, type, ...args }: ContentArgs): TabDef[] => {
         },
         interventionsByIndication: {
             id: 'interventionsByIndication',
-            label: 'Characteristics',
+            label: 'Landscape',
             panel: (
                 <Suspense fallback={<Skeleton />}>
                     <DocumentCharacteristics
@@ -99,7 +99,7 @@ const getTabsForType = ({ tab, type, ...args }: ContentArgs): TabDef[] => {
         },
         ownersByInterventions: {
             id: 'ownersByInterventions',
-            label: 'Characteristics',
+            label: 'Landscape',
             panel: (
                 <Suspense fallback={<Skeleton />}>
                     <DocumentCharacteristics
@@ -112,7 +112,7 @@ const getTabsForType = ({ tab, type, ...args }: ContentArgs): TabDef[] => {
         },
         ownersByIndications: {
             id: 'ownersByIndications',
-            label: 'Characteristics',
+            label: 'Landscape',
             panel: (
                 <Suspense fallback={<Skeleton />}>
                     <DocumentCharacteristics
@@ -131,7 +131,7 @@ const getTabsForType = ({ tab, type, ...args }: ContentArgs): TabDef[] => {
             tabs.indications,
             tabs.patents,
             tabs.trials,
-            tabs.summary,
+            // tabs.summary,
             tabs.ownersByIndications,
         ],
         indication: [
@@ -139,7 +139,7 @@ const getTabsForType = ({ tab, type, ...args }: ContentArgs): TabDef[] => {
             tabs.interventions,
             tabs.patents,
             tabs.trials,
-            tabs.summary,
+            // tabs.summary,
             tabs.ownersByInterventions,
         ],
         company: [
@@ -147,7 +147,7 @@ const getTabsForType = ({ tab, type, ...args }: ContentArgs): TabDef[] => {
             tabs.indications,
             tabs.patents,
             tabs.trials,
-            tabs.summary,
+            // tabs.summary,
             tabs.interventionsByIndication,
         ],
         unknown: [tabs.patents, tabs.trials, tabs.summary],
