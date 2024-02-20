@@ -6,23 +6,28 @@ import { Heatmap } from '@/components/charts/heatmap';
 import {
     BaseSearchArgs,
     HeadField,
-    PatentCharacteristic,
-    PatentSearchArgs,
+    DocumentCharacteristic,
     TailField,
 } from '@/types';
 
 import { fetchDocumentCharacteristics } from './actions';
 import { DocumentCharacteristicsControl, getClickUrl } from './control';
 
+type DocCharacteristicsProps = BaseSearchArgs & {
+    headField: HeadField;
+    tailField: TailField;
+    pathname?: string;
+};
+
 const CharacteristicsInner = async ({
     pathname = DEFAULT_PATHNAME,
     ...args
-}: PatentSearchArgs & { headField: HeadField; pathname?: string }) => {
+}: BaseSearchArgs & DocCharacteristicsProps) => {
     try {
         const data = await fetchDocumentCharacteristics(args);
 
         return (
-            <Heatmap<PatentCharacteristic>
+            <Heatmap<DocumentCharacteristic>
                 getClickUrl={getClickUrl}
                 data={data}
                 pathname={pathname}
@@ -36,13 +41,7 @@ const CharacteristicsInner = async ({
     }
 };
 
-export const DocumentCharacteristics = (
-    args: BaseSearchArgs & {
-        headField: HeadField;
-        tailField: TailField;
-        pathname?: string;
-    }
-) => (
+export const DocumentCharacteristics = (args: DocCharacteristicsProps) => (
     <DocumentCharacteristicsControl {...args}>
         <CharacteristicsInner {...args} />
     </DocumentCharacteristicsControl>

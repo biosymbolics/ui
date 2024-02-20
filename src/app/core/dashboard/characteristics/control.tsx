@@ -4,8 +4,7 @@ import { ReactNode } from 'react';
 import Typography from '@mui/joy/Typography';
 
 import { Section } from '@/components/layout/section';
-import { PatentCharacteristic, PatentSearchArgs } from '@/types';
-import { DEFAULT_PATHNAME } from '@/constants';
+import { DocumentCharacteristic, PatentSearchArgs } from '@/types';
 
 // const { setParam } = useNavigation();
 export const DocumentCharacteristicsControl = ({
@@ -38,11 +37,8 @@ export const DocumentCharacteristicsControl = ({
     </>
 );
 
-export const getClickUrl = (
-    object: PatentCharacteristic,
-    pathname: string = DEFAULT_PATHNAME
-) => {
+export const getClickUrl = (object: DocumentCharacteristic) => {
     const ids = object.documents?.join(';');
     const term = `${object.tail} x ${object.head}`;
-    return `${pathname}/patents?ids=${ids}&terms=${term}`;
+    return `patents?ids=${ids}&terms=${term}`;
 };

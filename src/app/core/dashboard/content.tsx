@@ -84,8 +84,8 @@ const getTabsForType = ({ tab, type, ...args }: ContentArgs): TabDef[] => {
                 </Suspense>
             ),
         },
-        interventionByIndication: {
-            id: 'interventionByIndication',
+        interventionsByIndication: {
+            id: 'interventionsByIndication',
             label: 'Characteristics',
             panel: (
                 <Suspense fallback={<Skeleton />}>
@@ -93,6 +93,32 @@ const getTabsForType = ({ tab, type, ...args }: ContentArgs): TabDef[] => {
                         {...args}
                         headField="indications"
                         tailField="interventions"
+                    />
+                </Suspense>
+            ),
+        },
+        ownersByInterventions: {
+            id: 'ownersByInterventions',
+            label: 'Characteristics',
+            panel: (
+                <Suspense fallback={<Skeleton />}>
+                    <DocumentCharacteristics
+                        {...args}
+                        headField="interventions"
+                        tailField="owners"
+                    />
+                </Suspense>
+            ),
+        },
+        ownersByIndications: {
+            id: 'ownersByIndications',
+            label: 'Characteristics',
+            panel: (
+                <Suspense fallback={<Skeleton />}>
+                    <DocumentCharacteristics
+                        {...args}
+                        headField="indications"
+                        tailField="owners"
                     />
                 </Suspense>
             ),
@@ -106,6 +132,7 @@ const getTabsForType = ({ tab, type, ...args }: ContentArgs): TabDef[] => {
             tabs.patents,
             tabs.trials,
             tabs.summary,
+            tabs.ownersByIndications,
         ],
         indication: [
             tabs.owners,
@@ -113,6 +140,7 @@ const getTabsForType = ({ tab, type, ...args }: ContentArgs): TabDef[] => {
             tabs.patents,
             tabs.trials,
             tabs.summary,
+            tabs.ownersByInterventions,
         ],
         company: [
             tabs.interventions,
@@ -120,7 +148,7 @@ const getTabsForType = ({ tab, type, ...args }: ContentArgs): TabDef[] => {
             tabs.patents,
             tabs.trials,
             tabs.summary,
-            tabs.interventionByIndication,
+            tabs.interventionsByIndication,
         ],
         unknown: [tabs.patents, tabs.trials, tabs.summary],
     };
