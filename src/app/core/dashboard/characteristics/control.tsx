@@ -16,8 +16,8 @@ export const DocumentCharacteristicsControl = ({
         <Section>
             <Typography level="h3">Patent Characteristics</Typography>
             <Typography gutterBottom level="body-md">
-                UMLS concepts directly or indirectly associated with patents for
-                search <b>{(terms || []).map((t) => `'${t}'`).join(', ')}</b>
+                Entities associated with patents for search{' '}
+                <b>{(terms || []).map((t) => `'${t}'`).join(', ')}</b>
             </Typography>
         </Section>
         {children}
