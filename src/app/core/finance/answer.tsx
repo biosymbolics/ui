@@ -5,7 +5,6 @@ import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 
 import { Line } from '@/components/charts/line';
-import { Code } from '@/components/code';
 
 import { getEvents } from './actions';
 
@@ -35,11 +34,7 @@ export const Answer = async (args: { ticker: string }) => {
                         },
                     ]}
                 />
-                <Sheet sx={{ p: 3 }}>
-                    <Code language="json">
-                        {JSON.stringify(events, null, 4)}
-                    </Code>
-                </Sheet>
+                <Sheet sx={{ p: 3 }}>{JSON.stringify(events, null, 4)}</Sheet>
             </Stack>
         );
     } catch (e) {
