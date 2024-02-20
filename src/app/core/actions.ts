@@ -114,7 +114,7 @@ export const fetchApprovals = cache(
         }
         const queryArgs = getQueryArgs(args, true);
         const res = await doFetch(
-            `${REGULATORY_APPROVAL_SEARCH_API_URL}?${queryArgs}`,
+            `${REGULATORY_APPROVAL_SEARCH_API_URL}?${queryArgs}&limit=200`,
             RegulatoryApprovalResponseSchema
         );
 
@@ -135,7 +135,7 @@ export const fetchPatents = cache(
         }
         const queryArgs = getQueryArgs(args, true);
         const res = await doFetch(
-            `${PATENT_SEARCH_API_URL}?${queryArgs}`,
+            `${PATENT_SEARCH_API_URL}?${queryArgs}&limit=200`,
             PatentResponseSchema
         );
 
@@ -155,7 +155,7 @@ export const fetchTrials = cache(
         }
         const queryArgs = getQueryArgs(args, true);
         const res = await doFetch(
-            `${TRIAL_SEARCH_API_URL}?${queryArgs}`,
+            `${TRIAL_SEARCH_API_URL}?${queryArgs}&limit=200`,
             TrialResponseSchema
         );
 
