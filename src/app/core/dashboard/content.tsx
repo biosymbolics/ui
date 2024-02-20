@@ -6,7 +6,7 @@ import Skeleton from '@mui/joy/Skeleton';
 
 import { getStyles } from '@/components/composite/styles';
 import { Tabs } from '@/components/layout/tabs';
-import { HeadField, BaseSearchArgs, SearchType } from '@/types';
+import { BaseSearchArgs, SearchType } from '@/types';
 
 import { EntityList, PatentList, TrialList } from './server';
 import { Summary } from './summary';
@@ -14,7 +14,6 @@ import { OverTime } from './over-time';
 import { DocumentCharacteristics } from './characteristics';
 
 export type ContentArgs = BaseSearchArgs & {
-    headField: HeadField;
     tab: string;
 };
 
@@ -85,12 +84,16 @@ const getTabsForType = ({ tab, type, ...args }: ContentArgs): TabDef[] => {
                 </Suspense>
             ),
         },
-        characteristics: {
-            id: 'characteristics',
+        interventionByIndication: {
+            id: 'interventionByIndication',
             label: 'Characteristics',
             panel: (
                 <Suspense fallback={<Skeleton />}>
-                    <DocumentCharacteristics {...args} />
+                    <DocumentCharacteristics
+                        {...args}
+                        headField="indications"
+                        tailField="interventions"
+                    />
                 </Suspense>
             ),
         },
@@ -117,6 +120,7 @@ const getTabsForType = ({ tab, type, ...args }: ContentArgs): TabDef[] => {
             tabs.patents,
             tabs.trials,
             tabs.summary,
+            tabs.interventionByIndication,
         ],
         unknown: [tabs.patents, tabs.trials, tabs.summary],
     };

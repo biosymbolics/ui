@@ -1,10 +1,15 @@
 'use server';
 
-import Box from '@mui/joy/Box';
-
 import { DEFAULT_PATHNAME } from '@/constants';
+import { SearchError } from '@/components/composite';
 import { Heatmap } from '@/components/charts/heatmap';
-import { HeadField, PatentCharacteristic, PatentSearchArgs } from '@/types';
+import {
+    BaseSearchArgs,
+    HeadField,
+    PatentCharacteristic,
+    PatentSearchArgs,
+    TailField,
+} from '@/types';
 
 import { fetchDocumentCharacteristics } from './actions';
 import { DocumentCharacteristicsControl, getClickUrl } from './control';
@@ -21,24 +26,20 @@ const CharacteristicsInner = async ({
                 getClickUrl={getClickUrl}
                 data={data}
                 pathname={pathname}
-                tooltipFields={['head', 'concept', 'documents']}
+                tooltipFields={['head', 'tail', 'documents']}
                 xField="head"
-                yField="concept"
+                yField="tail"
             />
         );
     } catch (e) {
-        return (
-            <Box>
-                Failed to fetch patents:{' '}
-                {e instanceof Error ? e.message : JSON.stringify(e)}
-            </Box>
-        );
+        return <SearchError error={e} />;
     }
 };
 
 export const DocumentCharacteristics = (
-    args: PatentSearchArgs & {
+    args: BaseSearchArgs & {
         headField: HeadField;
+        tailField: TailField;
         pathname?: string;
     }
 ) => (

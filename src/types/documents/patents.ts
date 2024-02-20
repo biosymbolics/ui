@@ -91,14 +91,17 @@ export type PatentGraph = z.infer<typeof PatentGraphSchema>;
 export type PatentEdge = z.infer<typeof PatentEdgeSchema>;
 export type PatentNode = z.infer<typeof PatentNodeSchema>;
 
-const HeadFieldEnum = z.enum(['id', 'assignee', 'priority_date']);
+const HeadFieldEnum = z.enum(['interventions', 'indications']);
 export type HeadField = z.infer<typeof HeadFieldEnum>;
 
+const TailFieldEnum = z.enum(['interventions', 'indications']);
+export type TailField = z.infer<typeof TailFieldEnum>;
+
 const DocumentCharacteristicschema = z.object({
-    concept: z.string(),
     count: z.number(),
-    head: z.union([z.string(), z.number()]),
     documents: z.array(z.string()),
+    head: z.union([z.string(), z.number()]),
+    tail: z.string(),
 });
 export const DocumentCharacteristicsSchema = z.array(
     DocumentCharacteristicschema
@@ -143,5 +146,4 @@ export const CompanyResponseSchema = z.object({
     companies: CompaniesSchema,
     description: z.string(),
 });
-
 export type CompanyResponse = z.infer<typeof CompanyResponseSchema>;
