@@ -6,7 +6,8 @@ import camelCase from 'lodash/fp/camelCase';
 import { CHARACTERISTIC_API_URL } from '@/constants';
 import {
     HeadField,
-    PatentSearchArgs,
+    TailField,
+    BaseSearchArgs,
     DocumentCharacteristicsSchema,
     DocumentCharacteristics as DocumentCharacteristicsType,
 } from '@/types';
@@ -16,7 +17,7 @@ import { getQueryArgs } from '@/utils/api';
 
 export const fetchDocumentCharacteristics = cache(
     async (
-        args: PatentSearchArgs & { headField: HeadField }
+        args: BaseSearchArgs & { headField: HeadField; tailField: TailField }
     ): Promise<DocumentCharacteristicsType> => {
         if (args.terms?.length === 0) {
             return {} as DocumentCharacteristicsType;

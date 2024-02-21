@@ -138,8 +138,15 @@ export const getEntityColumns = (
     },
     {
         field: 'investment_level',
-        headerName: 'Investment',
-        width: 125,
+        headerName: category === 'owner' ? 'Investment' : 'Crowding',
+        width: 100,
+        renderCell: renderSaturationChip,
+    },
+    {
+        field: 'risk_level',
+        headerName: 'Risk',
+        hidden: category === 'owner',
+        width: 75,
         renderCell: renderSaturationChip,
     },
     {

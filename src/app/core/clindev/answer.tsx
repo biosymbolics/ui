@@ -1,11 +1,9 @@
 'use server';
 
 import 'server-only';
-import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 
 import { Gantt } from '@/components/charts/gantt';
-import { Code } from '@/components/code';
 
 import { predictClindev } from './actions';
 
@@ -34,9 +32,6 @@ export const Answer = async (args: {
                         x2: d.offset + d.median_duration,
                     }))}
                 />
-                <Sheet sx={{ p: 3 }}>
-                    <Code language="json">{JSON.stringify(data, null, 4)}</Code>
-                </Sheet>
             </Stack>
         );
     } catch (e) {

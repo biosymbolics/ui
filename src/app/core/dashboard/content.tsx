@@ -6,7 +6,7 @@ import Skeleton from '@mui/joy/Skeleton';
 
 import { getStyles } from '@/components/composite/styles';
 import { Tabs } from '@/components/layout/tabs';
-import { HeadField, BaseSearchArgs, SearchType } from '@/types';
+import { BaseSearchArgs, SearchType } from '@/types';
 
 import { EntityList, PatentList, TrialList } from './server';
 import { Summary } from './summary';
@@ -14,7 +14,6 @@ import { OverTime } from './over-time';
 import { DocumentCharacteristics } from './characteristics';
 
 export type ContentArgs = BaseSearchArgs & {
-    headField: HeadField;
     tab: string;
 };
 
@@ -85,12 +84,42 @@ const getTabsForType = ({ tab, type, ...args }: ContentArgs): TabDef[] => {
                 </Suspense>
             ),
         },
-        characteristics: {
-            id: 'characteristics',
-            label: 'Characteristics',
+        interventionsByIndication: {
+            id: 'interventionsByIndication',
+            label: 'Landscape',
             panel: (
                 <Suspense fallback={<Skeleton />}>
-                    <DocumentCharacteristics {...args} />
+                    <DocumentCharacteristics
+                        {...args}
+                        headField="indications"
+                        tailField="interventions"
+                    />
+                </Suspense>
+            ),
+        },
+        ownersByInterventions: {
+            id: 'ownersByInterventions',
+            label: 'Landscape',
+            panel: (
+                <Suspense fallback={<Skeleton />}>
+                    <DocumentCharacteristics
+                        {...args}
+                        headField="interventions"
+                        tailField="owners"
+                    />
+                </Suspense>
+            ),
+        },
+        ownersByIndications: {
+            id: 'ownersByIndications',
+            label: 'Landscape',
+            panel: (
+                <Suspense fallback={<Skeleton />}>
+                    <DocumentCharacteristics
+                        {...args}
+                        headField="indications"
+                        tailField="owners"
+                    />
                 </Suspense>
             ),
         },
@@ -102,21 +131,24 @@ const getTabsForType = ({ tab, type, ...args }: ContentArgs): TabDef[] => {
             tabs.indications,
             tabs.patents,
             tabs.trials,
-            tabs.summary,
+            // tabs.summary,
+            tabs.ownersByIndications,
         ],
         indication: [
             tabs.owners,
             tabs.interventions,
             tabs.patents,
             tabs.trials,
-            tabs.summary,
+            // tabs.summary,
+            tabs.ownersByInterventions,
         ],
         company: [
             tabs.interventions,
             tabs.indications,
             tabs.patents,
             tabs.trials,
-            tabs.summary,
+            // tabs.summary,
+            tabs.interventionsByIndication,
         ],
         unknown: [tabs.patents, tabs.trials, tabs.summary],
     };

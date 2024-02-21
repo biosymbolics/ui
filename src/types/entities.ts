@@ -33,6 +33,7 @@ export const ChildEntitySchema = z.object({
     record_count: z.number(),
     regulatory_approval_count: z.number(),
     regulatory_approval_ids: z.array(z.string()),
+    risk: z.optional(z.string().default('--')),
     trial_count: z.number(),
     trial_ids: z.array(z.string()),
 });

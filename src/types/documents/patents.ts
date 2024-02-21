@@ -91,26 +91,31 @@ export type PatentGraph = z.infer<typeof PatentGraphSchema>;
 export type PatentEdge = z.infer<typeof PatentEdgeSchema>;
 export type PatentNode = z.infer<typeof PatentNodeSchema>;
 
-const HeadFieldEnum = z.enum(['id', 'assignee', 'priority_date']);
+const HeadFieldEnum = z.enum(['interventions', 'indications', 'owners']);
 export type HeadField = z.infer<typeof HeadFieldEnum>;
 
+const TailFieldEnum = z.enum(['interventions', 'indications', 'owners']);
+export type TailField = z.infer<typeof TailFieldEnum>;
+
 const DocumentCharacteristicschema = z.object({
-    concept: z.string(),
     count: z.number(),
-    head: z.union([z.string(), z.number()]),
     documents: z.array(z.string()),
+    head: z.union([z.string(), z.number()]),
+    tail: z.string(),
 });
 export const DocumentCharacteristicsSchema = z.array(
     DocumentCharacteristicschema
 );
-export type PatentCharacteristic = z.infer<typeof DocumentCharacteristicschema>;
+export type DocumentCharacteristic = z.infer<
+    typeof DocumentCharacteristicschema
+>;
 export type DocumentCharacteristics = z.infer<
     typeof DocumentCharacteristicsSchema
 >;
 
 const CountByYearSchema = z.object({
     year: z.number(),
-    count: z.number(),
+    count: z.number({ coerce: true }),
 });
 
 export type RelevanceByYear = z.infer<typeof CountByYearSchema>;
@@ -127,9 +132,9 @@ export const CompanySchema = z.object({
     avgAge: z.number(),
     relevanceScore: z.number(),
     wheelhouseScore: z.number(),
-    activity: z.array(z.number()),
+    activity: z.array(z.number({ coerce: true })),
     countByYear: z.array(CountByYearSchema),
-    score: z.number(),
+    score: z.number({ coerce: true }),
 });
 export const CompaniesSchema = z.array(CompanySchema);
 export type Company = z.infer<typeof CompanySchema>;
@@ -142,6 +147,7 @@ export type FindCompaniesParams = z.infer<typeof FindCompaniesParamsSchema>;
 export const CompanyResponseSchema = z.object({
     companies: CompaniesSchema,
     description: z.string(),
+    exitScore: z.number({ coerce: true }),
+    competitionScore: z.number({ coerce: true }),
 });
-
 export type CompanyResponse = z.infer<typeof CompanyResponseSchema>;
