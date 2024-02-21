@@ -30,7 +30,7 @@ export const renderCompanyName = getRenderTypography(
 );
 
 export const renderTicker = getRenderChip({
-    color: 'success',
+    color: 'primary',
     getUrl: (row: Company) =>
         row.symbol
             ? `https://finance.yahoo.com/quote/${row.symbol.toUpperCase()}`

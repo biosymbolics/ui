@@ -147,5 +147,7 @@ export type FindCompaniesParams = z.infer<typeof FindCompaniesParamsSchema>;
 export const CompanyResponseSchema = z.object({
     companies: CompaniesSchema,
     description: z.string(),
+    exitScore: z.number({ coerce: true }),
+    competitionScore: z.number({ coerce: true }),
 });
 export type CompanyResponse = z.infer<typeof CompanyResponseSchema>;
