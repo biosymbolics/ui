@@ -19,3 +19,24 @@ export const MockChatMessageSchema = z.object({
 });
 
 export type MockChatMessage = z.infer<typeof MockChatMessageSchema>;
+
+export const TopDocsByYearSchema = z.object({
+    avg_score: z.number(),
+    count: z.number(),
+    ids: z.array(z.string()),
+    scores: z.array(z.number()),
+    titles: z.array(z.string()),
+    total_score: z.number(),
+    year: z.number(),
+});
+export const SubConceptSchema = z.object({
+    name: z.string(),
+    description: z.string(),
+    report: z.array(TopDocsByYearSchema),
+});
+
+export type SubConcept = z.infer<typeof SubConceptSchema>;
+export const ConceptDecompositionReportSchema = z.array(SubConceptSchema);
+export type ConceptDecompositionReport = z.infer<
+    typeof ConceptDecompositionReportSchema
+>;

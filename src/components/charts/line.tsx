@@ -9,7 +9,10 @@ import { mangoFusionPalette } from '@mui/x-charts/colorPalettes';
 
 import { BaseChartProps } from './types';
 
+type ChartStackType = string; // 'total'
+
 type LineChartProps = BaseChartProps & {
+    defaultStack?: ChartStackType;
     isArea?: boolean;
     series: {
         name: string;
@@ -35,6 +38,7 @@ const getXTicks = (series: LineChartProps['series']) =>
  * Line chart
  */
 export const Line = ({
+    defaultStack,
     isArea = true,
     series,
     title,
@@ -58,7 +62,7 @@ export const Line = ({
                     label: s.name,
                     data: s.data.map(({ y }) => y),
                     showMark: ({ index }) => s.data[index].showMark || false,
-                    stack: 'total',
+                    stack: defaultStack,
                     // valueFormatter: (value) =>
                     //     value == null ? 'NaN' : `${value}`,
                 }))}

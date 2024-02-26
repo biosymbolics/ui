@@ -92,15 +92,17 @@ export const FindCompaniesControl = ({
                                 tooltip="How distantly to search for related IP (KNN). Higher values will take longer to compute."
                             />
                         </Grid>
-                        <Grid xs={12} sm={2}>
-                            <Checkbox
-                                checked={useGptExpansion}
-                                label="Expand?"
-                                onChange={(e) =>
-                                    setUseGptExpansion(e.target.checked)
-                                }
-                            />
-                        </Grid>
+                        {false && (
+                            <Grid xs={12} sm={2}>
+                                <Checkbox
+                                    checked={useGptExpansion}
+                                    label="Expand?"
+                                    onChange={(e) =>
+                                        setUseGptExpansion(e.target.checked)
+                                    }
+                                />
+                            </Grid>
+                        )}
                     </Grid>
                 </Section>
                 <Section variant="l2">
