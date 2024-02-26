@@ -48,7 +48,6 @@ export const ConceptDecompositionSummary = ({
                 }))}
                 title="Patent Activity Over Time"
                 variant="minimal"
-                width={800}
             />
         </Box>
     </>
