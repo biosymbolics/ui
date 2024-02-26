@@ -17,6 +17,7 @@ const CONVERSATION_IDS = [
     'tradingBelowCash',
     'clinicalTrialHighDropout',
     'drugDeliverySystems',
+    'conceptDecomposition',
 ];
 
 export const Contents = ({

@@ -124,6 +124,8 @@ export const CompanySchema = z.object({
     id: z.number(),
     name: z.string(),
     ids: z.array(z.string()),
+    isAcquirer: z.boolean({ coerce: true }),
+    isCompetition: z.boolean({ coerce: true }),
     count: z.number(),
     symbol: z.optional(z.union([z.string(), z.null()])),
     titles: z.array(z.string()),
@@ -141,6 +143,7 @@ export type Company = z.infer<typeof CompanySchema>;
 
 export const FindCompaniesParamsSchema = PatentSearchArgsSchema.extend({
     similarCompanies: z.optional(paramStringArray), // OR with description
+    useGptExpansion: z.optional(z.boolean({ coerce: true })),
 });
 export type FindCompaniesParams = z.infer<typeof FindCompaniesParamsSchema>;
 

@@ -14,6 +14,7 @@ import {
     GridColDef,
     getRenderChip,
     getRenderTypography,
+    renderBoolean,
     renderChip,
     renderPrimaryChip,
     renderSparkline,
@@ -48,21 +49,21 @@ export const findCompanyColumns: GridColDef[] = [
         field: 'symbol',
         headerName: 'Ticker',
         renderCell: renderTicker,
-        width: 125,
+        width: 100,
     },
     {
         field: 'count',
         headerName: 'Count',
         renderCell: renderChip,
         description: 'Number of similar patents',
-        width: 100,
+        width: 85,
     },
     {
         field: 'score',
         headerName: 'Score',
         renderCell: renderPrimaryChip,
         description: 'Overall relevancy score with recency weighting',
-        width: 100,
+        width: 85,
     },
     {
         field: 'activity',
@@ -74,20 +75,32 @@ export const findCompanyColumns: GridColDef[] = [
         field: 'minAge',
         headerName: 'Min Age',
         description: 'Minimum patent age',
-        width: 100,
+        width: 85,
     },
     {
         field: 'relevanceScore',
         headerName: 'Relevance',
         description: 'Average semantic similarity / relevance score',
-        width: 125,
+        width: 90,
     },
     {
         field: 'wheelhouseScore',
         headerName: 'Wheelhouse',
         description:
             'How similar is this set of patents to the overall company portfolio?',
-        width: 125,
+        width: 100,
+    },
+    {
+        field: 'isAcquirer',
+        headerName: 'Acquires?',
+        renderCell: renderBoolean,
+        width: 100,
+    },
+    {
+        field: 'isCompetition',
+        headerName: 'Competition?',
+        renderCell: renderBoolean,
+        width: 100,
     },
 ];
 

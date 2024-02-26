@@ -21,6 +21,7 @@ const FindCompaniesInner = async ({
     description,
     k,
     similarCompanies,
+    useGptExpansion,
 }: FindCompaniesParams): Promise<JSX.Element> => {
     if (isEmpty(description) && isEmpty(similarCompanies)) {
         return (
@@ -48,6 +49,7 @@ const FindCompaniesInner = async ({
             description,
             k,
             similarCompanies,
+            useGptExpansion,
         });
 
         // TODO: expandable text component
