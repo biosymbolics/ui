@@ -142,6 +142,14 @@ const getTabsForType = ({ tab, type, ...args }: ContentArgs): TabDef[] => {
             // tabs.summary,
             tabs.ownersByInterventions,
         ],
+        target: [
+            tabs.owners,
+            tabs.interventions,
+            tabs.indications,
+            tabs.patents,
+            tabs.trials,
+            tabs.ownersByInterventions,
+        ],
         company: [
             tabs.interventions,
             tabs.indications,

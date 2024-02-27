@@ -5,13 +5,7 @@ import Grid from '@mui/joy/Grid';
 import Typography from '@mui/joy/Typography';
 
 import { Section } from '@/components/layout/section';
-import {
-    Autocomplete,
-    Button,
-    Checkbox,
-    Slider,
-    TextArea,
-} from '@/components/input';
+import { Autocomplete, Button, Slider, TextArea } from '@/components/input';
 import { Option } from '@/types/select';
 import { FindCompaniesParams } from '@/types';
 import { useNavigation } from '@/hooks/navigation';
@@ -23,14 +17,10 @@ export const FindCompaniesControl = ({
     children,
     similarCompanies: initialCompanies = [],
     k: initialK = 1000,
-    useGptExpansion: initialUseGptExpansion = false,
 }: FindCompaniesParams & { children: ReactNode }) => {
     const { setParams } = useNavigation();
     const [description, setDescription] = useState<string>(initialDescription);
     const [companies, setCompanies] = useState<string[]>(initialCompanies);
-    const [useGptExpansion, setUseGptExpansion] = useState<boolean>(
-        initialUseGptExpansion
-    );
     const [k, setK] = useState<number>(initialK);
     const [isPending] = useTransition();
 
@@ -92,17 +82,6 @@ export const FindCompaniesControl = ({
                                 tooltip="How distantly to search for related IP (KNN). Higher values will take longer to compute."
                             />
                         </Grid>
-                        {false && (
-                            <Grid xs={12} sm={2}>
-                                <Checkbox
-                                    checked={useGptExpansion}
-                                    label="Expand?"
-                                    onChange={(e) =>
-                                        setUseGptExpansion(e.target.checked)
-                                    }
-                                />
-                            </Grid>
-                        )}
                     </Grid>
                 </Section>
                 <Section variant="l2">
@@ -115,7 +94,6 @@ export const FindCompaniesControl = ({
                                     description,
                                     k,
                                     similarCompanies: companies.join(';'),
-                                    useGptExpansion,
                                 },
                                 true
                             );

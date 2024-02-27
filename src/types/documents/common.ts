@@ -25,7 +25,12 @@ export const paramInteger = z.preprocess((value) => {
 }, z.number());
 
 // vs EntityType??
-export const SearchTypes = ['intervention', 'indication', 'company'] as const;
+export const SearchTypes = [
+    'intervention',
+    'indication',
+    'target',
+    'company',
+] as const;
 const SearchTypeSchema = z.enum(SearchTypes);
 export type SearchType = z.infer<typeof SearchTypeSchema>;
 

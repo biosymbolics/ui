@@ -143,7 +143,6 @@ export type Company = z.infer<typeof CompanySchema>;
 
 export const FindCompaniesParamsSchema = PatentSearchArgsSchema.extend({
     similarCompanies: z.optional(paramStringArray), // OR with description
-    useGptExpansion: z.optional(z.boolean({ coerce: true })),
 });
 export type FindCompaniesParams = z.infer<typeof FindCompaniesParamsSchema>;
 
