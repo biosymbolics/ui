@@ -69,7 +69,7 @@ export const FindCompaniesControl = ({
                                 variant="soft"
                             />
                         </Grid>
-                        <Grid xs={12} sm={4}>
+                        <Grid xs={12} sm={3}>
                             <Slider<number>
                                 defaultValue={k}
                                 label="Search Breadth"
@@ -77,7 +77,7 @@ export const FindCompaniesControl = ({
                                 min={100}
                                 max={5000}
                                 size="lg"
-                                step={100}
+                                step={200}
                                 sx={{ mr: 3 }}
                                 tooltip="How distantly to search for related IP (KNN). Higher values will take longer to compute."
                             />
@@ -93,7 +93,7 @@ export const FindCompaniesControl = ({
                                 {
                                     description,
                                     k,
-                                    companies: companies.join(';'),
+                                    similarCompanies: companies.join(';'),
                                 },
                                 true
                             );

@@ -124,6 +124,8 @@ export const CompanySchema = z.object({
     id: z.number(),
     name: z.string(),
     ids: z.array(z.string()),
+    isAcquirer: z.boolean({ coerce: true }),
+    isCompetition: z.boolean({ coerce: true }),
     count: z.number(),
     symbol: z.optional(z.union([z.string(), z.null()])),
     titles: z.array(z.string()),

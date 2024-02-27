@@ -8,8 +8,13 @@ import ReactMarkdown from 'react-markdown';
 
 import { Gantt } from '@/components/charts/gantt';
 import { Heatmap } from '@/components/charts/heatmap';
+import { ConceptDecompositionSummary } from '@/components/composite/concepts';
 import { ClindevResponseSchema } from '@/types/clindev';
-import { InterventionDropoutReportSchema, MockChatMessage } from '@/types/chat';
+import {
+    ConceptDecompositionReportSchema,
+    InterventionDropoutReportSchema,
+    MockChatMessage,
+} from '@/types/chat';
 
 type ChatBubbleProps = MockChatMessage;
 
@@ -18,6 +23,18 @@ const getChild = (
     content: string,
     description: string | null = null
 ) => {
+    if (type === 'CONCEPT_DECOMPOSITION') {
+        const parsed = ConceptDecompositionReportSchema.safeParse(
+            JSON.parse(content)
+        );
+        if (parsed.success === false) {
+            const message = `Failed to parse: ${parsed.error.toString()}`;
+            console.error(message, parsed);
+            throw new Error(message);
+        }
+        const { data } = parsed;
+        return <ConceptDecompositionSummary concepts={data} />;
+    }
     if (type === 'HEATMAP') {
         const parsed = InterventionDropoutReportSchema.safeParse(
             JSON.parse(content)
@@ -90,7 +107,7 @@ export const ChatBubble = ({
                     borderRadius: 'lg',
                 }}
             >
-                <Box sx={{ color: 'text.secondary' }}>
+                <Box sx={{ color: 'text.secondary', my: 1 }}>
                     {getChild(type, content, description)}
                 </Box>
             </Sheet>
