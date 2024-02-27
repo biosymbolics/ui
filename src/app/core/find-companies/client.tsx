@@ -24,6 +24,7 @@ import { Title } from '@/components/layout/title';
 import { Company } from '@/types';
 import { DEFAULT_PATHNAME } from '@/constants';
 import { Line } from '@/components/charts/line';
+import { getSelectableId } from '@/utils/string';
 
 export const renderCompanyName = getRenderTypography(
     'title-md',
@@ -105,28 +106,19 @@ export const findCompanyColumns: GridColDef[] = [
 ];
 
 const TitleList = ({
-    ids,
-    titles,
+    urls,
 }: {
-    ids: string[];
-    titles: string[];
+    urls: { title: string; url: string }[];
 }): JSX.Element => (
     <>
-        <Typography level="title-md">Patents</Typography>
+        <Typography level="title-md">Patents and Trials</Typography>
         <List>
-            {ids.map((id, i) => (
-                <ListItem key={id}>
+            {urls.map(({ title, url }) => (
+                <ListItem key={getSelectableId(url)}>
                     <ListItemDecorator>·</ListItemDecorator>
 
-                    <Link
-                        component={NextLink}
-                        href={`https://patents.google.com/patent/${id.replaceAll(
-                            '-',
-                            ''
-                        )}`}
-                        target="_blank"
-                    >
-                        {titles[i]}
+                    <Link component={NextLink} href={url} target="_blank">
+                        {title}
                     </Link>
                 </ListItem>
             ))}
@@ -160,7 +152,7 @@ export const CompanyDetail = <T extends Company>({
                 width={800}
             />
         </Title>
-        <TitleList ids={company.ids} titles={company.titles} />
+        <TitleList urls={company.urls} />
     </Section>
 );
 

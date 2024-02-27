@@ -120,6 +120,11 @@ const CountByYearSchema = z.object({
 
 export type RelevanceByYear = z.infer<typeof CountByYearSchema>;
 
+const UrlDefSchema = z.object({
+    title: z.string(),
+    url: z.string(),
+});
+
 export const CompanySchema = z.object({
     id: z.number(),
     name: z.string(),
@@ -129,6 +134,7 @@ export const CompanySchema = z.object({
     count: z.number(),
     symbol: z.optional(z.union([z.string(), z.null()])),
     titles: z.array(z.string()),
+    urls: z.array(UrlDefSchema),
     // terms: z.array(z.string()),
     minAge: z.number(),
     avgAge: z.number(),
