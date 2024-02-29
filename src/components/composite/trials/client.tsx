@@ -29,11 +29,7 @@ import { formatPercent, getSelectableId } from '@/utils/string';
 import { Outcome, Trial } from '@/types/documents/trials';
 import { DEFAULT_PATHNAME } from '@/constants';
 
-import {
-    getDropoutScoresClass,
-    getRepurposeScoreClass,
-    getStyles,
-} from '../styles';
+import { getDropoutScoresClass, getStyles } from '../styles';
 
 export const renderStatusChip = getRenderChip({
     color: (v) => {
@@ -106,14 +102,6 @@ export const getTrialColumns = (): GridColDef[] => [
         field: 'termination_reason',
         headerName: 'Term. Reason',
         width: 150,
-    },
-    {
-        field: 'reformulation_score',
-        headerName: 'Repurpose⚠️',
-        width: 150,
-        valueFormatter: formatNumber,
-        cellClassName: getRepurposeScoreClass,
-        description: '**FAKE PLACEHOLDER**!! Esimated repurpose potential.',
     },
     {
         field: 'title',
