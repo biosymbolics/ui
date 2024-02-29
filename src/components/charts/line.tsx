@@ -1,6 +1,5 @@
 'use client';
 
-import Typography from '@mui/joy/Typography';
 import {
     LineChart as MuiLineChart,
     LineChartProps as MuiLineChartProps,
@@ -8,6 +7,7 @@ import {
 import { mangoFusionPalette } from '@mui/x-charts/colorPalettes';
 
 import { BaseChartProps } from './types';
+import { ChartTitle } from './common/chart-title';
 
 type ChartStackType = string; // 'total'
 
@@ -19,7 +19,6 @@ type LineChartProps = BaseChartProps & {
         data: { showMark?: boolean; x: string | number; y: number }[];
     }[];
     tooltip?: MuiLineChartProps['tooltip'];
-    variant?: 'default' | 'minimal';
 };
 
 /**
@@ -41,6 +40,7 @@ export const Line = ({
     defaultStack,
     isArea = true,
     series,
+    subtitle,
     title,
     tooltip,
     variant = 'default',
@@ -49,11 +49,7 @@ export const Line = ({
     const xTicks = getXTicks(series);
     return (
         <>
-            {title && (
-                <Typography level={variant === 'minimal' ? 'title-md' : 'h4'}>
-                    {title}
-                </Typography>
-            )}
+            <ChartTitle subtitle={subtitle} title={title} variant={variant} />
             <MuiLineChart
                 {...props}
                 colors={mangoFusionPalette}

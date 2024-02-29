@@ -1,11 +1,11 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import Typography from '@mui/joy/Typography';
 import { Vega, VisualizationSpec } from 'react-vega';
 
 import { DEFAULT_VEGA_THEME } from './constants';
 import { BaseChartProps } from './types';
+import { ChartTitle } from './common/chart-title';
 
 type GanttSpecProps = {
     colorField?: string;
@@ -91,8 +91,10 @@ export const Gantt = <DT extends Record<string, unknown>>({
     data,
     colorField,
     getClickUrl,
+    subtitle,
     tooltipFields = [],
     title,
+    variant,
     xField = 'start',
     x2Field = 'end',
     yField,
@@ -123,7 +125,7 @@ export const Gantt = <DT extends Record<string, unknown>>({
     });
     return (
         <>
-            {title && <Typography level="title-md">{title}</Typography>}
+            <ChartTitle subtitle={subtitle} title={title} variant={variant} />
 
             <Vega
                 actions={false}

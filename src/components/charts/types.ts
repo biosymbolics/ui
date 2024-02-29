@@ -12,10 +12,14 @@ export type AnnotationSpec = {
     type?: AnnotationType;
 };
 
+export type ChartVariant = 'default' | 'minimal';
+
 export type BaseChartProps = {
     height?: number;
     pathname: string;
+    subtitle?: string;
     title?: string;
+    variant?: ChartVariant;
     width?: number;
 };
 
