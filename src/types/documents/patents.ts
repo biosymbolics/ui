@@ -116,6 +116,7 @@ export type DocumentCharacteristics = z.infer<
 const CountByYearSchema = z.object({
     year: z.number(),
     count: z.number({ coerce: true }),
+    type: z.string(),
 });
 
 export type RelevanceByYear = z.infer<typeof CountByYearSchema>;
@@ -138,10 +139,10 @@ export const CompanySchema = z.object({
     // terms: z.array(z.string()),
     minAge: z.number(),
     avgAge: z.number(),
-    relevanceScore: z.number(),
-    wheelhouseScore: z.number(),
+    relevanceScore: z.number({ coerce: true }),
+    wheelhouseScore: z.number({ coerce: true }),
     activity: z.array(z.number({ coerce: true })),
-    countByYear: z.array(CountByYearSchema),
+    countByYear: z.record(z.string(), z.array(CountByYearSchema)),
     score: z.number({ coerce: true }),
 });
 export const CompaniesSchema = z.array(CompanySchema);

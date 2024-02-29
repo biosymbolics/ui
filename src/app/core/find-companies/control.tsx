@@ -55,7 +55,7 @@ export const FindCompaniesControl = ({
                                     option: Option,
                                     value: Option
                                 ) => option.id === value.id}
-                                label="Select Companies"
+                                label="Comparison Companies"
                                 onChange={(e, values) => {
                                     setCompanies(values.map((v) => v.id));
                                 }}

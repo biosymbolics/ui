@@ -136,20 +136,20 @@ export const CompanyDetail = <T extends Company>({
             <Line
                 height={150}
                 pathname={DEFAULT_PATHNAME}
-                series={[
-                    {
-                        name: 'patents',
-                        data: company.countByYear
+                series={Object.entries(company.countByYear).map(
+                    ([type, report]) => ({
+                        name: type,
+                        data: report
                             .map((d) => ({
                                 x: d.year,
                                 y: d.count,
                             }))
                             .sort((a, b) => a.x - b.x),
-                    },
-                ]}
+                    })
+                )}
                 title="Activity Over Time"
                 variant="minimal"
-                width={800}
+                width={1000}
             />
         </Title>
         <TitleList urls={company.urls} />
