@@ -1,12 +1,12 @@
 'use client';
 
-import Typography from '@mui/joy/Typography';
 import { Vega, VisualizationSpec } from 'react-vega';
 
 import { PatentGraph } from '@/types';
 
 import { DEFAULT_VEGA_THEME } from './constants';
 import { BaseChartProps } from './types';
+import { ChartTitle } from './common/chart-title';
 
 type GraphProps = BaseChartProps & {
     data: PatentGraph;
@@ -241,11 +241,13 @@ const spec: VisualizationSpec = {
  */
 export const EdgeBundled = ({
     data,
+    subtitle,
     title,
+    variant,
     ...props
 }: GraphProps): JSX.Element => (
     <>
-        {title && <Typography level="title-md">{title}</Typography>}
+        <ChartTitle subtitle={subtitle} title={title} variant={variant} />
 
         <Vega
             actions={false}

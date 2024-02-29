@@ -1,11 +1,11 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import Typography from '@mui/joy/Typography';
 import { Vega, VisualizationSpec } from 'react-vega';
 
 import { DEFAULT_VEGA_THEME } from './constants';
 import { BaseChartProps } from './types';
+import { ChartTitle } from './common/chart-title';
 
 type HeadmapSpecProps = {
     colorField?: string;
@@ -99,12 +99,14 @@ export const Heatmap = <DT extends Record<string, unknown>>({
     colorField,
     getClickUrl,
     tooltipFields = [],
+    subtitle,
     title,
     xField,
     yField,
     xFieldTitle = '',
     yFieldTitle = '',
     width = 800,
+    variant = 'default',
 }: HeatmapProps<DT>): JSX.Element => {
     const router = useRouter();
     const signalListeners = {
@@ -128,7 +130,7 @@ export const Heatmap = <DT extends Record<string, unknown>>({
     });
     return (
         <>
-            {title && <Typography level="title-md">{title}</Typography>}
+            <ChartTitle subtitle={subtitle} title={title} variant={variant} />
 
             <Vega
                 actions={false}
