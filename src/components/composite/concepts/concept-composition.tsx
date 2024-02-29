@@ -46,7 +46,8 @@ export const ConceptDecompositionSummary = ({
                         }))
                         .sort((a, b) => a.x - b.x),
                 }))}
-                title="Patent/Trial Activity Over Time"
+                subtitle="(WIPO Patents and Trials)"
+                title="Activity Over Time"
                 variant="minimal"
             />
         </Box>

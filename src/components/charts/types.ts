@@ -15,6 +15,7 @@ export type AnnotationSpec = {
 export type BaseChartProps = {
     height?: number;
     pathname: string;
+    subtitle?: string;
     title?: string;
     width?: number;
 };

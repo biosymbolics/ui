@@ -41,6 +41,7 @@ export const Line = ({
     defaultStack,
     isArea = true,
     series,
+    subtitle,
     title,
     tooltip,
     variant = 'default',
@@ -52,6 +53,13 @@ export const Line = ({
             {title && (
                 <Typography level={variant === 'minimal' ? 'title-md' : 'h4'}>
                     {title}
+                </Typography>
+            )}
+            {subtitle && (
+                <Typography
+                    level={variant === 'minimal' ? 'title-sm' : 'title-md'}
+                >
+                    <i>{subtitle}</i>
                 </Typography>
             )}
             <MuiLineChart
