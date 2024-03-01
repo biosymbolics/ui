@@ -53,25 +53,6 @@ export const SearchBar = ({
 
     return (
         <>
-            <Autocomplete<Option, true, false>
-                isMultiple
-                defaultValue={(terms || []).map((term) => ({
-                    id: term,
-                    label: term,
-                }))}
-                isOptionEqualToValue={(option: Option, value: Option) =>
-                    option.id === value.id
-                }
-                label="Select Terms"
-                onChange={(e, values) => {
-                    setTerms(values.map((v) => v.id));
-                }}
-                optionFetcher={fetchAutocompletions}
-                optionLabelField="label"
-                size="xlg"
-                tooltip="Compounds, diseases, MoAs, pharmaceutical companies, etc."
-                variant="soft"
-            />
             <Section variant="l2">
                 <TextArea
                     aria-label="description"
@@ -81,6 +62,27 @@ export const SearchBar = ({
                     maxRows={20}
                     minRows={2}
                     placeholder="(optional) describe the invention or technology you are interested in."
+                />
+            </Section>
+            <Section variant="l2">
+                <Autocomplete<Option, true, false>
+                    isMultiple
+                    defaultValue={(terms || []).map((term) => ({
+                        id: term,
+                        label: term,
+                    }))}
+                    isOptionEqualToValue={(option: Option, value: Option) =>
+                        option.id === value.id
+                    }
+                    label="Select Additional Terms"
+                    onChange={(e, values) => {
+                        setTerms(values.map((v) => v.id));
+                    }}
+                    optionFetcher={fetchAutocompletions}
+                    optionLabelField="label"
+                    size="md"
+                    tooltip="Compounds, diseases, MoAs, pharmaceutical companies, etc."
+                    variant="soft"
                 />
             </Section>
 
@@ -131,7 +133,7 @@ export const SearchBar = ({
                     <Grid xs={12} sm={2}>
                         <Select
                             defaultValue={type}
-                            label="Term Type"
+                            label="Display Type"
                             onChange={(
                                 e: unknown,
                                 value: SetStateAction<SearchType | null>
