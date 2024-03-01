@@ -10,11 +10,7 @@ import {
     unencodeHtml,
 } from '@/components/data/grid';
 
-import {
-    getAvailabilityClass,
-    getPatentYearsClass,
-    getTolerantScoresClass,
-} from '../styles';
+import { getAvailabilityClass, getPatentYearsClass } from '../styles';
 
 export const getPatentColumns = (): GridColDef[] => [
     { field: 'id', headerName: 'Pub #', width: 170 },
@@ -24,14 +20,14 @@ export const getPatentColumns = (): GridColDef[] => [
         width: 500,
         valueFormatter: unencodeHtml,
     },
-    {
-        field: 'score',
-        headerName: 'Overall',
-        width: 85,
-        valueFormatter: formatNumber,
-        cellClassName: getTolerantScoresClass,
-        description: 'Overall score',
-    },
+    // {
+    //     field: 'score',
+    //     headerName: 'Overall',
+    //     width: 85,
+    //     valueFormatter: formatNumber,
+    //     cellClassName: getTolerantScoresClass,
+    //     description: 'Overall score',
+    // },
     // {
     //     field: 'suitability_score',
     //     headerName: 'Suitability',

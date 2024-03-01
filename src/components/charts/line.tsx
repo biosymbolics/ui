@@ -58,7 +58,7 @@ export const Line = ({
                     label: s.name,
                     data: s.data.map(({ y }) => y),
                     showMark: ({ index }) => s.data[index].showMark || false,
-                    stack: defaultStack,
+                    stack: defaultStack || isArea ? 'total' : undefined,
                     // valueFormatter: (value) =>
                     //     value == null ? 'NaN' : `${value}`,
                 }))}

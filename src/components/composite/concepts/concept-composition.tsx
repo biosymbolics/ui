@@ -35,7 +35,7 @@ export const ConceptDecompositionSummary = ({
         <Box sx={{ my: 2 }}>
             <Line
                 height={300}
-                isArea={false}
+                // isArea={false}
                 pathname={DEFAULT_PATHNAME}
                 series={concepts.map((c) => ({
                     name: c.name,
