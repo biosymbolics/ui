@@ -137,7 +137,7 @@ export const CompanySchema = z.object({
     titles: z.array(z.string()),
     urls: z.array(UrlDefSchema),
     // terms: z.array(z.string()),
-    minAge: z.number(),
+    minAge: z.union([z.null(), z.number()]),
     avgAge: z.number(),
     relevanceScore: z.number({ coerce: true }),
     wheelhouseScore: z.number({ coerce: true }),
