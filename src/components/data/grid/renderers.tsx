@@ -271,6 +271,13 @@ export const renderOwnerChip = getRenderChip({
     ),
 });
 
+const getSparklineYMargin = (value: number[]): number => {
+    if (value.reduce((sum, current) => sum + current, 0) < 3) {
+        return 20;
+    }
+    return 10;
+};
+
 export const getRenderSparkline =
     <T extends Record<string, unknown>>(
         height: number | undefined = undefined // defaults nicely to varying row heights
@@ -280,6 +287,9 @@ export const getRenderSparkline =
         if (!value) {
             return <span />;
         }
+
+        const my = getSparklineYMargin(value);
+
         return (
             <SparkLineChart
                 showHighlight
@@ -287,7 +297,7 @@ export const getRenderSparkline =
                 colors={cheerfulFiestaPalette}
                 data={value}
                 height={height}
-                margin={{ top: 10, right: 0, bottom: 10, left: 0 }}
+                margin={{ top: my, right: 0, bottom: my, left: 0 }}
                 plotType="line"
             />
         );
