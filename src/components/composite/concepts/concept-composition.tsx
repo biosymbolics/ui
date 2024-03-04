@@ -21,7 +21,7 @@ export const ConceptDecompositionSummary = ({
                     <ListItemContent>
                         <Link
                             component={NextLink}
-                            href={`/core/find-companies?description=${concept.description}`}
+                            href={`/core/dashboard?description=${concept.description}&type=companies`}
                             target="_blank"
                         >
                             <b>{concept.name}</b>

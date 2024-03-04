@@ -93,9 +93,9 @@ export const SearchBar = ({
                             defaultValue={newYearRange}
                             label="Year Range"
                             onChange={(value) => setYearRange(value)}
-                            min={2000}
+                            min={1980}
                             minDistance={2}
-                            max={2025}
+                            max={2030}
                             size="lg"
                             sx={{ mr: 3 }}
                             valueLabelDisplay="on"
