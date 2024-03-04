@@ -4,42 +4,45 @@ import { z } from 'zod';
 import { BaseSearchArgs, ViewType } from './documents/common';
 
 const EntityActivitySchema = z.object({
-    year: z.number(),
-    patents: z.number(),
-    regulatory_approvals: z.number(),
-    trials: z.number(),
+    year: z.number({ coerce: true }),
+    patents: z.number({ coerce: true }),
+    regulatoryApprovals: z.number({ coerce: true }),
+    trials: z.number({ coerce: true }),
 });
 
 export const ChildEntitySchema = z.object({
-    activity: z.array(z.number()),
-    average_trial_dropout: z.union([z.number(), z.null()]),
-    average_trial_duration: z.union([z.number(), z.null()]),
-    average_trial_enrollment: z.union([z.number(), z.null()]),
-    detailed_activity: z.array(EntityActivitySchema),
+    activity: z.array(z.number({ coerce: true })),
+    averageTrialDropout: z.union([z.number(), z.null()]),
+    averageTrialDuration: z.union([z.number(), z.null()]),
+    averageTrialEnrollment: z.union([z.number(), z.null()]),
+    detailedActivity: z.array(EntityActivitySchema),
     id: z.string(),
-    investment_level: z.string(),
-    is_approved: z.boolean(),
-    last_status: z.string(),
-    last_updated: z.union([z.number(), z.null()]),
-    maybe_available_count: z.number(),
-    maybe_available_ids: z.array(z.string()),
-    max_phase: z.string(),
+    investmentLevel: z.string(),
+    isApproved: z.boolean({ coerce: true }),
+    lastStatus: z.string(),
+    lastUpdated: z.union([z.number(), z.null()]),
+    maybeAvailableCount: z.number({ coerce: true }),
+    maybeAvailableIds: z.array(z.string()),
+    maxPhase: z.string(),
     name: z.string(),
     owners: z.array(z.string()),
-    owner_count: z.number(),
-    patent_count: z.number(),
-    patent_ids: z.array(z.string()),
-    percent_trials_stopped: z.union([z.number(), z.null()]),
-    record_count: z.number(),
-    regulatory_approval_count: z.number(),
-    regulatory_approval_ids: z.array(z.string()),
+    ownerCount: z.number({ coerce: true }),
+    patentCount: z.number({ coerce: true }),
+    patentIds: z.array(z.string()),
+    percentTrialsStopped: z.union([z.number(), z.null()]),
+    recordCount: z.number({ coerce: true }),
+    regulatoryApprovalCount: z.number({ coerce: true }),
+    regulatoryApprovalIds: z.array(z.string()),
     risk: z.optional(z.string().default('--')),
-    trial_count: z.number(),
-    trial_ids: z.array(z.string()),
+    trialCount: z.number({ coerce: true }),
+    trialIds: z.array(z.string()),
 });
 
 export const EntitySchema = ChildEntitySchema.and(
-    z.object({ children: z.array(ChildEntitySchema), child_count: z.number() })
+    z.object({
+        children: z.array(ChildEntitySchema),
+        childCount: z.number({ coerce: true }),
+    })
 );
 
 export const EntityResponseSchema = z.array(EntitySchema);

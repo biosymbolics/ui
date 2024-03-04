@@ -67,13 +67,13 @@ export const getTrialColumns = (): GridColDef[] => [
         valueGetter: formatMappingObject,
     },
     {
-        field: 'start_date',
+        field: 'startDate',
         headerName: 'Start',
         width: 75,
         valueFormatter: formatYear,
     },
     {
-        field: 'end_date',
+        field: 'endDate',
         headerName: 'End',
         width: 75,
         valueFormatter: formatYear,
@@ -91,7 +91,7 @@ export const getTrialColumns = (): GridColDef[] => [
         width: 125,
     },
     {
-        field: 'dropout_percent',
+        field: 'dropoutPercent',
         headerName: 'Dropout %',
         width: 100,
         valueFormatter: renderPercent,
@@ -99,7 +99,7 @@ export const getTrialColumns = (): GridColDef[] => [
         description: 'Dropout % = Dropouts / Enrollment',
     },
     {
-        field: 'termination_reason',
+        field: 'terminationReason',
         headerName: 'Term. Reason',
         width: 150,
     },
@@ -121,7 +121,7 @@ export const getTrialColumns = (): GridColDef[] => [
         valueFormatter: formatNumber,
     },
     {
-        field: 'max_timeframe',
+        field: 'maxTimeframe',
         headerName: 'Timeframe',
         width: 100,
     },
@@ -218,14 +218,14 @@ export const TrialDetail = <T extends Trial>({
                 <Metric
                     formatter={(v) => `${v || '?'} days`}
                     label="Outcome Timeframe"
-                    value={trial.max_timeframe || 0}
+                    value={trial.maxTimeframe || 0}
                 />
             </Grid>
             <Grid>
                 <Metric
                     value={
-                        trial.dropout_percent
-                            ? formatPercent(trial.dropout_percent)
+                        trial.dropoutPercent
+                            ? formatPercent(trial.dropoutPercent)
                             : '--'
                     }
                     label="Dropout Rate"
@@ -233,9 +233,9 @@ export const TrialDetail = <T extends Trial>({
             </Grid>
             <Grid>
                 <Metric
-                    value={trial.termination_reason || '--'}
+                    value={trial.terminationReason || '--'}
                     label="Termination Reason"
-                    tooltip={trial.termination_description || undefined}
+                    tooltip={trial.terminationDescription || undefined}
                 />
             </Grid>
         </Grid>

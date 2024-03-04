@@ -21,12 +21,14 @@ export const MockChatMessageSchema = z.object({
 export type MockChatMessage = z.infer<typeof MockChatMessageSchema>;
 
 export const TopDocsByYearSchema = z.object({
-    avg_score: z.number(),
+    avgRelevance: z.number({ coerce: true }),
     count: z.number(),
     ids: z.array(z.string()),
-    scores: z.array(z.number()),
-    titles: z.array(z.string()),
-    total_score: z.number(),
+    // scores: z.array(z.number()),
+    titles: z.array(z.union([z.string(), z.null()])),
+    totalInvestment: z.number({ coerce: true }),
+    totalRelevance: z.number({ coerce: true }),
+    totalTraction: z.number({ coerce: true }),
     year: z.number(),
 });
 export const SubConceptSchema = z.object({
@@ -40,3 +42,5 @@ export const ConceptDecompositionReportSchema = z.array(SubConceptSchema);
 export type ConceptDecompositionReport = z.infer<
     typeof ConceptDecompositionReportSchema
 >;
+
+export type TopDocsByYear = z.infer<typeof TopDocsByYearSchema>;

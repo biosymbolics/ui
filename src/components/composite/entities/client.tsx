@@ -22,14 +22,14 @@ import { getStoppedPercentClass } from '../styles';
 export const renderPatentModal = getRenderChip({
     color: 'primary',
     getUrl: (row: Entity) =>
-        `/core/patents?ids=${row.patent_ids.join(';')}&terms=${row.name}`,
+        `/core/patents?ids=${row.patentIds.join(';')}&terms=${row.name}`,
     openInNewTab: false,
 });
 
 export const renderApprovalModel = getRenderChip({
     color: 'primary',
     getUrl: (row: Entity) =>
-        `/core/approvals?ids=${row.regulatory_approval_ids.join(';')}&terms=${
+        `/core/approvals?ids=${row.regulatoryApprovalIds.join(';')}&terms=${
             row.name
         }`,
     openInNewTab: false,
@@ -38,14 +38,14 @@ export const renderApprovalModel = getRenderChip({
 export const renderTrialModal = getRenderChip({
     color: 'primary',
     getUrl: (row: Entity) =>
-        `/core/trials?ids=${row.trial_ids.join(';')}&terms=${row.name}`,
+        `/core/trials?ids=${row.trialIds.join(';')}&terms=${row.name}`,
     openInNewTab: false,
 });
 
 export const renderAvailabilityModal = getRenderChip({
     color: (v) => ((v as number) > 0 ? 'success' : 'neutral'),
     getUrl: (row: Entity) =>
-        `/core/patents?ids=${row.maybe_available_ids.join(';')}&terms=${
+        `/core/patents?ids=${row.maybeAvailableIds.join(';')}&terms=${
             row.name
         }`,
     openInNewTab: false,
@@ -93,32 +93,32 @@ export const getEntityColumns = (
         renderCell: renderMainTerm,
     },
     {
-        field: 'child_count',
+        field: 'childCount',
         headerName: 'Subs',
         width: 80,
         hidden: !hasChildren,
         renderCell: renderChip,
     },
     {
-        field: 'regulatory_approval_count',
+        field: 'regulatoryApprovalCount',
         headerName: 'Approvals',
         width: 80,
         renderCell: renderApprovalModel,
     },
     {
-        field: 'trial_count',
+        field: 'trialCount',
         headerName: 'Trials',
         width: 80,
         renderCell: renderTrialModal,
     },
     {
-        field: 'patent_count',
+        field: 'patentCount',
         headerName: 'Patents',
         width: 80,
         renderCell: renderPatentModal,
     },
     {
-        field: 'owner_count',
+        field: 'ownerCount',
         headerName: 'Owners',
         hidden: category === 'owner' || view === 'company',
         width: 80,
@@ -131,7 +131,7 @@ export const getEntityColumns = (
         renderCell: renderSparkline,
     },
     {
-        field: 'maybe_available_count',
+        field: 'maybeAvailableCount',
         headerName: 'Avail?',
         hidden: category !== 'intervention',
         width: 85,
@@ -139,7 +139,7 @@ export const getEntityColumns = (
         description: 'Number of patents that *might* be available',
     },
     {
-        field: 'investment_level',
+        field: 'investmentLevel',
         headerName:
             category === 'owner' || view === 'company'
                 ? 'Investment'
@@ -149,39 +149,39 @@ export const getEntityColumns = (
         description: 'Relative investment or crowding level',
     },
     {
-        field: 'risk_level',
+        field: 'riskLevel',
         headerName: 'Risk',
         hidden: category === 'owner',
         width: 75,
         renderCell: renderSaturationChip,
     },
     {
-        field: 'max_phase',
+        field: 'maxPhase',
         headerName: 'Max Phase',
         width: 125,
         renderCell: renderChip,
     },
     {
-        field: 'percent_trials_stopped',
+        field: 'percentTrialsStopped',
         headerName: '% Stopped',
         width: 85,
         valueFormatter: renderPercent,
         cellClassName: getStoppedPercentClass,
     },
     {
-        field: 'average_trial_dropout',
+        field: 'averageTrialDropout',
         headerName: '% Dropout',
         width: 85,
         valueFormatter: renderPercent,
         cellClassName: getStoppedPercentClass,
     },
     {
-        field: 'average_trial_duration',
+        field: 'averageTrialDuration',
         headerName: 'Avg Duration',
         width: 85,
     },
     {
-        field: 'average_trial_enrollment',
+        field: 'averageTrialEnrollment',
         headerName: 'Avg Enrollment',
         width: 85,
     },
@@ -191,7 +191,7 @@ export const getRowId = (row: Entity) => `nested-${row.id}`;
 
 const DocTypes: (keyof Omit<EntityActivity, 'year'>)[] = [
     'patents',
-    'regulatory_approvals',
+    'regulatoryApprovals',
     'trials',
 ];
 
@@ -234,7 +234,7 @@ export const EntityDetail = <T extends Entity>(
                 <Line
                     height={150}
                     pathname={DEFAULT_PATHNAME}
-                    series={formatDetailData(entity.detailed_activity)}
+                    series={formatDetailData(entity.detailedActivity)}
                     title="Activity Over Time"
                     variant="minimal"
                     width={800}

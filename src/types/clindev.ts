@@ -5,7 +5,7 @@ export const ClindevResponseSchema = z.array(
     z.object({
         stage: z.string(),
         offset: z.number(),
-        median_duration: z.number(),
+        medianDuration: z.number(),
         iqr: z.number(),
     })
 );

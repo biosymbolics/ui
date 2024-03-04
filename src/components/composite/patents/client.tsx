@@ -30,7 +30,7 @@ const SimilarPatents = ({ patent }: { patent: Patent }): JSX.Element => (
     <>
         <Typography level="title-md">Similar Patents</Typography>
         <List>
-            {patent.similar_patents
+            {patent.similarPatents
                 .filter((s) => s.startsWith('WO'))
                 .map((s, index) => (
                     <ListItem key={`${getSelectableId(s)}-${index}`}>
@@ -112,19 +112,19 @@ export const PatentDetail = <T extends Patent>({
         <Grid container spacing={3}>
             <Grid xs={6} sm={2}>
                 <Metric
-                    value={patent.suitability_score}
+                    value={patent.suitabilityScore}
                     label="Suitability"
-                    tooltip={patent.suitability_score_explanation || ''}
+                    tooltip={patent.suitabilityScoreExplanation || ''}
                 />
             </Grid>
             <Grid xs={6} sm={2}>
-                <Metric value={patent.patent_years} label="Patent Years Left" />
+                <Metric value={patent.patentYears} label="Patent Years Left" />
             </Grid>
             <Grid xs={6} sm={2}>
                 <Metric
-                    value={patent.availability_likelihood}
+                    value={patent.availabilityLikelihood}
                     label="Likehood of Availability"
-                    tooltip={patent.availability_explanation}
+                    tooltip={patent.availabilityExplanation}
                 />
             </Grid>
         </Grid>

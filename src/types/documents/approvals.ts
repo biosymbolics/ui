@@ -10,8 +10,8 @@ import {
 
 export const RegulatoryApprovalSchema = z.object({
     agency: z.optional(z.string()),
-    application_type: z.string(),
-    approval_date: z.string(),
+    applicationType: z.string(),
+    approvalDate: z.string(),
     id: z.string(),
     indications: z.union([z.array(MappingObjectSchema), z.null()]),
     interventions: z.union([z.array(MappingObjectSchema), z.null()]),

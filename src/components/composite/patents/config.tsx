@@ -29,7 +29,7 @@ export const getPatentColumns = (): GridColDef[] => [
     //     description: 'Overall score',
     // },
     // {
-    //     field: 'suitability_score',
+    //     field: 'suitabilityScore',
     //     headerName: 'Suitability',
     //     width: 85,
     //     valueFormatter: formatNumber,
@@ -38,7 +38,7 @@ export const getPatentColumns = (): GridColDef[] => [
     //         'Suitability of patent, in terms of patent type (CoM vs MoU), patented thing (compound > device) and patent years remaining.',
     // },
     {
-        field: 'priority_date',
+        field: 'priorityDate',
         headerName: 'Priority Year',
         valueFormatter: formatYear,
         width: 125,
@@ -50,7 +50,7 @@ export const getPatentColumns = (): GridColDef[] => [
         valueGetter: formatMappingObjects,
     },
     // {
-    //     field: 'probability_of_success',
+    //     field: 'probabilityOfSuccess',
     //     headerName: 'PoS',
     //     width: 85,
     //     valueFormatter: formatBlank,
@@ -58,7 +58,7 @@ export const getPatentColumns = (): GridColDef[] => [
     //     description: '**FAKE PLACEHOLDER**!! Estimated PoS.',
     // },
     // {
-    //     field: 'reformulation_score',
+    //     field: 'reformulationScore',
     //     headerName: 'Reformulation⚠️',
     //     width: 100,
     //     valueFormatter: renderPercent,
@@ -66,14 +66,14 @@ export const getPatentColumns = (): GridColDef[] => [
     //     description: '**FAKE PLACEHOLDER**!! Esimated reformulation potential.',
     // },
     {
-        field: 'patent_years',
+        field: 'patentYears',
         headerName: 'Yrs Left',
         width: 75,
         description: 'Patent years remaining.',
         cellClassName: getPatentYearsClass,
     },
     {
-        field: 'availability_likelihood',
+        field: 'availabilityLikelihood',
         headerName: 'Est. Avail',
         width: 100,
         valueFormatter: formatName,
@@ -81,7 +81,7 @@ export const getPatentColumns = (): GridColDef[] => [
         description: 'Likehood of patent being available.',
     },
     {
-        field: 'search_rank',
+        field: 'searchRank',
         headerName: 'Relevance',
         valueFormatter: formatNumber,
         width: 100,

@@ -1,5 +1,6 @@
 import isUndefined from 'lodash/fp/isUndefined';
 import capitalize from 'lodash/fp/capitalize';
+import startCase from 'lodash/fp/startCase';
 
 /**
  * Removes all non-alphanumeric characters from a string
@@ -101,7 +102,7 @@ export const formatLabel = (
     if (exceptionRe && new RegExp(exceptionRe).test(strInput)) {
         return strInput;
     }
-    return title(strInput.replace(/_/g, ' '));
+    return startCase(strInput);
 };
 
 export const formatPercent = (value: number) =>

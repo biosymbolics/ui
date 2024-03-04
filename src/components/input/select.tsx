@@ -8,7 +8,7 @@ import {
 } from '@mui/joy/Select';
 
 import { FormLabel } from '@/components/input/label';
-import { getSelectableId } from '@/utils/string';
+import { formatLabel, getSelectableId } from '@/utils/string';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type BaseOption = string | Record<string, any>;
@@ -20,6 +20,7 @@ export type SelectProps<T extends BaseOption> = {
     helperText?: string;
     id?: JoySelectProps<T, false>['id'];
     idField?: keyof T; // TODO: only if T is Record<string, any>
+    labelField?: keyof T; // TODO: only if T is Record<string, any>
     label?: string;
     options: T[];
     onChange?: JoySelectProps<T, false>['onChange'];
@@ -36,6 +37,7 @@ export const Select = <T extends BaseOption>({
     helperText,
     id,
     idField,
+    labelField,
     label,
     options,
     sx,
@@ -54,6 +56,16 @@ export const Select = <T extends BaseOption>({
         throw new Error('idField required for record options');
     };
 
+    const getLabel = (option: T): string => {
+        if (typeof option === 'string') {
+            return formatLabel(option);
+        }
+        if (labelField) {
+            return option[labelField] as string;
+        }
+        throw new Error('labelField required for record options');
+    };
+
     return (
         <FormControl id={formId} error={error} sx={sx}>
             {label && <FormLabel tooltip={tooltip}>{label}</FormLabel>}
@@ -66,9 +78,10 @@ export const Select = <T extends BaseOption>({
                 {options.map((o) => (
                     <JoySelectOption
                         key={getSelectableId(getValue(o))}
+                        label={getLabel(o)}
                         value={getValue(o)}
                     >
-                        {getValue(o)}
+                        {getLabel(o)}
                     </JoySelectOption>
                 ))}
             </JoySelect>

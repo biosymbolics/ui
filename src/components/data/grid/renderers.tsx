@@ -271,8 +271,19 @@ export const renderOwnerChip = getRenderChip({
     ),
 });
 
+export const renderZeroIsNullChip = getRenderChip({
+    color: 'neutral',
+    getTooltip: (row: { owners: string[] }) => (
+        <List>
+            {row.owners.map((owner) => (
+                <ListItem key={owner}>{owner}</ListItem>
+            ))}
+        </List>
+    ),
+});
+
 const getSparklineYMargin = (value: number[]): number => {
-    if (value.reduce((sum, current) => sum + current, 0) < 3) {
+    if (value.filter((v) => v > 2).length === 0) {
         return 20;
     }
     return 10;

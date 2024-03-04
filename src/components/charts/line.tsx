@@ -12,6 +12,7 @@ import { ChartTitle } from './common/chart-title';
 type ChartStackType = string; // 'total'
 
 type LineChartProps = BaseChartProps & {
+    controls?: React.ReactNode;
     defaultStack?: ChartStackType;
     isArea?: boolean;
     series: {
@@ -37,6 +38,7 @@ const getXTicks = (series: LineChartProps['series']) =>
  * Line chart
  */
 export const Line = ({
+    controls,
     defaultStack,
     isArea = true,
     series,
@@ -49,7 +51,12 @@ export const Line = ({
     const xTicks = getXTicks(series);
     return (
         <>
-            <ChartTitle subtitle={subtitle} title={title} variant={variant} />
+            <ChartTitle
+                controls={controls}
+                subtitle={subtitle}
+                title={title}
+                variant={variant}
+            />
             <MuiLineChart
                 {...props}
                 colors={mangoFusionPalette}
