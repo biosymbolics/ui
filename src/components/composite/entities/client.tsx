@@ -256,14 +256,11 @@ export const EntityGrid = ({
     entities: Entity[];
 }) => {
     const columns = getEntityColumns(category, false);
-    const anyChildren = entities.some((e) => e.children.length > 0);
     return (
         <DataGrid
             disableRowSelectionOnClick
             columns={columns}
-            detailComponent={
-                anyChildren ? getEntityDetail(category) : undefined
-            }
+            detailComponent={getEntityDetail(category)}
             detailHeight="auto"
             rows={entities}
             variant="maximal"

@@ -42,7 +42,7 @@ const SimilarPatents = ({ patent }: { patent: Patent }): JSX.Element => (
                         >
                             {s}
                         </Link>
-                        <Typography level="body-sm" sx={{ ml: 1 }}>
+                        {/* <Typography level="body-sm" sx={{ ml: 1 }}>
                             (
                             <Link
                                 component={NextLink}
@@ -52,7 +52,7 @@ const SimilarPatents = ({ patent }: { patent: Patent }): JSX.Element => (
                                 Search
                             </Link>
                             )
-                        </Typography>
+                        </Typography> */}
                     </ListItem>
                 ))}
         </List>

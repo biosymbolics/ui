@@ -29,7 +29,7 @@ export const SearchBar = ({
     fetchAutocompletions,
     k: initialK,
     queryType: initialQueryType = 'AND',
-    startYear: initialStartYear = 2014,
+    startYear: initialStartYear = 2000,
     terms: initialTerms,
     type: initialType,
 }: {
