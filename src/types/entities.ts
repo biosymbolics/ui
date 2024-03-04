@@ -12,9 +12,9 @@ const EntityActivitySchema = z.object({
 
 export const ChildEntitySchema = z.object({
     activity: z.array(z.number()),
-    average_trial_dropout: z.number(),
-    average_trial_duration: z.number(),
-    average_trial_enrollment: z.number(),
+    average_trial_dropout: z.union([z.number(), z.null()]),
+    average_trial_duration: z.union([z.number(), z.null()]),
+    average_trial_enrollment: z.union([z.number(), z.null()]),
     detailed_activity: z.array(EntityActivitySchema),
     id: z.string(),
     investment_level: z.string(),
@@ -29,7 +29,7 @@ export const ChildEntitySchema = z.object({
     owner_count: z.number(),
     patent_count: z.number(),
     patent_ids: z.array(z.string()),
-    percent_trials_stopped: z.number(),
+    percent_trials_stopped: z.union([z.number(), z.null()]),
     record_count: z.number(),
     regulatory_approval_count: z.number(),
     regulatory_approval_ids: z.array(z.string()),

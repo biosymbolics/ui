@@ -146,6 +146,7 @@ export const getEntityColumns = (
                 : 'Crowding',
         width: 100,
         renderCell: renderSaturationChip,
+        description: 'Relative investment or crowding level',
     },
     {
         field: 'risk_level',

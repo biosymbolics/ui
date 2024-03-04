@@ -150,7 +150,7 @@ const getTabsForType = ({
         },
     };
 
-    const typeToTabs: Record<ViewType | 'unknown', TabDef[]> = {
+    const typeToTabs: Record<ViewType, TabDef[]> = {
         intervention: [
             tabs.owners,
             tabs.indications,
@@ -183,7 +183,7 @@ const getTabsForType = ({
             tabs.interventionsByIndication,
         ],
         companies: [tabs.owners, tabs.patents, tabs.trials],
-        unknown: [tabs.patents, tabs.trials, tabs.summary],
+        unknown: [tabs.patents, tabs.trials],
     };
 
     return typeToTabs[type || 'unknown'];

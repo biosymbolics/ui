@@ -163,7 +163,7 @@ export const SearchBar = ({
                             queryType,
                             startYear: newYearRange?.[0],
                             terms,
-                            viewType,
+                            type: viewType,
                         });
                         navigate(`${pathname}?${queryArgs}`);
                     }}
