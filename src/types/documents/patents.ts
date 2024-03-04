@@ -148,9 +148,7 @@ export const CompanySchema = z.object({
 export const CompaniesSchema = z.array(CompanySchema);
 export type Company = z.infer<typeof CompanySchema>;
 
-export const FindCompaniesParamsSchema = PatentSearchArgsSchema.extend({
-    similarCompanies: z.optional(paramStringArray), // OR with description
-});
+export const FindCompaniesParamsSchema = PatentSearchArgsSchema;
 export type FindCompaniesParams = z.infer<typeof FindCompaniesParamsSchema>;
 
 export const CompanyResponseSchema = z.object({

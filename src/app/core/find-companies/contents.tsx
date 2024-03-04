@@ -20,20 +20,17 @@ import { CompanyGrid } from './client';
 const FindCompaniesInner = async ({
     description,
     k,
-    similarCompanies,
 }: FindCompaniesParams): Promise<JSX.Element> => {
-    if (isEmpty(description) && isEmpty(similarCompanies)) {
+    if (isEmpty(description)) {
         return (
             <Alert
                 variant="soft"
                 color="primary"
                 startDecorator={<LightbulbIcon />}
             >
-                <Typography level="h4">
-                    Please enter a description or select companies
-                </Typography>
+                <Typography level="h4">Please enter a description</Typography>
                 <Typography level="body-md">
-                    Enter a 2-3 paragraph description, or similar companies
+                    Enter a 2-3 paragraph description
                 </Typography>
             </Alert>
         );
@@ -47,7 +44,6 @@ const FindCompaniesInner = async ({
         } = await findCompanies({
             description,
             k,
-            similarCompanies,
         });
 
         // TODO: expandable text component
