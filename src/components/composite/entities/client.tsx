@@ -82,7 +82,7 @@ const getTermLabel = (category: EntityCategory) => {
 
 export const getEntityColumns = (
     category: EntityCategory,
-    isChild: boolean
+    hasChildren: boolean
 ): GridColDef[] => [
     {
         field: 'name',
@@ -94,7 +94,7 @@ export const getEntityColumns = (
         field: 'child_count',
         headerName: 'Subs',
         width: 80,
-        hidden: isChild,
+        hidden: !hasChildren,
         renderCell: renderChip,
     },
     {
@@ -217,7 +217,10 @@ export const EntityDetail = <T extends Entity>(
     }
     const { category, row: entity } = props;
 
-    const columns = getEntityColumns(category, true);
+    const hasChildren = entity.children.length > 0;
+
+    const columns = getEntityColumns(category, hasChildren);
+
     return (
         <Section mx={3}>
             <Title title={entity.name} variant="soft">
@@ -231,13 +234,15 @@ export const EntityDetail = <T extends Entity>(
                 />
             </Title>
 
-            <DataGrid<Entity>
-                columns={columns}
-                getRowId={getRowId}
-                height={Math.min(400, 100 + entity.children.length * 35)}
-                rows={entity.children}
-                variant="minimal"
-            />
+            {hasChildren && (
+                <DataGrid<Entity>
+                    columns={columns}
+                    getRowId={getRowId}
+                    height={Math.min(400, 100 + entity.children.length * 35)}
+                    rows={entity.children}
+                    variant="minimal"
+                />
+            )}
         </Section>
     );
 };
@@ -251,11 +256,13 @@ const getEntityDetail =
 export const EntityGrid = ({
     category,
     entities,
+    hasChildren = true,
 }: {
     category: EntityCategory;
     entities: Entity[];
+    hasChildren: boolean;
 }) => {
-    const columns = getEntityColumns(category, false);
+    const columns = getEntityColumns(category, hasChildren);
     return (
         <DataGrid
             disableRowSelectionOnClick

@@ -16,9 +16,15 @@ import { fetchEntities, fetchPatents, fetchTrials } from '../actions';
 export const EntityList = async (args: EntitySearchArgs) => {
     try {
         const entities = await fetchEntities(args);
+
+        const hasChildren = !isEmpty(
+            entities.filter((e) => e.children.length > 0)
+        );
+
         return (
             <Box height="100vh">
                 <EntityGrid
+                    hasChildren={hasChildren}
                     category={args.entityCategory}
                     entities={entities}
                 />
