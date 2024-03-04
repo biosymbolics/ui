@@ -15,6 +15,7 @@ import { Section } from '@/components/layout/section';
 import { Title } from '@/components/layout/title';
 import { DEFAULT_PATHNAME } from '@/constants';
 import { Entity, EntityActivity, EntityCategory } from '@/types/entities';
+import { ViewType } from '@/types';
 
 import { getStoppedPercentClass } from '../styles';
 
@@ -82,6 +83,7 @@ const getTermLabel = (category: EntityCategory) => {
 
 export const getEntityColumns = (
     category: EntityCategory,
+    view: ViewType,
     hasChildren: boolean
 ): GridColDef[] => [
     {
@@ -118,7 +120,7 @@ export const getEntityColumns = (
     {
         field: 'owner_count',
         headerName: 'Owners',
-        hidden: category === 'owner',
+        hidden: category === 'owner' || view === 'company',
         width: 80,
         renderCell: renderOwnerChip,
     },
@@ -138,7 +140,10 @@ export const getEntityColumns = (
     },
     {
         field: 'investment_level',
-        headerName: category === 'owner' ? 'Investment' : 'Crowding',
+        headerName:
+            category === 'owner' || view === 'company'
+                ? 'Investment'
+                : 'Crowding',
         width: 100,
         renderCell: renderSaturationChip,
     },
@@ -202,6 +207,7 @@ const formatDetailData = (data: EntityActivity[]) =>
 
 type EntityDetailProps<T extends Entity> = {
     category: EntityCategory;
+    view: ViewType;
     row: T;
 };
 
@@ -215,11 +221,11 @@ export const EntityDetail = <T extends Entity>(
     if (!props || !props?.row) {
         return <span />;
     }
-    const { category, row: entity } = props;
+    const { category, row: entity, view } = props;
 
     const hasChildren = entity.children.length > 0;
 
-    const columns = getEntityColumns(category, hasChildren);
+    const columns = getEntityColumns(category, view, hasChildren);
 
     return (
         <Section mx={3}>
@@ -248,26 +254,28 @@ export const EntityDetail = <T extends Entity>(
 };
 
 const getEntityDetail =
-    (category: EntityCategory) =>
-    (props: Omit<EntityDetailProps<Entity>, 'category'>) => (
-        <EntityDetail<Entity> {...props} category={category} />
+    (category: EntityCategory, view: ViewType) =>
+    (props: Omit<EntityDetailProps<Entity>, 'category' | 'view'>) => (
+        <EntityDetail<Entity> {...props} category={category} view={view} />
     );
 
 export const EntityGrid = ({
     category,
     entities,
     hasChildren = true,
+    view,
 }: {
     category: EntityCategory;
     entities: Entity[];
     hasChildren: boolean;
+    view: ViewType;
 }) => {
-    const columns = getEntityColumns(category, hasChildren);
+    const columns = getEntityColumns(category, view, hasChildren);
     return (
         <DataGrid
             disableRowSelectionOnClick
             columns={columns}
-            detailComponent={getEntityDetail(category)}
+            detailComponent={getEntityDetail(category, view)}
             detailHeight="auto"
             rows={entities}
             variant="maximal"

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { z } from 'zod';
 
-import { BaseSearchArgs } from './documents/common';
+import { BaseSearchArgs, ViewType } from './documents/common';
 
 const EntityActivitySchema = z.object({
     year: z.number(),
@@ -57,4 +57,5 @@ const EntityCategorySchema = z.enum(EntityCategories);
 export type EntityCategory = z.infer<typeof EntityCategorySchema>;
 export type EntitySearchArgs = BaseSearchArgs & {
     entityCategory: EntityCategory;
+    view: ViewType;
 };

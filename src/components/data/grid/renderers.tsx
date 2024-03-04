@@ -247,7 +247,12 @@ export const getRenderChip =
                 openInNewTab={openInNewTab}
                 tooltip={tooltip}
             >
-                {formatLabel(value)}
+                <Typography
+                    fontSize="inherit"
+                    fontWeight={href && value ? 'lg' : undefined}
+                >
+                    {formatLabel(value)}
+                </Typography>
             </Chip>
         );
     };

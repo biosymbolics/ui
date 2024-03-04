@@ -24,15 +24,16 @@ export const paramInteger = z.preprocess((value) => {
     return value;
 }, z.number());
 
-export const SearchTypes = [
+export const ViewTypes = [
     'intervention',
     'indication',
     'target', // or drug class
     'company', // single company dossier
     'companies', // multiple company
+    'unknown',
 ] as const;
-const SearchTypeSchema = z.enum(SearchTypes);
-export type SearchType = z.infer<typeof SearchTypeSchema>;
+const ViewTypesSchema = z.enum(ViewTypes);
+export type ViewType = z.infer<typeof ViewTypesSchema>;
 
 export const BaseSearchArgsSchema = z.object({
     description: z.optional(z.string()),
@@ -43,7 +44,7 @@ export const BaseSearchArgsSchema = z.object({
     terms: z.optional(
         z.union([paramStringArray, z.array(z.string()).nullable()])
     ),
-    type: z.optional(SearchTypeSchema),
+    type: z.optional(ViewTypesSchema),
 });
 
 export type BaseSearchArgs = z.infer<typeof BaseSearchArgsSchema>;

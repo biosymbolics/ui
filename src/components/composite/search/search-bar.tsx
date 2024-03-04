@@ -14,7 +14,7 @@ import {
 } from '@/components/input';
 import { Section } from '@/components/layout/section';
 import { useNavigation } from '@/hooks/navigation';
-import { BaseSearchArgs, SearchTypes, SearchType } from '@/types';
+import { BaseSearchArgs, ViewTypes, ViewType } from '@/types';
 import { Option } from '@/types/select';
 import { getQueryArgs } from '@/utils/api';
 
@@ -38,7 +38,9 @@ export const SearchBar = ({
     const { navigate } = useNavigation();
     const pathname = usePathname();
     const [terms, setTerms] = useState<string[]>(initialTerms || []);
-    const [type, setType] = useState<SearchType | null>(initialType || null);
+    const [viewType, setViewType] = useState<ViewType | null>(
+        initialType || null
+    );
     const [description, setDescription] = useState<string | null>(
         initialDescription || null
     );
@@ -132,15 +134,15 @@ export const SearchBar = ({
 
                     <Grid xs={12} sm={2}>
                         <Select
-                            defaultValue={type}
+                            defaultValue={viewType}
                             label="Display Type"
                             onChange={(
                                 e: unknown,
-                                value: SetStateAction<SearchType | null>
+                                value: SetStateAction<ViewType | null>
                             ) => {
-                                setType(value);
+                                setViewType(value);
                             }}
-                            options={[...SearchTypes]}
+                            options={[...ViewTypes]}
                         />
                     </Grid>
                 </Grid>
@@ -161,7 +163,7 @@ export const SearchBar = ({
                             queryType,
                             startYear: newYearRange?.[0],
                             terms,
-                            type,
+                            viewType,
                         });
                         navigate(`${pathname}?${queryArgs}`);
                     }}

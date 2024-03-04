@@ -24,9 +24,10 @@ export const EntityList = async (args: EntitySearchArgs) => {
         return (
             <Box height="100vh">
                 <EntityGrid
-                    hasChildren={hasChildren}
                     category={args.entityCategory}
                     entities={entities}
+                    hasChildren={hasChildren}
+                    view={args.view}
                 />
             </Box>
         );
