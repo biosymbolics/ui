@@ -50,7 +50,6 @@ export const ConceptDecompositionSummary = ({
                             options={[
                                 'count',
                                 'totalInvestment',
-                                'totalRelevance',
                                 'totalTraction',
                             ]}
                             sx={{ width: 250, mb: 3 }}

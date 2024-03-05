@@ -4,7 +4,6 @@ import { z } from 'zod';
 export const MappingObjectSchema = z.object({
     name: z.string(),
     canonicalName: z.union([z.string(), z.null()]),
-    // instanceRollup: z.union([z.string(), z.null()]),
 });
 
 export type MappingObject = z.infer<typeof MappingObjectSchema>;

@@ -172,13 +172,13 @@ export const TrialDetail = <T extends Trial>({
             baseUrl={pathname}
             color="primary"
             label="Indications"
-            items={(trial.indications || []).map((i) => i.name)}
+            items={trial.indications.map((i) => i.canonicalName || i.name)}
         />
         <Chips
             baseUrl={pathname}
             color="primary"
             label="Interventions"
-            items={(trial.interventions || []).map((i) => i.name)}
+            items={trial.interventions.map((i) => i.canonicalName || i.name)}
         />
 
         <Divider sx={{ my: 3 }} />
