@@ -109,7 +109,7 @@ export const fetchApprovals = cache(
     async (
         args: RegulatoryApprovalSearchArgs
     ): Promise<RegulatoryApprovalResponse> => {
-        if (args.terms?.length === 0) {
+        if (isEmpty(args.terms) && isEmpty(args.description)) {
             return [];
         }
         const queryArgs = getQueryArgs(args, true);
@@ -150,7 +150,7 @@ export const fetchPatents = cache(
  */
 export const fetchTrials = cache(
     async (args: TrialSearchArgs): Promise<TrialResponse> => {
-        if (args.terms?.length === 0) {
+        if (isEmpty(args.terms) && isEmpty(args.description)) {
             return [];
         }
         const queryArgs = getQueryArgs(args, true);

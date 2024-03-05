@@ -1,6 +1,9 @@
 'use server';
 
+import camelCase from 'lodash/fp/camelCase';
 import { z } from 'zod';
+
+import { formatKeys } from './object';
 
 /**
  * Get fetch options, given a url and a schema
@@ -11,7 +14,8 @@ import { z } from 'zod';
 export const doFetch = async <T>(
     url: string,
     schema: z.ZodSchema<T>,
-    transform: (data: unknown) => unknown = (data) => data
+    transform: (data: unknown) => unknown = (response) =>
+        formatKeys(response, camelCase)
 ): Promise<T> => {
     console.info(`Calling url: ${url}`);
 
@@ -24,6 +28,7 @@ export const doFetch = async <T>(
 
     const jsonResp: unknown = await res.json();
     const transformed = transform(jsonResp);
+
     const parsedRes = schema.safeParse(transformed);
 
     if (parsedRes.success === false) {

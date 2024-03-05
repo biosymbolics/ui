@@ -156,7 +156,7 @@ export const SideNav = () => {
                     menu={
                         <Menu onClose={() => setMenuIndex(null)}>
                             <MenuItem {...itemProps} href={DEFAULT_PATHNAME}>
-                                Entitys Search
+                                Entity Search
                             </MenuItem>
                             {/* a because https://github.com/vercel/next.js/discussions/49146 */}
                             <MenuItem component="a" href="/core/patents">

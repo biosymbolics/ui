@@ -5,6 +5,7 @@ import Box from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet';
 import Typography from '@mui/joy/Typography';
 import ReactMarkdown from 'react-markdown';
+import camelCase from 'lodash/fp/camelCase';
 
 import { Gantt } from '@/components/charts/gantt';
 import { Heatmap } from '@/components/charts/heatmap';
@@ -15,6 +16,7 @@ import {
     InterventionDropoutReportSchema,
     MockChatMessage,
 } from '@/types/chat';
+import { formatKeys } from '@/utils/object';
 
 type ChatBubbleProps = MockChatMessage;
 
@@ -25,7 +27,7 @@ const getChild = (
 ) => {
     if (type === 'CONCEPT_DECOMPOSITION') {
         const parsed = ConceptDecompositionReportSchema.safeParse(
-            JSON.parse(content)
+            formatKeys(JSON.parse(content), camelCase)
         );
         if (parsed.success === false) {
             const message = `Failed to parse: ${parsed.error.toString()}`;
@@ -83,7 +85,7 @@ const getChild = (
                     data={data.map((d) => ({
                         y: d.stage || '???',
                         x: d.offset,
-                        x2: d.offset + d.median_duration,
+                        x2: d.offset + d.medianDuration,
                     }))}
                 />
             </Box>

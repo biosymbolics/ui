@@ -27,8 +27,15 @@ export const Metric = ({
 }: MetricProps): JSX.Element => {
     const format =
         formatter ||
-        ((v: number | string) =>
-            isNumber(v) ? `${parseFloat(v.toPrecision(2))}` : formatLabel(v));
+        ((v: number | string) => {
+            if (isNumber(v)) {
+                return `${parseFloat(v.toPrecision(2))}`;
+            }
+            if (v === '--') {
+                return v;
+            }
+            return formatLabel(v);
+        });
 
     const metric = (
         <Card color={color} sx={{ textAlign: 'center' }} variant="soft">

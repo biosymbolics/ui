@@ -10,25 +10,24 @@ import {
 export const PatentSchema = z.object({
     id: z.string(),
     title: z.string(),
-    abstract: z.string(),
-    adj_patent_years: z.number(),
+    abstract: z.union([z.null(), z.string()]),
+    adjPatentYears: z.number({ coerce: true }),
     assignees: z.union([z.array(MappingObjectSchema), z.null()]),
     attributes: z.array(z.string()),
-    availability_likelihood: z.string(),
-    availability_explanation: z.string(),
-    description_similarity: z.union([z.number(), z.null()]),
+    availabilityLikelihood: z.string(),
+    availabilityExplanation: z.string(),
+    descriptionSimilarity: z.union([z.number(), z.null()]),
     indications: z.union([z.array(MappingObjectSchema), z.null()]),
     interventions: z.union([z.array(MappingObjectSchema), z.null()]),
     inventors: z.union([z.array(MappingObjectSchema), z.null()]),
-    patent_years: z.number(),
-    priority_date: z.string(),
-    probability_of_success: z.number(),
-    reformulation_score: z.optional(z.number()),
-    score: z.number(),
-    search_rank: z.union([z.number(), z.null()]),
-    similar_patents: z.array(z.string()),
-    suitability_score: z.number(),
-    suitability_score_explanation: z.optional(z.union([z.string(), z.null()])),
+    patentYears: z.number({ coerce: true }),
+    priorityDate: z.string(),
+    probabilityOfSuccess: z.number({ coerce: true }),
+    score: z.number({ coerce: true }),
+    searchRank: z.union([z.number(), z.null()]),
+    similarPatents: z.array(z.string()),
+    suitabilityScore: z.number({ coerce: true }),
+    suitabilityScoreExplanation: z.optional(z.union([z.string(), z.null()])),
     url: z.string(),
 });
 export const PatentResponseSchema = z.array(PatentSchema);
@@ -47,7 +46,7 @@ export const PatentsSummarySchema = z.array(
 );
 
 const PatentTopicSchema = z.object({
-    publication_number: z.string(),
+    publicationNumber: z.string(),
     x: z.union([z.string(), z.number()]),
     y: z.optional(z.union([z.string(), z.number()])),
 });
@@ -137,9 +136,9 @@ export const CompanySchema = z.object({
     titles: z.array(z.string()),
     urls: z.array(UrlDefSchema),
     // terms: z.array(z.string()),
-    minAge: z.number(),
+    minAge: z.union([z.null(), z.number()]),
     avgAge: z.number(),
-    relevanceScore: z.number({ coerce: true }),
+    relevance: z.number({ coerce: true }),
     wheelhouseScore: z.number({ coerce: true }),
     activity: z.array(z.number({ coerce: true })),
     countByYear: z.record(z.string(), z.array(CountByYearSchema)),
@@ -148,9 +147,7 @@ export const CompanySchema = z.object({
 export const CompaniesSchema = z.array(CompanySchema);
 export type Company = z.infer<typeof CompanySchema>;
 
-export const FindCompaniesParamsSchema = PatentSearchArgsSchema.extend({
-    similarCompanies: z.optional(paramStringArray), // OR with description
-});
+export const FindCompaniesParamsSchema = PatentSearchArgsSchema;
 export type FindCompaniesParams = z.infer<typeof FindCompaniesParamsSchema>;
 
 export const CompanyResponseSchema = z.object({

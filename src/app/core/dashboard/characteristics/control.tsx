@@ -29,7 +29,7 @@ export const DocumentCharacteristicsControl = ({
                             setParam('headField', value);
                         }
                     }}
-                    options={['priority_date', 'id']}
+                    options={['priorityDate', 'id']}
                     sx={{ maxWidth: 400, mb: 3 }}
                 />
                 {children}

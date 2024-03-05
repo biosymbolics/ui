@@ -3,8 +3,7 @@ import { z } from 'zod';
 
 export const MappingObjectSchema = z.object({
     name: z.string(),
-    canonical_name: z.union([z.string(), z.null()]),
-    // instance_rollup: z.union([z.string(), z.null()]),
+    canonicalName: z.union([z.string(), z.null()]),
 });
 
 export type MappingObject = z.infer<typeof MappingObjectSchema>;
@@ -24,15 +23,16 @@ export const paramInteger = z.preprocess((value) => {
     return value;
 }, z.number());
 
-// vs EntityType??
-export const SearchTypes = [
+export const ViewTypes = [
     'intervention',
     'indication',
-    'target',
-    'company',
+    'target', // or drug class
+    'company', // single company dossier
+    'companies', // multiple company
+    'unknown',
 ] as const;
-const SearchTypeSchema = z.enum(SearchTypes);
-export type SearchType = z.infer<typeof SearchTypeSchema>;
+const ViewTypesSchema = z.enum(ViewTypes);
+export type ViewType = z.infer<typeof ViewTypesSchema>;
 
 export const BaseSearchArgsSchema = z.object({
     description: z.optional(z.string()),
@@ -43,7 +43,7 @@ export const BaseSearchArgsSchema = z.object({
     terms: z.optional(
         z.union([paramStringArray, z.array(z.string()).nullable()])
     ),
-    type: z.optional(SearchTypeSchema),
+    type: z.optional(ViewTypesSchema),
 });
 
 export type BaseSearchArgs = z.infer<typeof BaseSearchArgsSchema>;

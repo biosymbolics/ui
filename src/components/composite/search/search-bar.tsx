@@ -14,7 +14,7 @@ import {
 } from '@/components/input';
 import { Section } from '@/components/layout/section';
 import { useNavigation } from '@/hooks/navigation';
-import { BaseSearchArgs, SearchTypes, SearchType } from '@/types';
+import { BaseSearchArgs, ViewTypes, ViewType } from '@/types';
 import { Option } from '@/types/select';
 import { getQueryArgs } from '@/utils/api';
 
@@ -29,7 +29,7 @@ export const SearchBar = ({
     fetchAutocompletions,
     k: initialK,
     queryType: initialQueryType = 'AND',
-    startYear: initialStartYear = 2014,
+    startYear: initialStartYear = 2000,
     terms: initialTerms,
     type: initialType,
 }: {
@@ -38,7 +38,9 @@ export const SearchBar = ({
     const { navigate } = useNavigation();
     const pathname = usePathname();
     const [terms, setTerms] = useState<string[]>(initialTerms || []);
-    const [type, setType] = useState<SearchType | null>(initialType || null);
+    const [viewType, setViewType] = useState<ViewType | null>(
+        initialType || null
+    );
     const [description, setDescription] = useState<string | null>(
         initialDescription || null
     );
@@ -53,25 +55,6 @@ export const SearchBar = ({
 
     return (
         <>
-            <Autocomplete<Option, true, false>
-                isMultiple
-                defaultValue={(terms || []).map((term) => ({
-                    id: term,
-                    label: term,
-                }))}
-                isOptionEqualToValue={(option: Option, value: Option) =>
-                    option.id === value.id
-                }
-                label="Select Terms"
-                onChange={(e, values) => {
-                    setTerms(values.map((v) => v.id));
-                }}
-                optionFetcher={fetchAutocompletions}
-                optionLabelField="label"
-                size="xlg"
-                tooltip="Compounds, diseases, MoAs, pharmaceutical companies, etc."
-                variant="soft"
-            />
             <Section variant="l2">
                 <TextArea
                     aria-label="description"
@@ -83,6 +66,27 @@ export const SearchBar = ({
                     placeholder="(optional) describe the invention or technology you are interested in."
                 />
             </Section>
+            <Section variant="l2">
+                <Autocomplete<Option, true, false>
+                    isMultiple
+                    defaultValue={(terms || []).map((term) => ({
+                        id: term,
+                        label: term,
+                    }))}
+                    isOptionEqualToValue={(option: Option, value: Option) =>
+                        option.id === value.id
+                    }
+                    label="Select Additional Terms"
+                    onChange={(e, values) => {
+                        setTerms(values.map((v) => v.id));
+                    }}
+                    optionFetcher={fetchAutocompletions}
+                    optionLabelField="label"
+                    size="md"
+                    tooltip="Compounds, diseases, MoAs, pharmaceutical companies, etc."
+                    variant="soft"
+                />
+            </Section>
 
             <Section variant="l1">
                 <Grid container spacing={2}>
@@ -91,9 +95,9 @@ export const SearchBar = ({
                             defaultValue={newYearRange}
                             label="Year Range"
                             onChange={(value) => setYearRange(value)}
-                            min={2000}
+                            min={1980}
                             minDistance={2}
-                            max={2025}
+                            max={2030}
                             size="lg"
                             sx={{ mr: 3 }}
                             valueLabelDisplay="on"
@@ -130,15 +134,15 @@ export const SearchBar = ({
 
                     <Grid xs={12} sm={2}>
                         <Select
-                            defaultValue={type}
-                            label="Term Type"
+                            defaultValue={viewType}
+                            label="Display Type"
                             onChange={(
                                 e: unknown,
-                                value: SetStateAction<SearchType | null>
+                                value: SetStateAction<ViewType | null>
                             ) => {
-                                setType(value);
+                                setViewType(value);
                             }}
-                            options={[...SearchTypes]}
+                            options={[...ViewTypes]}
                         />
                     </Grid>
                 </Grid>
@@ -159,7 +163,7 @@ export const SearchBar = ({
                             queryType,
                             startYear: newYearRange?.[0],
                             terms,
-                            type,
+                            type: viewType,
                         });
                         navigate(`${pathname}?${queryArgs}`);
                     }}

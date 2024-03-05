@@ -29,7 +29,7 @@ export const Answer = async (args: {
                     data={data.map((d) => ({
                         y: d.stage || '???',
                         x: d.offset,
-                        x2: d.offset + d.median_duration,
+                        x2: d.offset + d.medianDuration,
                     }))}
                 />
             </Stack>

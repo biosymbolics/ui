@@ -31,7 +31,7 @@ export const ApprovalDetail = <T extends RegulatoryApproval>({
     <Section mx={3}>
         <Title
             link={{
-                label: `${approval.application_type} ${approval.id} (${approval.agency})`,
+                label: `${approval.applicationType} ${approval.id} (${approval.agency})`,
                 url: approval.url,
             }}
             title={approval.interventions?.[0]?.name || 'unknown'}
@@ -51,7 +51,7 @@ export const ApprovalDetail = <T extends RegulatoryApproval>({
 
 export const getApprovalColumns = (): GridColDef[] => [
     {
-        field: 'application_type',
+        field: 'applicationType',
         headerName: 'Type',
         renderCell: renderChip,
         width: 200,
@@ -63,7 +63,7 @@ export const getApprovalColumns = (): GridColDef[] => [
         width: 100,
     },
     {
-        field: 'approval_date',
+        field: 'approvalDate',
         headerName: 'Year',
         width: 75,
         valueFormatter: formatYear,

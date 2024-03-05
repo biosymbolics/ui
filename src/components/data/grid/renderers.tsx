@@ -247,7 +247,12 @@ export const getRenderChip =
                 openInNewTab={openInNewTab}
                 tooltip={tooltip}
             >
-                {formatLabel(value)}
+                <Typography
+                    fontSize="inherit"
+                    fontWeight={href && value ? 'lg' : undefined}
+                >
+                    {formatLabel(value)}
+                </Typography>
             </Chip>
         );
     };
@@ -266,6 +271,24 @@ export const renderOwnerChip = getRenderChip({
     ),
 });
 
+export const renderZeroIsNullChip = getRenderChip({
+    color: 'neutral',
+    getTooltip: (row: { owners: string[] }) => (
+        <List>
+            {row.owners.map((owner) => (
+                <ListItem key={owner}>{owner}</ListItem>
+            ))}
+        </List>
+    ),
+});
+
+const getSparklineYMargin = (value: number[]): number => {
+    if (value.filter((v) => v > 2).length === 0) {
+        return 20;
+    }
+    return 10;
+};
+
 export const getRenderSparkline =
     <T extends Record<string, unknown>>(
         height: number | undefined = undefined // defaults nicely to varying row heights
@@ -275,6 +298,9 @@ export const getRenderSparkline =
         if (!value) {
             return <span />;
         }
+
+        const my = getSparklineYMargin(value);
+
         return (
             <SparkLineChart
                 showHighlight
@@ -282,7 +308,7 @@ export const getRenderSparkline =
                 colors={cheerfulFiestaPalette}
                 data={value}
                 height={height}
-                margin={{ top: 10, right: 0, bottom: 10, left: 0 }}
+                margin={{ top: my, right: 0, bottom: my, left: 0 }}
                 plotType="line"
             />
         );

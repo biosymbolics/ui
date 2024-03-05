@@ -1,20 +1,21 @@
 import { fetchApprovals } from '@/app/core/actions';
 import { ApprovalsDetail } from '@/components/composite/approvals/client';
+import { RegulatoryApprovalSearchArgsWithIdsSchema } from '@/types';
 
 const ApprovalsDetailPage = async ({
     searchParams,
 }: {
     searchParams: Record<string, string>;
 }) => {
-    const ids = searchParams.ids?.split(';') ?? null;
-    const terms = searchParams.terms?.split(';') ?? null;
+    const { ids, terms, ...params } =
+        RegulatoryApprovalSearchArgsWithIdsSchema.parse(searchParams);
 
     if (!terms && !ids) {
         return null;
     }
 
     const approvals = await fetchApprovals({ terms: ids || terms });
-    return <ApprovalsDetail approvals={approvals} />;
+    return <ApprovalsDetail {...params} approvals={approvals} />;
 };
 
 export default ApprovalsDetailPage;
