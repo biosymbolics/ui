@@ -71,7 +71,7 @@ export const PatentDetail = <T extends Patent>({
 }): JSX.Element => (
     <Section mx={3}>
         <Title
-            description={unescape(patent.abstract)}
+            description={unescape(patent.abstract || '')}
             link={{ label: patent.id, url: patent.url }}
             title={unescape(patent.title)}
             variant="soft"
