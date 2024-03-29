@@ -1,14 +1,13 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Biosymbolics UI
+
+Taking a neurosymbolic approach to pattern-based discovery of assets and trends in biopharma.
+
+## Screen Shots
+<img width="1174" alt="Screenshot 2024-03-29 at 1 34 48 PM" src="https://github.com/biosymbolics/ui/assets/9382486/9e9bd05c-09ca-4d94-8ace-6d36203181f3">
+<img width="1142" alt="Screenshot 2024-03-29 at 2 02 06 PM" src="https://github.com/biosymbolics/ui/assets/9382486/562e68d3-8ec9-4730-b736-5358fb305edd">
+
 
 ## Development
 
 -   `yarn dev`
 -   Open [http://localhost:3000](http://localhost:3000)
--   yarn prettier . --write
--   `rm -rf .next/cache/fetch-cache/`
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
