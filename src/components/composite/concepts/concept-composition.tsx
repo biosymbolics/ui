@@ -5,6 +5,7 @@ import Link from '@mui/joy/Link';
 import List from '@mui/joy/List';
 import ListItem from '@mui/joy/ListItem';
 import ListItemContent from '@mui/joy/ListItemContent';
+import truncate from 'lodash/fp/truncate';
 
 import { ConceptDecompositionReport, TopDocsByYear } from '@/types/chat';
 import { Line } from '@/components/charts/line';
@@ -31,7 +32,7 @@ export const ConceptDecompositionSummary = ({
                                 <b>{concept.name}</b>
                             </Link>
                             {':  '}
-                            {concept.description}
+                            {truncate({ length: 225 }, concept.description)}
                         </ListItemContent>
                     </ListItem>
                 ))}

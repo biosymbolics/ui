@@ -1,5 +1,4 @@
 export const API_URL = 'http://localhost:3001/dev'; // 'https://api.biosymbolics.ai';
-export const API_KEY = 'Ahu8ef3VoNzBqn'; // /biosymbolics/pipeline/api/free-key
 
 export const AUTOCOMPLETE_API_URL = `${API_URL}/autocomplete`;
 export const CHARACTERISTIC_API_URL = `${API_URL}/reports/characteristics`;

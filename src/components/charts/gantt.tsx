@@ -85,7 +85,7 @@ const getSpec: (props: GanttSpecProps) => VisualizationSpec = ({
 });
 
 /**
- * Graph chart
+ * Gantt chart
  */
 export const Gantt = <DT extends Record<string, unknown>>({
     data,

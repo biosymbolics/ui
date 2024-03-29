@@ -66,10 +66,10 @@ export const Line = ({
                     data: s.data.map(({ y }) => y),
                     showMark: ({ index }) => s.data[index].showMark || false,
                     stack: defaultStack || isArea ? 'total' : undefined,
-                    // valueFormatter: (value) =>
-                    //     value == null ? 'NaN' : `${value}`,
+                    valueFormatter: (value) =>
+                        value == null ? 'NaN' : `${value}`,
                 }))}
-                slotProps={{ legend: { hidden: true } }}
+                slotProps={{ legend: { hidden: false } }}
                 tooltip={tooltip}
                 xAxis={[{ data: xTicks, id: 'Years', scaleType: 'point' }]}
             />

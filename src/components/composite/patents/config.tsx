@@ -49,22 +49,6 @@ export const getPatentColumns = (): GridColDef[] => [
         width: 200,
         valueGetter: formatMappingObjects,
     },
-    // {
-    //     field: 'probabilityOfSuccess',
-    //     headerName: 'PoS',
-    //     width: 85,
-    //     valueFormatter: formatBlank,
-    //     cellClassName: getScoresClass,
-    //     description: '**FAKE PLACEHOLDER**!! Estimated PoS.',
-    // },
-    // {
-    //     field: 'reformulationScore',
-    //     headerName: 'Reformulation⚠️',
-    //     width: 100,
-    //     valueFormatter: renderPercent,
-    //     cellClassName: getScoresClass,
-    //     description: '**FAKE PLACEHOLDER**!! Esimated reformulation potential.',
-    // },
     {
         field: 'patentYears',
         headerName: 'Yrs Left',

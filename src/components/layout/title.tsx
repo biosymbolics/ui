@@ -7,6 +7,16 @@ import { ReactNode } from 'react';
 type TitleVariant = 'outlined' | 'soft' | 'plain' | 'solid';
 
 const MAX_WIDTH = 800;
+
+/**
+ * Title component for pages or sections
+ *
+ * @param props.children
+ * @param props.description
+ * @param props.link
+ * @param props.title
+ * @param props.variant - outlined, soft, plain, solid
+ */
 export const Title = ({
     children,
     description,

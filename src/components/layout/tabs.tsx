@@ -17,6 +17,8 @@ type TabDef = {
 
 /**
  * Tab component
+ *
+ * @param props.openId - id of the open tab
  * @param props.tabs
  */
 export const Tabs = ({
