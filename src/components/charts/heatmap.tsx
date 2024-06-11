@@ -7,7 +7,7 @@ import { DEFAULT_VEGA_THEME } from './constants';
 import { BaseChartProps } from './types';
 import { ChartTitle } from './common/chart-title';
 
-type HeadmapSpecProps = {
+type HeatmapSpecProps = {
     colorField?: string;
     tooltipFields?: string[];
     xField: string;
@@ -20,9 +20,12 @@ type HeatmapProps<DT extends Record<string, unknown>> = BaseChartProps & {
     data: DT[];
     getClickUrl?: (obj: DT) => string;
     width?: number;
-} & HeadmapSpecProps;
+} & HeatmapSpecProps;
 
-const getSpec: (props: HeadmapSpecProps) => VisualizationSpec = ({
+/**
+ * Vega spec for heatmap
+ */
+const getSpec: (props: HeatmapSpecProps) => VisualizationSpec = ({
     tooltipFields = [],
     xField,
     xFieldTitle,
@@ -92,7 +95,7 @@ const getSpec: (props: HeadmapSpecProps) => VisualizationSpec = ({
 });
 
 /**
- * Graph chart
+ * Heatmap chart component
  */
 export const Heatmap = <DT extends Record<string, unknown>>({
     data,

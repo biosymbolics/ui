@@ -59,6 +59,9 @@ const NavigationContext = createContext<NavigationContextType>({
     },
 });
 
+/**
+ * Navigation provider that makes it easier to manage state as parameters in the url
+ */
 export const NavigationProvider = ({ children }: { children: ReactNode }) => {
     const Router = useRouter();
     const params = useSearchParams();

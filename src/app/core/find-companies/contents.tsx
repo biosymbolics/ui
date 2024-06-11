@@ -11,7 +11,7 @@ import isEmpty from 'lodash/fp/isEmpty';
 import { SearchError } from '@/components/composite';
 import { Metric } from '@/components/data/metric';
 import { Section } from '@/components/layout/section';
-import { FindCompaniesParams } from '@/types';
+import { FindCompaniesArgs } from '@/types';
 
 import { findCompanies } from './actions';
 import { FindCompaniesControl } from './control';
@@ -20,7 +20,7 @@ import { CompanyGrid } from './client';
 const FindCompaniesInner = async ({
     description,
     k,
-}: FindCompaniesParams): Promise<JSX.Element> => {
+}: FindCompaniesArgs): Promise<JSX.Element> => {
     if (isEmpty(description)) {
         return (
             <Alert
@@ -79,7 +79,10 @@ const FindCompaniesInner = async ({
     }
 };
 
-export const FindCompanies = (args: FindCompaniesParams) => (
+/**
+ * Displays a simple company lookup (via patent & trial vector similarity to query)
+ */
+export const FindCompanies = (args: FindCompaniesArgs) => (
     <FindCompaniesControl {...args}>
         <Suspense
             fallback={<Skeleton height="80vh" sx={{ position: 'relative' }} />}

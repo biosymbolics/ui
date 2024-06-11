@@ -8,6 +8,9 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
 import { Button } from '@/components/input';
 
+/**
+ * Simple website homepage
+ */
 const Home = (): JSX.Element => (
     <main>
         <div

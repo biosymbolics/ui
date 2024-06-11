@@ -20,7 +20,7 @@ type InputProps = {
 } & BaseInputProps;
 
 /**
- * Input component
+ * Simple input component
  */
 export const Input = ({
     error,

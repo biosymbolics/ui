@@ -79,6 +79,9 @@ export const Chip = ({
     return chip;
 };
 
+/**
+ * Multi-chip renderer
+ */
 export const formatChips = ({
     baseUrl = undefined,
     color = 'primary',

@@ -19,7 +19,7 @@ type SectionProps = {
 };
 
 /**
- * Section
+ * Section layout component
  */
 export const Section = ({
     children,

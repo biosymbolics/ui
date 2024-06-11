@@ -15,7 +15,10 @@ import { doFetch } from '@/utils/actions';
 import { getQueryArgs } from '@/utils/api';
 import { SearchError } from '@/components/composite';
 
-const fetchSummaries = cache(
+/**
+ * Fetches patent summaries reports for search arguments
+ */
+const fetchSummaryReports = cache(
     async (args: PatentSearchArgs): Promise<PatentsSummaries> => {
         if (args.terms?.length === 0) {
             return [];
@@ -29,32 +32,20 @@ const fetchSummaries = cache(
     }
 );
 
-// const fetchTopicAnalysis = cache(
-//     async (args: PatentSearchArgs): Promise<PatentsTopics> => {
-//         if (args.terms?.length === 0) {
-//             return [];
-//         }
-//         const queryArgs = getQueryArgs(args, true);
-//         const res = await doFetch(
-//             `${TOPIC_API_URL}?${queryArgs}`,
-//             PatentsTopicSchema
-//         );
-//         return res;
-//     }
-// );
-
+/**
+ * Shows a summary of patents for a given set of terms
+ */
 export const Summary = async ({
     pathname = DEFAULT_PATHNAME,
     terms,
     ...args
 }: PatentSearchArgs & { pathname?: string }) => {
     try {
-        const summaries = await fetchSummaries({ terms, ...args });
-        // const topics = await fetchTopicAnalysis({ terms, ...args });
+        const reports = await fetchSummaryReports({ terms, ...args });
         return (
             <Box sx={getStyles}>
                 <Bars
-                    specs={summaries.map(({ x, data }) => ({
+                    specs={reports.map(({ x, data }) => ({
                         data: data.map((s) => ({
                             label: s.x,
                             value: s.count,
@@ -64,10 +55,6 @@ export const Summary = async ({
                         maxLength: 15,
                     }))}
                 />
-                {/* <Scatter
-                    pathname={pathname}
-                    series={{ data: topics.map((t) => ({ x: t.x, y: t.y })) }}
-                /> */}
             </Box>
         );
     } catch (e) {

@@ -9,6 +9,9 @@ export const InterventionDropoutReportSchema = z.array(
     })
 );
 
+/**
+ * General schema for fake chat messages
+ */
 export const MockChatMessageSchema = z.object({
     content: z.string(),
     description: z.optional(z.union([z.null(), z.string()])),
@@ -20,6 +23,10 @@ export const MockChatMessageSchema = z.object({
 
 export type MockChatMessage = z.infer<typeof MockChatMessageSchema>;
 
+/**
+ * General schema top docs (patents, trials, etc) by year
+ * (queryable in a chat UI)
+ */
 export const TopDocsByYearSchema = z.object({
     avgRelevance: z.number({ coerce: true }),
     count: z.number(),

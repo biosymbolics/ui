@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { z } from 'zod';
 
 export const MappingObjectSchema = z.object({
@@ -8,7 +7,9 @@ export const MappingObjectSchema = z.object({
 
 export type MappingObject = z.infer<typeof MappingObjectSchema>;
 
-// turn ; delimited string into array
+/**
+ * Turn a semicolon delimited string into an array of strings
+ */
 export const paramStringArray = z.preprocess((value) => {
     if (typeof value === 'string') {
         return value.split(';');
@@ -16,6 +17,9 @@ export const paramStringArray = z.preprocess((value) => {
     return value;
 }, z.array(z.string()));
 
+/**
+ * Turn a string into an integer
+ */
 export const paramInteger = z.preprocess((value) => {
     if (typeof value === 'string') {
         return parseInt(value, 10);

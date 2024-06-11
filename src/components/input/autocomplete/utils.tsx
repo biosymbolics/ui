@@ -96,7 +96,6 @@ export const getOptionId = <T extends BaseOption>(
 
 /**
  * Method to return a filter method
- * @returns filter method
  */
 export const getFilter = <T extends BaseOption>() => createFilterOptions<T>();
 
@@ -104,7 +103,7 @@ export const getFilter = <T extends BaseOption>() => createFilterOptions<T>();
  * Debounce value - waits until user stops typing (not ideal, but ok for now)
  * @param value
  * @param delay
- * @returns
+ * @returns debounced value
  */
 export const useDebounce = (value: string, delay: number) => {
     const [debouncedValue, setDebouncedValue] = useState(value);

@@ -2,6 +2,10 @@ import { fetchApprovals } from '@/app/core/actions';
 import { ApprovalsDetail } from '@/components/composite/approvals/client';
 import { RegulatoryApprovalSearchArgsWithIdsSchema } from '@/types';
 
+/**
+ * Regulatory Approval detail page component
+ * (used as a page and modal content)
+ */
 const ApprovalsDetailPage = async ({
     searchParams,
 }: {

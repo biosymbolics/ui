@@ -16,7 +16,7 @@ type MetricProps = {
 };
 
 /**
- * Metric component
+ * Simple metric display component
  */
 export const Metric = ({
     color,

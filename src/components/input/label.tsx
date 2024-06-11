@@ -9,6 +9,9 @@ type FormLabelProps = {
     tooltip?: string | JSX.Element;
 } & JoyFormLabelProps;
 
+/**
+ * Simple form label with optional tooltip
+ */
 export const FormLabel = ({ children, tooltip, ...props }: FormLabelProps) => {
     const formLabel = <JoyFormLabel {...props}>{children}</JoyFormLabel>;
 

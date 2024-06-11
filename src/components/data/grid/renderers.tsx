@@ -27,7 +27,7 @@ import { formatLabel, formatPercent, title } from '@/utils/string';
 import { MappingObject } from '@/types/documents/common';
 
 /**
- * Format name
+ * Format name renderer
  */
 export const formatName = <T extends Record<string, unknown>>(
     params: GridValueFormatterParams<T>
@@ -271,17 +271,6 @@ export const renderOwnerChip = getRenderChip({
     ),
 });
 
-export const renderZeroIsNullChip = getRenderChip({
-    color: 'neutral',
-    getTooltip: (row: { owners: string[] }) => (
-        <List>
-            {row.owners.map((owner) => (
-                <ListItem key={owner}>{owner}</ListItem>
-            ))}
-        </List>
-    ),
-});
-
 const getSparklineYMargin = (value: number[]): number => {
     if (value.filter((v) => v > 2).length === 0) {
         return 20;
@@ -289,6 +278,9 @@ const getSparklineYMargin = (value: number[]): number => {
     return 10;
 };
 
+/**
+ * Renderer for a wee little sparkline chart
+ */
 export const getRenderSparkline =
     <T extends Record<string, unknown>>(
         height: number | undefined = undefined // defaults nicely to varying row heights
@@ -316,6 +308,9 @@ export const getRenderSparkline =
 
 export const renderSparkline = getRenderSparkline();
 
+/**
+ * Renderer for a wee little sparkbar chart
+ */
 export const getRenderBar =
     <T extends Record<string, unknown>>(
         height: number | undefined = undefined
@@ -363,6 +358,9 @@ export const renderLabel = <T extends Record<string, unknown>>(
     return formatLabel(value);
 };
 
+/**
+ * Renderer for typography (with optional URL)
+ */
 export const getRenderTypography =
     <T extends Record<string, unknown>>(
         level: TypographyProps['level'],

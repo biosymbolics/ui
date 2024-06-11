@@ -4,6 +4,9 @@ import { useEffect } from 'react';
 
 import { Button } from '@/components/input';
 
+/**
+ * Simple fallback error component
+ */
 export const Error = ({
     error,
     reset,

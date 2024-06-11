@@ -78,6 +78,9 @@ const ChatPaneInner = ({ conversationId }: ChatPaneProps) => {
     );
 };
 
+/**
+ * Container component for fake chat instance
+ */
 export const ChatPane = (props: ChatPaneProps) => (
     <ChatProvider>
         <ChatPaneInner {...props} />

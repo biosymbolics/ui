@@ -41,6 +41,9 @@ const CharacteristicsInner = async ({
     }
 };
 
+/**
+ * Document characteristics report component (heatmap of X by Y style reports)
+ */
 export const DocumentCharacteristics = (args: DocCharacteristicsProps) => (
     <DocumentCharacteristicsControl {...args}>
         <CharacteristicsInner {...args} />

@@ -1,13 +1,13 @@
 'use server';
 
 import { cache } from 'react';
-import Box from '@mui/joy/Box';
 import Typography from '@mui/joy/Typography';
 import groupBy from 'lodash/fp/groupBy';
 import isEmpty from 'lodash/fp/isEmpty';
 
 import { DEFAULT_PATHNAME, OVER_TIME_API_URL } from '@/constants';
 import { Line } from '@/components/charts/line';
+import { SearchError } from '@/components/composite';
 import { getStyles } from '@/components/composite/styles';
 import { Section } from '@/components/layout/section';
 import {
@@ -25,7 +25,10 @@ type OverTimeProps = PatentSearchArgs & {
     minDataLength?: number;
 };
 
-const fetchReports = cache(
+/**
+ * Fetches over-time reports
+ */
+const fetchOverTimeReports = cache(
     async (args: PatentSearchArgs): Promise<PatentsSummaries> => {
         if (args.terms?.length === 0) {
             return [];
@@ -39,6 +42,9 @@ const fetchReports = cache(
     }
 );
 
+/**
+ * Shows trends over time for a given set of terms
+ */
 export const OverTime = async ({
     pathname = DEFAULT_PATHNAME,
     maxSeries = 8, // server-side limit too (10 by default)
@@ -46,7 +52,7 @@ export const OverTime = async ({
     ...args
 }: OverTimeProps) => {
     try {
-        const reports = await fetchReports(args);
+        const reports = await fetchOverTimeReports(args);
 
         const formattedReports = reports
             .map((r) => ({
@@ -90,11 +96,6 @@ export const OverTime = async ({
             </Section>
         );
     } catch (e) {
-        return (
-            <Box>
-                Failed to fetch patents:{' '}
-                {e instanceof Error ? e.message : JSON.stringify(e)}
-            </Box>
-        );
+        return <SearchError error={e} />;
     }
 };

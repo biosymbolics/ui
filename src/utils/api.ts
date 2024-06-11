@@ -16,7 +16,7 @@ const maybeSnakeCase = (key: string, isSnakeCase: boolean): string =>
  * Format the value for the query string
  * @param value
  * @param isServer
- * @returns
+ * @returns a string or number
  */
 const formatValue = (
     value: unknown,
@@ -38,9 +38,9 @@ const formatValue = (
 };
 
 /**
- * Get the query string for the patent search
+ * Get the query string for the document search
  *
- * @param args - The arguments for the patent search
+ * @param args - The arguments for the document search
  * @param isServer - Whether the query string is for the server (if so, snake_case keys)
  */
 export const getQueryArgs = (

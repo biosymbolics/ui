@@ -17,6 +17,9 @@ const PatentsDetailInner = async ({ terms }: { terms: string[] }) => {
     return <PatentsDetail patents={patents} />;
 };
 
+/**
+ * Component for displaying a modal with details of patents
+ */
 const PatentsDetailModal = ({ searchParams }: Props) => {
     const { ids, terms, ...params } =
         PatentSearchArgsWithIdsSchema.parse(searchParams);

@@ -4,7 +4,14 @@ import { Suspense } from 'react';
 
 import { Contents } from './contents';
 
-const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
+/**
+ * Fake chat page
+ */
+const ChatPage = ({
+    searchParams,
+}: {
+    searchParams: Record<string, string>;
+}) => {
     const { conversationId } = searchParams;
     return (
         <Suspense>
@@ -13,4 +20,4 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     );
 };
 
-export default Page;
+export default ChatPage;

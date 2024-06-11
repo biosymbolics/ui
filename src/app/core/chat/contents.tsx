@@ -20,6 +20,9 @@ const CONVERSATION_IDS = [
     'conceptDecomposition',
 ];
 
+/**
+ * Lists out the "fake chats" available
+ */
 export const Contents = ({
     conversationId,
 }: {

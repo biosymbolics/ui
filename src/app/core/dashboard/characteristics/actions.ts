@@ -16,6 +16,10 @@ import { doFetch } from '@/utils/actions';
 import { getQueryArgs } from '@/utils/api';
 import { formatKeys } from '@/utils/object';
 
+/**
+ * Fetches document characteristics report
+ * (reports with two independent axis (head and tail) and a dependent axis (count))
+ */
 export const fetchDocumentCharacteristics = cache(
     async (
         args: BaseSearchArgs & { headField: HeadField; tailField: TailField }

@@ -6,7 +6,6 @@ import Typography from '@mui/joy/Typography';
 import { Section } from '@/components/layout/section';
 import { DocumentCharacteristic, PatentSearchArgs } from '@/types';
 
-// const { setParam } = useNavigation();
 export const DocumentCharacteristicsControl = ({
     terms,
     children,
@@ -37,6 +36,10 @@ export const DocumentCharacteristicsControl = ({
     </>
 );
 
+/**
+ * Gets URL for a given document characteristic
+ * (specifying head and tail terms)
+ */
 export const getClickUrl = (object: DocumentCharacteristic) => {
     const ids = object.documents?.join(';');
     const term = `${object.tail} x ${object.head}`;

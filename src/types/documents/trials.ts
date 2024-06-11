@@ -3,6 +3,9 @@ import { z } from 'zod';
 
 import { BaseSearchArgs, MappingObjectSchema } from './common';
 
+/**
+ * Schema for trial outcomes
+ */
 const OutcomeSchema = z.object({
     id: z.number(),
     description: z.union([z.null(), z.string()]),
@@ -12,6 +15,9 @@ const OutcomeSchema = z.object({
 
 export type Outcome = z.infer<typeof OutcomeSchema>;
 
+/**
+ * Schema for trial dropout reasons
+ */
 const DropoutReasonSchema = z.object({
     count: z.number(),
     reason: z.string(),
@@ -19,6 +25,9 @@ const DropoutReasonSchema = z.object({
 
 export type DropoutReason = z.infer<typeof DropoutReasonSchema>;
 
+/**
+ * Overall schema for clinical trials
+ */
 export const TrialSchema = z.object({
     // blinding: z.string(),
     comparisonType: z.string(),
@@ -49,8 +58,6 @@ export const TrialSchema = z.object({
 });
 
 export const TrialResponseSchema = z.array(TrialSchema);
-
 export type Trial = z.infer<typeof TrialSchema>;
 export type TrialResponse = z.infer<typeof TrialResponseSchema>;
-
 export type TrialSearchArgs = BaseSearchArgs;

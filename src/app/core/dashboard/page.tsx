@@ -13,7 +13,15 @@ import { Content } from './content';
 
 import { fetchAutocompletions } from '../actions';
 
-const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
+/**
+ * Component for the dashboard page
+ * @param args.searchParams - search parameters
+ */
+const DashboardPage = ({
+    searchParams,
+}: {
+    searchParams: Record<string, string>;
+}) => {
     const { terms, ...params } = BaseSearchArgsSchema.parse(searchParams);
     const { tab } = searchParams;
 
@@ -47,4 +55,4 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     );
 };
 
-export default Page;
+export default DashboardPage;

@@ -8,6 +8,9 @@ import Stack from '@mui/joy/Stack';
 import { useNavigation } from '@/hooks/navigation';
 import { Button, Input } from '@/components/input';
 
+/**
+ * Controls for clindev prediction API
+ */
 export const Choose = ({ initial }: { initial: string }) => {
     const { navigate } = useNavigation();
     const pathname = usePathname();

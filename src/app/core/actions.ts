@@ -44,7 +44,7 @@ type AutocompleteTypes = 'entity' | 'owner';
 /**
  * Autocomplete terms or ids from the API.
  * @param str search string
- * @returns options promise
+ * @returns autocompletions promise
  */
 export const fetchAutocompletions = async (
     str: string,
@@ -62,6 +62,7 @@ export const fetchAutocompletions = async (
 /**
  * Fetch term(s) description from the API. Cached.
  * @param terms
+ * @returns description promise
  */
 export const fetchDescription = cache(
     async (terms: string[]): Promise<string> => {
@@ -82,8 +83,8 @@ export const fetchDescription = cache(
 
 /**
  * Fetch entities from the API. Cached.
- * @param args
- * @returns patents promise
+ * @param args - entity search arguments
+ * @returns entities response promise
  */
 export const fetchEntities = cache(
     async (args: EntitySearchArgs): Promise<EntityResponse> => {
@@ -102,7 +103,7 @@ export const fetchEntities = cache(
 
 /**
  * Fetch approvals from the API. Cached.
- * @param args
+ * @param args - approval search arguments
  * @returns approvals promise
  */
 export const fetchApprovals = cache(
@@ -124,7 +125,7 @@ export const fetchApprovals = cache(
 
 /**
  * Fetch patents from the API. Cached.
- * @param args
+ * @param args - patent search arguments
  * @returns patents promise
  */
 export const fetchPatents = cache(
@@ -145,8 +146,8 @@ export const fetchPatents = cache(
 
 /**
  * Fetch patents from the API. Cached.
- * @param args
- * @returns patents promise
+ * @param args - trial search arguments
+ * @returns trials response promise
  */
 export const fetchTrials = cache(
     async (args: TrialSearchArgs): Promise<TrialResponse> => {

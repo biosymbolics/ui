@@ -10,6 +10,9 @@ type ChartTitleProps = {
     variant?: ChartVariant;
 };
 
+/**
+ * Chart title component
+ */
 export const ChartTitle = ({
     controls,
     subtitle,

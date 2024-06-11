@@ -5,7 +5,7 @@ import camelCase from 'lodash/fp/camelCase';
 
 import { FIND_COMPANIES_URL } from '@/constants';
 import {
-    FindCompaniesParams,
+    FindCompaniesArgs,
     CompanyResponse,
     CompanyResponseSchema,
 } from '@/types';
@@ -14,10 +14,11 @@ import { doFetch } from '@/utils/actions';
 import { formatKeys } from '@/utils/object';
 
 /**
- * FindCompanies
+ * Find companies API call
+ * @param args - find companies parameters
  */
 export const findCompanies = cache(
-    async (args: FindCompaniesParams): Promise<CompanyResponse> => {
+    async (args: FindCompaniesArgs): Promise<CompanyResponse> => {
         const queryArgs = getQueryArgs(args, true);
         const res = await doFetch(
             `${FIND_COMPANIES_URL}?${queryArgs}`,

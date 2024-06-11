@@ -10,12 +10,7 @@ import { SideNav } from '@/components/navigation/menu';
 /**
  * Basic layout compound
  */
-const Layout = ({
-    children, // modal,
-}: {
-    children: ReactNode;
-    // modal: ReactNode;
-}) => {
+const Layout = ({ children }: { children: ReactNode }) => {
     const { isPending } = useNavigation();
 
     if (isPending) {
