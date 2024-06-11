@@ -20,7 +20,15 @@ const PatentPageInner = async (args: PatentSearchArgs) => {
     return <PatentsDetail patents={patents} />;
 };
 
-const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
+/**
+ * Page showing patents, including a search bar
+ * (useful in case of deeplink to modal)
+ */
+const PatentPage = ({
+    searchParams,
+}: {
+    searchParams: Record<string, string>;
+}) => {
     const { ids, terms, ...params } =
         PatentSearchArgsWithIdsSchema.parse(searchParams);
 
@@ -44,4 +52,4 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     );
 };
 
-export default Page;
+export default PatentPage;

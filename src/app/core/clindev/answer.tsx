@@ -7,6 +7,9 @@ import { Gantt } from '@/components/charts/gantt';
 
 import { predictClindev } from './actions';
 
+/**
+ * Answer to clindev questions
+ */
 export const Answer = async (args: {
     indication: string;
     pathname: string;

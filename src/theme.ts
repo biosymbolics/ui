@@ -4,10 +4,13 @@ import { Mulish } from 'next/font/google';
 
 const mulish = Mulish({ subsets: ['latin'] });
 
-declare module '@mui/joy/styles' {
-    // No custom tokens found, you can skip the theme augmentation.
-}
+declare module '@mui/joy/styles' {}
 
+/**
+ * Joy/MUI theme
+ *
+ * Try to consolidate all theme customizations here.
+ */
 const theme = extendTheme({
     fontFamily: {
         body: `${mulish.className}, SF Pro Text, var(--gh-fontFamily-fallback)`,

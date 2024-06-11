@@ -17,6 +17,9 @@ const ApprovalsDetailInner = async ({ terms }: { terms: string[] }) => {
     return <ApprovalsDetail approvals={approvals} />;
 };
 
+/**
+ * Component for displaying a modal with details of regulatory approvals
+ */
 const ApprovalsDetailModal = ({ searchParams }: Props) => {
     const { ids, terms, ...params } =
         PatentSearchArgsWithIdsSchema.parse(searchParams);

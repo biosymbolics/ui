@@ -23,6 +23,9 @@ type GanttProps<DT extends Record<string, unknown>> = BaseChartProps & {
     width?: number;
 } & GanttSpecProps;
 
+/**
+ * Get Vega spec for Gantt chart
+ */
 const getSpec: (props: GanttSpecProps) => VisualizationSpec = ({
     tooltipFields = [],
     xField,

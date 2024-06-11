@@ -20,6 +20,13 @@ import { formatKeys } from '@/utils/object';
 
 type ChatBubbleProps = MockChatMessage;
 
+/**
+ * Hacky component to show hard-coded chat message types
+ *
+ * @param type
+ * @param content
+ * @param description
+ */
 const getChild = (
     type: string,
     content: string,

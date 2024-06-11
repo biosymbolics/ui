@@ -1,6 +1,9 @@
 import { fetchTrials } from '@/app/core/actions';
 import { TrialsDetail } from '@/components/composite/trials/client';
 
+/**
+ * Trials detail page component
+ */
 const TrialsDetailPage = async ({
     searchParams,
 }: {

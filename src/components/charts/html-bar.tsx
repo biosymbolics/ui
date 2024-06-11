@@ -83,7 +83,7 @@ export const Bar = ({ data, label, maxLength = 100 }: BarChartProps) => {
                                     { length: 38, omission: '...' },
                                     item.label as string
                                 ),
-                                '^WO-.*$'
+                                '^WO-.*$' // TODO: hack
                             )}
                         </span>
                     </Box>
@@ -104,7 +104,7 @@ export const Bar = ({ data, label, maxLength = 100 }: BarChartProps) => {
 };
 
 /**
- * Grid of HTML bars
+ * Grid of HTML bar charts
  */
 export const Bars = ({
     maxLength,

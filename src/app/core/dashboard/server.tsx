@@ -13,6 +13,10 @@ import { EntitySearchArgs, PatentSearchArgs, TrialSearchArgs } from '@/types';
 
 import { fetchEntities, fetchPatents, fetchTrials } from '../actions';
 
+/**
+ * Fetches and displays a list of entities
+ * @param args - entity search arguments
+ */
 export const EntityList = async (args: EntitySearchArgs) => {
     try {
         const entities = await fetchEntities(args);
@@ -36,6 +40,10 @@ export const EntityList = async (args: EntitySearchArgs) => {
     }
 };
 
+/**
+ * Fetches and displays a list of patents
+ * @param args - patent search arguments
+ */
 export const PatentList = async (args: PatentSearchArgs) => {
     const { description, terms } = args;
     if (isEmpty(terms) && isEmpty(description)) {
@@ -50,6 +58,10 @@ export const PatentList = async (args: PatentSearchArgs) => {
     }
 };
 
+/**
+ * Fetches and displays a list of trials
+ * @param args - trial search arguments
+ */
 export const TrialList = async (args: TrialSearchArgs) => {
     const { description, terms } = args;
     if (isEmpty(terms) && isEmpty(description)) {

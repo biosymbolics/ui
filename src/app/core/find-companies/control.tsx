@@ -6,14 +6,19 @@ import Typography from '@mui/joy/Typography';
 
 import { Section } from '@/components/layout/section';
 import { Button, Slider, TextArea } from '@/components/input';
-import { FindCompaniesParams } from '@/types';
+import { FindCompaniesArgs } from '@/types';
 import { useNavigation } from '@/hooks/navigation';
 
+/**
+ * Controls for finding companies based on vector similarity to description & other serach args
+ * @param param0
+ * @returns
+ */
 export const FindCompaniesControl = ({
     description: initialDescription = '',
     children,
     k: initialK = 1000,
-}: FindCompaniesParams & { children: ReactNode }) => {
+}: FindCompaniesArgs & { children: ReactNode }) => {
     const { setParams } = useNavigation();
     const [description, setDescription] = useState<string>(initialDescription);
     const [k, setK] = useState<number>(initialK);

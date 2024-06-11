@@ -135,7 +135,6 @@ export const CompanySchema = z.object({
     symbol: z.optional(z.union([z.string(), z.null()])),
     titles: z.array(z.string()),
     urls: z.array(UrlDefSchema),
-    // terms: z.array(z.string()),
     minAge: z.union([z.null(), z.number()]),
     avgAge: z.number(),
     relevance: z.number({ coerce: true }),
@@ -147,8 +146,8 @@ export const CompanySchema = z.object({
 export const CompaniesSchema = z.array(CompanySchema);
 export type Company = z.infer<typeof CompanySchema>;
 
-export const FindCompaniesParamsSchema = PatentSearchArgsSchema;
-export type FindCompaniesParams = z.infer<typeof FindCompaniesParamsSchema>;
+export const FindCompaniesArgsSchema = PatentSearchArgsSchema;
+export type FindCompaniesArgs = z.infer<typeof FindCompaniesArgsSchema>;
 
 export const CompanyResponseSchema = z.object({
     companies: CompaniesSchema,

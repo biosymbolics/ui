@@ -12,6 +12,9 @@ type GraphProps = BaseChartProps & {
     data: PatentGraph;
 };
 
+/**
+ * Vega spec for edge-bundled graph
+ */
 const spec: VisualizationSpec = {
     $schema: 'https://vega.github.io/schema/vega/v5.json',
     description:
@@ -237,7 +240,7 @@ const spec: VisualizationSpec = {
 };
 
 /**
- * Graph chart
+ * Edge-bundled graph component
  */
 export const EdgeBundled = ({
     data,

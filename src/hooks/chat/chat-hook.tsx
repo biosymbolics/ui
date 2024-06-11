@@ -28,6 +28,9 @@ const ChatContext = createContext<ChatContextType>({
     send,
 });
 
+/**
+ * Chat context provider
+ */
 export const ChatProvider = ({ children }: { children: ReactNode }) => {
     const [error, setError] = useState<string | null>(null);
     const [isPending, setIsPending] = useState(false);
@@ -64,6 +67,9 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
     );
 };
 
+/**
+ * Chat hook
+ */
 export const useChat = () => {
     const context = useContext(ChatContext);
     if (!context) {

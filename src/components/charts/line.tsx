@@ -35,7 +35,7 @@ const getXTicks = (series: LineChartProps['series']) =>
     ).data.map(({ x }) => `${x}`);
 
 /**
- * Line chart
+ * Line chart component (using MUI charts)
  */
 export const Line = ({
     controls,

@@ -26,11 +26,17 @@ import { DEFAULT_PATHNAME } from '@/constants';
 import { Line } from '@/components/charts/line';
 import { getSelectableId } from '@/utils/string';
 
+/**
+ * Render a company name as a link to the company page
+ */
 export const renderCompanyName = getRenderTypography(
     'title-md',
     (row: Company) => `${DEFAULT_PATHNAME}?terms=${row.name}`
 );
 
+/**
+ * Render a ticker symbol as a link to Yahoo Finance
+ */
 export const renderTicker = getRenderChip({
     color: 'primary',
     getUrl: (row: Company) =>
@@ -39,6 +45,66 @@ export const renderTicker = getRenderChip({
             : '',
 });
 
+/**
+ * A list of titles and URLs associated with a company
+ */
+const TitleList = ({
+    urls,
+}: {
+    urls: { title: string; url: string }[];
+}): JSX.Element => (
+    <>
+        <Typography level="title-md">Patents and Trials</Typography>
+        <List>
+            {urls.map(({ title, url }) => (
+                <ListItem key={getSelectableId(url)}>
+                    <ListItemDecorator>·</ListItemDecorator>
+
+                    <Link component={NextLink} href={url} target="_blank">
+                        {title}
+                    </Link>
+                </ListItem>
+            ))}
+        </List>
+    </>
+);
+
+/**
+ * Per-company detail component, including a sparkline chart of activity over time
+ */
+export const CompanyDetail = <T extends Company>({
+    row: company,
+}: {
+    row: T;
+}): JSX.Element => (
+    <Section mx={3}>
+        <Title title={company.name} variant="soft">
+            <Line
+                height={150}
+                pathname={DEFAULT_PATHNAME}
+                series={Object.entries(company.countByYear).map(
+                    ([type, report]) => ({
+                        name: type,
+                        data: report
+                            .map((d) => ({
+                                x: d.year,
+                                y: d.count,
+                            }))
+                            .sort((a, b) => a.x - b.x),
+                    })
+                )}
+                title="Activity Over Time"
+                variant="minimal"
+                width={1000}
+            />
+        </Title>
+        <TitleList urls={company.urls} />
+    </Section>
+);
+
+/**
+ * A list of columns for the company grid
+ */
 export const findCompanyColumns: GridColDef[] = [
     {
         field: 'name',
@@ -105,57 +171,11 @@ export const findCompanyColumns: GridColDef[] = [
     },
 ];
 
-const TitleList = ({
-    urls,
-}: {
-    urls: { title: string; url: string }[];
-}): JSX.Element => (
-    <>
-        <Typography level="title-md">Patents and Trials</Typography>
-        <List>
-            {urls.map(({ title, url }) => (
-                <ListItem key={getSelectableId(url)}>
-                    <ListItemDecorator>·</ListItemDecorator>
-
-                    <Link component={NextLink} href={url} target="_blank">
-                        {title}
-                    </Link>
-                </ListItem>
-            ))}
-        </List>
-    </>
-);
-
-export const CompanyDetail = <T extends Company>({
-    row: company,
-}: {
-    row: T;
-}): JSX.Element => (
-    <Section mx={3}>
-        <Title title={company.name} variant="soft">
-            <Line
-                height={150}
-                pathname={DEFAULT_PATHNAME}
-                series={Object.entries(company.countByYear).map(
-                    ([type, report]) => ({
-                        name: type,
-                        data: report
-                            .map((d) => ({
-                                x: d.year,
-                                y: d.count,
-                            }))
-                            .sort((a, b) => a.x - b.x),
-                    })
-                )}
-                title="Activity Over Time"
-                variant="minimal"
-                width={1000}
-            />
-        </Title>
-        <TitleList urls={company.urls} />
-    </Section>
-);
-
+/**
+ * A grid of companies
+ *
+ * @param companies The companies to display
+ */
 export const CompanyGrid = ({ companies }: { companies: Company[] }) => (
     <Box sx={getStyles}>
         <DataGrid<Company>

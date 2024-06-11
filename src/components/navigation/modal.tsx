@@ -74,6 +74,9 @@ export const Modal = ({ buttonElement, children, title }: ModalProps) => {
     );
 };
 
+/**
+ * A modal that can be dismissed by the router
+ */
 export const RouteableModal = ({
     children,
     isOpen,

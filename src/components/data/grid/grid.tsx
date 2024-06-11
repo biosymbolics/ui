@@ -51,6 +51,12 @@ const NoRows = (): JSX.Element => (
     </Typography>
 );
 
+/**
+ * Get density based on variant
+ *
+ * @param variant
+ * @returns density
+ */
 const getDensity = (variant: DataGridVariant): MuiDataGridProps['density'] => {
     if (variant === 'minimal') {
         return 'compact';
@@ -61,6 +67,11 @@ const getDensity = (variant: DataGridVariant): MuiDataGridProps['density'] => {
     return 'standard';
 };
 
+/**
+ * Data grid with:
+ * - optional detail panel
+ * - flexible column specification
+ */
 export const DataGrid = <T extends Record<string, unknown>>({
     columns: _columns,
     detailComponent,

@@ -30,7 +30,7 @@ export type SelectProps<T extends BaseOption> = {
 };
 
 /**
- * Slider component
+ * Simple select component (versus the more complex Autocomplete)
  */
 export const Select = <T extends BaseOption>({
     error,

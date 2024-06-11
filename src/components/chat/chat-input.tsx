@@ -11,6 +11,9 @@ export type ChatInputProps = {
     onSubmit: (prompt: string) => void;
 };
 
+/**
+ * Input for fake chat
+ */
 export const ChatInput = ({ error, isPending, onSubmit }: ChatInputProps) => {
     const [prompt, setPrompt] = useState<string>('');
 

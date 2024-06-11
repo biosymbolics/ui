@@ -5,7 +5,7 @@ import { doFetch } from '@/utils/actions';
 import { ClindevResponse, ClindevResponseSchema } from '@/types/clindev';
 
 /**
- * Predict clindev
+ * Predict clindev API call
  * @param indication
  */
 export const predictClindev = cache(

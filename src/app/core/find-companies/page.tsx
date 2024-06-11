@@ -2,12 +2,19 @@
 
 import Typography from '@mui/joy/Typography';
 
-import { FindCompaniesParamsSchema } from '@/types';
+import { FindCompaniesArgsSchema } from '@/types';
 
 import { FindCompanies } from './contents';
 
-const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
-    const params = FindCompaniesParamsSchema.parse(searchParams);
+/**
+ * Page component for finding companies
+ */
+const FindCompaniesPage = ({
+    searchParams,
+}: {
+    searchParams: Record<string, string>;
+}) => {
+    const params = FindCompaniesArgsSchema.parse(searchParams);
 
     return (
         <>
@@ -19,4 +26,4 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     );
 };
 
-export default Page;
+export default FindCompaniesPage;

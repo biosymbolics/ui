@@ -9,7 +9,14 @@ import { Section } from '@/components/layout/section';
 import { Answer } from './answer';
 import { Choose } from './choose';
 
-const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
+/**
+ * Page component for clinical development timelines querying
+ */
+const ClindevTimelinesPage = ({
+    searchParams,
+}: {
+    searchParams: Record<string, string>;
+}) => {
     const indication = searchParams.indication ?? '';
 
     return (
@@ -34,4 +41,4 @@ const Page = ({ searchParams }: { searchParams: Record<string, string> }) => {
     );
 };
 
-export default Page;
+export default ClindevTimelinesPage;

@@ -19,6 +19,11 @@ export type ContentArgs = BaseSearchArgs & {
 
 type TabDef = { id: string; label: string; panel: JSX.Element };
 
+/**
+ * Get tabs for a given display/use-case type
+ * @param args.tab - active tab
+ * @param args.type - display/use-case type
+ */
 const getTabsForType = ({
     tab,
     type = 'unknown',
@@ -156,7 +161,6 @@ const getTabsForType = ({
             tabs.indications,
             tabs.patents,
             tabs.trials,
-            // tabs.summary,
             tabs.ownersByIndications,
         ],
         indication: [
@@ -164,7 +168,6 @@ const getTabsForType = ({
             tabs.interventions,
             tabs.patents,
             tabs.trials,
-            // tabs.summary,
             tabs.ownersByInterventions,
         ],
         target: [
@@ -189,6 +192,13 @@ const getTabsForType = ({
     return typeToTabs[type || 'unknown'];
 };
 
+/**
+ * Dashboard content component
+ * @param tab - active tab
+ * @param ...args - search parameters
+ *
+ * @returns tabbed content component
+ */
 export const Content = ({ tab, ...args }: ContentArgs) => {
     const tabs = getTabsForType({ tab, ...args });
     return (

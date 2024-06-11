@@ -122,6 +122,8 @@ const NavMenuButton = ({
 
 /**
  * Side navigation menu
+ *
+ * This is all very ugly. I must have stolen it from the MUI site.
  */
 export const SideNav = () => {
     const [menuIndex, setMenuIndex] = useState<null | number>(null);

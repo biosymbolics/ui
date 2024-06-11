@@ -6,6 +6,11 @@ import 'server-only';
 
 import { fetchDescription } from '../actions';
 
+/**
+ * Component that displays a GPT-generated description for term(s). Supports markup.
+ *
+ * @param terms - terms to fetch description for
+ */
 export const Description = async ({ terms }: { terms: string[] }) => {
     try {
         const description = await fetchDescription(terms);
